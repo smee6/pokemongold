@@ -14,6 +14,12 @@ HRESULT tileMap::init()
 {
 	//맵 이미지
 	_map = IMAGEMANAGER->addImage("map", "image/pokemon_Map.bmp", 7936, 2304, true, RGB(255, 0, 255));
+	_startHome1 = IMAGEMANAGER->addImage("집1층", "image/pokemon_start_home1.bmp", 640, 512, true, RGB(255, 0, 255));
+	_startHome2 = IMAGEMANAGER->addImage("집2층", "image/pokemon_start_home2.bmp", 512, 384, true, RGB(255, 0, 255));
+	_startCenter = IMAGEMANAGER->addImage("시작맵센터", "image/pokemon_start_center.bmp", 640, 768, true, RGB(255, 0, 255));
+	_gymCenter = IMAGEMANAGER->addImage("체육관맵센터", "image/pokemon_gym_center.bmp", 640, 512, true, RGB(255, 0, 255));
+	_gymGym = IMAGEMANAGER->addImage("체육관맵체육관", "image/pokemon_gym_gym.bmp", 640, 1024, true, RGB(255, 0, 255));
+	_gymMart = IMAGEMANAGER->addImage("체육관맵마트", "image/pokemon_gym_mart.bmp", 768, 512, true, RGB(255, 0, 255));
 
 	//맵 카메라 초기화
 	_cameraX = 0;
@@ -53,6 +59,12 @@ void tileMap::render()
 {
 	//맵이미지
 	_map->render(getMemDC(), -6400 -_cameraX, -1152 - _cameraY);
+	_startHome1->render(getMemDC(), 1536 + TILESIZE * 5 - _cameraX, -_cameraY);
+	_startHome2->render(getMemDC(), 640 + 1536 + TILESIZE * 10 - _cameraX, -_cameraY);
+	_startCenter->render(getMemDC(), 512 + 640 + 1536 + TILESIZE * 15 - _cameraX, -_cameraY);
+	_gymCenter->render(getMemDC(),  640 + 512 + 640 + 1536 + TILESIZE * 20 - _cameraX, -_cameraY);
+	_gymGym->render(getMemDC(), 640 + 640 + 512 + 640 + 1536 + TILESIZE * 25 - _cameraX, -_cameraY);
+	_gymMart->render(getMemDC(), 640 + 640 + 640 + 512 + 640 + 1536 + TILESIZE * 30 - _cameraX, -_cameraY);
 
 	//타일 속성별로 색이 다름(삭제예정)
 	for (int i = 0; i < TILE; i++)
@@ -113,23 +125,24 @@ void tileMap::render()
 				SelectObject(getMemDC(), oldBrush);
 				DeleteObject(brush);
 			}
-			char str[128];
-			sprintf_s(str, "cameraX : %d", _cameraX);
-			TextOut(getMemDC(), 100, 100, str,strlen(str));
-	
-			sprintf_s(str, "cameraY : %d", _cameraY);
-			TextOut(getMemDC(), 100, 130, str, strlen(str));
 	}
+
+	char str[128];
+	sprintf_s(str, "cameraX : %d", _cameraX);
+	TextOut(getMemDC(), 100, 100, str, strlen(str));
+
+	sprintf_s(str, "cameraY : %d", _cameraY);
+	TextOut(getMemDC(), 100, 130, str, strlen(str));
 }
 
 void tileMap::setTile()
 {
-	//타일 렉트 생성
+	//전체맵 타일 렉트 생성
 	for (int i = 0; i < 36; i++)
 	{
-		for (int j = 0; j < 124; j++)
+		for (int j = 0; j < 214; j++)
 		{
-			_tile[i * 124 + j].rc = RectMake(-6400 + j * TILESIZE - _cameraX, -1152 +  i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
+			_tile[i * 214 + j].rc = RectMake(-6400 + j * TILESIZE - _cameraX, -1152 +  i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
 		}
 	}
 

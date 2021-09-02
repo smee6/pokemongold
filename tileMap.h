@@ -4,7 +4,7 @@
 #define TILESIZE 64				//타일 사이즈 64 * 64
 
 //전체 타일 개수
-#define TILE 124 * 36
+#define TILE 214 * 36
 
 enum TILETYPE					//타일 속성
 {
@@ -32,6 +32,17 @@ private:
 	character* _character;
 
 	image* _map;							//전체 맵 이미지
+	
+	//시작맵 건물 안 이미지
+	image* _startHome1;						//집 1층 이미지
+	image* _startHome2;						//집 2층 이미지
+	image* _startCenter;					//시작맵 센터
+
+	//체육관맵 건물 안 이미지
+	image* _gymCenter;						//체육관맵 센터
+	image* _gymGym;							//체유관맵 체육관
+	image* _gymMart;						//체육관맵 마트
+
 	tagTile _tile[TILE];					//시작맵 타일
 
 	int _cameraX;							//맵 카메라 X좌표

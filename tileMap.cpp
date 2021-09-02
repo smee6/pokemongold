@@ -20,10 +20,10 @@ HRESULT tileMap::init()
 	_cameraY = 0;
 
 	//타일 속성 초기화 (삭제예정)
-	//for (int i = 0; i < TILE; i++)
-	//{
-	//		_tile[i].type = TILETYPE_CLOSE;
-	//}
+	for (int i = 0; i < TILE; i++)
+	{
+			_tile[i].type = TILETYPE_CLOSE;
+	}
 
 	load();
 
@@ -36,29 +36,6 @@ void tileMap::release()
 
 void tileMap::update()
 {
-	////움직이는 키(삭제 예정)
-	//if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	//{
-	//	if (_cameraY % 64 == 0) _direction = LEFT;
-	//	moveX();
-	//}
-	//if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	//{
-	//	if (_cameraY % 64 == 0)_direction = RIGHT;
-	//	moveX();
-	//}
-	//if (KEYMANAGER->isStayKeyDown(VK_UP))
-	//{
-	//	if (_cameraX % 64 == 0) _direction = TOP;
-	//	moveY();
-	//}
-	//if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	//{
-	//	if (_cameraX % 64 == 0) _direction = BOTTOM;
-	//	moveY();
-	//}
-	 
-
 	//저장과 불러오기
 	//if (KEYMANAGER->isOnceKeyDown('R'))
 	//{
@@ -68,8 +45,6 @@ void tileMap::update()
 	//{
 	//	load();
 	//}
-	//if (_cameraX % 64 != 0) moveX();
-	//if (_cameraY % 64 != 0) moveY();
 	
 	setTile();
 }
@@ -150,29 +125,14 @@ void tileMap::render()
 void tileMap::setTile()
 {
 	//타일 렉트 생성
-	for (int i = 0; i < 18; i++)
-	{
-		for (int j = 0; j < 24; j++)
-		{
-			_tile[i * 24 + j].rc = RectMake(j * TILESIZE - _cameraX, i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
-		}
-	}
-
-	for (int i = 0; i < 18; i++)
-	{
-		for (int j = 0; j < 60; j++)
-		{
-			_tile[431 + i * 60 + j].rc = RectMake(-3840 + j * TILESIZE - _cameraX, i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
-		}
-	}
-
 	for (int i = 0; i < 36; i++)
 	{
-		for (int j = 0; j < 40; j++)
+		for (int j = 0; j < 124; j++)
 		{
-			_tile[1511 + i * 40 + j].rc = RectMake(-6400 + j * TILESIZE - _cameraX, -1152 + i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
+			_tile[i * 124 + j].rc = RectMake(-6400 + j * TILESIZE - _cameraX, -1152 +  i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
 		}
 	}
+
 	//속성 부여(삭제 예정)
 	for (int i = 0; i < TILE; i++)
 	{
@@ -222,29 +182,3 @@ void tileMap::load()
 
 	CloseHandle(file);
 }
-
-//void tileMap::moveX()
-//{
-//	switch (_direction)
-//	{
-//	case LEFT:
-//		_cameraX -= 4;
-//		break;
-//	case RIGHT:
-//		_cameraX += 4;
-//		break;
-//	}
-//}
-//
-//void tileMap::moveY()
-//{
-//	switch (_direction)
-//	{
-//	case TOP:
-//		_cameraY -= 4;
-//		break;
-//	case BOTTOM:
-//		_cameraY += 4;
-//		break;
-//	}
-//}

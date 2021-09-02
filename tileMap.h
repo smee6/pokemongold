@@ -3,13 +3,8 @@
 
 #define TILESIZE 64				//타일 사이즈 64 * 64
 
-//타일 깔 때 구분하기 위한 전처리기
-#define	STARTTILE 24 * 18		//시작맵 타일개수
-#define BATTLETILE 60 * 18		//배틀맵 타일개수
-#define GYMTILE 40 * 36			//체육관맵 타일개수
-
 //전체 타일 개수
-#define TILE 24 * 18 + 60 * 18 + 40 * 36
+#define TILE 124 * 36
 
 enum TILETYPE					//타일 속성
 {
@@ -21,14 +16,7 @@ enum TILETYPE					//타일 속성
 	TILETYPE_RIGHTSLOPE,		//오른쪽 비탈길
 	TILETYPE_BOTTOMSLOPE		//아래쪽 비탈길
 };
-//테스트용 방향
-//enum DIRECTION
-//{
-//	LEFT,
-//	RIGHT,
-//	BOTTOM,
-//	TOP,
-//};
+
 
 struct tagTile
 {
@@ -43,7 +31,6 @@ class tileMap : public gameNode
 private:
 	character* _character;
 
-	//DIRECTION _direction;
 	image* _map;							//전체 맵 이미지
 	tagTile _tile[TILE];					//시작맵 타일
 
@@ -63,8 +50,6 @@ public:
 	void setTile();		//맵에 타일 깔아주는 함수
 	void save();		//저장 함수
 	void load();		//불러오는 함수
-	//void moveX();		//움직임 함수
-	//void moveY();
 
 	//접근자
 	tagTile* getTile() { return _tile; }			//맵 타일에 대한 접근자
@@ -73,8 +58,8 @@ public:
 	int getCameraY() { return _cameraY; }			//맵 카메라 y좌표에 대한 접근자
 
 	//설정자
-	void setCameraX(int x) { _cameraX = x; }
-	void setCameraY(int y) { _cameraY = y; }
+	void setCameraX(int x) { _cameraX = x; }		//맵 카메라 x좌표에 대한 설정자
+	void setCameraY(int y) { _cameraY = y; }		//맵 카메라 y좌표에 대한 설정자
 
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

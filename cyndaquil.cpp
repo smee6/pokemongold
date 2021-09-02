@@ -39,7 +39,7 @@ HRESULT cyndaquil::init()
 
 			_poketmon.maxHP = _poketmon.currentHP = 39;			//체력
 			_poketmon.currentExp;
-			_poketmon.maxExp = 1059860;							//100레벨 경험치량
+			_poketmon.maxExp = 1000000;							//100레벨 경험치량
 			_poketmon.skill1;
 			_poketmon.skill2;
 			_poketmon.skill3;

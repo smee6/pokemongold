@@ -46,12 +46,12 @@ struct tagPOKETMON
 	int	currentHP;							// 1레벨 초기 현재 체력
 	int	maxHP;								// 1레벨 초기 최대 체력
 
-	int	levelAttack;						// 레벨당 증가하는 공격
-	int	levelDefense;						// 레벨당 증가하는 방어	
-	int levelSpecialAttack;					// 레벨당 증가하는 특수공격
-	int	levelSpecialDefense;				// 레벨당 증가하는 특수방어
-	int	levelSpeed;							// 레벨당 증가하는 스피드
-	int levelHP;							// 레벨당 증가하는 체력
+	float levelAttack;						// 레벨당 증가하는 공격
+	float levelDefense;						// 레벨당 증가하는 방어	
+	float levelSpecialAttack;				// 레벨당 증가하는 특수공격
+	float levelSpecialDefense;				// 레벨당 증가하는 특수방어
+	float levelSpeed;						// 레벨당 증가하는 스피드
+	float levelHP;							// 레벨당 증가하는 체력
 
 	int sumAttack;							// 최종 공격
 	int sumDefense;							// 최종 방어

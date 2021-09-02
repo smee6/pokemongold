@@ -17,10 +17,11 @@ HRESULT character::init() // 인잇
 
     _image = IMAGEMANAGER->findImage("아이들_좌우");
 
-    _direction = _isMoving = 0;
+    _direction = _isMoving = _frontTileType = 0;
     _frameCount = _currentFrame = 0;
-    _x = WINSIZEX / 2 + 32;
+    _x = WINSIZEX / 2 + TILESIZE / 2;
     _y = WINSIZEY / 2;
+    _currentTile = 4813;
 
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -37,48 +38,56 @@ void character::update() // 업데이트
     controll();
     imageFrame();
 
+    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 
 }
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    // 아이들
-    if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) idle(0);
-    if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) idle(1);
-    if (KEYMANAGER->isOnceKeyUp(VK_DOWN)) idle(2);
-    if (KEYMANAGER->isOnceKeyUp(VK_UP)) idle(3);
-
-    // 걷기
     if (!_isMoving)
     {
+        // 아이들
+        if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) idle(0);
+        if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) idle(1);
+        if (KEYMANAGER->isOnceKeyUp(VK_DOWN)) idle(2);
+        if (KEYMANAGER->isOnceKeyUp(VK_UP)) idle(3);
+
+        // 걷기
         if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) // 오른쪽 이동
         {
-            run(0);
-            move();
+            run(0); 
+            if (!_isMoving) tileCheck(0);
+            tileAction();
         }
 
         if (KEYMANAGER->isStayKeyDown(VK_LEFT)) // 왼쪽 이동
         {
             run(1);
-            move();
+            if (!_isMoving) tileCheck(1);
+            tileAction();
         }
 
         if (KEYMANAGER->isStayKeyDown(VK_DOWN)) // 아래 이동
         {
             run(2);
-            move();
+            if (!_isMoving) tileCheck(2);
+            tileAction();
         }
 
         if (KEYMANAGER->isStayKeyDown(VK_UP)) // 위 이동
         {
             run(3);
-            move();
+            if (!_isMoving) tileCheck(3);
+            tileAction();
         }
     }
 
-    // 카메라 타일 이동
-    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) move();
-    
+    // enter Key
+    if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+    {
+
+    }
+
     // Z Key
     if (KEYMANAGER->isOnceKeyDown('Z'))
     {
@@ -92,7 +101,7 @@ void character::controll() // 캐릭터 컨트롤 처리
     }
 }
 
-void character::imageSetting() // 현재 이미지 세팅
+void character::imageSetting() // 상태에 따라 현재 이미지 세팅
 {
     switch (_state)
     {
@@ -147,42 +156,215 @@ void character::idle(int direction) // 아이들 처리
     if (direction == 0 || direction == 1) _state = static_cast<int>(STATE::IDLE_RL);
     else if (direction == 2 || direction == 3) _state = static_cast<int>(STATE::IDLE_UD);
 
-    _isMoving = 0;
-
     imageSetting();
 }
 
 void character::run(int direction) // 걷기 처리
 {
     // 방향 변경 처리
-    if (_tileMap->getCameraY() % TILESIZE == 0 && _tileMap->getCameraX() % TILESIZE == 0) _direction = direction;
+    if (_tileMap->getCameraX() % TILESIZE == 0 && _tileMap->getCameraY() % TILESIZE == 0) _direction = direction;
 
     // 상태 변경 처리
     if (_direction == 0 || _direction == 1) _state = static_cast<int>(STATE::RUN_RL);
     else if (_direction == 2 || _direction == 3) _state = static_cast<int>(STATE::RUN_UD);
 
     // 이동 중인지 처리
-    if (_tileMap->getCameraX() % TILESIZE != 0 && _tileMap->getCameraY() % TILESIZE != 0) _isMoving = 1;
-    else _isMoving = 0;
+    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) _isMoving = 1;
 
     imageSetting();
 }
 
-void character::move() // 좌표 이동 처리
+void character::tileCheck(int direction) // 타일 체크 처리
 {
-    switch (_direction)
+    //    TILETYPE_OPEN,				//지나갈 수 있는 타일
+    //    TILETYPE_GRASS,				//풀(포켓몬 뿌릴 수 있게)
+    //    TILETYPE_CLOSE,				//지나갈 수 없는 타일
+    //    TILETYPE_DOOR,				//이동할 수 있는 문
+    //    TILETYPE_LEFTSLOPE,			//왼쪽 비탈길
+    //    TILETYPE_RIGHTSLOPE,		//오른쪽 비탈길
+    //    TILETYPE_BOTTOMSLOPE		//아래쪽 비탈길
+    
+    // 바라본 방향의 타일이 갈 수 있는 타일인지 체크
+    switch (direction)
     {
     case 0:
-        _tileMap->setCameraX(_tileMap->getCameraX() + 4);
+        if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_OPEN) _frontTileType = 1;
+        else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_GRASS) _frontTileType = 2;
+        else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_DOOR) _frontTileType = 3;
+        else _frontTileType = 0;
+
         break;
     case 1:
-        _tileMap->setCameraX(_tileMap->getCameraX() - 4);
+        if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_OPEN) _frontTileType = 1;
+        else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_GRASS) _frontTileType = 2;
+        else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_DOOR) _frontTileType = 3;
+        else _frontTileType = 0;
+
         break;
     case 2:
-        _tileMap->setCameraY(_tileMap->getCameraY() + 4);
+        if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_OPEN) _frontTileType = 1;
+        else if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_GRASS) _frontTileType = 2;
+        else if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_DOOR) _frontTileType = 3;
+        else _frontTileType = 0;
+
         break;
     case 3:
-        _tileMap->setCameraY(_tileMap->getCameraY() - 4);
+        if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_OPEN) _frontTileType = 1;
+        else if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_GRASS) _frontTileType = 2;
+        else if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_DOOR) _frontTileType = 3;
+        else _frontTileType = 0;
+
+        break;
+    }
+}
+
+void character::tileAction() // 좌표 이동 처리
+{
+    // 방향에 따라 좌표이동
+    if (_frontTileType == 1 || _frontTileType == 2 || _frontTileType == 3)
+    {
+        switch (_direction)
+        {
+        case 0:
+            _tileMap->setCameraX(_tileMap->getCameraX() + 8);
+            break;
+        case 1:
+            _tileMap->setCameraX(_tileMap->getCameraX() - 8);
+            break;
+        case 2:
+            _tileMap->setCameraY(_tileMap->getCameraY() + 8);
+            break;
+        case 3:
+            _tileMap->setCameraY(_tileMap->getCameraY() - 8);
+            break;
+        }
+
+        // 타일 정중앙에 오면 타일 인덱스 변경, 문, 풀 타일 처리
+        if (_tileMap->getCameraX() % TILESIZE == 0 && _tileMap->getCameraY() % TILESIZE == 0)
+        {
+            _isMoving = 0;
+
+            switch (_direction)                            // 현재 타일 인덱스 변경
+            {
+            case 0:
+                _currentTile += 1;
+                break;
+            case 1:
+                _currentTile -= 1;
+                break;
+            case 2:
+                _currentTile += 214;
+                break;
+            case 3:
+                _currentTile -= 214;
+                break;
+            }
+
+            if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
+            if (_frontTileType == 3) door(_currentTile);    // 문 타일일 때 처리
+        }
+    }
+}
+
+void character::grass() // 풀 타일 처리
+{
+    int rndPoketmonMeet = RND->getFromIntTo(1, 100);
+
+    if (rndPoketmonMeet <= POKETMONMEET)
+    {
+        _grassTest = 1;
+    }
+    else _grassTest = 0;
+}
+
+void character::door(int doorIndex) // 문 타일 처리
+{
+    switch (doorIndex)
+    {
+    case 5037:  // 필드에서 플레이어 집 1층 이동
+        _currentTile = 5485;
+        _tileMap->setCameraX(1920);
+        _tileMap->setCameraY(192);
+        break;
+    case 3990:  // 플레이어 집 1층에서 2층 이동
+        _currentTile = 4003;
+        _tileMap->setCameraX(2944);
+        _tileMap->setCameraY(-256);
+        break;
+    case 4003:  // 플레이어 집 2층에서 1층 이동
+        _currentTile = 3990;
+        _tileMap->setCameraX(2112);
+        _tileMap->setCameraY(-256);
+        break;
+    case 5485:  // 플레이어 집 1층에서 필드 이동
+        _currentTile = 5037;
+        _tileMap->setCameraX(640);
+        _tileMap->setCameraY(64);
+        break;
+    case 5486:  // 플레이어 집 1층에서 필드 이동
+        _currentTile = 5037;
+        _tileMap->setCameraX(640);
+        _tileMap->setCameraY(64);
+        break;
+    case 4602:  // 필드에서 오박사 집 이동
+        _currentTile = 6367;
+        _tileMap->setCameraX(3584);
+        _tileMap->setCameraY(448);
+        break;
+    case 6367:  // 오박사 집에서 필드 이동
+        _currentTile = 4602;
+        _tileMap->setCameraX(192);
+        _tileMap->setCameraY(-64);
+        break;
+    case 6368:  // 오박사 집에서 필드 이동
+        _currentTile = 4602;
+        _tileMap->setCameraX(192);
+        _tileMap->setCameraY(-64);
+        break;
+    case 5381:  // 필드에서 포켓몬 센터 이동
+        _currentTile = 5525;
+        _tileMap->setCameraX(4480);
+        _tileMap->setCameraY(192);
+        break;
+    case 5525:  // 포켓몬 센터에서 필드 이동
+        _currentTile = 5381;
+        _tileMap->setCameraX(-4736);
+        _tileMap->setCameraY(192);
+        break;
+    case 5526:  // 포켓몬 센터에서 필드 이동
+        _currentTile = 5381;
+        _tileMap->setCameraX(-4736);
+        _tileMap->setCameraY(192);
+        break;
+    case 3656:  // 필드에서 체육관 이동
+        _currentTile = 7253;
+        _tileMap->setCameraX(5504);
+        _tileMap->setCameraY(704);
+        break;
+    case 7253:  // 체육관에서 필드 이동
+        _currentTile = 3656;
+        _tileMap->setCameraX(-5568);
+        _tileMap->setCameraY(-320);
+        break;
+    case 7254:  // 체육관에서 필드 이동
+        _currentTile = 3656;
+        _tileMap->setCameraX(-5568);
+        _tileMap->setCameraY(-320);
+        break;
+    case 3647:  // 필드에서 상점 이동
+        _currentTile = 5554;
+        _tileMap->setCameraX(6336);
+        _tileMap->setCameraY(192);
+        break;
+    case 5554:  // 상점에서 필드 이동
+        _currentTile = 3647;
+        _tileMap->setCameraX(-6144);
+        _tileMap->setCameraY(-320);
+        break;
+    case 5555:  // 상점에서 필드 이동
+        _currentTile = 3647;
+        _tileMap->setCameraX(-6144);
+        _tileMap->setCameraY(-320);
         break;
     }
 }
@@ -196,9 +378,21 @@ void character::render() // 렌더
         Rectangle(getMemDC(), _rc);
     }
     
+    char str[128];
+    sprintf_s(str, "_isMoving : %d", _isMoving);
+    TextOut(getMemDC(), 100, 160, str, strlen(str));
+
+    sprintf_s(str, "_frontTileType : %d", _frontTileType);
+    TextOut(getMemDC(), 100, 190, str, strlen(str));
+
+    sprintf_s(str, "_현재 타일 : %d", _currentTile);
+    TextOut(getMemDC(), 100, 220, str, strlen(str));
+
+    sprintf_s(str, "_포켓몬 조우 : %d", _grassTest);
+    TextOut(getMemDC(), 100, 250, str, strlen(str));
 }
 
-void character::imageInit() // 파일 이미지들 불러옴
+void character::imageInit() // 이미지 파일들 불러옴
 {
     // 캐릭터
     IMAGEMANAGER->addFrameImage("아이들_좌우", "image/character_idle_RL.bmp", 56, 128, 1, 2, true, RGB(255, 0, 255));

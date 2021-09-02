@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 
+#define POKETMONMEET 10						// 포켓몬 조우 확률
+
 // 캐릭터 상태
 enum class STATE
 {
@@ -100,8 +102,12 @@ private:
 	int _frameCount;										// 프레임 이미지 인터벌 카운트
 	int _currentFrame;										// 현재 프레임
 	int _direction;											// 캐릭터 방향 0: 우, 1: 좌, 2: 하, 3: 상
+	int _currentTile;										// 현재 플레이어가 위치한 타일 인덱스
+	int _frontTileType;										// 바라본 방향의 타일 타입
 
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
+
+	bool _grassTest; // 풀 타일 테스트용
 
 public:
 	character();
@@ -112,17 +118,21 @@ public:
 	virtual void update();			//연산하는 함수
 	virtual void render();			//그리기 함수
 
-	void imageInit();																// 이미지들 불러옴
-	void imageSetting();															// 현재 이미지 세팅
+	void imageInit();																// 이미지 파일들 불러옴
+	void imageSetting();															// 상태에 따라 현재 이미지 세팅
 	void imageFrame();																// 이미지 프레임 처리
 	void controll();																// 캐릭터 컨트롤 처리
 	void idle(int direction);														// 아이들 처리
 	void run(int direction);														// 걷기 처리
-	void move();																	// 좌표 이동 처리
+	void tileCheck(int direction);													// 타일 체크 처리
+	void tileAction();																// 좌표 이동 처리
+	void grass();																	// 풀 타일 처리
+	void door(int doorIndex);														// 문 타일 처리
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터
 	int getDirection() { return _direction; }										// 캐릭터 방향 게터
+	int getCurrentTile() { return _currentTile; }									// 캐릭터가 위치한 타일 인덱스 게터
 	bool getIsMoving() { return _isMoving; }										// 이동 중인지 불값 게터
 	RECT getRect() { return _rc; }													// 렉트 게터
 	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터

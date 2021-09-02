@@ -1,11 +1,12 @@
-#pragma once
 #include "poketmon.h"
+
 class spearow : public poketmon
 {
+
 private:
 
-public:
 
+public:
 	spearow();
 	~spearow();
 
@@ -13,6 +14,4 @@ public:
 	void release();
 	void update();
 	void render();
-
 };
-

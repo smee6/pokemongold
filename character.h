@@ -75,7 +75,9 @@ struct tagPOKETMON_PLAYER
 	int	skill1;								// 스킬1 인덱스 
 	int	skill2;								// 스킬2 인덱스 
 	int	skill3;								// 스킬3 인덱스 
-	int	skill4;								// 스킬4 인덱스 
+	int	skill4;								// 스킬4 인덱스
+
+	int item;								// 보유 중인 아이템 인덱스
 };
 
 // 전방 선언
@@ -110,15 +112,21 @@ public:
 	virtual void update();			//연산하는 함수
 	virtual void render();			//그리기 함수
 
-	void imageInit();										// 이미지들 불러옴
-	void imageSetting();									// 현재 이미지 세팅
-	void imageFrame();										// 이미지 프레임 처리
-	void controll();										// 캐릭터 컨트롤 처리
-	void idle(int direction);								// 아이들 처리
-	void run(int direction);								// 걷기 처리
-	void move();											// 좌표 이동 처리
+	void imageInit();																// 이미지들 불러옴
+	void imageSetting();															// 현재 이미지 세팅
+	void imageFrame();																// 이미지 프레임 처리
+	void controll();																// 캐릭터 컨트롤 처리
+	void idle(int direction);														// 아이들 처리
+	void run(int direction);														// 걷기 처리
+	void move();																	// 좌표 이동 처리
 
-	float getCharacterX() {}
+	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
+	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터
+	int getDirection() { return _direction; }										// 캐릭터 방향 게터
+	bool getIsMoving() { return _isMoving; }										// 이동 중인지 불값 게터
+	RECT getRect() { return _rc; }													// 렉트 게터
+	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터
+
 
 	void setPoketmonManagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }		// 메모리 주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }		// 메모리 주소 링크

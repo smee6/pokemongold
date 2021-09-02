@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "tileMap.h"
+#include "character.h"
 
 tileMap::tileMap()
 {
@@ -35,27 +36,29 @@ void tileMap::release()
 
 void tileMap::update()
 {
-	//움직이는 키(삭제 예정)
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		if (_cameraY % 64 == 0) _direction = LEFT;
-		moveX();
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		if (_cameraY % 64 == 0)_direction = RIGHT;
-		moveX();
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		if (_cameraX % 64 == 0) _direction = TOP;
-		moveY();
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		if (_cameraX % 64 == 0) _direction = BOTTOM;
-		moveY();
-	}
+	////움직이는 키(삭제 예정)
+	//if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	//{
+	//	if (_cameraY % 64 == 0) _direction = LEFT;
+	//	moveX();
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	//{
+	//	if (_cameraY % 64 == 0)_direction = RIGHT;
+	//	moveX();
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_UP))
+	//{
+	//	if (_cameraX % 64 == 0) _direction = TOP;
+	//	moveY();
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	//{
+	//	if (_cameraX % 64 == 0) _direction = BOTTOM;
+	//	moveY();
+	//}
+	 
+
 	//저장과 불러오기
 	//if (KEYMANAGER->isOnceKeyDown('R'))
 	//{
@@ -65,8 +68,8 @@ void tileMap::update()
 	//{
 	//	load();
 	//}
-	if (_cameraX % 64 != 0) moveX();
-	if (_cameraY % 64 != 0) moveY();
+	//if (_cameraX % 64 != 0) moveX();
+	//if (_cameraY % 64 != 0) moveY();
 	
 	setTile();
 }
@@ -220,28 +223,28 @@ void tileMap::load()
 	CloseHandle(file);
 }
 
-void tileMap::moveX()
-{
-	switch (_direction)
-	{
-	case LEFT:
-		_cameraX -= 4;
-		break;
-	case RIGHT:
-		_cameraX += 4;
-		break;
-	}
-}
-
-void tileMap::moveY()
-{
-	switch (_direction)
-	{
-	case TOP:
-		_cameraY -= 4;
-		break;
-	case BOTTOM:
-		_cameraY += 4;
-		break;
-	}
-}
+//void tileMap::moveX()
+//{
+//	switch (_direction)
+//	{
+//	case LEFT:
+//		_cameraX -= 4;
+//		break;
+//	case RIGHT:
+//		_cameraX += 4;
+//		break;
+//	}
+//}
+//
+//void tileMap::moveY()
+//{
+//	switch (_direction)
+//	{
+//	case TOP:
+//		_cameraY -= 4;
+//		break;
+//	case BOTTOM:
+//		_cameraY += 4;
+//		break;
+//	}
+//}

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "character.h"
 #include "poketmonManager.h"
+#include "tileMap.h"
 
 character::character()
 {
@@ -35,67 +36,60 @@ void character::update() // 업데이트
 {
     controll();
     imageFrame();
-    //move();
 
 
 }
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
+    // 아이들
+    if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) idle(0);
+    if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) idle(1);
+    if (KEYMANAGER->isOnceKeyUp(VK_DOWN)) idle(2);
+    if (KEYMANAGER->isOnceKeyUp(VK_UP)) idle(3);
 
     // 걷기
-    if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) // 오른쪽 이동
+    if (!_isMoving)
     {
-        run(0);
+        if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) // 오른쪽 이동
+        {
+            run(0);
+            move();
+        }
+
+        if (KEYMANAGER->isStayKeyDown(VK_LEFT)) // 왼쪽 이동
+        {
+            run(1);
+            move();
+        }
+
+        if (KEYMANAGER->isStayKeyDown(VK_DOWN)) // 아래 이동
+        {
+            run(2);
+            move();
+        }
+
+        if (KEYMANAGER->isStayKeyDown(VK_UP)) // 위 이동
+        {
+            run(3);
+            move();
+        }
     }
 
-    if (KEYMANAGER->isStayKeyDown(VK_LEFT)) // 왼쪽 이동
-    {
-        run(1);
-    }
-
-    if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-    {
-        run(2);
-    }
-
-    if (KEYMANAGER->isStayKeyDown(VK_UP))
-    {
-        run(3);
-    }
-
-    // 아이들
-    if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
-    {
-        idle(0);
-    }
-
-    if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-    {
-        idle(1);
-    }
-
-    if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
-    {
-        idle(2);
-    }
-
-    if (KEYMANAGER->isOnceKeyUp(VK_UP))
-    {
-        idle(3);
-    }
-
-
+    // 카메라 타일 이동
+    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) move();
+    
+    // Z Key
     if (KEYMANAGER->isOnceKeyDown('Z'))
     {
 
     }
 
+    // X Key
     if (KEYMANAGER->isOnceKeyDown('X'))
     {
 
     }
-
 }
 
 void character::imageSetting() // 현재 이미지 세팅
@@ -143,16 +137,16 @@ void character::imageFrame() // 이미지 프레임 처리
         _image->setFrameX(_currentFrame);
     }
 
+    // 렉트 갱신
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
 void character::idle(int direction) // 아이들 처리
 {
-
+    // 상태 변경 처리
     if (direction == 0 || direction == 1) _state = static_cast<int>(STATE::IDLE_RL);
     else if (direction == 2 || direction == 3) _state = static_cast<int>(STATE::IDLE_UD);
 
-    _direction = direction;
     _isMoving = 0;
 
     imageSetting();
@@ -160,46 +154,37 @@ void character::idle(int direction) // 아이들 처리
 
 void character::run(int direction) // 걷기 처리
 {
-    if (direction == 0 || direction == 1) _state = static_cast<int>(STATE::RUN_RL);
-    else if (direction == 2 || direction == 3) _state = static_cast<int>(STATE::RUN_UD);
+    // 방향 변경 처리
+    if (_tileMap->getCameraY() % TILESIZE == 0 && _tileMap->getCameraX() % TILESIZE == 0) _direction = direction;
 
-    _direction = direction;
-    _isMoving = 1;
+    // 상태 변경 처리
+    if (_direction == 0 || _direction == 1) _state = static_cast<int>(STATE::RUN_RL);
+    else if (_direction == 2 || _direction == 3) _state = static_cast<int>(STATE::RUN_UD);
+
+    // 이동 중인지 처리
+    if (_tileMap->getCameraX() % TILESIZE != 0 && _tileMap->getCameraY() % TILESIZE != 0) _isMoving = 1;
+    else _isMoving = 0;
 
     imageSetting();
 }
 
 void character::move() // 좌표 이동 처리
 {
-    //if (_isMoving)
-    //{
-    //    if (_direction == 0)
-    //    {
-    //        _x += _speed;
-    //        if (_maxXY <= _x) _x = _maxXY, _isMoving = 0;
-    //    }
-    //    else if (_direction == 1)
-    //    {
-    //        _x -= _speed;
-    //        if (_maxXY >= _x) _x = _maxXY, _isMoving = 0;
-    //    }
-    //    else if (_direction == 2)
-    //    {
-    //        _y += _speed;
-    //        if (_maxXY <= _y) _y = _maxXY, _isMoving = 0;
-    //    }
-    //    else if (_direction == 3)
-    //    {
-    //        _y -= _speed;
-    //        if (_maxXY >= _y) _y = _maxXY, _isMoving = 0;
-    //    }
-
-    //    // 이동하려는 좌표의 중앙 좌표 값에 다다르면 멈춤
-    //    //if()
-    //    //{
-
-    //    //}
-    //}
+    switch (_direction)
+    {
+    case 0:
+        _tileMap->setCameraX(_tileMap->getCameraX() + 4);
+        break;
+    case 1:
+        _tileMap->setCameraX(_tileMap->getCameraX() - 4);
+        break;
+    case 2:
+        _tileMap->setCameraY(_tileMap->getCameraY() + 4);
+        break;
+    case 3:
+        _tileMap->setCameraY(_tileMap->getCameraY() - 4);
+        break;
+    }
 }
 
 void character::render() // 렌더

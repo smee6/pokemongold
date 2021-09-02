@@ -22,13 +22,13 @@ enum TILETYPE					//타일 속성
 	TILETYPE_BOTTOMSLOPE		//아래쪽 비탈길
 };
 //테스트용 방향
-enum DIRECTION
-{
-	LEFT,
-	RIGHT,
-	TOP,
-	BOTTOM
-};
+//enum DIRECTION
+//{
+//	LEFT,
+//	RIGHT,
+//	BOTTOM,
+//	TOP,
+//};
 
 struct tagTile
 {
@@ -43,7 +43,7 @@ class tileMap : public gameNode
 private:
 	character* _character;
 
-	DIRECTION _direction;
+	//DIRECTION _direction;
 	image* _map;							//전체 맵 이미지
 	tagTile _tile[TILE];					//시작맵 타일
 
@@ -63,8 +63,8 @@ public:
 	void setTile();		//맵에 타일 깔아주는 함수
 	void save();		//저장 함수
 	void load();		//불러오는 함수
-	void moveX();		//움직임 함수
-	void moveY();
+	//void moveX();		//움직임 함수
+	//void moveY();
 
 	//접근자
 	tagTile* getTile() { return _tile; }			//맵 타일에 대한 접근자

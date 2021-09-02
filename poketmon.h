@@ -67,6 +67,8 @@ struct tagPOKETMON
 	int	skill2;								// 스킬2 인덱스 
 	int	skill3;								// 스킬3 인덱스 
 	int	skill4;								// 스킬4 인덱스 
+
+	int item;								// 보유 중인 아이템 인덱스
 };
 
 class poketmon : public gameNode

@@ -21,7 +21,7 @@ HRESULT endingScene::init()
 	_endingPokemon[2] = IMAGEMANAGER->addFrameImage("엔딩포켓몬3", "image/end_image/endingPokemon3.bmp", 216, 68, 3, 1, true, RGB(255, 0, 255));		// 엔딩 포켓몬 1(에레키드)
 	_endingPokemon[3] = IMAGEMANAGER->addFrameImage("엔딩포켓몬4", "image/end_image/endingPokemon4.bmp", 208, 72, 4, 1, true, RGB(255, 0, 255));		// 엔딩 포켓몬 1(꼬리선)
 
-	_time = TIMEMANAGER->getWorldTime();
+	_time = TIMEMANAGER->getWorldTime();		// 현재 시간으로 설정
 
 	return S_OK;
 }
@@ -36,26 +36,28 @@ void endingScene::update()
 
 	if (count % 7 == 0)
 	{
-		if (_index < 2 && _endCount != 3) _index++;
-		else if (_index < 3 && _endCount == 3) _index++;
+		if (_index < 2 && _endCount != 3) _index++;				// 엔딩 포켓몬 프레임 랜더용 변수
+		else if (_index < 3 && _endCount == 3) _index++;		// 꼬리선만 프레임이 4장이라서 꼬리선일떄만 루프 값 다르게 설정
 		else _index = 0;
 	}
 
 	count++;
 
+	// 각 화면이 2초가 지나면 다음 화면으로 넘어가도록 설정
 	if (TIMEMANAGER->getWorldTime() >= _time + 2 && _endCount < 3)
 	{
-		_endCount++;
-		_time = TIMEMANAGER->getWorldTime();
-		_index = 0;
+		_endCount++;		// 배열번호 + 1
+		_time = TIMEMANAGER->getWorldTime();		// 시간 값 다시 받아옴
+		_index = 0;			// 프레임 번호 초기화
 	}
 }
 
 void endingScene::render()
 {
-	_endingBackground[_endCount]->render(getMemDC());
+	_endingBackground[_endCount]->render(getMemDC());		// n번쨰 배경 렌더
 	for (int i = 0; i < 5; i++)
 	{
+		// n번째 포켓몬 프레임 렌더
 		_endingPokemon[_endCount]->frameRender(getMemDC(), 50 + i * 120, 20, _index, 0);
 		_endingPokemon[_endCount]->frameRender(getMemDC(), 50 + i * 120, WINSIZEY - 30 - 50, _index, 0);
 	}

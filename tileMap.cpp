@@ -42,6 +42,25 @@ void tileMap::release()
 
 void tileMap::update()
 {
+	//if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) // 오른쪽 이동
+	//{
+	//	_cameraX += 64;
+	//}
+	//
+	//if (KEYMANAGER->isStayKeyDown(VK_LEFT)) // 왼쪽 이동
+	//{
+	//	_cameraX -= 64;
+	//}
+	//
+	//if (KEYMANAGER->isStayKeyDown(VK_DOWN)) // 아래 이동
+	//{
+	//	_cameraY += 64;
+	//}
+	//
+	//if (KEYMANAGER->isStayKeyDown(VK_UP)) // 위 이동
+	//{
+	//	_cameraY -= 64;
+	//}
 	//저장과 불러오기
 	//if (KEYMANAGER->isOnceKeyDown('R'))
 	//{
@@ -69,61 +88,64 @@ void tileMap::render()
 	//타일 속성별로 색이 다름(삭제예정)
 	for (int i = 0; i < TILE; i++)
 	{
-			if (_tile[i].type == TILETYPE_CLOSE) continue;
-			if (_tile[i].rc.left > WINSIZEX || _tile[i].rc.right < 0 || _tile[i].rc.top > WINSIZEY || _tile[i].rc.bottom < 0) continue;
-	
-			if (_tile[i].type == TILETYPE_OPEN)
+			if (_tile[i].type == TILETYPE_CLOSE) continue;	//못지나가는 길은 render안함
+			if (_tile[i].rc.left > WINSIZEX || _tile[i].rc.right < 0 || _tile[i].rc.top > WINSIZEY || _tile[i].rc.bottom < 0) continue;	//창 밖에 타일은 render안함
+			
+			if (KEYMANAGER->isToggleKey(VK_TAB))
 			{
-				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
-			}
-	
-			if (_tile[i].type == TILETYPE_GRASS)
-			{
-				HBRUSH brush = CreateSolidBrush(RGB(0, 255, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
-			}
-	
-			if (_tile[i].type == TILETYPE_DOOR)
-			{
-				HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
-			}
-	
-			if (_tile[i].type == TILETYPE_LEFTSLOPE)
-			{
-				HBRUSH brush = CreateSolidBrush(RGB(125, 0, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
-			}
-	
-			if (_tile[i].type == TILETYPE_RIGHTSLOPE)
-			{
-				HBRUSH brush = CreateSolidBrush(RGB(0, 125, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
-			}
-	
-			if (_tile[i].type == TILETYPE_BOTTOMSLOPE)
-			{
-				HBRUSH brush = CreateSolidBrush(RGB(0, 0, 125));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
-				Rectangle(getMemDC(), _tile[i].rc);
-				SelectObject(getMemDC(), oldBrush);
-				DeleteObject(brush);
+				if (_tile[i].type == TILETYPE_OPEN)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
+
+				if (_tile[i].type == TILETYPE_GRASS)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(0, 255, 0));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
+
+				if (_tile[i].type == TILETYPE_DOOR)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
+
+				if (_tile[i].type == TILETYPE_LEFTSLOPE)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(125, 0, 0));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
+
+				if (_tile[i].type == TILETYPE_RIGHTSLOPE)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(0, 125, 0));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
+
+				if (_tile[i].type == TILETYPE_BOTTOMSLOPE)
+				{
+					HBRUSH brush = CreateSolidBrush(RGB(0, 0, 125));
+					HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), brush);
+					Rectangle(getMemDC(), _tile[i].rc);
+					SelectObject(getMemDC(), oldBrush);
+					DeleteObject(brush);
+				}
 			}
 	}
 

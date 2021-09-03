@@ -64,7 +64,7 @@ void poketmonManager::poketmonSpawn()
 
 void poketmonManager::render()
 {
-
+    
 }
 
 void poketmonManager::poketmonImage()

@@ -30,16 +30,16 @@ HRESULT chikorita::init()
          _poketmon.specialDefense = 65;                     //특수방어
          _poketmon.speed = 45;							    //스피드		
 
-         _poketmon.levelAttack;
-         _poketmon.levelDefense;
-         _poketmon.levelSpecialAttack;
-         _poketmon.levelSpecialDefense;
-         _poketmon.levelSpeed;
-         _poketmon.levelHP;
+         _poketmon.levelAttack = 1.67f;                     //레벨당 공격력
+         _poketmon.levelDefense = 1.86f;                    //레벨당 방어력
+         _poketmon.levelSpecialAttack = 1.67f;              //레벨당 특수공격력
+         _poketmon.levelSpecialDefense = 1.86f;             //레벨당 특수방어력
+         _poketmon.levelSpeed = 1.62f;                      //레벨당 스피드
+         _poketmon.levelHP = 2.49f;                         //레벨당 체력
 
          _poketmon.maxHP = _poketmon.currentHP = 45;		//체력
          _poketmon.currentExp;
-         _poketmon.maxExp = 1000000;						//100레벨 경험치량
+         _poketmon.maxExp;						            
          _poketmon.skill1;
          _poketmon.skill2;
          _poketmon.skill3;
@@ -62,12 +62,12 @@ HRESULT chikorita::init()
          _poketmon.specialDefense = 80;                     //특수방어
          _poketmon.speed = 60;							    //스피드		
 
-         _poketmon.levelAttack;
-         _poketmon.levelDefense;
-         _poketmon.levelSpecialAttack;
-         _poketmon.levelSpecialDefense;
-         _poketmon.levelSpeed;
-         _poketmon.levelHP;
+         _poketmon.levelAttack = 1.83f;                     //레벨당 공격력
+         _poketmon.levelDefense = 2.04f;                    //레벨당 방어력
+         _poketmon.levelSpecialAttack = 1.83f;              //레벨당 특수공격력
+         _poketmon.levelSpecialDefense = 2.04f;             //레벨당 특수방어력
+         _poketmon.levelSpeed =1.8f;                        //레벨당 스피드
+         _poketmon.levelHP = 2.64f;                         //레벨당 체력
 
          _poketmon.maxHP = _poketmon.currentHP = 60;		//체력
          _poketmon.currentExp;
@@ -87,19 +87,19 @@ HRESULT chikorita::init()
          _poketmon.level = RND->getFromIntTo(33, 70);	    //처음 등장 레벨 33~70
          _poketmon.type1 = static_cast<int>(TYPE::GRASS);   //풀타입
          _poketmon.type2 = static_cast<int>(TYPE::NONE);	//
-         _poketmon.evolutionLevel = 0;					    //진화단계
+         _poketmon.evolutionLevel = 2;					    //진화단계
          _poketmon.attack = 82;							    //공격					
          _poketmon.defense = 100;						    //방어
          _poketmon.specialAttack = 83;                      //특수공격
          _poketmon.specialDefense = 100;                    //특수방어
          _poketmon.speed = 80;							    //스피드		
 
-         _poketmon.levelAttack = 1;
-         _poketmon.levelDefense;
-         _poketmon.levelSpecialAttack;
-         _poketmon.levelSpecialDefense;
-         _poketmon.levelSpeed;
-         _poketmon.levelHP = 2;
+         _poketmon.levelAttack = 2.07f;                     //레벨당 공격력
+         _poketmon.levelDefense = 2.28f;                    //레벨당 방어력
+         _poketmon.levelSpecialAttack = 2.08f;              //레벨당 특수공격력
+         _poketmon.levelSpecialDefense = 2.28f;             //레벨당 특수방어력
+         _poketmon.levelSpeed = 2.04f;                      //레벨당 스피드
+         _poketmon.levelHP = 2.64f;                         //레벨당 체력
 
          _poketmon.maxHP = _poketmon.currentHP = 80;		//체력
          _poketmon.currentExp;

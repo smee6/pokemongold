@@ -30,12 +30,12 @@ HRESULT pikachu::init()
 			_poketmon.specialDefense = 50;						//특수방어
 			_poketmon.speed = 90;								//스피드		
 
-			_poketmon.levelAttack = 1;
-			_poketmon.levelDefense;
-			_poketmon.levelSpecialAttack;
-			_poketmon.levelSpecialDefense;
-			_poketmon.levelSpeed;
-			_poketmon.levelHP = 2;
+			_poketmon.levelAttack = 1.74f;						//레벨당 공격력
+			_poketmon.levelDefense = 1.56f;						//레벨당 방어력
+			_poketmon.levelSpecialAttack = 1.68f;				//레벨당 특수공격력
+			_poketmon.levelSpecialDefense = 1.68f;				//레벨당 특수방어력
+			_poketmon.levelSpeed = 2.16f;						//레벨당 스피드
+			_poketmon.levelHP = 2.39f;							//레벨당 체력
 
 			_poketmon.maxHP = _poketmon.currentHP = 35;			//체력
 			_poketmon.currentExp;
@@ -62,12 +62,12 @@ HRESULT pikachu::init()
 			_poketmon.specialDefense = 80;						//특수방어
 			_poketmon.speed = 110;								//스피드		
 
-			_poketmon.levelAttack = 1;
-			_poketmon.levelDefense;
-			_poketmon.levelSpecialAttack;
-			_poketmon.levelSpecialDefense;
-			_poketmon.levelSpeed;
-			_poketmon.levelHP = 2;
+			_poketmon.levelAttack = 2.16f;						//레벨당 공격력
+			_poketmon.levelDefense = 1.74f;						//레벨당 방어력
+			_poketmon.levelSpecialAttack = 2.16f;				//레벨당 특수공격력
+			_poketmon.levelSpecialDefense = 2.04f;				//레벨당 특수방어력
+			_poketmon.levelSpeed = 2.4f;						//레벨당 스피드
+			_poketmon.levelHP = 2.64f;							//레벨당 체력
 
 			_poketmon.maxHP = _poketmon.currentHP = 60;			//체력
 			_poketmon.currentExp;

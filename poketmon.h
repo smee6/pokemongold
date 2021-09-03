@@ -60,8 +60,8 @@ struct tagPOKETMON
 	int sumSpeed;							// 최종 스피드
 	int sumMaxHP;							// 최종 체력
 
-	int currentExp;							// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-	int	maxExp;								// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+	float currentExp;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
+	float	maxExp;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
 
 	int	skill1;								// 스킬1 인덱스 
 	int	skill2;								// 스킬2 인덱스 
@@ -90,7 +90,7 @@ public:
 	void attackAI();
 
 	void genderSettings();					//젠더 함수
-
+	void potketmonEXP();					//경험치
 
 	tagPOKETMON getTagPoketmon() { return _poketmon; }	//포켓몬구조체 겟터?
 	

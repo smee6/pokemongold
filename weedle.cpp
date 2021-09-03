@@ -28,12 +28,12 @@ HRESULT weedle::init()
 		_poketmon.specialDefense = 20;						//특수방어
 		_poketmon.speed = 50;								//스피드		
 
-		_poketmon.levelAttack = 1;
-		_poketmon.levelDefense;
-		_poketmon.levelSpecialAttack;
-		_poketmon.levelSpecialDefense;
-		_poketmon.levelSpeed;
-		_poketmon.levelHP = 2;
+		_poketmon.levelAttack = 1.5f;						//레벨당 공격력
+		_poketmon.levelDefense = 1.44f;						//레벨당 방어력
+		_poketmon.levelSpecialAttack = 1.32f;				//레벨당 특수공격력
+		_poketmon.levelSpecialDefense = 1.32f;				//레벨당 특수방어력
+		_poketmon.levelSpeed = 1.68f;						//레벨당 스피드
+		_poketmon.levelHP = 2.44f;							//레벨당 체력
 
 		_poketmon.maxHP = _poketmon.currentHP = 40;			//체력
 		_poketmon.currentExp;
@@ -60,12 +60,12 @@ HRESULT weedle::init()
 		_poketmon.specialDefense = 25;						//특수방어
 		_poketmon.speed = 35;								//스피드		
 
-		_poketmon.levelAttack = 1;
-		_poketmon.levelDefense;
-		_poketmon.levelSpecialAttack;
-		_poketmon.levelSpecialDefense;
-		_poketmon.levelSpeed;
-		_poketmon.levelHP = 2;
+		_poketmon.levelAttack = 1.38f;						//레벨당 공격력
+		_poketmon.levelDefense = 1.68f;						//레벨당 방어력
+		_poketmon.levelSpecialAttack = 1.38f;				//레벨당 특수공격력
+		_poketmon.levelSpecialDefense = 1.38f;				//레벨당 특수방어력
+		_poketmon.levelSpeed = 1.5f;						//레벨당 스피드
+		_poketmon.levelHP = 2.49f;							//레벨당 체력
 
 		_poketmon.maxHP = _poketmon.currentHP = 45;			//체력
 		_poketmon.currentExp;
@@ -92,12 +92,12 @@ HRESULT weedle::init()
 		_poketmon.specialDefense = 80;						//특수방어
 		_poketmon.speed = 75;								//스피드		
 
-		_poketmon.levelAttack = 1;
-		_poketmon.levelDefense;
-		_poketmon.levelSpecialAttack;
-		_poketmon.levelSpecialDefense;
-		_poketmon.levelSpeed;
-		_poketmon.levelHP = 2;
+		_poketmon.levelAttack = 2.16f;						//레벨당 공격력
+		_poketmon.levelDefense = 1.56f;						//레벨당 방어력
+		_poketmon.levelSpecialAttack = 1.62f;				//레벨당 특수공격력
+		_poketmon.levelSpecialDefense = 2.04f;				//레벨당 특수방어력
+		_poketmon.levelSpeed = 1.98f;						//레벨당 스피드
+		_poketmon.levelHP = 2.69f;							//레벨당 체력
 
 		_poketmon.maxHP = _poketmon.currentHP = 65;			//체력
 		_poketmon.currentExp;

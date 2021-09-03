@@ -30,12 +30,12 @@ HRESULT pidgey::init()
         _poketmon.specialDefense = 35;						//특수방어
         _poketmon.speed = 56;								//스피드		
 
-        _poketmon.levelAttack = 1;
-        _poketmon.levelDefense;
-        _poketmon.levelSpecialAttack;
-        _poketmon.levelSpecialDefense;
-        _poketmon.levelSpeed;
-        _poketmon.levelHP = 2;
+        _poketmon.levelAttack = 1.62f;                      //레벨당 공격력
+        _poketmon.levelDefense = 1.56f;                     //레벨당 방어력
+        _poketmon.levelSpecialAttack = 1.5f;                //레벨당 특수공격력       
+        _poketmon.levelSpecialDefense = 1.5f;               //레벨당 특수방어력       
+        _poketmon.levelSpeed = 1.76f;                       //레벨당 스피드        
+        _poketmon.levelHP = 2.44f;                          //레벨당 체력    
 
         _poketmon.maxHP = _poketmon.currentHP = 40;			//체력
         _poketmon.currentExp;
@@ -62,12 +62,12 @@ HRESULT pidgey::init()
         _poketmon.specialDefense = 50;						//특수방어
         _poketmon.speed = 71;								//스피드		
 
-        _poketmon.levelAttack = 1;
-        _poketmon.levelDefense;
-        _poketmon.levelSpecialAttack;
-        _poketmon.levelSpecialDefense;
-        _poketmon.levelSpeed;
-        _poketmon.levelHP = 2;
+        _poketmon.levelAttack = 1.8f;                       //레벨당 공격력
+        _poketmon.levelDefense = 1.74f;                     //레벨당 방어력
+        _poketmon.levelSpecialAttack = 1.68f;               //레벨당 특수공격력
+        _poketmon.levelSpecialDefense = 1.68f;              //레벨당 특수방어력
+        _poketmon.levelSpeed = 1.94f;                       //레벨당 스피드
+        _poketmon.levelHP = 2.67f;                          //레벨당 체력
 
         _poketmon.maxHP = _poketmon.currentHP = 63;			//체력
         _poketmon.currentExp;
@@ -92,14 +92,14 @@ HRESULT pidgey::init()
         _poketmon.defense = 75;								//방어
         _poketmon.specialAttack = 70;						//특수공격
         _poketmon.specialDefense = 70;						//특수방어
-        _poketmon.speed = 91;								//스피드		
+        _poketmon.speed = 101;								//스피드		
 
-        _poketmon.levelAttack = 1;
-        _poketmon.levelDefense;
-        _poketmon.levelSpecialAttack;
-        _poketmon.levelSpecialDefense;
-        _poketmon.levelSpeed;
-        _poketmon.levelHP = 2;
+        _poketmon.levelAttack = 2.04f;                      //레벨당 공격력
+        _poketmon.levelDefense = 1.98f;                     //레벨당 방어력
+        _poketmon.levelSpecialAttack = 1.92f;               //레벨당 특수공격력
+        _poketmon.levelSpecialDefense = 1.92f;              //레벨당 특수방어력
+        _poketmon.levelSpeed = 2.3f;                        //레벨당 스피드
+        _poketmon.levelHP = 2.87f;                          //레벨당 체력
 
         _poketmon.maxHP = _poketmon.currentHP = 83;			//체력
         _poketmon.currentExp;

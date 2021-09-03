@@ -44,14 +44,19 @@ void poketmon::genderSettings()
 
 void poketmon::potketmonEXP()
 {
+
     //포켓몬 레벨은 현제 경험치에서 3제곱근 하고 그걸 int로 변경해야함
     //cbrt 삼제곱근 
-
-    _poketmon.level = static_cast<int>(cbrt(_poketmon.currentExp));
+    
+    _poketmon.level = static_cast<int>(cbrt(_poketmon.totalEXP));
     
     //맥스 경험치는  레벨의 3제곱임
+    
+    _poketmon.maxExp = pow(_poketmon.level + 1, 3) - pow(_poketmon.level,3);
+    
+    //현재 경험치는 토탈 경험치에서 현제 레벨 3제곱한거를 뺴면 나옴
 
-    _poketmon.maxExp = pow(_poketmon.level, 3);
+    _poketmon.currentExp = _poketmon.totalEXP - pow(_poketmon.level, 3);
 
 }
 

@@ -7,9 +7,6 @@
 //전체 타일 개수
 #define TILE (214 * 36)
 
-//나무 타일 개수
-#define TREE (84 * 2 + 84 * 2 + 18 * 5)
-
 //타일 속성
 enum TILETYPE
 {
@@ -56,7 +53,6 @@ private:
 	image* _gymMart;						//체육관맵 마트
 
 	tagTile _tile[TILE];					//시작맵 타일
-	tagTree _tree[TREE];					//나무 타일
 
 	int _cameraX;							//맵 카메라 X좌표
 	int _cameraY;							//맵 카메라 y좌표
@@ -84,7 +80,6 @@ public:
 	//설정자
 	void setCameraX(int x) { _cameraX = x; }		//맵 카메라 x좌표에 대한 설정자
 	void setCameraY(int y) { _cameraY = y; }		//맵 카메라 y좌표에 대한 설정자
-
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };

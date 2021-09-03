@@ -181,7 +181,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
     // 바라본 방향의 타일이 갈 수 있는 타일인지 체크
     switch (direction)
     {
-    case 0:
+    case 0: // 왼쪽 방향
         if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_DOOR) _frontTileType = 3;
@@ -189,7 +189,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
         else _frontTileType = 0;
 
         break;
-    case 1:
+    case 1: // 오른쪽 방향
         if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_DOOR) _frontTileType = 3;
@@ -197,7 +197,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
         else _frontTileType = 0;
 
         break;
-    case 2:
+    case 2: // 아래쪽 방향
         if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile + 214].type == TILETYPE_DOOR) _frontTileType = 3;
@@ -205,7 +205,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
         else _frontTileType = 0;
 
         break;
-    case 3:
+    case 3: // 위쪽 방향
         if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile - 214].type == TILETYPE_DOOR) _frontTileType = 3;

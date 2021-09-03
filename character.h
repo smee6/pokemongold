@@ -142,6 +142,7 @@ public:
 	int getDirection() { return _direction; }										// 캐릭터 방향 게터
 	int getCurrentTile() { return _currentTile; }									// 캐릭터가 위치한 타일 인덱스 게터
 	bool getIsMoving() { return _isMoving; }										// 이동 중인지 불값 게터
+	bool getIsSloping() { return _isSloping; }										// 비탈길 이동 중인지 불값 게터
 	RECT getRect() { return _rc; }													// 렉트 게터
 	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터
 

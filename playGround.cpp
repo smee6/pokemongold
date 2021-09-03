@@ -19,18 +19,19 @@ HRESULT playGround::init()
 	_tileMap = new tileMap;
 	_character = new character;
 	_pM = new poketmonManager;
-
+	
 	_tileMap->setCharacterMemoryAddressLink(_character);
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
 	_pM->setCharacterMemoryAddressLink(_character);
-
+	
 	_tileMap->init();
 	_character->init();
 	_pM->init();
 
 
-
+	//SCENEMANAGER->addScene("엔딩", new endingScene);
+	//SCENEMANAGER->changeScene("엔딩");
 	
 
 	return S_OK;
@@ -53,6 +54,7 @@ void playGround::update()
 	_character->update();
 	_pM->update();
 
+	//SCENEMANAGER->update();
 	
 }
 
@@ -66,6 +68,7 @@ void playGround::render()
 	_character->render();
 	_pM->render();
 
+	//SCENEMANAGER->render();
 
 	//=============== 밑에도 건들지마라 ================
 	_backBuffer->render(getHDC(), 0, 0);

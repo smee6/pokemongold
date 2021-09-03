@@ -24,6 +24,13 @@ HRESULT tileMap::init()
 	//나무 타일
 	for (int i = 0; i < TREE; i++)
 	{
+		if (i == 110)
+		{
+			_tree[i].image = IMAGEMANAGER->addImage("지붕", "image/pokemon_roof.bmp", 256, 128, true, RGB(255, 0, 255));
+			continue;
+		}
+		if (i == 111 || i == 112 || i == 113) continue;
+		
 		_tree[i].image = IMAGEMANAGER->addImage("나무", "image/pokemon_tree.bmp", 64, 128, true, RGB(255, 0, 255));
 	}
 
@@ -94,6 +101,7 @@ void tileMap::render()
 	for (int i = 0; i < TREE; i++)
 	{
 		if (_tree[i].rc.left > WINSIZEX || _tree[i].rc.right < 0 || _tree[i].rc.top > WINSIZEY || _tree[i].rc.bottom < 0) continue;
+		if (i == 111 || i == 112 || i == 113) continue;
 		_tree[i].image->render(getMemDC(), _tree[i].rc.left, _tree[i].rc.top);
 	}
 

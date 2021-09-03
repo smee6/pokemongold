@@ -58,6 +58,24 @@ void tileMap::update()
 	//	load();
 	//}
 	
+	//수정용 방향키
+	//if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	//{
+	//	_cameraX -= 64;
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	//{
+	//	_cameraX += 64;
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_UP))
+	//{
+	//	_cameraY -= 64;
+	//}
+	//if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	//{
+	//	_cameraY += 64;
+	//}
+	
 	setTile();
 }
 

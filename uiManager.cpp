@@ -37,6 +37,7 @@ HRESULT uiManager::init()
 
 void uiManager::release()
 {
+
 }
 
 void uiManager::update()
@@ -47,7 +48,6 @@ void uiManager::update()
 void uiManager::render()
 {
 
-
 }
 
 void uiManager::shop()
@@ -57,6 +57,7 @@ void uiManager::shop()
 	if (!buyWindow) {
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && shopCnt < 2) {
 			shopCnt += 1;
+			//메뉴 화살표 위아래 움직이는
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && shopCnt > 0) {
 			shopCnt -= 1;
@@ -73,6 +74,7 @@ void uiManager::shop()
 		break;
 	case 2:
 		IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
+		return;
 		break;
 	}
 

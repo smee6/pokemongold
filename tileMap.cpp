@@ -13,7 +13,7 @@ tileMap::~tileMap()
 HRESULT tileMap::init()
 {
 	//맵 이미지
-	_map = IMAGEMANAGER->addImage("map", "image/pokemon_Map.bmp", 7936, 2304, true, RGB(255, 0, 255));
+	_map = IMAGEMANAGER->addImage("map", "image/pokemon_Map.bmp", 8256, 2560, true, RGB(255, 0, 255));
 	_startHome1 = IMAGEMANAGER->addImage("집1층", "image/pokemon_start_home1.bmp", 640, 512, true, RGB(255, 0, 255));
 	_startHome2 = IMAGEMANAGER->addImage("집2층", "image/pokemon_start_home2.bmp", 512, 384, true, RGB(255, 0, 255));
 	_startCenter = IMAGEMANAGER->addImage("시작맵센터", "image/pokemon_start_center.bmp", 640, 768, true, RGB(255, 0, 255));
@@ -21,18 +21,6 @@ HRESULT tileMap::init()
 	_gymGym = IMAGEMANAGER->addImage("체육관맵체육관", "image/pokemon_gym_gym.bmp", 640, 1024, true, RGB(255, 0, 255));
 	_gymMart = IMAGEMANAGER->addImage("체육관맵마트", "image/pokemon_gym_mart.bmp", 768, 512, true, RGB(255, 0, 255));
 	
-	//나무 타일
-	for (int i = 0; i < TREE; i++)
-	{
-		if (i == 110)
-		{
-			_tree[i].image = IMAGEMANAGER->addImage("지붕", "image/pokemon_roof.bmp", 256, 128, true, RGB(255, 0, 255));
-			continue;
-		}
-		if (i == 111 || i == 112 || i == 113) continue;
-		
-		_tree[i].image = IMAGEMANAGER->addImage("나무", "image/pokemon_tree.bmp", 64, 128, true, RGB(255, 0, 255));
-	}
 
 	//맵 카메라 초기화
 	_cameraX = 0;
@@ -68,19 +56,19 @@ void tileMap::update()
 	//수정용 방향키
 	//if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	//{
-	//	_cameraX -= 64;
+	//	_cameraX -= 5;
 	//}
 	//if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	//{
-	//	_cameraX += 64;
+	//	_cameraX += 5;
 	//}
 	//if (KEYMANAGER->isStayKeyDown(VK_UP))
 	//{
-	//	_cameraY -= 64;
+	//	_cameraY -= 5;
 	//}
 	//if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	//{
-	//	_cameraY += 64;
+	//	_cameraY += 5;
 	//}
 	
 	setTile();
@@ -89,7 +77,8 @@ void tileMap::update()
 void tileMap::render()
 {
 	//맵이미지
-	_map->render(getMemDC(), -6400 -_cameraX, -1152 - _cameraY);
+	_map->render(getMemDC(),-TILESIZE * 5 -6400 -_cameraX,  -1152 - _cameraY);
+
 	_startHome1->render(getMemDC(), 1536 + TILESIZE * 5 - _cameraX, -_cameraY);
 	_startHome2->render(getMemDC(), 640 + 1536 + TILESIZE * 10 - _cameraX, -_cameraY);
 	_startCenter->render(getMemDC(), 512 + 640 + 1536 + TILESIZE * 15 - _cameraX, -_cameraY);
@@ -97,13 +86,6 @@ void tileMap::render()
 	_gymGym->render(getMemDC(), 640 + 640 + 512 + 640 + 1536 + TILESIZE * 25 - _cameraX, -_cameraY);
 	_gymMart->render(getMemDC(), 640 + 640 + 640 + 512 + 640 + 1536 + TILESIZE * 30 - _cameraX, -_cameraY);
 
-	//나무 타일 이미지
-	for (int i = 0; i < TREE; i++)
-	{
-		if (_tree[i].rc.left > WINSIZEX || _tree[i].rc.right < 0 || _tree[i].rc.top > WINSIZEY || _tree[i].rc.bottom < 0) continue;
-		if (i == 111 || i == 112 || i == 113) continue;
-		_tree[i].image->render(getMemDC(), _tree[i].rc.left, _tree[i].rc.top);
-	}
 
 	//타일 속성별로 색이 다름(삭제예정)
 	for (int i = 0; i < TILE; i++)
@@ -121,7 +103,7 @@ void tileMap::render()
 					SelectObject(getMemDC(), oldBrush);
 					DeleteObject(brush);
 				}
-
+	
 				if (_tile[i].type == TILETYPE_GRASS)
 				{
 					HBRUSH brush = CreateSolidBrush(RGB(0, 255, 0));
@@ -130,7 +112,7 @@ void tileMap::render()
 					SelectObject(getMemDC(), oldBrush);
 					DeleteObject(brush);
 				}
-
+	
 				if (_tile[i].type == TILETYPE_DOOR)
 				{
 					HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
@@ -139,7 +121,7 @@ void tileMap::render()
 					SelectObject(getMemDC(), oldBrush);
 					DeleteObject(brush);
 				}
-
+	
 				if (_tile[i].type == TILETYPE_LEFTSLOPE)
 				{
 					HBRUSH brush = CreateSolidBrush(RGB(125, 0, 0));
@@ -148,7 +130,7 @@ void tileMap::render()
 					SelectObject(getMemDC(), oldBrush);
 					DeleteObject(brush);
 				}
-
+	
 				if (_tile[i].type == TILETYPE_RIGHTSLOPE)
 				{
 					HBRUSH brush = CreateSolidBrush(RGB(0, 125, 0));
@@ -157,7 +139,7 @@ void tileMap::render()
 					SelectObject(getMemDC(), oldBrush);
 					DeleteObject(brush);
 				}
-
+	
 				if (_tile[i].type == TILETYPE_BOTTOMSLOPE)
 				{
 					HBRUSH brush = CreateSolidBrush(RGB(0, 0, 125));
@@ -185,30 +167,6 @@ void tileMap::setTile()
 		for (int j = 0; j < 214; j++)
 		{
 			_tile[i * 214 + j].rc = RectMake(-6400 + j * TILESIZE - _cameraX, -1152 +  i * TILESIZE - _cameraY, TILESIZE, TILESIZE);
-		}
-	}
-	//윗부분 나무 타일 렉트 생성
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 84; j++)
-		{
-			_tree[i * 84 + j].rc = RectMake(-3840 + j * TILESIZE - _cameraX, i * TILESIZE * 2 - TILESIZE * 4 - _cameraY, TILESIZE, TILESIZE * 2);
-		}
-	}
-	//아랫부분 나무 타일 렉트 생성
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 84; j++)
-		{
-			_tree[84 * 2 + i * 84 + j].rc = RectMake(-3840 + j * TILESIZE - _cameraX, 1152 + i * TILESIZE * 2 - _cameraY, TILESIZE, TILESIZE * 2);
-		}
-	}
-	//왼쪽부분 나무 타일 렉트 생성
-	for (int i = 0; i < 18; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			_tree[84 * 4 + i * 5 + j].rc = RectMake(-6400 - TILESIZE * 5 + j * TILESIZE - _cameraX, -1152 + i * TILESIZE * 2 - _cameraY, TILESIZE, TILESIZE * 2);
 		}
 	}
 

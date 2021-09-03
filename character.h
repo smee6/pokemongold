@@ -2,6 +2,8 @@
 #include "gameNode.h"
 
 #define POKETMONMEET 10						// 포켓몬 조우 확률
+#define JUMPPOWER 10						// 점프 파워
+#define GRAVITY	1							// 중력 파워
 
 // 캐릭터 상태
 enum class STATE
@@ -94,9 +96,12 @@ private:
 	tagPOKETMON_PLAYER _poketmon[6];						// 유저가 보유한 포켓몬
 
 	image* _image;											// 캐릭터 이미지
+	image* _shadowImage;									// 비탈길 이동 시 그림자 이미지
 	RECT _rc;												// 캐릭터 렉트
 
 	float _x, _y;											// 캐릭터 중점 좌표
+	float _jumpPower;										// 점프 파워
+	float _gravity;											// 중력 파워
 
 	int _state;												// 유저 상태
 	int _frameCount;										// 프레임 이미지 인터벌 카운트
@@ -104,8 +109,10 @@ private:
 	int _direction;											// 캐릭터 방향 0: 우, 1: 좌, 2: 하, 3: 상
 	int _currentTile;										// 현재 플레이어가 위치한 타일 인덱스
 	int _frontTileType;										// 바라본 방향의 타일 타입
+	int _slopeDistance;										// 비탈길 이동 거리
 
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
+	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
 
 	bool _grassTest; // 풀 타일 테스트용
 
@@ -128,6 +135,7 @@ public:
 	void tileAction();																// 좌표 이동 처리
 	void grass();																	// 풀 타일 처리
 	void door(int doorIndex);														// 문 타일 처리
+	void slope(int direction);														// 비탈길 타일 처리
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터

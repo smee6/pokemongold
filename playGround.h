@@ -3,6 +3,8 @@
 #include "tileMap.h"
 #include "character.h"
 #include "poketmonManager.h"
+#include "endingScene.h"
+#include "openingScene.h"
 
 
 class playGround : public gameNode

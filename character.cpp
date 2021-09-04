@@ -186,7 +186,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
     // 바라본 방향의 타일이 갈 수 있는 타일인지 체크
     switch (direction)
     {
-    case 0: // 왼쪽 방향
+    case 0: // 오른쪽 방향
         if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile + 1].type == TILETYPE_DOOR) _frontTileType = 3;
@@ -194,7 +194,7 @@ void character::tileCheck(int direction) // 타일 체크 처리
         else _frontTileType = 0;
 
         break;
-    case 1: // 오른쪽 방향
+    case 1: // 왼쪽 방향
         if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_OPEN) _frontTileType = 1;
         else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_GRASS) _frontTileType = 2;
         else if (_tileMap->getTile()[_currentTile - 1].type == TILETYPE_DOOR) _frontTileType = 3;
@@ -218,6 +218,9 @@ void character::tileCheck(int direction) // 타일 체크 처리
 
         break;
     }
+
+    // 아래쪽 방향 볼 때 전체 타일 배열의 개수를 넘어간다면 타일이 없다는 뜻이니 이동 불가 타일로 처리
+    if (_currentTile + 214 > TILE && direction == 2) _frontTileType = 0;
 }
 
 void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리

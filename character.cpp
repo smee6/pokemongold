@@ -17,6 +17,7 @@ HRESULT character::init() // 인잇
 
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
+    _grassImage = IMAGEMANAGER->findImage("풀숲1");
 
     _direction = _isMoving = _isSloping = _frontTileType = 0;
     _jumpPower = JUMPPOWER;
@@ -46,7 +47,7 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    if (!_isMoving && !_isSloping)
+    if (!_isMoving && !_isSloping) // 이동 중이 아니고, 비탈길 아닐 때
     {
         // 아이들
         if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) idle(0);
@@ -57,6 +58,7 @@ void character::controll() // 캐릭터 컨트롤 처리
         // 걷기
         if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) // 오른쪽 이동
         {
+            if (_grassCount >= 3) _grassCount = 0; // 풀 타일 이동 중일 때 초기화 해줌
             run(0);
             if (!_isMoving) tileCheck(0);
             tileAction();
@@ -64,6 +66,7 @@ void character::controll() // 캐릭터 컨트롤 처리
 
         if (KEYMANAGER->isStayKeyDown(VK_LEFT)) // 왼쪽 이동
         {
+            if (_grassCount >= 3) _grassCount = 0; // 풀 타일 이동 중일 때 초기화 해줌
             run(1);
             if (!_isMoving) tileCheck(1);
             tileAction();
@@ -71,6 +74,7 @@ void character::controll() // 캐릭터 컨트롤 처리
 
         if (KEYMANAGER->isStayKeyDown(VK_DOWN)) // 아래 이동
         {
+            if (_grassCount >= 3) _grassCount = 0; // 풀 타일 이동 중일 때 초기화 해줌
             run(2);
             if (!_isMoving) tileCheck(2);
             tileAction();
@@ -78,6 +82,7 @@ void character::controll() // 캐릭터 컨트롤 처리
 
         if (KEYMANAGER->isStayKeyDown(VK_UP)) // 위 이동
         {
+            if (_grassCount >= 3) _grassCount = 0; // 풀 타일 이동 중일 때 초기화 해줌
             run(3);
             if (!_isMoving) tileCheck(3);
             tileAction();
@@ -454,9 +459,20 @@ void character::render() // 렌더
         TextOut(getMemDC(), 100, 250, str, strlen(str));
     }
     
-    if (_isSloping) // 비탈길 이동 중일 때 그림자 보여짐
+    // 비탈길 이동 중일 때 그림자 보여짐
+    if (_isSloping) 
     {
-        _shadowImage->render(getMemDC(), _rc.left, WINSIZEY / 2 - TILESIZE/2);
+        _shadowImage->render(getMemDC(), _rc.left, WINSIZEY / 2 - TILESIZE / 2);
+    }
+
+    // 풀 타일 이동 중일 때 풀떼기 이미지 보여짐
+    if (_tileMap->getTile()[_currentTile].type == TILETYPE_GRASS)
+    {
+        if (_grassCount == 0) _grassImage = IMAGEMANAGER->findImage("풀숲1");
+        if (_grassCount == 3) _grassImage = IMAGEMANAGER->findImage("풀숲2");
+        _grassImage->render(getMemDC(), _x - 22, _y - 2);
+        _grassCount++;
+        if (_grassCount >= 3) _grassCount = 3;
     }
 }
 
@@ -468,6 +484,8 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("걷기_좌우", "image/character_run_RL.bmp", 112, 128, 2, 2, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("걷기_상하", "image/character_run_UD.bmp", 224, 128, 4, 2, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("캐릭터_그림자", "image/character_shadow.bmp", 56, 64, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("풀숲2", "image/poketmon_grass2.bmp", 45, 21, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("풀숲1", "image/poketmon_grass1.bmp", 48, 36, 1, 1, true, RGB(255, 0, 255));
 
     //포켓몬 뒤
     IMAGEMANAGER->addFrameImage("브케인_뒤", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));

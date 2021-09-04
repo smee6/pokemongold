@@ -97,6 +97,7 @@ private:
 
 	image* _image;											// 캐릭터 이미지
 	image* _shadowImage;									// 비탈길 이동 시 그림자 이미지
+	image* _grassImage;										// 풀숲 이미지
 	RECT _rc;												// 캐릭터 렉트
 
 	float _x, _y;											// 캐릭터 중점 좌표
@@ -115,7 +116,7 @@ private:
 	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
 
 	bool _grassTest; // 풀 타일 테스트용
-
+	int _grassCount; // 풀 이미지 테스트용
 public:
 	character();
 	~character();

@@ -12,7 +12,6 @@ private:
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 
-	// script
 	bool _isScript;
 	bool _isScriptSkip;
 	RECT _scriptRC;
@@ -21,10 +20,6 @@ private:
 	int _txtIndex;
 	vector<string> _vScript;
 	string _txt;
-
-	// pokeCenter
-	int cnt = 0;
-	int _index = 0;
 
 public:
 	uiManager();

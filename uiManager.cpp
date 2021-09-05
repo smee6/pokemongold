@@ -32,6 +32,14 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("고급상처약", "image/shopUI/buy_3.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("안산다", "image/shopUI/buy_4.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("menu0", "image/menuUI/menu_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu1", "image/menuUI/menu_2.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu2", "image/menuUI/menu_3.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu3", "image/menuUI/menu_4.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu4", "image/menuUI/menu_5.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu5", "image/menuUI/menu_6.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("menu6", "image/menuUI/menu_7.bmp", 640, 576, true, RGB(255, 0, 255));
+
 	return S_OK;
 }
 
@@ -127,5 +135,52 @@ void uiManager::shop()
 
 void uiManager::bag()
 {
+
+}
+
+void uiManager::pokeCenter()
+{
+
+}
+
+void uiManager::menu()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
+		menuCnt += 1;
+		//메뉴 화살표 위아래 움직이는
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
+		menuCnt -= 1;
+	}
+
+	switch (menuCnt)
+	{
+	case 0:
+		IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
+		break;
+	case 1:
+		IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
+		break;
+	case 2:
+		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
+		break;
+	case 3:
+		IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
+		break;
+	case 4:
+		IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
+		break;
+	case 5:
+		IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
+		break;
+	case 6:
+		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
+		
+		return;
+		break;
+	}
+
+
+
 
 }

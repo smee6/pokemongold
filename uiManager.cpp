@@ -40,6 +40,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("menu5", "image/menuUI/menu_6.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("menu6", "image/menuUI/menu_7.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
+
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
 
 	_vScript = TXTDATA->txtLoad("Test.txt");
@@ -146,7 +148,17 @@ void uiManager::bag()
 
 void uiManager::pokeCenter()
 {
+	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
+	cnt++;
+	if (cnt == 15) {
+		_index++;
+		cnt = 0;
+	}
 
+
+	if (_index > 10) {
+		_index = 0;
+	}
 }
 
 void uiManager::menu()

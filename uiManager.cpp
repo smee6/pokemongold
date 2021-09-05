@@ -21,7 +21,7 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
-	
+
 	//인벤토리를 10칸으로 초기화해준다 . 빈칸이 10개가 생김 ( 0~9)
 	IMAGEMANAGER->addImage("사다", "image/shopUI/shop_1.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("팔다", "image/shopUI/shop_2.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -40,7 +40,10 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("menu5", "image/menuUI/menu_6.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("menu6", "image/menuUI/menu_7.bmp", 640, 576, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
+	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
+
+	_vScript = TXTDATA->txtLoad("Test.txt");
+
 	return S_OK;
 }
 
@@ -51,12 +54,14 @@ void uiManager::release()
 
 void uiManager::update()
 {
-
+	//if (KEYMANAGER->isOnceKeyDown('P'))
+	//{
+	//	_isScript = true;
+	//}
 }
 
 void uiManager::render()
 {
-
 }
 
 void uiManager::shop()
@@ -101,7 +106,7 @@ void uiManager::shop()
 			buyCnt -= 1;
 		}
 		switch (buyCnt) {
-		
+
 		case 0:
 			IMAGEMANAGER->findImage("몬스터볼")->render(_backBuffer->getMemDC());
 			break;
@@ -124,8 +129,8 @@ void uiManager::shop()
 
 			break;
 		}
-	
-	
+
+
 	}
 
 
@@ -141,17 +146,6 @@ void uiManager::bag()
 
 void uiManager::pokeCenter()
 {
-	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105,_index,0);
-	cnt++;
-	if (cnt == 15) {
-		_index++;
-		cnt = 0;
-	}
-	
-
-	if (_index > 10) {
-		_index = 0;
-	}
 
 }
 
@@ -187,7 +181,7 @@ void uiManager::menu()
 		break;
 	case 6:
 		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
-		
+
 		return;
 		break;
 	}
@@ -195,4 +189,66 @@ void uiManager::menu()
 
 
 
+}
+
+void uiManager::script()
+{
+	if (_isScript)
+	{
+		_scriptImage->render(_backBuffer->getMemDC());
+
+		_txt = _vScript[_scriptIndex];
+
+		if (!_isScriptSkip)
+		{
+			if (_txtIndex < _txt.length())
+			{
+				_txtIndex++;
+			}
+			else if (_txtIndex >= _txt.length())
+			{
+				if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+				{
+					_isScriptSkip = false;
+
+					_txtIndex = 0;
+					_scriptIndex++;
+				}
+			}
+		}
+		else if (_isScriptSkip)
+		{
+			if (_txtIndex >= _txt.length())
+			{
+				_isScriptSkip = false;
+				_txtIndex = 0;
+				_scriptIndex++;
+			}
+			else if (_txtIndex < _txt.length())
+			{
+				_isScriptSkip = false;
+				_txtIndex = _txt.length();
+			}
+		}
+
+		if (_scriptIndex >= _vScript.size())
+		{
+			_isScript = false;
+		}
+
+		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+		RECT rcText = RectMake(30, WINSIZEY - 120, 500, 70);
+
+		HFONT font = CreateFont(35, 0, 0, 100, 1000, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("휴먼매직체"));
+
+		HFONT oldFont = (HFONT)SelectObject(_backBuffer->getMemDC(), font);
+
+		DrawText(_backBuffer->getMemDC(), TEXT(_txt.c_str()), _txtIndex, &rcText, DT_VCENTER | DT_VCENTER | DT_WORDBREAK);
+
+		SelectObject(_backBuffer->getMemDC(), oldFont);
+		DeleteObject(font);
+	}
 }

@@ -11,6 +11,8 @@ private:
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 
+	int cnt = 0;
+	int _index = 0 ;
 public:
 	uiManager();
 	~uiManager();

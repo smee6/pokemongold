@@ -74,7 +74,7 @@ vector<string> txtData::charArraySeparation(char charArray[])
 {
 	vector<string> vArray;
 	char* temp;
-	const char* seperator = ",";
+	const char* seperator = ";";
 	char* token;
 
 	token = strtok_s(charArray, seperator, &temp);

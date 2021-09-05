@@ -44,7 +44,7 @@ HRESULT uiManager::init()
 
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
 
-	_vScript = TXTDATA->txtLoad("Test.txt");
+	//_vScript = TXTDATA->txtLoad("Test.txt");		// 경로("script/OO.txt");
 
 	return S_OK;
 }
@@ -149,12 +149,13 @@ void uiManager::bag()
 void uiManager::pokeCenter()
 {
 	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
+
 	cnt++;
+
 	if (cnt == 15) {
 		_index++;
 		cnt = 0;
 	}
-
 
 	if (_index > 10) {
 		_index = 0;
@@ -199,60 +200,87 @@ void uiManager::menu()
 	}
 
 
-
-
 }
 
 void uiManager::script()
 {
+	// 대화 스킵
+	if (KEYMANAGER->isOnceKeyDown('I'))
+	{
+		_isScriptSkip = true;
+	}
+
+	// 대화 중
 	if (_isScript)
 	{
+		// 마지막 쓰레기값 나와서 -1까지
+		if (_scriptIndex >= _vScript.size() - 1)
+		{
+			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
+			_isScript = false;
+			_txtIndex = 0;
+			_scriptIndex = 0;
+		}
+
+		// 배경이미지 렌더
 		_scriptImage->render(_backBuffer->getMemDC());
 
+		// 받아온 텍스트정보를 넘겨줌
 		_txt = _vScript[_scriptIndex];
 
+		// 스킵이 아닐 경우에
 		if (!_isScriptSkip)
 		{
+			// 문장 전체 길이보다 현재가 작으면
 			if (_txtIndex < _txt.length())
 			{
+				// 한 글자씩 출력
 				_txtIndex++;
 			}
+			// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
 			else if (_txtIndex >= _txt.length())
 			{
-				if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+				// 버튼을 누르면
+				if (KEYMANAGER->isOnceKeyDown('I'))
 				{
+					// 스킵 상태 false(다음 문장 스킵되지 않도록)
 					_isScriptSkip = false;
 
+					// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
 					_txtIndex = 0;
 					_scriptIndex++;
 				}
 			}
 		}
+		// 스킵하면
 		else if (_isScriptSkip)
 		{
+			// 현재 문자열이 전체 길이보다 길어지려고 하면
 			if (_txtIndex >= _txt.length())
 			{
+				// 스킵 상태 false
 				_isScriptSkip = false;
+				
+				// 문자 인덱스 초기화해주고 다음 줄로 넘겨줌
 				_txtIndex = 0;
 				_scriptIndex++;
 			}
+			// 현재 문자열의 길이가 전체 길이보다 작으면
 			else if (_txtIndex < _txt.length())
 			{
+				// 스킵 상태 false
 				_isScriptSkip = false;
+				
+				// 현재 문장 전부 출력
 				_txtIndex = _txt.length();
 			}
-		}
-
-		if (_scriptIndex >= _vScript.size())
-		{
-			_isScript = false;
 		}
 
 		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 		RECT rcText = RectMake(30, WINSIZEY - 120, 500, 70);
 
-		HFONT font = CreateFont(35, 0, 0, 100, 1000, false, false, false,
+		HFONT font = CreateFont(35, 0, 0, 0, 200, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("휴먼매직체"));
 

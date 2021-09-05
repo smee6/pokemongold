@@ -54,6 +54,12 @@ void playGround::update()
 	_character->update();
 	_pM->update();
 
+	//if (KEYMANAGER->isOnceKeyDown('P'))
+	//{
+	//	UIMANAGER->setVScript(TXTDATA->txtLoad("script/ÂÌµû±¸2_½Â¸®Á¤»ê.txt"));
+	//	UIMANAGER->setIsScript(true);
+	//}
+
 	//SCENEMANAGER->update();
 	
 }
@@ -67,6 +73,8 @@ void playGround::render()
 	_tileMap->render();
 	_character->render();
 	_pM->render();
+
+	//UIMANAGER->script();
 
 	//SCENEMANAGER->render();
 

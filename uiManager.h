@@ -13,14 +13,13 @@ private:
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 
 	// script
-	bool _isScript;
-	bool _isScriptSkip;
-	RECT _scriptRC;
-	image* _scriptImage;
-	int _scriptIndex;
-	int _txtIndex;
-	vector<string> _vScript;
-	string _txt;
+	bool _isScript;								// 대화 여부 (대화 중인지)
+	bool _isScriptSkip;							// 스킵 여부 (대화 한꺼번에 출력)
+	image* _scriptImage;						// 스크립트 배경이미지
+	int _scriptIndex;							// 스크립트 줄 카운트(문장?)
+	int _txtIndex;								// 스크립트 글자 카운트
+	vector<string> _vScript;					// 스크립트를 담을 벡터
+	string _txt;								// 실제 텍스트 파일
 
 	// pokeCenter
 	int cnt = 0;
@@ -47,6 +46,9 @@ public:
 	// get set
 	bool getIsScript() { return _isScript; }
 	void setIsScript(bool script) { _isScript = script; }
+
+	vector<string> getVScript() { return _vScript; }
+	void setVScript(vector<string> vScript) { _vScript = vScript; }
 
 };
 

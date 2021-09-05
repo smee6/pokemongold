@@ -1,5 +1,6 @@
 #pragma once
 #include "singletonBase.h"
+#include <string>
 
 
 class uiManager : public singletonBase<uiManager>
@@ -11,8 +12,15 @@ private:
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 
-	int cnt = 0;
-	int _index = 0 ;
+	bool _isScript;
+	bool _isScriptSkip;
+	RECT _scriptRC;
+	image* _scriptImage;
+	int _scriptIndex;
+	int _txtIndex;
+	vector<string> _vScript;
+	string _txt;
+
 public:
 	uiManager();
 	~uiManager();
@@ -27,6 +35,13 @@ public:
 
 	void pokeCenter();
 	void menu();
+
+	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
+
+
+	// get set
+	bool getIsScript() { return _isScript; }
+	void setIsScript(bool script) { _isScript = script; }
 
 };
 

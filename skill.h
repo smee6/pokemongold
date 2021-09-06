@@ -3,12 +3,12 @@
 
 enum class STATUS_AILMENT	// 상태이상
 {
+	NONE,					// 없음
 	POISON,					// 독
 	BURN,					// 화상
 	PARALYSIS,				// 마비
 	SLEEP,					// 수면
 	FREEZE,					// 얼음
-	NONE					// 없음
 };
 
 enum class CLASSIFCATION	// 분류
@@ -76,6 +76,8 @@ public:
 
 	void rage();			// 분노
 	void waterGun();		// 물대포
+
+	void imageInit();		// 이미지
 
 
 

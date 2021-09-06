@@ -12,6 +12,8 @@ skill::~skill()
 
 HRESULT skill::init()
 {
+	imageInit();
+
 	STATUS_AILMENT::NONE;	// 상태이상 초기값은 없음
 
 	return S_OK;
@@ -286,4 +288,30 @@ void skill::waterGun()			//물대포
 	_accuracy = 100;			//명중률
 	CLASSIFCATION::SPECIAL;		//분류
 	TYPE::WATER;				//타입
+}
+
+void skill::imageInit()	//스킬 이미지
+{
+	IMAGEMANAGER->addImage("attack", "image/skill/attack.bmp", 32, 32, true, RGB(255, 0, 255));							
+	IMAGEMANAGER->addFrameImage("bind", "image/skill/bind.bmp", 720, 45, 12, 1, true, RGB(255, 0, 255));				
+	IMAGEMANAGER->addFrameImage("cut", "image/skill/cut.bmp", 600, 50, 12, 1, true, RGB(255, 0, 255));					
+	IMAGEMANAGER->addFrameImage("fire", "image/skill/fire.bmp", 352, 20, 8, 1, true, RGB(255, 0, 255));					
+	IMAGEMANAGER->addFrameImage("growth", "image/skill/growth.bmp", 1152, 72, 12, 1, true, RGB(255, 0, 255));			
+	IMAGEMANAGER->addFrameImage("horn", "image/skill/horn.bmp", 108, 27, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("attack3", "image/skill/attack3.bmp", 192, 64, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("cut3", "image/skill/cut3.bmp", 144, 36, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("lightScreen", "image/skill/lightScreen.bmp", 450, 63, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("move", "image/skill/move.bmp", 220, 56, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 1620, 50, 27, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("shine", "image/skill/shine.bmp", 418, 38, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 960, 40, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("spark", "image/skill/spark.bmp", 352, 44, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 1118, 57, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("slash", "image/skill/slash.bmp", 480, 60, 43, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("skyAttack", "image/skill/skyAttack.bmp", 600, 70, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("smokescreen", "image/skill/smokescreen.bmp", 560, 20, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("razonWind", "image/skill/razonWind.bmp", 1456, 112, 13, 1, true, RGB(255, 0, 255));
+	
+
 }

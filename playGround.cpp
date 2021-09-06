@@ -29,6 +29,7 @@ HRESULT playGround::init()
 	_character->init();
 	_pM->init();
 
+	UIMANAGER->init();
 
 	//SCENEMANAGER->addScene("엔딩", new endingScene);
 	//SCENEMANAGER->changeScene("엔딩");
@@ -75,7 +76,6 @@ void playGround::render()
 	_pM->render();
 
 	//UIMANAGER->script();
-
 	//SCENEMANAGER->render();
 
 	//=============== 밑에도 건들지마라 ================

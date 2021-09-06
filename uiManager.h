@@ -84,7 +84,7 @@ private:
 
 	int _index = 0;
 
-	bool uiOpen = false;
+	bool uiOpen = false;						// ui 켜져 있는지 여부
 
 	NPC _npc;
 

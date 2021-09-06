@@ -218,7 +218,10 @@ void uiManager::menu()
 		break;
 	case 6://´Ý´Ù
 		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
-		uiOpen = false;
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		{
+			uiOpen = false;
+		}
 		return;
 		break;
 	}

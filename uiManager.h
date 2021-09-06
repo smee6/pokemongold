@@ -60,8 +60,15 @@ private:
 	int shopCnt = 0;							//상점 메뉴 선택지
 	int buyCnt = 0;								//아이템 메뉴 선택지
 	int menuCnt = 0;
+	int bagCnt = 0;
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
+	bool bagWindow = false;
+	bool menuWindow = false;
+	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
+	int medicineQ = 22;
+	int goodMedicineQ = 13;
+
 
 	// script
 	bool _isScript;								// 대화 여부 (대화 중인지)

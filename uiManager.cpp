@@ -40,6 +40,13 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("menu5", "image/menuUI/menu_6.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("menu6", "image/menuUI/menu_7.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("bag0", "image/bag/bag_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("bag1", "image/bag/bag_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
+
+
+
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
 
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
@@ -68,86 +75,102 @@ void uiManager::render()
 
 void uiManager::shop()
 {
+	uiOpen = true;
+	shopWindow = true;
 
-	// 스위치 넣어서 상점이 열려있을때만
-	if (!buyWindow) {
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && shopCnt < 2) {
-			shopCnt += 1;
-			//메뉴 화살표 위아래 움직이는
+	if (shopWindow) {
+
+		// 스위치 넣어서 상점이 열려있을때만
+		if (!buyWindow) {
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && shopCnt < 2) {
+				shopCnt += 1;
+				//메뉴 화살표 위아래 움직이는
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP) && shopCnt > 0) {
+				shopCnt -= 1;
+			}
 		}
-		if (KEYMANAGER->isOnceKeyDown(VK_UP) && shopCnt > 0) {
-			shopCnt -= 1;
-		}
-	}
 
-	switch (shopCnt)
-	{
-	case 0:
-		IMAGEMANAGER->findImage("사다")->render(_backBuffer->getMemDC());
-		break;
-	case 1:
-		IMAGEMANAGER->findImage("팔다")->render(_backBuffer->getMemDC());
-		break;
-	case 2:
-		IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
-		return;
-		break;
-	}
-
-	if (shopCnt == 0 && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		buyWindow = true;
-		//상점 구현 
-	};
-
-	if (buyWindow) {
-
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && buyCnt < 4) {
-			buyCnt += 1;
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_UP) && buyCnt > 0) {
-			buyCnt -= 1;
-		}
-		switch (buyCnt) {
-
+		switch (shopCnt)
+		{
 		case 0:
-			IMAGEMANAGER->findImage("몬스터볼")->render(_backBuffer->getMemDC());
+			IMAGEMANAGER->findImage("사다")->render(_backBuffer->getMemDC());
 			break;
 		case 1:
-			IMAGEMANAGER->findImage("상처약")->render(_backBuffer->getMemDC());
+			IMAGEMANAGER->findImage("팔다")->render(_backBuffer->getMemDC());
 			break;
 		case 2:
-			IMAGEMANAGER->findImage("고급상처약")->render(_backBuffer->getMemDC());
-			break;
-		case 3:
-			IMAGEMANAGER->findImage("안산다")->render(_backBuffer->getMemDC());
-
-
-			if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
-				buyCnt = 0;
-				//shopCnt = 0;
-				buyWindow = false;
-				//상점 구현 
-			};
-
+			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				shopWindow = false;
+				uiOpen = false;
+				shopCnt = 0;
+				_isOpenShop = false;
+				return;
+			}
 			break;
 		}
 
+		if (shopCnt == 0 && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			buyWindow = true;
+			//상점 구현 
+		};
 
+		if (buyWindow) {
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && buyCnt < 4) {
+				buyCnt += 1;
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP) && buyCnt > 0) {
+				buyCnt -= 1;
+			}
+
+			switch (buyCnt) {
+			case 0:
+				IMAGEMANAGER->findImage("몬스터볼")->render(_backBuffer->getMemDC());
+				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					pokeballQ++;
+				};
+				break;
+			case 1:
+				IMAGEMANAGER->findImage("상처약")->render(_backBuffer->getMemDC());
+				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					medicineQ++;
+				};
+				break;
+			case 2:
+				IMAGEMANAGER->findImage("고급상처약")->render(_backBuffer->getMemDC());
+				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					goodMedicineQ++;
+				};
+				break;
+			case 3:
+				IMAGEMANAGER->findImage("안산다")->render(_backBuffer->getMemDC());
+
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					buyCnt = 0;
+					//shopCnt = 0;
+					buyWindow = false;
+					//상점 구현 
+				};
+
+				break;
+			}
+
+
+		}
+	
 	}
-
-
-
-
-
-}
-
-void uiManager::bag()
-{
 
 }
 
 void uiManager::pokeCenter()
 {
+	uiOpen = true;
 	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
 
 	cnt++;
@@ -159,11 +182,14 @@ void uiManager::pokeCenter()
 
 	if (_index > 10) {
 		_index = 0;
+		uiOpen = false;
 	}
 }
 
 void uiManager::menu()
 {
+	uiOpen = true;
+
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
 		menuCnt += 1;
 		//메뉴 화살표 위아래 움직이는
@@ -174,36 +200,138 @@ void uiManager::menu()
 
 	switch (menuCnt)
 	{
-	case 0:
+	case 0: //도감
 		IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
 		break;
-	case 1:
+	case 1: //포켓몬
 		IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
 		break;
-	case 2:
+	case 2://가방
 		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenBag = true;
+			//bag();
+		};
 		break;
-	case 3:
+	case 3://포켓기어
 		IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
 		break;
-	case 4:
+	case 4://이름
 		IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
 		break;
-	case 5:
+	case 5://설정
 		IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
 		break;
-	case 6:
+	case 6://닫다
 		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
-
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		{
+			uiOpen = false;
+			_isOpenMenu = false;
+			menuCnt = 0;
+		}
 		return;
 		break;
+	}
+
+	if (_isOpenBag)
+	{
+		bag();
 	}
 
 
 }
 
+
+void uiManager::bag()
+{
+	bagWindow = true;
+
+	if (bagWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && bagCnt < 4) {
+			bagCnt += 1;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
+			bagCnt -= 1;
+		}
+
+
+		switch (bagCnt) {
+
+		case 0: // 가방에서 몬스터볼에 커서가 있다
+			IMAGEMANAGER->findImage("bag0")->render(_backBuffer->getMemDC());
+			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
+			if (pokeballQ > 0) {
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					goodMedicineQ++;
+				};
+			}
+			break;
+		case 1:// 가방에서 상처약에 커서가 있다
+			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
+			if (medicineQ > 0) {
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					goodMedicineQ++;
+				};
+			}
+			break;
+		case 2:// 가방에서 고급상처약에 커서가 있다
+			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
+			if (goodMedicineQ > 0) {
+				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					goodMedicineQ++;
+				};
+			}
+			break;
+		case 3:// 가방에서 나가기에 커서가 있다
+			IMAGEMANAGER->findImage("bag3")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				bagCnt = 0;
+				bagWindow = false;
+				uiOpen = false;
+				_isOpenBag = false;
+			};
+
+			break;
+		}
+
+
+
+		//수량을 텍스트로 표시해주는 부분
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		sprintf_s(str, "%d", pokeballQ);
+		TextOut(_backBuffer->getMemDC(), 595, 78, str, strlen(str));
+
+
+		sprintf_s(str, "%d", medicineQ);
+		TextOut(_backBuffer->getMemDC(), 595, 143, str, strlen(str));
+
+		sprintf_s(str, "%d", goodMedicineQ);
+		TextOut(_backBuffer->getMemDC(), 595, 210, str, strlen(str));
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+
+	}
+
+}
+
+
+
 void uiManager::script()
 {
+	uiOpen = true;
+
 	switch (_npc)
 	{
 	case NPC::TITLE:
@@ -308,6 +436,7 @@ void uiManager::script()
 			_isScript = false;
 			_txtIndex = 0;
 			_scriptIndex = 0;
+			uiOpen = false;
 		}
 
 		// 배경이미지 렌더

@@ -60,8 +60,22 @@ private:
 	int shopCnt = 0;							//상점 메뉴 선택지
 	int buyCnt = 0;								//아이템 메뉴 선택지
 	int menuCnt = 0;
+	int bagCnt = 0;
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
+	bool bagWindow = false;
+	bool menuWindow = false;
+	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
+	int medicineQ = 22;
+	int goodMedicineQ = 13;
+
+
+	// isOpen
+	bool _isOpenShop;							// 상점 열려있는지
+	bool _isOpenBag;							// 가방 열려있는지
+	bool _isOpenPokecenter;						// 포케센터 열려있는지
+	bool _isOpenMenu;							// 메뉴 열려있는지
+
 
 	// script
 	bool _isScript;								// 대화 여부 (대화 중인지)
@@ -77,7 +91,7 @@ private:
 
 	int _index = 0;
 
-	bool uiOpen = false;
+	bool uiOpen = false;						// ui 켜져 있는지 여부
 
 	NPC _npc;
 
@@ -112,6 +126,18 @@ public:
 	void setNPC(NPC npc) { _npc = npc; }
 
 	bool isUiOpen();
+
+	bool getOpenShop() { return _isOpenShop; }
+	void setOpenShop(bool openShop) { _isOpenShop = openShop; }
+
+	bool getOpenBag() { return _isOpenBag; }
+	void setOpenBag(bool openBag) { _isOpenBag = openBag; }
+
+	bool getOpenPokecenter() { return _isOpenPokecenter; }
+	void setOpenPokecenter(bool openPoke) { _isOpenPokecenter = openPoke; }
+
+	bool getOpenMenu() { return _isOpenMenu; }
+	void setOpenMenu(bool openMenu) { _isOpenMenu = openMenu; }
 
 
 };

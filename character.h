@@ -137,6 +137,7 @@ public:
 	void grass();																	// 풀 타일 처리
 	void door(int doorIndex);														// 문 타일 처리
 	void slope(int direction);														// 비탈길 타일 처리
+	void ui();																		// ui창 처리
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터

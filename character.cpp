@@ -47,6 +47,8 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
+    if (UIMANAGER->isUiOpen()) return; // ui떠있을 때 캐릭터 컨트롤 불가
+
     if (!_isMoving && !_isSloping) // 이동 중이 아니고, 비탈길 아닐 때
     {
         // 아이들
@@ -87,24 +89,6 @@ void character::controll() // 캐릭터 컨트롤 처리
             if (!_isMoving) tileCheck(3);
             tileAction();
         }
-    }
-
-    // enter Key
-    if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-    {
-
-    }
-
-    // Z Key
-    if (KEYMANAGER->isOnceKeyDown('Z'))
-    {
-
-    }
-
-    // X Key
-    if (KEYMANAGER->isOnceKeyDown('X'))
-    {
-
     }
 }
 
@@ -440,8 +424,30 @@ void character::slope(int direction) // 비탈길 타일 처리
     }
 }
 
-void character::render() // 렌더
+void character::ui() // ui창 호출
 {
+    // 각 ui창 불러옴
+    if (!UIMANAGER->isUiOpen())
+    {
+        // 메뉴창 (enter Key)
+        if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
+
+        // 상점창 (Z Key 테스트용)
+        if (KEYMANAGER->isOnceKeyDown('Z')) UIMANAGER->setOpenShop(true);
+
+        // 포켓몬센터창 (X Key 테스트용)
+        if (KEYMANAGER->isOnceKeyDown('X')) UIMANAGER->setOpenPokecenter(true);
+    }
+
+    if (UIMANAGER->getOpenMenu()) UIMANAGER->menu();
+    if (UIMANAGER->getOpenShop()) UIMANAGER->shop();
+    if (UIMANAGER->getOpenPokecenter()) UIMANAGER->pokeCenter();
+}
+
+void character::render() // 렌더
+{    
+
+    // 캐릭터 이미지 렌더
     _image->frameRender(getMemDC(), _rc.left, _rc.top);
 
     if (KEYMANAGER->isToggleKey(VK_TAB))
@@ -477,6 +483,9 @@ void character::render() // 렌더
         _grassCount++;
         if (_grassCount >= 3) _grassCount = 3;
     }
+
+    // ui창 호출
+    ui();
 }
 
 void character::imageInit() // 이미지 파일들 불러옴

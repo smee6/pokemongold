@@ -75,6 +75,7 @@ void uiManager::render()
 
 void uiManager::shop()
 {
+	uiOpen = true;
 	shopWindow = true;
 
 	if (shopWindow) {
@@ -101,6 +102,7 @@ void uiManager::shop()
 		case 2:
 			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
 			shopWindow = false;
+			uiOpen = false;
 			return;
 			break;
 		}
@@ -163,6 +165,7 @@ void uiManager::shop()
 
 void uiManager::pokeCenter()
 {
+	uiOpen = true;
 	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
 
 	cnt++;
@@ -174,6 +177,7 @@ void uiManager::pokeCenter()
 
 	if (_index > 10) {
 		_index = 0;
+		uiOpen = false;
 	}
 }
 
@@ -309,6 +313,8 @@ void uiManager::bag()
 
 void uiManager::script()
 {
+	uiOpen = true;
+
 	switch (_npc)
 	{
 	case NPC::TITLE:
@@ -413,6 +419,7 @@ void uiManager::script()
 			_isScript = false;
 			_txtIndex = 0;
 			_scriptIndex = 0;
+			uiOpen = false;
 		}
 
 		// 배경이미지 렌더

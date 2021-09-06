@@ -23,7 +23,13 @@ private:
 
 	// pokeCenter
 	int cnt = 0;
+<<<<<<< HEAD
 	int _index = 0;
+=======
+	int _index = 0 ;
+
+	bool uiOpen = false;
+>>>>>>> origin/uiSei
 
 public:
 	uiManager();
@@ -40,6 +46,7 @@ public:
 	void pokeCenter();
 	void menu();
 
+
 	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
 
 
@@ -49,6 +56,8 @@ public:
 
 	vector<string> getVScript() { return _vScript; }
 	void setVScript(vector<string> vScript) { _vScript = vScript; }
+	bool isUiOpen();
+
 
 };
 

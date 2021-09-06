@@ -23,13 +23,11 @@ private:
 
 	// pokeCenter
 	int cnt = 0;
-<<<<<<< HEAD
+
 	int _index = 0;
-=======
-	int _index = 0 ;
 
 	bool uiOpen = false;
->>>>>>> origin/uiSei
+
 
 public:
 	uiManager();

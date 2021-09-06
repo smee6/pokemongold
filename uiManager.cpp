@@ -202,9 +202,9 @@ void uiManager::menu()
 
 }
 
-void uiManager::script(NPC npc)
+void uiManager::script()
 {
-	switch (npc)
+	switch (_npc)
 	{
 	case NPC::TITLE:
 		_vScript = TXTDATA->txtLoad("script/≈∏¿Ã∆≤.txt");

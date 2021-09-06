@@ -13,6 +13,9 @@ private:
 
 	int cnt = 0;
 	int _index = 0 ;
+
+	bool uiOpen = false;
+
 public:
 	uiManager();
 	~uiManager();
@@ -27,6 +30,8 @@ public:
 
 	void pokeCenter();
 	void menu();
+
+	bool isUiOpen();
 
 };
 

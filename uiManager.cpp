@@ -196,3 +196,8 @@ void uiManager::menu()
 
 
 }
+
+bool uiManager::isUiOpen()
+{
+	return uiOpen;
+}

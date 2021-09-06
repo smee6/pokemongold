@@ -292,3 +292,8 @@ void uiManager::script()
 		DeleteObject(font);
 	}
 }
+
+bool uiManager::isUiOpen()
+{
+	return uiOpen;
+}

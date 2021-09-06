@@ -2,6 +2,57 @@
 #include "singletonBase.h"
 #include <string>
 
+enum class NPC
+{
+	// title
+	TITLE,
+
+	// mom
+	MOM_FIRST,
+	MOM_NORMAL,
+
+	// Dr.Gong
+	DR_FIRST,
+	DR_BEFORE_POKEMON,
+	DR_AFTER_POKEMON,
+	DR_NORMAL,
+	SUPPORTER,
+
+	// champion
+	CHAMPION_BATTLE_START,
+	CHAMPION_BATTLE_AFTER,
+	CHAMPION_BATTLE_END,
+
+	// trainers
+	TRAINER1_BATTLE_BEFORE,
+	TRAINER1_BATTLE_START,
+	TRAINER1_BATTLE_END,
+	TRAINER1_BATTLE_WIN,
+
+	TRAINER2_BATTLE_BEFORE,
+	TRAINER2_BATTLE_START,
+	TRAINER2_BATTLE_END,
+	TRAINER2_BATTLE_WIN,
+
+	// where connect to player
+	POKECENTER,
+	SHOP,
+
+	// about pokemon
+	EVOLUTION,
+	TOTODILE,		// 리아코
+	CHIKORITA,		// 치코리타
+	CYNDAQUIL,		// 브케인
+
+	// starting select cancel
+	SELECTCANCEL,
+
+	// battle(test)
+	BATTLE,
+
+
+};
+
 
 class uiManager : public singletonBase<uiManager>
 {
@@ -27,6 +78,8 @@ private:
 	int _index = 0;
 
 	bool uiOpen = false;
+
+	NPC _npc;
 
 
 public:
@@ -54,6 +107,10 @@ public:
 
 	vector<string> getVScript() { return _vScript; }
 	void setVScript(vector<string> vScript) { _vScript = vScript; }
+
+	NPC getNPC() { return _npc; }
+	void setNPC(NPC npc) { _npc = npc; }
+
 	bool isUiOpen();
 
 

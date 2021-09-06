@@ -201,6 +201,9 @@
     <ClInclude Include="spearow.h">
       <Filter>playGround\poketmonManager</Filter>
     </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>playGround\poketmonManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsAPI.cpp">
@@ -321,6 +324,9 @@
       <Filter>playGround\poketmonManager</Filter>
     </ClCompile>
     <ClCompile Include="spearow.cpp">
+      <Filter>playGround\poketmonManager</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.cpp">
       <Filter>playGround\poketmonManager</Filter>
     </ClCompile>
   </ItemGroup>

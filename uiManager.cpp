@@ -101,11 +101,14 @@ void uiManager::shop()
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
-			shopWindow = false;
-			uiOpen = false;
-			shopCnt = 0;
-			_isOpenShop = false;
-			return;
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				shopWindow = false;
+				uiOpen = false;
+				shopCnt = 0;
+				_isOpenShop = false;
+				return;
+			}
 			break;
 		}
 

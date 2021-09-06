@@ -103,6 +103,8 @@ void uiManager::shop()
 			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
 			shopWindow = false;
 			uiOpen = false;
+			shopCnt = 0;
+			_isOpenShop = false;
 			return;
 			break;
 		}
@@ -204,7 +206,8 @@ void uiManager::menu()
 	case 2://가방
 		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			bag();
+			_isOpenBag = true;
+			//bag();
 		};
 		break;
 	case 3://포켓기어
@@ -221,9 +224,16 @@ void uiManager::menu()
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
 			uiOpen = false;
+			_isOpenMenu = false;
+			menuCnt = 0;
 		}
 		return;
 		break;
+	}
+
+	if (_isOpenBag)
+	{
+		bag();
 	}
 
 
@@ -276,7 +286,8 @@ void uiManager::bag()
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				bagCnt = 0;
 				bagWindow = false;
-				
+				uiOpen = false;
+				_isOpenBag = false;
 			};
 
 			break;

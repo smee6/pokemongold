@@ -24,14 +24,17 @@ HRESULT playGround::init()
 	_tileMap->setCharacterMemoryAddressLink(_character);
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
+	_character->setNPCMemoryAddressLink(_npc);
 	_pM->setCharacterMemoryAddressLink(_character);
 	UIMANAGER->setCharacterMemoryAddressLink(_character);
 	_npc->setTileMapMemoryAddressLink(_tileMap);
+	_npc->setCharacterMemoryAddressLink(_character);
 
 	_tileMap->init();
+	_npc->init();
 	_character->init();
 	_pM->init();
-	_npc->init();
+
 
 	UIMANAGER->init();
 
@@ -56,9 +59,9 @@ void playGround::update()
 	gameNode::update();
 
 	_tileMap->update();
+	_npc->update();
 	_character->update();
 	_pM->update();
-	_npc->update();
 
 	//if (KEYMANAGER->isOnceKeyDown('P'))
 	//{

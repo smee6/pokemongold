@@ -96,12 +96,14 @@ struct tagPOKETMON_PLAYER
 // 전방 선언
 class poketmonManager;
 class tileMap;
+class npc;
 
 class character : public gameNode
 {
 private:
 	poketmonManager* _pM;									// 포켓몬 매니저 클래스 		
 	tileMap* _tileMap;										// 타일맵 클래스
+	npc* _npc;												// npc 클래스
 	tagPOKETMON_PLAYER _poketmon[6];						// 유저가 보유한 포켓몬
 
 	image* _image;											// 캐릭터 이미지
@@ -165,4 +167,5 @@ public:
 
 	void setPoketmonManagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }		// 메모리 주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }		// 메모리 주소 링크
+	void setNPCMemoryAddressLink(npc* npc) { _npc = npc; }							// 메모리 주소 링크
 };

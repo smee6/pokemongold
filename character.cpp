@@ -2,6 +2,7 @@
 #include "character.h"
 #include "poketmonManager.h"
 #include "tileMap.h"
+#include "npc.h"
 
 character::character()
 {
@@ -506,7 +507,7 @@ void character::poketmonSetting()
 
     _poketmon[0].iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
     _poketmon[0].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
-
+    
     _poketmon[0].attack = 49;								// 1레벨 초기 공격
     _poketmon[0].defense = 65;							// 1레벨 초기 방어	
     _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격

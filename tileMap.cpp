@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "tileMap.h"
 #include "character.h"
+#include "npc.h"
 
 tileMap::tileMap()
 {
@@ -31,6 +32,8 @@ HRESULT tileMap::init()
 	{
 			_tile[i].type = TILETYPE_CLOSE;
 	}
+
+	_isMove = false;
 
 	load();
 
@@ -70,6 +73,20 @@ void tileMap::update()
 	//{
 	//	_cameraY += 5;
 	//}
+
+	//npc 렉트와 닿은 타일은 속성이 못지나감
+	for (int i = 0; i < TILE; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &_tile[i].rc, &_npc->getnpcRC()[j].rc))
+			{
+				if (_isMove) break;
+				_tile[i].type = TILETYPE_CLOSE;
+			}
+		}
+	}
 	
 	setTile();
 }

@@ -34,11 +34,13 @@ struct tagTree
 };
 
 class character;
+class npc;
 
 class tileMap : public gameNode
 {
 private:
 	character* _character;
+	npc* _npc;
 
 	image* _map;							//전체 맵 이미지
 	
@@ -57,6 +59,7 @@ private:
 	int _cameraX;							//맵 카메라 X좌표
 	int _cameraY;							//맵 카메라 y좌표
 
+	bool _isMove;							//움직일 때는  속성바꾸는 것을 꺼주기 위해 만듬
 public:
 	tileMap();
 	~tileMap();
@@ -82,4 +85,5 @@ public:
 	void setCameraY(int y) { _cameraY = y; }		//맵 카메라 y좌표에 대한 설정자
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
+	void setNPCMemoryAddressLink(npc* npc) { _npc = npc; }
 };

@@ -98,6 +98,7 @@ private:
 	image* _image;											// 캐릭터 이미지
 	image* _shadowImage;									// 비탈길 이동 시 그림자 이미지
 	image* _grassImage;										// 풀숲 이미지
+	image* _battleLoadingImage;								// 배틀 로딩 이미지
 	RECT _rc;												// 캐릭터 렉트
 
 	float _x, _y;											// 캐릭터 중점 좌표
@@ -111,12 +112,12 @@ private:
 	int _currentTile;										// 현재 플레이어가 위치한 타일 인덱스
 	int _frontTileType;										// 바라본 방향의 타일 타입
 	int _slopeDistance;										// 비탈길 이동 거리
+	int _grassCount;										// 풀 이미지 변경용 카운트값
 
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
 	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
+	bool _isPoketmonMeet;									// 풀 타일에서 포켓몬 조우 중인지?
 
-	bool _grassTest; // 풀 타일 테스트용
-	int _grassCount; // 풀 이미지 테스트용
 public:
 	character();
 	~character();
@@ -145,9 +146,9 @@ public:
 	int getCurrentTile() { return _currentTile; }									// 캐릭터가 위치한 타일 인덱스 게터
 	bool getIsMoving() { return _isMoving; }										// 이동 중인지 불값 게터
 	bool getIsSloping() { return _isSloping; }										// 비탈길 이동 중인지 불값 게터
+	bool getIsPoketmonMeet() { return _isPoketmonMeet; }							// 포켓몬 조우 중인지 불값 게터
 	RECT getRect() { return _rc; }													// 렉트 게터
 	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터
-
 
 	void setPoketmonManagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }		// 메모리 주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }		// 메모리 주소 링크

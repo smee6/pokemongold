@@ -18,8 +18,9 @@ HRESULT character::init() // 인잇
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
+    _battleLoadingImage = IMAGEMANAGER->findImage("배틀로딩");
 
-    _direction = _isMoving = _isSloping = _frontTileType = 0;
+    _direction = _isMoving = _isSloping = _isPoketmonMeet = _frontTileType = 0;
     _jumpPower = JUMPPOWER;
     _gravity = GRAVITY;
     _frameCount = _currentFrame = 0;
@@ -47,7 +48,19 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    if (UIMANAGER->isUiOpen()) return; // ui떠있을 때 캐릭터 컨트롤 불가
+    if (_isPoketmonMeet) // 포켓몬 만났으면 조작 불가
+    {
+        idle(_direction);
+        if (KEYMANAGER->isStayKeyDown('C')) // 테스트용 제거 예정
+        {
+            _battleLoadingImage->setFrameX(0); 
+            _battleLoadingImage->setFrameY(0);
+            _isPoketmonMeet = false;
+        }
+        return;        
+    }
+
+    if (UIMANAGER->isUiOpen()) return;  // ui떠있을 때 캐릭터 컨트롤 불가
 
     if (!_isMoving && !_isSloping) // 이동 중이 아니고, 비탈길 아닐 때
     {
@@ -117,8 +130,12 @@ void character::imageFrame() // 이미지 프레임 처리
     if (_direction == 0 || _direction == 2) _image->setFrameY(0);
     else _image->setFrameY(1);
 
-    // 카운트가 일정 수치마다 프레임X 갱신
+    if (_isPoketmonMeet) _battleLoadingImage->setFrameY(0); // 포켓몬 조우 시 Y프레임 세팅
+
+    // 프레임 카운트 증가
     _frameCount++;
+
+    // 카운트가 일정 수치마다 프레임X 갱신
     if (_frameCount % 5 == 0)
     {
         // 프레임 초기화
@@ -137,8 +154,15 @@ void character::imageFrame() // 이미지 프레임 처리
         _image->setFrameX(_currentFrame);
     }
 
+    // 포켓몬 조우 시 배틀 로딩 이미지 갱신
+    if (_isPoketmonMeet) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
+    if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX()) _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
+    
     // 렉트 갱신
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+
+    // 프레임카운트 초기화
+    if (_frameCount > 5) _frameCount = 0;
 }
 
 void character::idle(int direction) // 아이들 처리
@@ -269,13 +293,20 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
 
 void character::grass() // 풀 타일 처리
 {
-    int rndPoketmonMeet = RND->getFromIntTo(1, 100);
-
-    if (rndPoketmonMeet <= POKETMONMEET)
+    // 포켓몬 조우 상태 아닐 때 
+    if (!_isPoketmonMeet)
     {
-        _grassTest = 1;
+        int rndPoketmonMeet = RND->getFromIntTo(1, 100);
+
+        if (rndPoketmonMeet <= POKETMONMEET) _isPoketmonMeet = 1;
+        else _isPoketmonMeet = 0;
     }
-    else _grassTest = 0;
+
+    // 포켓몬 만났을 때
+    if (_isPoketmonMeet)
+    {
+        
+    }
 }
 
 void character::door(int doorIndex) // 문 타일 처리
@@ -426,8 +457,10 @@ void character::slope(int direction) // 비탈길 타일 처리
 
 void character::ui() // ui창 호출
 {
+    if (_isPoketmonMeet) return; // 포켓몬 만났으면 조작 불가
+
     // 각 ui창 불러옴
-    if (!UIMANAGER->isUiOpen())
+    if (!UIMANAGER->isUiOpen()) // 아무 UI창도 없을 때
     {
         // 메뉴창 (enter Key)
         if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
@@ -446,7 +479,6 @@ void character::ui() // ui창 호출
 
 void character::render() // 렌더
 {    
-
     // 캐릭터 이미지 렌더
     _image->frameRender(getMemDC(), _rc.left, _rc.top);
 
@@ -464,7 +496,7 @@ void character::render() // 렌더
         sprintf_s(str, "_현재 타일 : %d", _currentTile);
         TextOut(getMemDC(), 100, 220, str, strlen(str));
 
-        sprintf_s(str, "_포켓몬 조우 : %d", _grassTest);
+        sprintf_s(str, "_포켓몬 조우 : %d", _isPoketmonMeet);
         TextOut(getMemDC(), 100, 250, str, strlen(str));
     }
     
@@ -486,6 +518,9 @@ void character::render() // 렌더
 
     // ui창 호출
     ui();
+
+    // 포켓몬 조우 시 배틀로딩 이미지 재생
+    if (_isPoketmonMeet) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
 }
 
 void character::imageInit() // 이미지 파일들 불러옴
@@ -498,6 +533,7 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("캐릭터_그림자", "image/character_shadow.bmp", 56, 64, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("풀숲2", "image/poketmon_grass2.bmp", 45, 21, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("풀숲1", "image/poketmon_grass1.bmp", 48, 36, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("배틀로딩", "image/battle_loading.bmp", 17920, 596, 28, 1, true, RGB(255, 0, 255));
 
     //포켓몬 뒤
     IMAGEMANAGER->addFrameImage("브케인_뒤", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
@@ -524,7 +560,6 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("뿔충이_뒤", "image/poketmon/no_13Bbmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("딱충이_뒤", "image/poketmon/no_14B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("독침붕_뒤", "image/poketmon/no_15B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-
 }
 
 

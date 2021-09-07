@@ -67,6 +67,9 @@
     <Filter Include="playGround\poketmonManager">
       <UniqueIdentifier>{16009e2a-5268-4c29-b981-7828976b1674}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\npc">
+      <UniqueIdentifier>{cdfa6a55-d014-423b-a9c4-bf23ed0e7806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="skill.h">
       <Filter>playGround\poketmonManager</Filter>
     </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>playGround\npc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowsAPI.cpp">
@@ -328,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="skill.cpp">
       <Filter>playGround\poketmonManager</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>playGround\npc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

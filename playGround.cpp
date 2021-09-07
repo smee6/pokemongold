@@ -19,16 +19,19 @@ HRESULT playGround::init()
 	_tileMap = new tileMap;
 	_character = new character;
 	_pM = new poketmonManager;
-	
+	_npc = new npc;
+
 	_tileMap->setCharacterMemoryAddressLink(_character);
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
 	_pM->setCharacterMemoryAddressLink(_character);
 	UIMANAGER->setCharacterMemoryAddressLink(_character);
+	_npc->setTileMapMemoryAddressLink(_tileMap);
 
 	_tileMap->init();
 	_character->init();
 	_pM->init();
+	_npc->init();
 
 	UIMANAGER->init();
 
@@ -55,6 +58,7 @@ void playGround::update()
 	_tileMap->update();
 	_character->update();
 	_pM->update();
+	_npc->update();
 
 	//if (KEYMANAGER->isOnceKeyDown('P'))
 	//{
@@ -73,6 +77,7 @@ void playGround::render()
 	//==============위에는 제발 건드리지 마라 ============
 
 	_tileMap->render();
+	_npc->render();
 	_character->render();
 	_pM->render();
 

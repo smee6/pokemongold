@@ -55,6 +55,8 @@ enum class NPC
 };
 
 
+class character;
+
 class uiManager : public singletonBase<uiManager>
 {
 private:
@@ -95,7 +97,7 @@ private:
 	bool uiOpen = false;						// ui 켜져 있는지 여부
 
 	NPC _npc;
-
+	character* _character;
 
 public:
 	uiManager();
@@ -141,6 +143,6 @@ public:
 	bool getOpenMenu() { return _isOpenMenu; }
 	void setOpenMenu(bool openMenu) { _isOpenMenu = openMenu; }
 
-
+	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };
 

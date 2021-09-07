@@ -12,6 +12,7 @@ struct item {
 	// 아이템 수량
 };
 
+
 uiManager::uiManager()
 {
 }
@@ -22,7 +23,20 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
-	//_character->getPoketmon(0).name
+	vector<tagPOKETMON_PLAYER> myPokemon(6);
+	//6개짜리 내 포켓몬을 담는 배열을 선언해 준다.
+	
+	
+	//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
+	for (int i = 0; i < myPokemon.size(); i++) {
+		myPokemon[i].name = _character->getPoketmon(i).name;
+		myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
+		myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
+	}
+	
+
+	//불러오는거 ... ?
+	//_character->getPoketmon(0).name;
 
 	//인벤토리를 10칸으로 초기화해준다 . 빈칸이 10개가 생김 ( 0~9)
 	IMAGEMANAGER->addImage("사다", "image/shopUI/shop_1.bmp", 640, 576, true, RGB(255, 0, 255));

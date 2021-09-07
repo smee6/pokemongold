@@ -48,7 +48,7 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    if (_isPoketmonMeet) // 포켓몬 만났으면 조작 불가
+    if (_isPoketmonMeet) // 포켓몬 만나면 아이들 처리
     {
         idle(_direction);
         if (KEYMANAGER->isStayKeyDown('C')) // 테스트용 제거 예정
@@ -57,7 +57,7 @@ void character::controll() // 캐릭터 컨트롤 처리
             _battleLoadingImage->setFrameY(0);
             _isPoketmonMeet = false;
         }
-        return;        
+        return; // 포켓몬 만났으면 조작 불가   
     }
 
     if (UIMANAGER->isUiOpen()) return;  // ui떠있을 때 캐릭터 컨트롤 불가
@@ -305,7 +305,7 @@ void character::grass() // 풀 타일 처리
     // 포켓몬 만났을 때
     if (_isPoketmonMeet)
     {
-        
+        // 배틀씬 ui 호출
     }
 }
 
@@ -475,6 +475,105 @@ void character::ui() // ui창 호출
     if (UIMANAGER->getOpenMenu()) UIMANAGER->menu();
     if (UIMANAGER->getOpenShop()) UIMANAGER->shop();
     if (UIMANAGER->getOpenPokecenter()) UIMANAGER->pokeCenter();
+}
+
+void character::poketmonSetting()
+{
+    _poketmon[0].name = "치코리타";							// 이름
+    _poketmon[0].gender = "수컷";							// 성별
+    _poketmon[0].isGender = 0;							// 성별 체크
+    _poketmon[0].index = 152;								// 인덱스 번호
+    _poketmon[0].level = 20;								// 포켓몬 현재 레벨
+    _poketmon[0].evolutionLevel = 0;						// 진화 단계
+
+    _poketmon[0].type1 = static_cast<int>(TYPE_PLAYER::GRASS); 								// 포켓몬 타입1	
+    _poketmon[0].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
+
+    _poketmon[0].attack = 49;								// 1레벨 초기 공격
+    _poketmon[0].defense = 65;							// 1레벨 초기 방어	
+    _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격
+    _poketmon[0].specialDefense = 65;						// 1레벨 초기 특수방어
+    _poketmon[0].speed = 45;								// 1레벨 초기 스피드
+    _poketmon[0].currentHP = 45;							// 1레벨 초기 현재 체력
+    _poketmon[0].maxHP = 45;								// 1레벨 초기 최대 체력
+
+    _poketmon[0].levelAttack = 1.67f;                     //레벨당 공격력
+    _poketmon[0].levelDefense = 1.86f;                    //레벨당 방어력
+    _poketmon[0].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
+    _poketmon[0].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
+    _poketmon[0].levelSpeed = 1.62f;                      //레벨당 스피드
+    _poketmon[0].levelHP = 2.49f;                         //레벨당 체력
+
+    _poketmon[0].sumAttack;							// 최종 공격
+    _poketmon[0].sumDefense;							// 최종 방어
+    _poketmon[0].sumSpecialAttack;					// 최종 특수공격
+    _poketmon[0].sumSpecialDefense;					// 최종 특수방어
+    _poketmon[0].sumSpeed;							// 최종 스피드
+    _poketmon[0].sumMaxHP;							// 최종 체력
+
+    _poketmon[0].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
+    _poketmon[0].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+
+    _poketmon[0].totalEXP = 8800;							// 토탈 경험치
+
+    _poketmon[0].skill1 = 1;								// 스킬1 인덱스 
+    _poketmon[0].skill2 = 2;								// 스킬2 인덱스 
+    _poketmon[0].skill3 = 3;								// 스킬3 인덱스 
+    _poketmon[0].skill4 = 4;								// 스킬4 인덱스 
+    _poketmon[0].skillPP1 = 10;							// 스킬1 현재 PP
+    _poketmon[0].skillPP2 = 10;							// 스킬1 현재 PP
+    _poketmon[0].skillPP3 = 10;							// 스킬1 현재 PP
+    _poketmon[0].skillPP4 = 10;							// 스킬1 현재 PP
+
+    _poketmon[0].item = 1;								// 보유 중인 아이템 인덱스
+
+    _poketmon[1].name = "피죤";							// 이름
+    _poketmon[1].gender = "암컷";							// 성별
+    _poketmon[1].isGender = 1;							// 성별 체크
+    _poketmon[1].index = 17;								// 인덱스 번호
+    _poketmon[1].level = 20;								// 포켓몬 현재 레벨
+    _poketmon[1].evolutionLevel = 1;						// 진화 단계
+              
+    _poketmon[1].type1 = static_cast<int>(TYPE_PLAYER::FLYING); 								// 포켓몬 타입1	
+    _poketmon[1].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
+              
+    _poketmon[1].attack = 49;								// 1레벨 초기 공격
+    _poketmon[1].defense = 65;							// 1레벨 초기 방어	
+    _poketmon[1].specialAttack = 49;						// 1레벨 초기 특수공격
+    _poketmon[1].specialDefense = 65;						// 1레벨 초기 특수방어
+    _poketmon[1].speed = 45;								// 1레벨 초기 스피드
+    _poketmon[1].currentHP = 45;							// 1레벨 초기 현재 체력
+    _poketmon[1].maxHP = 45;								// 1레벨 초기 최대 체력
+              
+    _poketmon[1].levelAttack = 1.67f;                     //레벨당 공격력
+    _poketmon[1].levelDefense = 1.86f;                    //레벨당 방어력
+    _poketmon[1].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
+    _poketmon[1].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
+    _poketmon[1].levelSpeed = 1.62f;                      //레벨당 스피드
+    _poketmon[1].levelHP = 2.49f;                         //레벨당 체력
+              
+    _poketmon[1].sumAttack;							// 최종 공격
+    _poketmon[1].sumDefense;							// 최종 방어
+    _poketmon[1].sumSpecialAttack;					// 최종 특수공격
+    _poketmon[1].sumSpecialDefense;					// 최종 특수방어
+    _poketmon[1].sumSpeed;							// 최종 스피드
+    _poketmon[1].sumMaxHP;							// 최종 체력
+              
+    _poketmon[1].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
+    _poketmon[1].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+              
+    _poketmon[1].totalEXP = 8800;							// 토탈 경험치
+              
+    _poketmon[1].skill1 = 1;								// 스킬1 인덱스 
+    _poketmon[1].skill2 = 2;								// 스킬2 인덱스 
+    _poketmon[1].skill3 = 3;								// 스킬3 인덱스 
+    _poketmon[1].skill4 = 4;								// 스킬4 인덱스 
+    _poketmon[1].skillPP1 = 10;							// 스킬1 현재 PP
+    _poketmon[1].skillPP2 = 10;							// 스킬1 현재 PP
+    _poketmon[1].skillPP3 = 10;							// 스킬1 현재 PP
+    _poketmon[1].skillPP4 = 10;							// 스킬1 현재 PP
+              
+    _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }
 
 void character::render() // 렌더

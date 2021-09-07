@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "skill.h"
 
 #define POKETMONMEET 10						// 포켓몬 조우 확률
 #define JUMPPOWER 10						// 점프 파워
@@ -59,12 +60,12 @@ struct tagPOKETMON_PLAYER
 	int	currentHP;							// 1레벨 초기 현재 체력
 	int	maxHP;								// 1레벨 초기 최대 체력
 
-	int	levelAttack;						// 레벨당 증가하는 공격
-	int	levelDefense;						// 레벨당 증가하는 방어	
-	int levelSpecialAttack;					// 레벨당 증가하는 특수공격
-	int	levelSpecialDefense;				// 레벨당 증가하는 특수방어
-	int	levelSpeed;							// 레벨당 증가하는 스피드
-	int levelHP;							// 레벨당 증가하는 체력
+	float levelAttack;						// 레벨당 증가하는 공격
+	float levelDefense;						// 레벨당 증가하는 방어	
+	float levelSpecialAttack;				// 레벨당 증가하는 특수공격
+	float levelSpecialDefense;				// 레벨당 증가하는 특수방어
+	float levelSpeed;						// 레벨당 증가하는 스피드
+	float levelHP;							// 레벨당 증가하는 체력
 
 	int sumAttack;							// 최종 공격
 	int sumDefense;							// 최종 방어
@@ -73,13 +74,19 @@ struct tagPOKETMON_PLAYER
 	int sumSpeed;							// 최종 스피드
 	int sumMaxHP;							// 최종 체력
 
-	int currentExp;							// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-	int	maxExp;								// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+	float currentExp;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
+	float	maxExp;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+
+	float totalEXP;							// 토탈 경험치
 
 	int	skill1;								// 스킬1 인덱스 
 	int	skill2;								// 스킬2 인덱스 
 	int	skill3;								// 스킬3 인덱스 
-	int	skill4;								// 스킬4 인덱스
+	int	skill4;								// 스킬4 인덱스 
+	int skillPP1;							// 스킬1 현재 PP
+	int skillPP2;							// 스킬1 현재 PP
+	int skillPP3;							// 스킬1 현재 PP
+	int skillPP4;							// 스킬1 현재 PP
 
 	int item;								// 보유 중인 아이템 인덱스
 };
@@ -87,6 +94,7 @@ struct tagPOKETMON_PLAYER
 // 전방 선언
 class poketmonManager;
 class tileMap;
+
 
 class character : public gameNode
 {
@@ -139,6 +147,7 @@ public:
 	void door(int doorIndex);														// 문 타일 처리
 	void slope(int direction);														// 비탈길 타일 처리
 	void ui();																		// ui창 처리
+	void poketmonSetting();
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터

@@ -76,7 +76,7 @@ void playGround::render()
 	_character->render();
 	_pM->render();
 
-	UIMANAGER->pokeShift();
+	//UIMANAGER->pokeShift();
 	//UIMANAGER->script();
 	//SCENEMANAGER->render();
 

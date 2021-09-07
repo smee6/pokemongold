@@ -28,7 +28,10 @@ HRESULT totodile::init()
 			_poketmon.defense = 64;								//방어	
 			_poketmon.specialAttack = 44;						//특수공격	
 			_poketmon.specialDefense = 48;						//특수방어	
-			_poketmon.speed = 43;								//스피드			
+			_poketmon.speed = 43;								//스피드		
+
+			_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
 			_poketmon.levelAttack = 1.86f;						//레벨당 공격력
 			_poketmon.levelDefense = 1.85f;						//레벨당 방어력
@@ -62,6 +65,9 @@ HRESULT totodile::init()
 			_poketmon.specialDefense = 63;						//특수방어	
 			_poketmon.speed = 58;								//스피드			
 
+			_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
 			_poketmon.levelAttack = 2.04f;						//레벨당 공격력
 			_poketmon.levelDefense = 2.04f;						//레벨당 방어력
 			_poketmon.levelSpecialAttack = 1.79f;				//레벨당 특수공격력
@@ -92,7 +98,10 @@ HRESULT totodile::init()
 			_poketmon.defense = 100;							//방어	
 			_poketmon.specialAttack = 79;						//특수공격	
 			_poketmon.specialDefense = 83;						//특수방어	
-			_poketmon.speed = 78;								//스피드			
+			_poketmon.speed = 78;								//스피드		
+
+			_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
 			_poketmon.levelAttack = 2.34f;						//레벨당 공격력
 			_poketmon.levelDefense = 2.28f;						//레벨당 방어력

@@ -64,6 +64,8 @@ HRESULT uiManager::init()
 
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addFrameImage("Icon", "image/menuUI/pokeicon.bmp", 2048, 191, 32, 3, true, RGB(255, 0, 255));
+
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
 
 	//_vScript = TXTDATA->txtLoad("Test.txt");		// 경로("script/OO.txt");
@@ -265,9 +267,10 @@ void uiManager::pokeShift()
 	pokeWindow = true;
 	if (pokeWindow) {
 
-
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
 				pokesCnt += 1;
+
+				
 				//메뉴 화살표 위아래 움직이는
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
@@ -283,15 +286,19 @@ void uiManager::pokeShift()
 			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
 			break;
 		case 2:
+			
 			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
 			break;
 		case 3:
+			
 			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
 			break;
 		case 4:
+			
 			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
 			break;
 		case 5:
+			
 			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
 			break;
 		case 6:
@@ -314,36 +321,46 @@ void uiManager::pokeShift()
 
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font2 = CreateFont(38, 0, 0, 0, 700, false, false, false,
+		HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
 
-		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+		HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
+		delaycnt++;
 
 		char poke[128];
 
-
+		if (delaycnt == 8) {
+			iconCnt++;
+			delaycnt = 0;
+		}
+		
+		
 		for (int i = 0; i < myPokemon.size(); i++) {
 			string strname = myPokemon[i].name;
 			strcpy_s(poke, strname.c_str());
 
-			sprintf_s(str, "%s", poke);
+			if (myPokemon[i].maxHP == 0) return;
+
+			IMAGEMANAGER->findImage("Icon")->frameRender(_backBuffer->getMemDC(),35,15 + (i * 65),12+(iconCnt%2),1);
+
+			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
-			sprintf_s(str, "%d", myPokemon[i].maxHP);
-			TextOut(_backBuffer->getMemDC(), 530, 3 + (i * 65), str, strlen(str));
+			sprintf_s(str, "/ %d", myPokemon[i].maxHP);
+			TextOut(_backBuffer->getMemDC(), 530, 3 + (i * 63), str, strlen(str));
 
-			sprintf_s(str, "%d", myPokemon[i].currentHP);
-			TextOut(_backBuffer->getMemDC(), 440, 3 + (i * 65), str, strlen(str));
+			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
+			TextOut(_backBuffer->getMemDC(), 400, 3 + (i * 63), str, strlen(str));
 
-			sprintf_s(str, "%d", myPokemon[i].level);
-			TextOut(_backBuffer->getMemDC(), 320, 25 + (i * 65), str, strlen(str));
+			sprintf_s(str, ": L %d", myPokemon[i].level);
+			TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), str, strlen(str));
 
 		}
 		
-		SelectObject(_backBuffer->getMemDC(), oldFont2);
-		DeleteObject(font2);
+		SelectObject(_backBuffer->getMemDC(), oldFont5);
+		DeleteObject(font5);
 
 
 	

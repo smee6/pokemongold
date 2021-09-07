@@ -75,7 +75,8 @@ private:
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;
-
+	int delaycnt;
+	int iconCnt;
 	// isOpen
 	bool _isOpenShop;							// 상점 열려있는지
 	bool _isOpenBag;							// 가방 열려있는지

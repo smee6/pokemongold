@@ -30,6 +30,9 @@ HRESULT spearow::init()
 		_poketmon.specialDefense = 31;						//특수방어
 		_poketmon.speed = 70;								//스피드		
 
+		_poketmon.iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
 		_poketmon.levelAttack = 1.8f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.44f;						//레벨당 방어력
 		_poketmon.levelSpecialAttack = 1.46f;				//레벨당 특수공격력
@@ -61,6 +64,9 @@ HRESULT spearow::init()
 		_poketmon.specialAttack = 61;						//특수공격
 		_poketmon.specialDefense = 61;						//특수방어
 		_poketmon.speed = 100;								//스피드		
+
+		_poketmon.iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
 		_poketmon.levelAttack = 2.16f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.86f;						//레벨당 방어력

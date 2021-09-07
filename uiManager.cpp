@@ -313,6 +313,8 @@ void uiManager::pokeShift()
 			myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
 			myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
 			myPokemon[i].level = _character->getPoketmon(i).level;
+			myPokemon[i].iconNumX = _character->getPoketmon(i).iconNumX;
+			myPokemon[i].iconNumY = _character->getPoketmon(i).iconNumY;
 		}
 
 		char str[128];
@@ -343,16 +345,17 @@ void uiManager::pokeShift()
 
 			if (myPokemon[i].maxHP == 0) return;
 
-			IMAGEMANAGER->findImage("Icon")->frameRender(_backBuffer->getMemDC(),35,15 + (i * 65),12+(iconCnt%2),1);
+			IMAGEMANAGER->findImage("Icon")->frameRender(_backBuffer->getMemDC(),35,15 + 
+				(i * 65), myPokemon[i].iconNumX+(iconCnt%2), myPokemon[i].iconNumY);
 
 			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
 			sprintf_s(str, "/ %d", myPokemon[i].maxHP);
-			TextOut(_backBuffer->getMemDC(), 530, 3 + (i * 63), str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
-			TextOut(_backBuffer->getMemDC(), 400, 3 + (i * 63), str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 400, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, ": L %d", myPokemon[i].level);
 			TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), str, strlen(str));

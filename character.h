@@ -1,6 +1,5 @@
 #pragma once
 #include "gameNode.h"
-#include "skill.h"
 
 #define POKETMONMEET 10						// 포켓몬 조우 확률
 #define JUMPPOWER 10						// 점프 파워
@@ -94,7 +93,6 @@ struct tagPOKETMON_PLAYER
 // 전방 선언
 class poketmonManager;
 class tileMap;
-
 
 class character : public gameNode
 {

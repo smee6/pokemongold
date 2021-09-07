@@ -54,7 +54,13 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("pokeShift", "image/menuUI/pokeShift.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift0", "image/menuUI/pokeShift_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift1", "image/menuUI/pokeShift_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift2", "image/menuUI/pokeShift_2.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift3", "image/menuUI/pokeShift_3.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift4", "image/menuUI/pokeShift_4.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift5", "image/menuUI/pokeShift_5.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pokeShift6", "image/menuUI/pokeShift_6.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
 
@@ -258,7 +264,42 @@ void uiManager::pokeShift()
 {
 	pokeWindow = true;
 	if (pokeWindow) {
-		IMAGEMANAGER->findImage("pokeShift")->render(_backBuffer->getMemDC());
+
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
+				pokesCnt += 1;
+				//메뉴 화살표 위아래 움직이는
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
+				pokesCnt -= 1;
+			}
+
+		switch (pokesCnt)
+		{
+		case 0:
+			IMAGEMANAGER->findImage("pokeShift0")->render(_backBuffer->getMemDC());
+			break;
+		case 1: 
+			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
+			break;
+		case 2:
+			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
+			break;
+		case 3:
+			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
+			break;
+		case 4:
+			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
+			break;
+		case 5:
+			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
+			break;
+		case 6:
+			IMAGEMANAGER->findImage("pokeShift6")->render(_backBuffer->getMemDC());
+			break;
+		}
+
+		
 		//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
 		for (int i = 0; i < myPokemon.size(); i++) {
 			myPokemon[i].name = _character->getPoketmon(i).name;
@@ -273,11 +314,12 @@ void uiManager::pokeShift()
 
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+		HFONT font2 = CreateFont(38, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
 
 		char poke[128];
 
@@ -302,6 +344,8 @@ void uiManager::pokeShift()
 		
 		SelectObject(_backBuffer->getMemDC(), oldFont2);
 		DeleteObject(font2);
+
+
 	
 	}
 	

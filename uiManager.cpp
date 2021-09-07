@@ -681,10 +681,11 @@ void uiManager::battle()
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
 
+	static int x = -_playerImage->getWidth();
+
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
-		static int x = -_playerImage->getWidth();
-
+		
 		_playerImage->render(_backBuffer->getMemDC(), x, 200);
 
 		if (x <= 70) x += 3; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
@@ -789,6 +790,9 @@ void uiManager::battle()
 					{
 						uiOpen = false;
 						_isBattle = false;
+						_behaviorCount = 0;
+						x = -_playerImage->getWidth();
+						_appearIndex = 2;
 					}
 					if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 					{
@@ -812,11 +816,73 @@ void uiManager::battle()
 	}
 	if (_isOpenSkill)
 	{
-
+		skill();
 	}
 	if (_isOpenPokemon)
 	{
 		pokeShift();
+	}
+}
+
+void uiManager::skill()
+{
+	static int skillCnt = 0;
+
+	IMAGEMANAGER->findImage("스킬선택")->render(_backBuffer->getMemDC(), 0, 287);
+
+	SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+	HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
+		DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+	HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
+
+	char skill[128];
+
+
+	for (int i = 0; i < 4; i++) {
+		//string strname = myPokemon[i].name;
+		//strcpy_s(poke, strname.c_str());
+
+		sprintf_s(skill, "몸통박치기");
+		TextOut(_backBuffer->getMemDC(), 55, 330 + (i * 60), skill, strlen(skill));
+
+		//sprintf_s(skill, "/ %d", myPokemon[i].maxHP);
+		//TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), skill, strlen(skill));
+		//
+		//sprintf_s(skill, "HP : %d", myPokemon[i].currentHP);
+		//TextOut(_backBuffer->getMemDC(), 400, 25 + (i * 63), skill, strlen(skill));
+		//
+		//sprintf_s(skill, ": L %d", myPokemon[i].level);
+		//TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), skill, strlen(skill));
+
+	}
+
+	SelectObject(_backBuffer->getMemDC(), oldFont5);
+	DeleteObject(font5);
+
+	if (skillCnt > 0)
+	{
+		if(KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			skillCnt--;
+		}
+	}
+	if (skillCnt < 3)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			skillCnt++;
+		}
+	}
+
+	IMAGEMANAGER->findImage("커서")->render(_backBuffer->getMemDC(), 25, 335 + (skillCnt * 60));
+
+	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창에서 다시 행동패턴 정하는 UI 호출
+	{
+		skillCnt = 0;
+		_isOpenSkill = false;
 	}
 }
 

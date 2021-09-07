@@ -51,6 +51,9 @@ struct tagPOKETMON_PLAYER
 	int type1; 								// 포켓몬 타입1	
 	int type2;								// 포켓몬 타입2
 
+	int iconNumX;							// 포켓몬 창에서 프레임 넘버 X값
+	int iconNumY;							// 포켓몬 창에서 프레임 넘버 Y값
+
 	int	attack;								// 1레벨 초기 공격
 	int	defense;							// 1레벨 초기 방어	
 	int specialAttack;						// 1레벨 초기 특수공격

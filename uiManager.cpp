@@ -190,13 +190,16 @@ void uiManager::menu()
 {
 	uiOpen = true;
 
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
-		menuCnt += 1;
-		//메뉴 화살표 위아래 움직이는
+	if (!bagWindow) {
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
+			menuCnt += 1;
+			//메뉴 화살표 위아래 움직이는
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
+			menuCnt -= 1;
+		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
-		menuCnt -= 1;
-	}
+
 
 	switch (menuCnt)
 	{
@@ -249,11 +252,11 @@ void uiManager::bag()
 
 	if (bagWindow) {
 
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && bagCnt < 4) {
-			bagCnt += 1;
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && bagCnt < 3) {
+			bagCnt ++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
-			bagCnt -= 1;
+			bagCnt --;
 		}
 
 
@@ -264,7 +267,7 @@ void uiManager::bag()
 			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
 			if (pokeballQ > 0) {
 				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
-					goodMedicineQ++;
+					pokeballQ++;
 				};
 			}
 			break;
@@ -272,7 +275,7 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
-					goodMedicineQ++;
+					medicineQ++;
 				};
 			}
 			break;
@@ -286,11 +289,13 @@ void uiManager::bag()
 			break;
 		case 3:// 가방에서 나가기에 커서가 있다
 			IMAGEMANAGER->findImage("bag3")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+
 				bagCnt = 0;
 				bagWindow = false;
 				uiOpen = false;
 				_isOpenBag = false;
+				
 			};
 
 			break;

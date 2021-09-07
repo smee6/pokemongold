@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+
+
 enum class NPC
 {
 	// title
@@ -68,10 +70,10 @@ private:
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 	bool bagWindow = false;
 	bool menuWindow = false;
+	bool pokeWindow = false;
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;
-
 
 	// isOpen
 	bool _isOpenShop;							// 상점 열려있는지

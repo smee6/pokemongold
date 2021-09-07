@@ -4,6 +4,7 @@
 #include "character.h"
 
 vector<tagPOKETMON_PLAYER> myPokemon(6);
+
 //6개짜리 내 포켓몬을 담는 배열을 선언해 준다.
 
 struct item {
@@ -25,9 +26,6 @@ uiManager::~uiManager()
 HRESULT uiManager::init()
 {
 	
-	
-	
-
 	
 
 	//불러오는거 ... ?
@@ -56,7 +54,7 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
 
-
+	IMAGEMANAGER->addImage("pokeShift", "image/menuUI/pokeShift.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
 
@@ -258,37 +256,55 @@ void uiManager::menu()
 
 void uiManager::pokeShift()
 {
-	//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
-	for (int i = 0; i < myPokemon.size(); i++) {
-		myPokemon[i].name = _character->getPoketmon(i).name;
-		myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
-		myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
-		myPokemon[i].level = _character->getPoketmon(i).level;
-	}
+	pokeWindow = true;
+	if (pokeWindow) {
+		IMAGEMANAGER->findImage("pokeShift")->render(_backBuffer->getMemDC());
+		//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
+		for (int i = 0; i < myPokemon.size(); i++) {
+			myPokemon[i].name = _character->getPoketmon(i).name;
+			myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
+			myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
+			myPokemon[i].level = _character->getPoketmon(i).level;
+		}
 
-	char str[128];
+		char str[128];
+		
+		
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		char poke[128];
+
+
+		for (int i = 0; i < myPokemon.size(); i++) {
+			string strname = myPokemon[i].name;
+			strcpy_s(poke, strname.c_str());
+
+			sprintf_s(str, "%s", poke);
+			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
+
+			sprintf_s(str, "%d", myPokemon[i].maxHP);
+			TextOut(_backBuffer->getMemDC(), 530, 3 + (i * 65), str, strlen(str));
+
+			sprintf_s(str, "%d", myPokemon[i].currentHP);
+			TextOut(_backBuffer->getMemDC(), 440, 3 + (i * 65), str, strlen(str));
+
+			sprintf_s(str, "%d", myPokemon[i].level);
+			TextOut(_backBuffer->getMemDC(), 320, 25 + (i * 65), str, strlen(str));
+
+		}
+		
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
 	
-
-	SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
-
-	HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
-		DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
-
-	HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
-
-
-	sprintf_s(str, "%d", myPokemon[0].maxHP);
-	TextOut(_backBuffer->getMemDC(), 595, 30, str, strlen(str));
-
-	sprintf_s(str, "%d", myPokemon[0].currentHP);
-	TextOut(_backBuffer->getMemDC(), 570, 30, str, strlen(str));
-
-	sprintf_s(str, "%d", myPokemon[0].level);
-	TextOut(_backBuffer->getMemDC(), 550, 50, str, strlen(str));
-
-	SelectObject(_backBuffer->getMemDC(), oldFont2);
-	DeleteObject(font2);
+	}
+	
 
 }
 

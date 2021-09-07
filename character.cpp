@@ -54,13 +54,6 @@ void character::controll() // 캐릭터 컨트롤 처리
     if (_isPoketmonMeet) // 포켓몬 만나면 아이들 처리
     {
         idle(_direction);
-        if (KEYMANAGER->isStayKeyDown('C')) // 테스트용 제거 예정
-        {
-            _battleLoadingImage->setFrameX(0); 
-            _battleLoadingImage->setFrameY(0);
-            _loadingCount = 0;
-            _isPoketmonMeet = false;         
-        }
         return; // 포켓몬 만났으면 조작 불가   
     }
 
@@ -173,10 +166,13 @@ void character::imageFrame() // 이미지 프레임 처리
         if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
 
         // 맥스프레임 도달하면 배틀씬 전환
-        if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX())
+        if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
         {
-            _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
             UIMANAGER->setIsBattle(true);
+            _battleLoadingImage->setFrameX(0);
+            _battleLoadingImage->setFrameY(0);
+            _loadingCount = 0;
+            _isPoketmonMeet = false;
         }
     }
 
@@ -645,12 +641,15 @@ void character::render() // 렌더
         if (_grassCount >= 3) _grassCount = 3;
     }
 
+    // 포켓몬 조우 시 플래시이미지, 배틀로딩이미지 재생
+    if (!UIMANAGER->getIsBattle())
+    {
+        if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
+        if (_isPoketmonMeet && _loadingCount <= 70) _flashLoadingImage->alphaRender(getMemDC(), _alpha);
+    }
+
     // ui창 호출
     ui();
-
-    // 포켓몬 조우 시 플래시이미지, 배틀로딩이미지 재생
-    if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
-    if (_isPoketmonMeet && _loadingCount <= 70) _flashLoadingImage->alphaRender(getMemDC(), _alpha);
 }
 
 void character::imageInit() // 이미지 파일들 불러옴

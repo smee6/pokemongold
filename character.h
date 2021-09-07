@@ -131,7 +131,6 @@ private:
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
 	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
 	bool _isPoketmonMeet;									// 풀 타일에서 포켓몬 조우 중인지?
-	bool _isBattle;											// 배틀 중인지?
 
 public:
 	character();

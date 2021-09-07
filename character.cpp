@@ -58,8 +58,8 @@ void character::controll() // 캐릭터 컨트롤 처리
         {
             _battleLoadingImage->setFrameX(0); 
             _battleLoadingImage->setFrameY(0);
-            _isPoketmonMeet = false;
             _loadingCount = 0;
+            _isPoketmonMeet = false;         
         }
         return; // 포켓몬 만났으면 조작 불가   
     }
@@ -171,7 +171,13 @@ void character::imageFrame() // 이미지 프레임 처리
     if (_frameCount % 2 == 0)
     {
         if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
-        if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX()) _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
+
+        // 맥스프레임 도달하면 배틀씬 전환
+        if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX())
+        {
+            _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
+            UIMANAGER->setIsBattle(true);
+        }
     }
 
     // 렉트 갱신
@@ -322,6 +328,7 @@ void character::grass() // 풀 타일 처리
     if (_isPoketmonMeet)
     {
         // 배틀씬 ui 호출
+        UIMANAGER->battle();
     }
 }
 
@@ -473,10 +480,8 @@ void character::slope(int direction) // 비탈길 타일 처리
 
 void character::ui() // ui창 호출
 {
-    if (_isPoketmonMeet) return; // 포켓몬 만났으면 조작 불가
-
-    // 각 ui창 불러옴
-    if (!UIMANAGER->isUiOpen()) // 아무 UI창도 없을 때
+    // 각 ui창 세팅
+    if (!UIMANAGER->isUiOpen() && !_isPoketmonMeet) // 아무 UI창도 없고, 포켓몬 조우도 아닐 때
     {
         // 메뉴창 (enter Key)
         if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
@@ -488,9 +493,12 @@ void character::ui() // ui창 호출
         if (KEYMANAGER->isOnceKeyDown('X')) UIMANAGER->setOpenPokecenter(true);
     }
 
+    // UI창 실행
     if (UIMANAGER->getOpenMenu()) UIMANAGER->menu();
     if (UIMANAGER->getOpenShop()) UIMANAGER->shop();
     if (UIMANAGER->getOpenPokecenter()) UIMANAGER->pokeCenter();
+    if (UIMANAGER->getIsBattle()) UIMANAGER->battle();
+
 }
 
 void character::poketmonSetting()

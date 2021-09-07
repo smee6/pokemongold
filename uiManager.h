@@ -79,6 +79,7 @@ private:
 	int goodMedicineQ = 13;
 	int delaycnt;
 	int iconCnt;
+
 	// isOpen
 	bool _isOpenShop;							// 상점 열려있는지
 	bool _isOpenBag;							// 가방 열려있는지
@@ -146,6 +147,7 @@ public:
 	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
 
 	void battle();
+	void skill();
 
 
 	// get set
@@ -174,6 +176,9 @@ public:
 
 	bool getIsBattle() { return _isBattle; }
 	void setIsBattle(bool isBattle) { _isBattle = isBattle; }
+
+	bool getIsAnimation() { return _isAnimation; }
+	void setIsAnimation(bool isAnimation) { _isAnimation = isAnimation; }
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };

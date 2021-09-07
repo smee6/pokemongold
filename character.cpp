@@ -15,15 +15,17 @@ HRESULT character::init() // 인잇
 {
     imageInit();
     poketmonSetting();
+
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
     _battleLoadingImage = IMAGEMANAGER->findImage("배틀로딩");
+    _flashLoadingImage = IMAGEMANAGER->findImage("플래시로딩");
 
-    _direction = _isMoving = _isSloping = _isPoketmonMeet = _frontTileType = 0;
+    _direction = _isMoving = _isSloping = _isPoketmonMeet = _frontTileType = _alpha = 0;
     _jumpPower = JUMPPOWER;
     _gravity = GRAVITY;
-    _frameCount = _currentFrame = 0;
+    _frameCount = _currentFrame = _loadingCount = 0;
     _x = WINSIZEX / 2 + TILESIZE / 2;
     _y = WINSIZEY / 2;
     _currentTile = 4813;
@@ -56,6 +58,7 @@ void character::controll() // 캐릭터 컨트롤 처리
             _battleLoadingImage->setFrameX(0); 
             _battleLoadingImage->setFrameY(0);
             _isPoketmonMeet = false;
+            _loadingCount = 0;
         }
         return; // 포켓몬 만났으면 조작 불가   
     }
@@ -154,10 +157,22 @@ void character::imageFrame() // 이미지 프레임 처리
         _image->setFrameX(_currentFrame);
     }
 
+    // 포켓몬 조우 시 플래시 로딩 이미지 갱신
+    if (_isPoketmonMeet)
+    {
+        _loadingCount++;     
+        if (_loadingCount % 15 == 0) _alpha = 0;
+        if (_loadingCount % 15 == 7) _alpha = 150;
+        if (_loadingCount % 15 == 14) _alpha = 255;
+    }
+
     // 포켓몬 조우 시 배틀 로딩 이미지 갱신
-    if (_isPoketmonMeet) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
-    if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX()) _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
-    
+    if (_frameCount % 2 == 0)
+    {
+        if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
+        if (_battleLoadingImage->getFrameX() > _battleLoadingImage->getMaxFrameX()) _battleLoadingImage->setFrameX(_battleLoadingImage->getMaxFrameX());
+    }
+
     // 렉트 갱신
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -618,8 +633,9 @@ void character::render() // 렌더
     // ui창 호출
     ui();
 
-    // 포켓몬 조우 시 배틀로딩 이미지 재생
-    if (_isPoketmonMeet) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
+    // 포켓몬 조우 시 플래시이미지, 배틀로딩이미지 재생
+    if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
+    if (_isPoketmonMeet && _loadingCount <= 70) _flashLoadingImage->alphaRender(getMemDC(), _alpha);
 }
 
 void character::imageInit() // 이미지 파일들 불러옴
@@ -633,6 +649,7 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("풀숲2", "image/poketmon_grass2.bmp", 45, 21, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("풀숲1", "image/poketmon_grass1.bmp", 48, 36, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("배틀로딩", "image/battle_loading.bmp", 17920, 596, 28, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("플래시로딩", "image/flash_loading.bmp", 640, 576, 1, 1, true, RGB(255, 0, 255));
 
     //포켓몬 뒤
     IMAGEMANAGER->addFrameImage("155B", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));

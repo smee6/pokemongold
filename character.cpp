@@ -504,6 +504,9 @@ void character::poketmonSetting()
     _poketmon[0].type1 = static_cast<int>(TYPE_PLAYER::GRASS); 								// 포켓몬 타입1	
     _poketmon[0].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
 
+    _poketmon[0].iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+    _poketmon[0].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
     _poketmon[0].attack = 49;								// 1레벨 초기 공격
     _poketmon[0].defense = 65;							// 1레벨 초기 방어	
     _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격
@@ -552,6 +555,9 @@ void character::poketmonSetting()
     _poketmon[1].type1 = static_cast<int>(TYPE_PLAYER::FLYING); 								// 포켓몬 타입1	
     _poketmon[1].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
               
+    _poketmon[1].iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+    _poketmon[1].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
     _poketmon[1].attack = 49;								// 1레벨 초기 공격
     _poketmon[1].defense = 65;							// 1레벨 초기 방어	
     _poketmon[1].specialAttack = 49;						// 1레벨 초기 특수공격

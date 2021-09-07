@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "npc.h"
 #include "tileMap.h"
+#include "character.h"
 
 npc::npc()
 {
@@ -39,8 +40,8 @@ void npc::render()
 {
 	for (int i = 0; i < 8; i++)
 	{
-		_npc[i].Img->render(getMemDC(), _npc[i].rc.left, _npc[i].rc.top);	//npc 이미지
-		//Rectangle(getMemDC(), _npc[i].detectRC);
+		_npc[i].Img->render(getMemDC(), _npc[i].rc.left, _npc[i].rc.top);				//npc 이미지
+		if(KEYMANAGER->isToggleKey(VK_TAB)) Rectangle(getMemDC(), _npc[i].detectRC);	//대화 상자 렉트
 	}
 }
 

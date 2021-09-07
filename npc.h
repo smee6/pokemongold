@@ -15,12 +15,14 @@ struct tagNPC
 
 //전방 선언
 class tileMap;
+class character;
 
 class npc : public gameNode
 {
 private:
 	//클래스
 	tileMap* _tileMap;
+	character* _character;
 
 	tagNPC _npc[8];				//npc - 0: 플레이어 엄마 1: 오박사 2: 오박사 조수 3: 간호사 4: 부하1 5: 부하2 6: 비상 7: 마트 주인
 
@@ -44,6 +46,7 @@ public:
 
 	//주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }
+	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };
 
 

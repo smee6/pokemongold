@@ -104,6 +104,7 @@ private:
 	image* _image;											// 캐릭터 이미지
 	image* _shadowImage;									// 비탈길 이동 시 그림자 이미지
 	image* _grassImage;										// 풀숲 이미지
+	image* _flashLoadingImage;								// 플래시 로딩 이미지
 	image* _battleLoadingImage;								// 배틀 로딩 이미지
 	RECT _rc;												// 캐릭터 렉트
 
@@ -123,7 +124,9 @@ private:
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
 	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
 	bool _isPoketmonMeet;									// 풀 타일에서 포켓몬 조우 중인지?
-
+	
+	int _alpha;
+	int _loadingCount;
 public:
 	character();
 	~character();

@@ -2,6 +2,7 @@
 #include "uiManager.h"
 #include "gameNode.h"
 #include "character.h"
+#include "progressBar.h"
 
 vector<tagPOKETMON_PLAYER> myPokemon(6);
 //6개짜리 내 포켓몬을 담는 배열을 선언해 준다.
@@ -56,6 +57,15 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("배틀배경", "image/battle/battleBackground.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("배틀행동선택", "image/battle/selectBehavior.bmp", 640, 186, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("스킬선택", "image/battle/backgroundSkill.bmp", 640, 289, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("커서", "image/battle/cursorBehavior.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("플레이어", "image/battle/playerImage.bmp", 188, 192, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("포켓볼상태", "image/battle/poketballState.bmp", 28, 112, 1, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("성별", "image/battle/gender.bmp", 7, 16, 1, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("포켓몬출근", "image/battle/appearPokemon.bmp", 600, 200, 3, 1,  true, RGB(255, 0, 255));
 
 
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
@@ -63,6 +73,24 @@ HRESULT uiManager::init()
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
 
 	//_vScript = TXTDATA->txtLoad("Test.txt");		// 경로("script/OO.txt");
+
+	_isAnimation = true;
+
+	//_currentHP = _character->getPoketmon(0).currentHP;
+	//_maxHP = _character->getPoketmon(0).maxHP;
+	//_currentEXP = _character->getPoketmon(0).currentExp;
+	//_maxEXP = _character->getPoketmon(0).maxExp;
+
+	_hpBarPlayer = new progressBar;
+	_hpBarPlayer->init(WINSIZEX - 161 - 192, 297, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp", "hpFront", "hpBack");
+	//_hpBarPlayer->setGauge(100, 100);
+
+	//_hpBarEnemy = new progressBar;
+	//_hpBarEnemy->init(50, 90, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp");
+
+	_expBar = new progressBar;
+	_expBar->init(WINSIZEX - 193 - 256, 365, 256, 8, "image/battle/expGauge.bmp", "image/battle/expGaugeBack.bmp", "expFront", "expBack");
+	//_expBar->setGauge(100, 100);
 
 	return S_OK;
 }
@@ -559,6 +587,56 @@ void uiManager::script()
 
 		SelectObject(_backBuffer->getMemDC(), oldFont);
 		DeleteObject(font);
+	}
+}
+
+void uiManager::battle()
+{
+	// 배경색 RGB(248, 248, 248)
+	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
+	_playerImage = IMAGEMANAGER->findImage("플레이어");
+
+	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
+	{
+		static int x = -_playerImage->getWidth();
+
+		_playerImage->render(_backBuffer->getMemDC(), x, 200);
+
+		if (x <= 70) x += 3; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
+		else
+		{
+			_time = TIMEMANAGER->getWorldTime();
+			_isAnimation = false;
+		}
+	}
+	else if (!_isAnimation && TIMEMANAGER->getWorldTime() >= _time + 0.3)
+	{
+		if (_appearIndex >= 0)
+		{
+			IMAGEMANAGER->findImage("포켓몬출근")->frameRender(_backBuffer->getMemDC(), 70, 200, _appearIndex, 0);
+		}
+
+		static int count = 0;
+		count++;
+
+		if (count % 7 == 0) // 포켓몬이 볼에서 나올때
+		{
+			_appearIndex--;
+		}
+
+		if (_appearIndex < 0) // 포켓몬이 등장한 후
+		{
+			//string index;
+			//index = _character->getPoketmon(0).index;
+
+			_hpBarPlayer->setGauge(100, 100);
+			_hpBarPlayer->render();
+
+			_expBar->setGauge(50, 100);
+			_expBar->render();
+
+			//IMAGEMANAGER->findImage(index + "");
+		}
 	}
 }
 

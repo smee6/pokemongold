@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+class progressBar;
+
 enum class NPC
 {
 	// title
@@ -96,6 +98,21 @@ private:
 
 	bool uiOpen = false;						// ui 켜져 있는지 여부
 
+	//battle
+	bool _isAnimation;							// 애니메이션이 끝났는지에 대한 체크변수
+
+	image* _playerImage;
+	int _appearIndex = 2;							// 포켓몬 출근 시 볼 프레임 이미지 렌더용
+
+	progressBar* _hpBarPlayer;							// 체력 게이지
+	progressBar* _hpBarEnemy;
+	progressBar* _expBar;							// 경험치 게이지
+
+	float _currentHP, _maxHP;
+	float _currentEXP, _maxEXP;
+
+	float _time;
+
 	NPC _npc;
 	character* _character;
 
@@ -117,6 +134,8 @@ public:
 	void pokeShift();
 
 	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
+
+	void battle();
 
 
 	// get set

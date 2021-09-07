@@ -85,6 +85,10 @@ private:
 	bool _isOpenPokecenter;						// 포케센터 열려있는지
 	bool _isOpenMenu;							// 메뉴 열려있는지
 
+	// isBattle
+	bool _isOpenSkill;							// 기술창 열려있는지
+	bool _isOpenPokemon;						// 포켓몬 보유창 열려있는지
+	bool _isBattle;								// 배틀 상태인지 아닌지
 
 	// script
 	bool _isScript;								// 대화 여부 (대화 중인지)
@@ -112,10 +116,12 @@ private:
 	progressBar* _hpBarEnemy;
 	progressBar* _expBar;							// 경험치 게이지
 
-	float _currentHP, _maxHP;
-	float _currentEXP, _maxEXP;
+	int _currentHP, _maxHP;							// 현재 hp, 최대 hp
+	int _currentEXP, _maxEXP;						// 현재 경험치, 최대 경험치
 
 	float _time;
+
+	int _behaviorCount;								//커서 움직임을 위한 변수
 
 	NPC _npc;
 	character* _character;
@@ -165,6 +171,9 @@ public:
 
 	bool getOpenMenu() { return _isOpenMenu; }
 	void setOpenMenu(bool openMenu) { _isOpenMenu = openMenu; }
+
+	bool getIsBattle() { return _isBattle; }
+	void setIsBattle(bool isBattle) { _isBattle = isBattle; }
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };

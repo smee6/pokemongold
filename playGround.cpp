@@ -84,6 +84,7 @@ void playGround::render()
 	//UIMANAGER->pokeShift();
 	//UIMANAGER->script();
 	//SCENEMANAGER->render();
+	//UIMANAGER->battle();
 
 	//=============== 밑에도 건들지마라 ================
 	_backBuffer->render(getHDC(), 0, 0);

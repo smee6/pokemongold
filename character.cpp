@@ -635,30 +635,30 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("배틀로딩", "image/battle_loading.bmp", 17920, 596, 28, 1, true, RGB(255, 0, 255));
 
     //포켓몬 뒤
-    IMAGEMANAGER->addFrameImage("브케인_뒤", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("마그케인_뒤", "image/poketmon/no_156B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("블레이범_뒤", "image/poketmon/no_157B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("치코리타_뒤", "image/poketmon/no_152B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("베이리프_뒤", "image/poketmon/no_153B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("메가니움_뒤", "image/poketmon/no_154B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("리아코_뒤", "image/poketmon/no_158B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("엘리게이_뒤", "image/poketmon/no_159B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("장크로다일_뒤", "image/poketmon/no_160B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("피카츄_뒤", "image/poketmon/no_25B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("라이츄_뒤", "image/poketmon/no_26B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("꼬렛_뒤", "image/poketmon/no_19B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("레트라_뒤", "image/poketmon/no_20B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("구구_뒤", "image/poketmon/no_16B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("피죤_뒤", "image/poketmon/no_17B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("피죤투_뒤", "image/poketmon/no_18B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("깨비참_뒤", "image/poketmon/no_21B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("깨비드릴조_뒤", "image/poketmon/no_22B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("캐터피_뒤", "image/poketmon/no_10B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("단데기_뒤", "image/poketmon/no_11B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("버터플_뒤", "image/poketmon/no_12B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("뿔충이_뒤", "image/poketmon/no_13Bbmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("딱충이_뒤", "image/poketmon/no_14B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("독침붕_뒤", "image/poketmon/no_15B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("155B", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("156B", "image/poketmon/no_156B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("157B", "image/poketmon/no_157B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("152B", "image/poketmon/no_152B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("153B", "image/poketmon/no_153B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("154B", "image/poketmon/no_154B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("158B", "image/poketmon/no_158B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("159B", "image/poketmon/no_159B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("160B", "image/poketmon/no_160B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("25B", "image/poketmon/no_25B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("26B", "image/poketmon/no_26B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("19B", "image/poketmon/no_19B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("20B", "image/poketmon/no_20B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("16B", "image/poketmon/no_16B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("17B", "image/poketmon/no_17B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("18B", "image/poketmon/no_18B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("21B", "image/poketmon/no_21B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("22B", "image/poketmon/no_22B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("10B", "image/poketmon/no_10B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("11B", "image/poketmon/no_11B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("12B", "image/poketmon/no_12B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("13B", "image/poketmon/no_13Bbmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("14B", "image/poketmon/no_14B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("15B", "image/poketmon/no_15B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
 }
 
 

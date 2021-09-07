@@ -70,6 +70,11 @@ struct tagPOKETMON
 	int	skill3;								// 스킬3 인덱스 
 	int	skill4;								// 스킬4 인덱스 
 
+	int skill1PP;							// 스킬1 남은 PP
+	int skill2PP;							// 스킬2 남은 PP	
+	int skill3PP;							// 스킬3 남은 PP
+	int skill4PP;							// 스킬4 남은 PP
+
 	int item;								// 보유 중인 아이템 인덱스
 };
 

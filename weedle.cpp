@@ -28,6 +28,9 @@ HRESULT weedle::init()
 		_poketmon.specialDefense = 20;						//특수방어
 		_poketmon.speed = 50;								//스피드		
 
+		_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
+
 		_poketmon.levelAttack = 1.5f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.44f;						//레벨당 방어력
 		_poketmon.levelSpecialAttack = 1.32f;				//레벨당 특수공격력
@@ -60,6 +63,9 @@ HRESULT weedle::init()
 		_poketmon.specialDefense = 25;						//특수방어
 		_poketmon.speed = 35;								//스피드		
 
+		_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
+
 		_poketmon.levelAttack = 1.38f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.68f;						//레벨당 방어력
 		_poketmon.levelSpecialAttack = 1.38f;				//레벨당 특수공격력
@@ -91,6 +97,9 @@ HRESULT weedle::init()
 		_poketmon.specialAttack = 45;						//특수공격
 		_poketmon.specialDefense = 80;						//특수방어
 		_poketmon.speed = 75;								//스피드		
+
+		_poketmon.iconNumX = 20;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
 		_poketmon.levelAttack = 2.16f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.56f;						//레벨당 방어력

@@ -30,6 +30,9 @@ HRESULT caterpie::init()
 		_poketmon.specialDefense = 20;						//특수방어
 		_poketmon.speed = 45;								//스피드		
 
+		_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
+
 		_poketmon.levelAttack = 1.44f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.5f;						//레벨당 방어력
 		_poketmon.levelSpecialAttack = 1.32f;				//레벨당 특수공격력
@@ -60,7 +63,10 @@ HRESULT caterpie::init()
 		_poketmon.defense = 55;								//방어
 		_poketmon.specialAttack = 25;						//특수공격
 		_poketmon.specialDefense = 25;						//특수방어
-		_poketmon.speed = 30;								//스피드		
+		_poketmon.speed = 30;								//스피드	
+
+		_poketmon.iconNumX = 14;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
 
 		_poketmon.levelAttack = 1.32f;						//레벨당 공격력
 		_poketmon.levelDefense	= 1.74f;					//레벨당 방어력
@@ -93,6 +99,9 @@ HRESULT caterpie::init()
 		_poketmon.specialAttack = 80;						//특수공격
 		_poketmon.specialDefense = 80;						//특수방어
 		_poketmon.speed = 70;								//스피드		
+
+		_poketmon.iconNumX = 26;							//포켓몬 미니 아이콘 좌표x
+		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
 
 		_poketmon.levelAttack = 1.62f;						//레벨당 공격력
 		_poketmon.levelDefense = 1.68f;						//레벨당 방어력

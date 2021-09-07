@@ -30,6 +30,9 @@ HRESULT pidgey::init()
         _poketmon.specialDefense = 35;						//특수방어
         _poketmon.speed = 56;								//스피드		
 
+        _poketmon.iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+        _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
         _poketmon.levelAttack = 1.62f;                      //레벨당 공격력
         _poketmon.levelDefense = 1.56f;                     //레벨당 방어력
         _poketmon.levelSpecialAttack = 1.5f;                //레벨당 특수공격력       
@@ -62,6 +65,9 @@ HRESULT pidgey::init()
         _poketmon.specialDefense = 50;						//특수방어
         _poketmon.speed = 71;								//스피드		
 
+        _poketmon.iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+        _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
         _poketmon.levelAttack = 1.8f;                       //레벨당 공격력
         _poketmon.levelDefense = 1.74f;                     //레벨당 방어력
         _poketmon.levelSpecialAttack = 1.68f;               //레벨당 특수공격력
@@ -93,6 +99,9 @@ HRESULT pidgey::init()
         _poketmon.specialAttack = 70;						//특수공격
         _poketmon.specialDefense = 70;						//특수방어
         _poketmon.speed = 101;								//스피드		
+
+        _poketmon.iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
+        _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
         _poketmon.levelAttack = 2.04f;                      //레벨당 공격력
         _poketmon.levelDefense = 1.98f;                     //레벨당 방어력

@@ -30,6 +30,9 @@ HRESULT rattata::init()
         _poketmon.specialDefense = 35;						//특수방어
         _poketmon.speed = 72;								//스피드		
 
+        _poketmon.iconNumX = 28;							//포켓몬 미니 아이콘 좌표x
+        _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
         _poketmon.levelAttack = 1.76f;                      //레벨당 공격력
         _poketmon.levelDefense = 1.5f;                      //레벨당 방어력
         _poketmon.levelSpecialAttack = 1.38f;               //레벨당 특수공격력
@@ -61,6 +64,9 @@ HRESULT rattata::init()
         _poketmon.specialAttack = 50;						//특수공격
         _poketmon.specialDefense = 70;						//특수방어
         _poketmon.speed = 97;								//스피드		
+
+        _poketmon.iconNumX = 28;							//포켓몬 미니 아이콘 좌표x
+        _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
         _poketmon.levelAttack = 2.06f;                      //레벨당 공격력 
         _poketmon.levelDefense  = 1.8f;                     //레벨당 방어력

@@ -30,6 +30,9 @@ HRESULT cyndaquil::init()
 			_poketmon.specialDefense = 50;						//특수방어
 			_poketmon.speed = 65;								//스피드		
 
+			_poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
 			_poketmon.levelAttack = 1.71f;						//레벨당 공격력
 			_poketmon.levelDefense = 1.6f;						//레벨당 방어력
 			_poketmon.levelSpecialAttack = 1.8f;				//레벨당 특수공격력
@@ -62,6 +65,9 @@ HRESULT cyndaquil::init()
 			_poketmon.specialDefense = 65;						//특수방어
 			_poketmon.speed = 80;								//스피드		
 
+			_poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
+
 			_poketmon.levelAttack = 1.85f;						//레벨당 공격력
 			_poketmon.levelDefense = 1.78f;						//레벨당 방어력
 			_poketmon.levelSpecialAttack = 2.04f;				//레벨당 특수공격력
@@ -93,6 +99,9 @@ HRESULT cyndaquil::init()
 			_poketmon.specialAttack = 109;						//특수공격
 			_poketmon.specialDefense = 85;						//특수방어
 			_poketmon.speed = 100;								//스피드		
+
+			_poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+			_poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
 			_poketmon.levelAttack = 2.09f;						//레벨당 공격력
 			_poketmon.levelDefense = 2.02f;						//레벨당 방어력

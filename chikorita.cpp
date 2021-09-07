@@ -30,6 +30,9 @@ HRESULT chikorita::init()
          _poketmon.specialDefense = 65;                     //특수방어
          _poketmon.speed = 45;							    //스피드		
 
+         _poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+         _poketmon.iconNumY = 0;							//포켓몬 미니 아이콘 좌표y
+
          _poketmon.levelAttack = 1.67f;                     //레벨당 공격력
          _poketmon.levelDefense = 1.86f;                    //레벨당 방어력
          _poketmon.levelSpecialAttack = 1.67f;              //레벨당 특수공격력
@@ -62,6 +65,9 @@ HRESULT chikorita::init()
          _poketmon.specialDefense = 80;                     //특수방어
          _poketmon.speed = 60;							    //스피드		
 
+         _poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+         _poketmon.iconNumY = 0;							//포켓몬 미니 아이콘 좌표y
+
          _poketmon.levelAttack = 1.83f;                     //레벨당 공격력
          _poketmon.levelDefense = 2.04f;                    //레벨당 방어력
          _poketmon.levelSpecialAttack = 1.83f;              //레벨당 특수공격력
@@ -92,7 +98,10 @@ HRESULT chikorita::init()
          _poketmon.defense = 100;						    //방어
          _poketmon.specialAttack = 83;                      //특수공격
          _poketmon.specialDefense = 100;                    //특수방어
-         _poketmon.speed = 80;							    //스피드		
+         _poketmon.speed = 80;							    //스피드	
+
+         _poketmon.iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
+         _poketmon.iconNumY = 0;							//포켓몬 미니 아이콘 좌표y
 
          _poketmon.levelAttack = 2.07f;                     //레벨당 공격력
          _poketmon.levelDefense = 2.28f;                    //레벨당 방어력

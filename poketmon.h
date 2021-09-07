@@ -35,6 +35,9 @@ struct tagPOKETMON
 	int level;								// 포켓몬 현재 레벨
 	int	evolutionLevel;						// 진화 단계
 
+	int iconNumX;							// 미니 포켓몬 이미지 아이콘 좌표 X
+	int iconNumY;							// 미니 포켓몬 이미지 아이콘 좌표 Y
+	
 	int type1; 								// 포켓몬 타입1	
 	int type2;								// 포켓몬 타입2
 

@@ -86,10 +86,9 @@ HRESULT uiManager::init()
 
 	_isAnimation = true;
 
-	//_currentHP = _character->getPoketmon(0).currentHP;
-	//_maxHP = _character->getPoketmon(0).maxHP;
-	//_currentEXP = _character->getPoketmon(0).currentExp;
-	//_maxEXP = _character->getPoketmon(0).maxExp;
+	
+	//myPokemon[0].currentHP = _character->getPoketmon(0).currentHP;
+	
 
 	_hpBarPlayer = new progressBar;
 	_hpBarPlayer->init(WINSIZEX - 161 - 192, 297, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp", "hpFront", "hpBack");
@@ -676,6 +675,8 @@ void uiManager::script()
 
 void uiManager::battle()
 {
+	uiOpen = true;
+
 	// 배경색 RGB(248, 248, 248)
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
@@ -698,6 +699,7 @@ void uiManager::battle()
 		if (_appearIndex >= 0)
 		{
 			IMAGEMANAGER->findImage("포켓몬출근")->frameRender(_backBuffer->getMemDC(), 70, 200, _appearIndex, 0);
+			_behaviorCount = 0;
 		}
 
 		static int count = 0;
@@ -713,14 +715,108 @@ void uiManager::battle()
 			//string index;
 			//index = _character->getPoketmon(0).index;
 
-			_hpBarPlayer->setGauge(100, 100);
+			_currentHP = _character->getPoketmon(0).currentHP;
+			_maxHP = _character->getPoketmon(0).maxHP;
+			_currentEXP = _character->getPoketmon(0).currentExp;
+			_maxEXP = _character->getPoketmon(0).maxExp;
+
+			_hpBarPlayer->setGauge(_currentHP, _maxHP);
 			_hpBarPlayer->render();
 
-			_expBar->setGauge(50, 100);
+			_expBar->setGauge(_currentEXP, _maxEXP);
 			_expBar->render();
 
+		
 			//IMAGEMANAGER->findImage(index + "");
+
+			
+
+			//	커서의 위치
+			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag)
+			{
+				if (_behaviorCount == 0)			// 싸우다
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						_isOpenSkill = true;
+					}
+
+					if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+					{
+						_behaviorCount = 1;			// 가방
+					}
+					else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+					{
+						_behaviorCount = 2;			// 포켓몬 보유창
+					}
+				}
+				if (_behaviorCount == 1)			// 가방
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						_isOpenBag = true;
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+					{
+						_behaviorCount = 3;			// 도망가다
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+					{
+						_behaviorCount = 0;			// 싸우다
+					}
+
+				}
+				if (_behaviorCount == 2)			// 포켓몬 보유창
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						_isOpenPokemon = true;
+						
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_UP))
+					{
+						_behaviorCount = 0;			// 싸우다
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+					{
+						_behaviorCount = 3;			// 도망가다
+					}
+				}
+				if (_behaviorCount == 3)			// 도망가다
+				{
+
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						uiOpen = false;
+						_isBattle = false;
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+					{
+						_behaviorCount = 2;			// 포켓몬 보유창
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_UP))
+					{
+						_behaviorCount = 1;			// 가방
+					}
+				}
+			}
+			// 커서의 기준점 - 싸우다
+			IMAGEMANAGER->findImage("커서")->render(_backBuffer->getMemDC(), 285 + (_behaviorCount % 2)*160, 445 + (_behaviorCount / 2)*60);
 		}
+
+	
+	}
+	if (_isOpenBag)
+	{
+		bag();
+	}
+	if (_isOpenSkill)
+	{
+
+	}
+	if (_isOpenPokemon)
+	{
+		pokeShift();
 	}
 }
 

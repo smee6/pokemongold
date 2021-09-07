@@ -1,6 +1,7 @@
 #pragma once
 #include "singletonBase.h"
 #include <string>
+#include <vector>
 
 enum class NPC
 {
@@ -111,6 +112,7 @@ public:
 	void pokeCenter();
 	void menu();
 
+	void pokeShift();
 
 	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
 

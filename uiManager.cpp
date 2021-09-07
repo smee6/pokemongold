@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "uiManager.h"
 #include "gameNode.h"
+#include "character.h"
 
 
 
@@ -21,6 +22,7 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
+	//_character->getPoketmon(0).name
 
 	//인벤토리를 10칸으로 초기화해준다 . 빈칸이 10개가 생김 ( 0~9)
 	IMAGEMANAGER->addImage("사다", "image/shopUI/shop_1.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -245,6 +247,10 @@ void uiManager::menu()
 
 }
 
+void uiManager::pokeShift()
+{
+}
+
 
 void uiManager::bag()
 {
@@ -423,7 +429,7 @@ void uiManager::script()
 	default:
 		break;
 	}
-
+	
 
 	// 대화 스킵
 	if (KEYMANAGER->isOnceKeyDown('I'))

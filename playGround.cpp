@@ -24,7 +24,8 @@ HRESULT playGround::init()
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
 	_pM->setCharacterMemoryAddressLink(_character);
-	
+	UIMANAGER->setCharacterMemoryAddressLink(_character);
+
 	_tileMap->init();
 	_character->init();
 	_pM->init();

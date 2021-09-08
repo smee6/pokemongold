@@ -153,7 +153,9 @@ public:
 	void door(int doorIndex);														// 문 타일 처리
 	void slope(int direction);														// 비탈길 타일 처리
 	void ui();																		// ui창 처리
-	void poketmonSetting();
+	void poketmonMeet();															// 포켓몬 조우 시 처리
+	void npcScript();																// npc 대화 스크립트 처리
+	void poketmonSetting();			// 테스트용 데이터
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터

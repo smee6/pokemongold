@@ -44,6 +44,8 @@ void character::update() // 업데이트
 {
     controll();
     imageFrame();
+    poketmonMeet();
+    npcScript();
 
     if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 
@@ -100,6 +102,16 @@ void character::controll() // 캐릭터 컨트롤 처리
             tileAction();
         }
     }
+
+    // 메뉴창 (enter Key)
+    if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
+
+    // 상점창 (Z Key 테스트용)
+    if (KEYMANAGER->isOnceKeyDown('Z')) UIMANAGER->setOpenShop(true);
+
+    // 포켓몬센터창 (X Key 테스트용)
+    if (KEYMANAGER->isOnceKeyDown('X')) UIMANAGER->setOpenPokecenter(true);
+    
 }
 
 void character::imageSetting() // 상태에 따라 현재 이미지 세팅
@@ -127,8 +139,6 @@ void character::imageFrame() // 이미지 프레임 처리
     if (_direction == 0 || _direction == 2) _image->setFrameY(0);
     else _image->setFrameY(1);
 
-    if (_isPoketmonMeet) _battleLoadingImage->setFrameY(0); // 포켓몬 조우 시 Y프레임 세팅
-
     // 프레임 카운트 증가
     _frameCount++;
 
@@ -151,36 +161,92 @@ void character::imageFrame() // 이미지 프레임 처리
         _image->setFrameX(_currentFrame);
     }
 
-    // 포켓몬 조우 시 플래시 로딩 이미지 갱신
-    if (_isPoketmonMeet)
-    {
-        _loadingCount++;     
-        if (_loadingCount % 15 == 0) _alpha = 0;
-        if (_loadingCount % 15 == 7) _alpha = 150;
-        if (_loadingCount % 15 == 14) _alpha = 255;
-    }
-
-    // 포켓몬 조우 시 배틀 로딩 이미지 갱신
-    if (_frameCount % 2 == 0)
-    {
-        if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
-
-        // 맥스프레임 도달하면 배틀씬 전환
-        if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
-        {
-            UIMANAGER->setIsBattle(true);
-            _battleLoadingImage->setFrameX(0);
-            _battleLoadingImage->setFrameY(0);
-            _loadingCount = 0;
-            _isPoketmonMeet = false;
-        }
-    }
-
     // 렉트 갱신
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
     // 프레임카운트 초기화
     if (_frameCount > 5) _frameCount = 0;
+}
+
+void character::poketmonMeet() // 포켓몬 조우 시 처리
+{
+    // 포켓몬 조우 시에만 처리되도록.
+    if (!_isPoketmonMeet) return;
+
+    // 포켓몬 조우 시 Y프레임 세팅
+    _battleLoadingImage->setFrameY(0); 
+
+    // 로딩 카운트 증가
+    _loadingCount++; 
+
+    // 플래시 로딩 이미지 알파값 세팅
+    if (_loadingCount % 15 == 0) _alpha = 0;
+    if (_loadingCount % 15 == 7) _alpha = 150;
+    if (_loadingCount % 15 == 14) _alpha = 255;
+
+    // 배틀 로딩 이미지 갱신
+    if (_loadingCount % 2 == 0)
+    {
+        if (_loadingCount > 70) _battleLoadingImage->setFrameX(_battleLoadingImage->getFrameX() + 1);
+
+        // 맥스 프레임 도달하면 배틀씬으로 전환
+        if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
+        {
+            UIMANAGER->setIsBattle(true);
+            UIMANAGER->setIsAnimation(true);
+            _battleLoadingImage->setFrameX(0);
+            _battleLoadingImage->setFrameY(0);
+            _loadingCount = 0;
+            _isPoketmonMeet = false;
+        }
+    }   
+}
+
+void character::npcScript() // npc 대화 스크립트 처리
+{
+    for (int i = 0; i < 8; i++)
+    {
+        RECT temp;
+        RECT npc = _npc->getnpcRC()[i].detectRC;
+
+        if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시
+        {
+            if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+            {
+                UIMANAGER->setIsScript(true); // 스크립트 켜줌.
+
+                switch (i) // 충돌된 npc의 대사 선택
+                {
+                case 0: // 어머니
+                    UIMANAGER->setNPC(NPC::MOM_FIRST);
+                    break;
+                case 1: // 공박사
+                    UIMANAGER->setNPC(NPC::DR_FIRST);
+                    break;
+                case 2: // 공박사 조수
+                    UIMANAGER->setNPC(NPC::SUPPORTER);
+                    break;
+                case 3: // 간호순 눈나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+                    UIMANAGER->setOpenPokecenter(true);
+                    UIMANAGER->setNPC(NPC::POKECENTER);
+                    break;
+                case 4: // 부하 1
+                    UIMANAGER->setNPC(NPC::TRAINER1_BATTLE_BEFORE);
+                    break;
+                case 5: // 부하 2
+                    UIMANAGER->setNPC(NPC::TRAINER2_BATTLE_BEFORE);
+                    break;
+                case 6: // 비상 관장
+                    UIMANAGER->setNPC(NPC::CHAMPION_BATTLE_START);
+                    break;
+                case 7: // 상점 주인
+                    UIMANAGER->setOpenShop(true);
+                    UIMANAGER->setNPC(NPC::SHOP);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void character::idle(int direction) // 아이들 처리
@@ -318,13 +384,6 @@ void character::grass() // 풀 타일 처리
 
         if (rndPoketmonMeet <= POKETMONMEET) _isPoketmonMeet = 1;
         else _isPoketmonMeet = 0;
-    }
-
-    // 포켓몬 만났을 때
-    if (_isPoketmonMeet)
-    {
-        // 배틀씬 ui 호출
-        UIMANAGER->battle();
     }
 }
 
@@ -476,28 +535,15 @@ void character::slope(int direction) // 비탈길 타일 처리
 
 void character::ui() // ui창 호출
 {
-    // 각 ui창 세팅
-    if (!UIMANAGER->isUiOpen() && !_isPoketmonMeet) // 아무 UI창도 없고, 포켓몬 조우도 아닐 때
-    {
-        // 메뉴창 (enter Key)
-        if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
-
-        // 상점창 (Z Key 테스트용)
-        if (KEYMANAGER->isOnceKeyDown('Z')) UIMANAGER->setOpenShop(true);
-
-        // 포켓몬센터창 (X Key 테스트용)
-        if (KEYMANAGER->isOnceKeyDown('X')) UIMANAGER->setOpenPokecenter(true);
-    }
-
     // UI창 실행
     if (UIMANAGER->getOpenMenu()) UIMANAGER->menu();
     if (UIMANAGER->getOpenShop()) UIMANAGER->shop();
     if (UIMANAGER->getOpenPokecenter()) UIMANAGER->pokeCenter();
     if (UIMANAGER->getIsBattle()) UIMANAGER->battle();
-
+    if (UIMANAGER->getIsScript()) UIMANAGER->script();
 }
 
-void character::poketmonSetting()
+void character::poketmonSetting() // 테스트 데이터
 {
     _poketmon[0].name = "치코리타";							// 이름
     _poketmon[0].gender = "수컷";							// 성별
@@ -544,12 +590,13 @@ void character::poketmonSetting()
     _poketmon[0].skill3 = 3;								// 스킬3 인덱스 
     _poketmon[0].skill4 = 4;								// 스킬4 인덱스 
     _poketmon[0].skillPP1 = 10;							// 스킬1 현재 PP
-    _poketmon[0].skillPP2 = 10;							// 스킬1 현재 PP
-    _poketmon[0].skillPP3 = 10;							// 스킬1 현재 PP
-    _poketmon[0].skillPP4 = 10;							// 스킬1 현재 PP
+    _poketmon[0].skillPP2 = 10;							// 스킬2 현재 PP
+    _poketmon[0].skillPP3 = 10;							// 스킬3 현재 PP
+    _poketmon[0].skillPP4 = 10;							// 스킬4 현재 PP
 
     _poketmon[0].item = 1;								// 보유 중인 아이템 인덱스
 
+//--------------------------------------------------------------------------------------------------------------
     _poketmon[1].name = "피죤";							// 이름
     _poketmon[1].gender = "암컷";							// 성별
     _poketmon[1].isGender = 1;							// 성별 체크
@@ -595,9 +642,9 @@ void character::poketmonSetting()
     _poketmon[1].skill3 = 3;								// 스킬3 인덱스 
     _poketmon[1].skill4 = 4;								// 스킬4 인덱스 
     _poketmon[1].skillPP1 = 10;							// 스킬1 현재 PP
-    _poketmon[1].skillPP2 = 10;							// 스킬1 현재 PP
-    _poketmon[1].skillPP3 = 10;							// 스킬1 현재 PP
-    _poketmon[1].skillPP4 = 10;							// 스킬1 현재 PP
+    _poketmon[1].skillPP2 = 10;							// 스킬2 현재 PP
+    _poketmon[1].skillPP3 = 10;							// 스킬3 현재 PP
+    _poketmon[1].skillPP4 = 10;							// 스킬4 현재 PP
               
     _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }
@@ -607,7 +654,7 @@ void character::render() // 렌더
     // 캐릭터 이미지 렌더
     _image->frameRender(getMemDC(), _rc.left, _rc.top);
 
-    if (KEYMANAGER->isToggleKey(VK_TAB))
+    if (KEYMANAGER->isToggleKey(VK_TAB)) // 데이터값들 표시
     {
         Rectangle(getMemDC(), _rc);
 

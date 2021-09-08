@@ -26,13 +26,13 @@ HRESULT character::init() // 인잇
     _direction = _isMoving = _isSloping = _isPoketmonMeet = _frontTileType = _alpha = 0;
     _jumpPower = JUMPPOWER;
     _gravity = GRAVITY;
-    _frameCount = _currentFrame = _loadingCount = 0;
+    _frameCount = _currentFrame = _loadingCount = _scriptAction = 0;
     _x = WINSIZEX / 2 + TILESIZE / 2;
     _y = WINSIZEY / 2;
     _currentTile = 4813;
     _slopeDistance = 0;
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
+    
     return S_OK;
 }
 
@@ -53,13 +53,11 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    if (_isPoketmonMeet) // 포켓몬 만나면 아이들 처리
+    if (_isPoketmonMeet || UIMANAGER->isUiOpen()) // 포켓몬 만나거나 UI떠있다면~
     {
-        idle(_direction);
-        return; // 포켓몬 만났으면 조작 불가   
+        idle(_direction); // 아이들 처리
+        return; // 함수 빠져나감 
     }
-
-    if (UIMANAGER->isUiOpen()) return;  // ui떠있을 때 캐릭터 컨트롤 불가
 
     if (!_isMoving && !_isSloping) // 이동 중이 아니고, 비탈길 아닐 때
     {
@@ -204,6 +202,7 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
 
 void character::npcScript() // npc 대화 스크립트 처리
 {
+    // 스크립트 떠있으면 빠져나감
     if (UIMANAGER->getIsScript()) return;
 
     for (int i = 0; i < 8; i++)
@@ -211,9 +210,30 @@ void character::npcScript() // npc 대화 스크립트 처리
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
 
-        if (IntersectRect(&temp, &_rc, &npc) && !UIMANAGER->isUiOpen()) // npc 탐지 렉트랑 충돌 시
+        if (IntersectRect(&temp, &_rc, &npc) && !UIMANAGER->isUiOpen() && !_isMoving) // npc 탐지 렉트랑 충돌 시, ui없을 시, 서있을 때
         {
-            if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+            // 간호순 눈나ㅏㅏㅏ 포켓볼 액션
+            if (_scriptAction == 1 && i == 3) 
+            {
+                UIMANAGER->setOpenPokecenter(true);     // 포켓몬 애니 재생
+                _scriptAction = 2;                      // 스크립트 액션 = 2
+            }
+            else if (_scriptAction == 2 && i == 3)
+            {
+                UIMANAGER->setIsScript(true);           // 스크립트 켜줌.
+                UIMANAGER->setNPC(NPC::SHOP, true);     // 엔드 스크립트 대사 재생
+                _scriptAction = 0;                      // 스크립트 액션 초기화
+            }
+
+            // 상점 아제 엔드 스크립트 대사 선택
+            if (_scriptAction == 1 && i == 7) 
+            {
+                UIMANAGER->setIsScript(true);           // 스크립트 켜줌.
+                UIMANAGER->setNPC(NPC::SHOP, true);     // 엔드 스크립트 선택
+                _scriptAction = 0;                      // 스크립트 액션 초기화
+            }
+
+            if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _scriptAction == 0) // 스페이스바 눌렀을 때
             {
                 UIMANAGER->setIsScript(true); // 스크립트 켜줌.
 
@@ -228,9 +248,9 @@ void character::npcScript() // npc 대화 스크립트 처리
                 case 2: // 공박사 조수
                     UIMANAGER->setNPC(NPC::SUPPORTER, true);
                     break;
-                case 3: // 간호순 눈나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
-                    UIMANAGER->setOpenPokecenter(true);
-                    UIMANAGER->setNPC(NPC::POKECENTER, true);
+                case 3: // 간호순 눈나ㅏㅏㅏㅏㅏㅏ
+                    UIMANAGER->setNPC(NPC::POKECENTER, true);   // 스타트 스크립트 대사 선택해주고
+                    _scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 4: // 부하 1
                     UIMANAGER->setNPC(NPC::TRAINER1, true);
@@ -241,11 +261,12 @@ void character::npcScript() // npc 대화 스크립트 처리
                 case 6: // 비상 관장
                     UIMANAGER->setNPC(NPC::CHAMPION, true);
                     break;
-                case 7: // 상점 주인
-                    UIMANAGER->setOpenShop(true);
-                    UIMANAGER->setNPC(NPC::SHOP, true);
+                case 7: // 상점 아제
+                    UIMANAGER->setIsScript(false);              // 스크립트 꺼주고
+                    UIMANAGER->setOpenShop(true);               // 상점 오픈
+                    _scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
-                }
+                }                
             }
         }
     }
@@ -359,7 +380,7 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
                 break;
             }
 
-            if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
+            //if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
             if (_frontTileType == 3) door(_currentTile);    // 문 타일일 때 처리
         }
     }
@@ -672,6 +693,9 @@ void character::render() // 렌더
 
         sprintf_s(str, "_포켓몬 조우 : %d", _isPoketmonMeet);
         TextOut(getMemDC(), 100, 250, str, strlen(str));
+
+        sprintf_s(str, "_scriptAction : %d", _scriptAction);
+        TextOut(getMemDC(), 100, 280, str, strlen(str));
     }
     
     // 비탈길 이동 중일 때 그림자 보여짐

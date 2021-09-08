@@ -127,10 +127,12 @@ private:
 	int _grassCount;										// 풀 이미지 변경용 카운트값
 	int _alpha;												// 플래시 로딩 이미지의 알파값
 	int _loadingCount;										// 포켓몬 조우 시 배틀 로딩까지의 인터벌 카운트
+	int _scriptAction;										// 대화 스크립트 중 기능 액션 필요할 때 사용하는 변수
 
 	bool _isMoving;											// 현재 캐릭터가 이동 중인지?
 	bool _isSloping;										// 현재 캐릭터가 비탈길 이동 중인지?				
 	bool _isPoketmonMeet;									// 풀 타일에서 포켓몬 조우 중인지?
+
 
 public:
 	character();

@@ -104,7 +104,11 @@ private:
 	//battle
 	bool _isAnimation;							// 애니메이션이 끝났는지에 대한 체크변수
 
-	image* _playerImage;
+	image* _playerImage;						// 플레이어 이미지
+	image* _playerPokeImage;					// 플레이어 포켓몬 이미지
+	image* _enemyImage;							// 상대 트레이너 이미지
+	image* _enemyPokeImage;						// 상대 포켓몬 이미지
+
 	int _appearIndex = 2;							// 포켓몬 출근 시 볼 프레임 이미지 렌더용
 
 	progressBar* _hpBarPlayer;							// 체력 게이지
@@ -117,6 +121,10 @@ private:
 	float _time;
 
 	int _behaviorCount;								//커서 움직임을 위한 변수
+
+	bool _isBattleScript;
+
+
 
 	NPC _npc;
 	character* _character;
@@ -174,6 +182,11 @@ public:
 	bool getIsAnimation() { return _isAnimation; }
 	void setIsAnimation(bool isAnimation) { _isAnimation = isAnimation; }
 
+	bool getIsBattleScript() { return _isBattleScript; }
+	void setIsBattleScript(bool isBattleScript) { _isBattleScript = isBattleScript;	}
+
+
+	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 };
 

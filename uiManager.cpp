@@ -42,6 +42,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("고급상처약", "image/shopUI/buy_3.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("안산다", "image/shopUI/buy_4.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	// =======================================================================================================================
+
 	IMAGEMANAGER->addImage("menu0", "image/menuUI/menu_1.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("menu1", "image/menuUI/menu_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("menu2", "image/menuUI/menu_3.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -55,6 +57,7 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("pokeShift0", "image/menuUI/pokeShift_0.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pokeShift1", "image/menuUI/pokeShift_1.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -63,6 +66,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("pokeShift4", "image/menuUI/pokeShift_4.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pokeShift5", "image/menuUI/pokeShift_5.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pokeShift6", "image/menuUI/pokeShift_6.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("배틀배경", "image/battle/battleBackground.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("배틀행동선택", "image/battle/selectBehavior.bmp", 640, 186, true, RGB(255, 0, 255));
@@ -74,7 +79,7 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addFrameImage("성별", "image/battle/gender.bmp", 7, 16, 1, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("포켓몬출근", "image/battle/appearPokemon.bmp", 600, 200, 3, 1,  true, RGB(255, 0, 255));
 
-
+	// ========================================================================================================================
 
 	IMAGEMANAGER->addFrameImage("pokeCenter", "image/shopUI/pokeCenter.bmp", 500, 60, 10, 1, true, RGB(255, 0, 255));
 
@@ -82,13 +87,9 @@ HRESULT uiManager::init()
 
 	_scriptImage = IMAGEMANAGER->addImage("script", "image/dialogueUI.bmp", 650, 576, true, RGB(255, 0, 255));
 
-	//_vScript = TXTDATA->txtLoad("Test.txt");		// 경로("script/OO.txt");
+	// =======================================================================================================================
 
 	_isAnimation = true;
-
-	
-	//myPokemon[0].currentHP = _character->getPoketmon(0).currentHP;
-	
 
 	_hpBarPlayer = new progressBar;
 	_hpBarPlayer->init(WINSIZEX - 161 - 192, 297, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp", "hpFront", "hpBack");
@@ -111,10 +112,6 @@ void uiManager::release()
 
 void uiManager::update()
 {
-	//if (KEYMANAGER->isOnceKeyDown('P'))
-	//{
-	//	_isScript = true;
-	//}
 }
 
 void uiManager::render()
@@ -208,12 +205,8 @@ void uiManager::shop()
 
 				break;
 			}
-
-
 		}
-	
 	}
-
 }
 
 void uiManager::pokeCenter()
@@ -231,6 +224,7 @@ void uiManager::pokeCenter()
 	if (_index > 10) {
 		_index = 0;
 		uiOpen = false;
+		_isOpenPokecenter = false;
 	}
 }
 
@@ -247,7 +241,6 @@ void uiManager::menu()
 			menuCnt -= 1;
 		}
 	}
-
 
 	switch (menuCnt)
 	{
@@ -289,8 +282,6 @@ void uiManager::menu()
 	{
 		bag();
 	}
-
-
 }
 
 void uiManager::pokeShift()
@@ -298,15 +289,14 @@ void uiManager::pokeShift()
 	pokeWindow = true;
 	if (pokeWindow) {
 
-			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
-				pokesCnt += 1;
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
+			pokesCnt += 1;
 
-				
-				//메뉴 화살표 위아래 움직이는
-			}
-			if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
-				pokesCnt -= 1;
-			}
+			//메뉴 화살표 위아래 움직이는
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
+			pokesCnt -= 1;
+		}
 
 		switch (pokesCnt)
 		{
@@ -337,7 +327,6 @@ void uiManager::pokeShift()
 			break;
 		}
 
-		
 		//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
 		for (int i = 0; i < myPokemon.size(); i++) {
 			myPokemon[i].name = _character->getPoketmon(i).name;
@@ -348,10 +337,9 @@ void uiManager::pokeShift()
 			myPokemon[i].iconNumY = _character->getPoketmon(i).iconNumY;
 		}
 
+
 		char str[128];
 		
-		
-
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
 		HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
@@ -368,7 +356,6 @@ void uiManager::pokeShift()
 			iconCnt++;
 			delaycnt = 0;
 		}
-		
 		
 		for (int i = 0; i < myPokemon.size(); i++) {
 			string strname = myPokemon[i].name;
@@ -395,12 +382,7 @@ void uiManager::pokeShift()
 		
 		SelectObject(_backBuffer->getMemDC(), oldFont5);
 		DeleteObject(font5);
-
-
-	
 	}
-	
-
 }
 
 
@@ -416,7 +398,6 @@ void uiManager::bag()
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
 			bagCnt --;
 		}
-
 
 		switch (bagCnt) {
 
@@ -459,8 +440,6 @@ void uiManager::bag()
 			break;
 		}
 
-
-
 		//수량을 텍스트로 표시해주는 부분
 		char str[128];
 
@@ -484,9 +463,7 @@ void uiManager::bag()
 
 		SelectObject(_backBuffer->getMemDC(), oldFont2);
 		DeleteObject(font2);
-
 	}
-
 }
 
 
@@ -578,7 +555,6 @@ void uiManager::script()
 		_isCount = false;
 	}
 	
-
 	// 대화 스킵
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -591,6 +567,11 @@ void uiManager::script()
 		// 마지막 쓰레기값 나와서 -1까지
 		if (_scriptIndex >= _vScript.size() - 1)
 		{
+			// 배틀 스크립트면 배틀 스크립트 종료
+			if (_isBattleScript)
+			{
+				_isBattleScript = false;
+			}
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 			_isScript = false;
 			_txtIndex = 0;
@@ -598,57 +579,117 @@ void uiManager::script()
 			uiOpen = false;
 		}
 
-		// 배경이미지 렌더
-		_scriptImage->render(_backBuffer->getMemDC());
-
-		// 받아온 텍스트정보를 넘겨줌
-		_txt = _vScript[_scriptIndex];
-
-		// 스킵이 아닐 경우에
-		if (!_isScriptSkip)
+		if (_isBattle)
 		{
-			// 문장 전체 길이보다 현재가 작으면
-			if (_txtIndex < _txt.length())
+			// 배경이미지 렌더
+			_scriptImage->render(_backBuffer->getMemDC());
+
+			// 받아온 텍스트정보를 넘겨줌
+			if (_scriptIndex == 1) _txt = _character->getPoketmon(0).name + _vScript[_scriptIndex];
+			else _txt = _vScript[_scriptIndex];
+
+			// 스킵이 아닐 경우에
+			if (!_isScriptSkip)
 			{
-				// 한 글자씩 출력
-				_txtIndex++;
-			}
-			// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
-			else if (_txtIndex >= _txt.length())
-			{
-				// 버튼을 누르면
-				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+				// 문장 전체 길이보다 현재가 작으면
+				if (_txtIndex < _txt.length())
 				{
-					// 스킵 상태 false(다음 문장 스킵되지 않도록)
+					// 한 글자씩 출력
+					_txtIndex++;
+				}
+				// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
+				else if (_txtIndex >= _txt.length())
+				{
+					// 버튼을 누르면
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						// 스킵 상태 false(다음 문장 스킵되지 않도록)
+						_isScriptSkip = false;
+
+						// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
+						_txtIndex = 0;
+						_scriptIndex++;
+					}
+				}
+			}
+			// 스킵하면
+			else if (_isScriptSkip)
+			{
+				// 현재 문자열이 전체 길이보다 길어지려고 하면
+				if (_txtIndex >= _txt.length())
+				{
+					// 스킵 상태 false
 					_isScriptSkip = false;
 
-					// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
+					// 문자 인덱스 초기화해주고 다음 줄로 넘겨줌
 					_txtIndex = 0;
 					_scriptIndex++;
 				}
+				// 현재 문자열의 길이가 전체 길이보다 작으면
+				else if (_txtIndex < _txt.length())
+				{
+					// 스킵 상태 false
+					_isScriptSkip = false;
+
+					// 현재 문장 전부 출력
+					_txtIndex = _txt.length();
+				}
 			}
 		}
-		// 스킵하면
-		else if (_isScriptSkip)
+		else if (!_isBattle)
 		{
-			// 현재 문자열이 전체 길이보다 길어지려고 하면
-			if (_txtIndex >= _txt.length())
+			// 배경이미지 렌더
+			_scriptImage->render(_backBuffer->getMemDC());
+
+			// 받아온 텍스트정보를 넘겨줌
+			_txt = _vScript[_scriptIndex];
+
+			// 스킵이 아닐 경우에
+			if (!_isScriptSkip)
 			{
-				// 스킵 상태 false
-				_isScriptSkip = false;
-				
-				// 문자 인덱스 초기화해주고 다음 줄로 넘겨줌
-				_txtIndex = 0;
-				_scriptIndex++;
+				// 문장 전체 길이보다 현재가 작으면
+				if (_txtIndex < _txt.length())
+				{
+					// 한 글자씩 출력
+					_txtIndex++;
+				}
+				// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
+				else if (_txtIndex >= _txt.length())
+				{
+					// 버튼을 누르면
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						// 스킵 상태 false(다음 문장 스킵되지 않도록)
+						_isScriptSkip = false;
+
+						// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
+						_txtIndex = 0;
+						_scriptIndex++;
+					}
+				}
 			}
-			// 현재 문자열의 길이가 전체 길이보다 작으면
-			else if (_txtIndex < _txt.length())
+			// 스킵하면
+			else if (_isScriptSkip)
 			{
-				// 스킵 상태 false
-				_isScriptSkip = false;
-				
-				// 현재 문장 전부 출력
-				_txtIndex = _txt.length();
+				// 현재 문자열이 전체 길이보다 길어지려고 하면
+				if (_txtIndex >= _txt.length())
+				{
+					// 스킵 상태 false
+					_isScriptSkip = false;
+
+					// 문자 인덱스 초기화해주고 다음 줄로 넘겨줌
+					_txtIndex = 0;
+					_scriptIndex++;
+				}
+				// 현재 문자열의 길이가 전체 길이보다 작으면
+				else if (_txtIndex < _txt.length())
+				{
+					// 스킵 상태 false
+					_isScriptSkip = false;
+
+					// 현재 문장 전부 출력
+					_txtIndex = _txt.length();
+				}
 			}
 		}
 
@@ -676,15 +717,31 @@ void uiManager::battle()
 	// 배경색 RGB(248, 248, 248)
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
+	_enemyPokeImage = IMAGEMANAGER->findImage("155F");
 
-	static int x = -_playerImage->getWidth();
+	static int px = -_playerImage->getWidth();
+	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 80;
 
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
-		
-		_playerImage->render(_backBuffer->getMemDC(), x, 200);
+		_playerImage->render(_backBuffer->getMemDC(), px, 200);
+		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
 
-		if (x <= 70) x += 3; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
+		if (ex >= WINSIZEX - 200)
+		{
+			ex -= 3;
+		}
+
+		if (px <= 70)
+		{
+			px += 3; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
+			_npc = NPC::BATTLE;
+		}
+		else if (_isBattleScript)
+		{
+			_isCount = true;
+			_isScript = true;
+		}
 		else
 		{
 			_time = TIMEMANAGER->getWorldTime();
@@ -787,7 +844,8 @@ void uiManager::battle()
 						uiOpen = false;
 						_isBattle = false;
 						_behaviorCount = 0;
-						x = -_playerImage->getWidth();
+						px = -_playerImage->getWidth();
+						ex = WINSIZEX + _enemyPokeImage->getWidth();
 						_appearIndex = 2;
 					}
 					if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
@@ -803,8 +861,6 @@ void uiManager::battle()
 			// 커서의 기준점 - 싸우다
 			IMAGEMANAGER->findImage("커서")->render(_backBuffer->getMemDC(), 285 + (_behaviorCount % 2)*160, 445 + (_behaviorCount / 2)*60);
 		}
-
-	
 	}
 	if (_isOpenBag)
 	{
@@ -835,7 +891,6 @@ void uiManager::skill()
 	HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
 	char skill[128];
-
 
 	for (int i = 0; i < 4; i++) {
 		//string strname = myPokemon[i].name;

@@ -30,8 +30,12 @@ private:
 
 
 	image* _skillImg;			//스킬 이미지
-	int _indexImg;				//프레임 초기화 할거.
+	int _currentFrame;			//프레임 초기화 할거.
+	int _frameCount;			//프레임 카운트
 	int _count;					//카운트 뒤 끝나게
+	
+	
+
 
 	int _power;					// 위력
 	int _accuracy;				// 명중률
@@ -39,9 +43,13 @@ private:
 	int _number;				// 넘버
 	int _skillLever;			// 스킬레벨
 
+	POINT _imgPoint;			// 이미지 띄우는 거 조정할려고 만든 함수
+	
+
 	int _index;					// 확률 조건걸떄 필요한 수
 
 	bool _isSkill;				// 스킬 사용확인
+	bool _isWhoSkill;			// 이미지 위치 띄우는거 조절할려고 만든 불값 플레이어(true) 인가 야생(false)인가 
 
 	RECT rc;					//위치 잡을 임시용
 
@@ -53,7 +61,7 @@ public:
 	HRESULT init();
 	void release();
 	void update();
-	void render();
+	
 
 	void tackle();			// 몸통박치기
 	void stringShot();		// 실뿜기
@@ -90,6 +98,7 @@ public:
 	void rage();			// 분노
 	void waterGun();		// 물대포
 
+	void render();
 
 	void skillAni();		// 스킬 애니메이션
 	void imageInit();		// 이미지

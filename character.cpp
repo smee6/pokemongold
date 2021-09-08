@@ -216,7 +216,7 @@ void character::npcScript() // npc 대화 스크립트 처리
             // 간호순 눈나ㅏㅏㅏ 포켓볼 액션
             if (_scriptAction == 1 && i == 3) 
             {
-                UIMANAGER->setOpenPokecenter(true);     // 포켓몬 애니 재생
+                //UIMANAGER->setOpenPokecenter(true);     // 포켓몬 애니 재생
                 _scriptAction = 2;                      // 스크립트 액션 = 2
             }
             else if (_scriptAction == 2 && i == 3)

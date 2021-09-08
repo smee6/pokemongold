@@ -579,16 +579,21 @@ void uiManager::script()
 			{
 				_isBattleScript = false;
 			}
-
-			if (_npc == NPC::POKECENTER && _pokecenterCount >= 2)
-			{
-				_pokecenterCount = 0;
-			}
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 			_isScript = false;
 			_txtIndex = 0;
 			_scriptIndex = 0;
 			uiOpen = false;
+			if (_npc == NPC::POKECENTER && _pokecenterCount == 1)
+			{
+				_isOpenPokecenter = true;
+				uiOpen = true;
+			}
+
+			if (_npc == NPC::POKECENTER && _pokecenterCount >= 2)
+			{
+				_pokecenterCount = 0;
+			}
 		}
 
 		if (_isBattle)

@@ -204,6 +204,8 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
 
 void character::npcScript() // npc 대화 스크립트 처리
 {
+    if (UIMANAGER->getIsScript()) return;
+
     for (int i = 0; i < 8; i++)
     {
         RECT temp;

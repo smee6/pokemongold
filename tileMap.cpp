@@ -33,8 +33,6 @@ HRESULT tileMap::init()
 			_tile[i].type = TILETYPE_CLOSE;
 	}
 
-	_isMove = false;
-
 	load();
 
 	return S_OK;
@@ -82,7 +80,7 @@ void tileMap::update()
 			RECT temp;
 			if (IntersectRect(&temp, &_tile[i].rc, &_npc->getnpcRC()[j].rc))
 			{
-				if (_isMove) break;
+				if (_npc->getIsMove() == true) break;			//npc가 움직일 때는 속성변화 없음
 				_tile[i].type = TILETYPE_CLOSE;
 			}
 		}

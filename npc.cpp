@@ -15,6 +15,8 @@ HRESULT npc::init()
 {
 	setNPC();
 
+	_isMove = false;
+
 	return S_OK;
 }
 
@@ -26,13 +28,19 @@ void npc::update()
 {
 	updateNPC();
 
+	//npc 무브렉트에 플레이어가 오면  npc움직임
 	for (int i = 0; i < 8; i++)
 	{
 		RECT temp;
-		//if(IntersectRect(&temp, &_npc[i].detectRC), &_character->)
+		if(IntersectRect(&temp, &_npc[i].moveRC, &_character->getRect()))
 		{
-			move();
+			_isMove = true;
 		}
+	}
+
+	if (_isMove)
+	{
+		move();
 	}
 }
 
@@ -40,9 +48,16 @@ void npc::render()
 {
 	for (int i = 0; i < 8; i++)
 	{
-		_npc[i].Img->render(getMemDC(), _npc[i].rc.left, _npc[i].rc.top);				//npc 이미지
+		_npc[i].Img->render(getMemDC(), _npc[i].rc.left + _npc[i].npcX , _npc[i].rc.top + _npc[i].npcY);				//npc 이미지
+		if (_npc[i].markCount != 0 && _npc[i].markCount != 100)
+		{
+			_npc[i].markImg->render(getMemDC(), _npc[i].rc.left - 16, _npc[i].rc.top - 16);
+		}
+
+
 		if(KEYMANAGER->isToggleKey(VK_TAB)) Rectangle(getMemDC(), _npc[i].detectRC);	//대화 상자 렉트
 	}
+
 }
 
 void npc::setNPC()
@@ -86,9 +101,65 @@ void npc::updateNPC()
 	_npc[5].detectRC = RectMake(_tileMap->getTile()[5329].rc.left, _tileMap->getTile()[5329].rc.top, 64, 64);
 	_npc[6].detectRC = RectMake(_tileMap->getTile()[4686].rc.left, _tileMap->getTile()[4686].rc.top, 64, 64);
 	_npc[7].detectRC = RectMake(_tileMap->getTile()[4699].rc.left, _tileMap->getTile()[4699].rc.top, 64, 64);
+
+	//npc 무브렉트
+	_npc[0].moveRC = RectMake(_tileMap->getTile()[4204].rc.left, _tileMap->getTile()[4204].rc.top, 64, 64);
+	_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 64, 64);
+	_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
 }
 
 void npc::move()
 {
+	RECT temp;
+	if (IntersectRect(&temp, &_npc[0].moveRC, &_character->getRect()))
+	{
+		if (_npc[0].markCount != 100)
+		{
+			_npc[0].markCount++;
+		}
+		else if (_npc[0].markCount == 100)
+		{
+			_npc[0].moveCount++;
+			if (_npc[0].moveCount <= 16)
+			{
+				_npc[0].npcX += 8;
+			}
+			if (_npc[0].moveCount > 16 && _npc[0].moveCount <= 24)
+			{
+				_npc[0].npcY -= 8;
+			}
+		}
+	}
 
+	if (IntersectRect(&temp, &_npc[4].moveRC, &_character->getRect()))
+	{
+		if (_npc[4].markCount != 100)
+		{
+			_npc[4].markCount++;
+		}
+		else if (_npc[4].markCount == 100)
+		{
+			_npc[4].moveCount++;
+			if (_npc[4].moveCount <= 16)
+			{
+				_npc[4].npcX += 8;
+			}
+		}
+	}
+
+	if (IntersectRect(&temp, &_npc[5].moveRC, &_character->getRect()))
+	{
+		if (_npc[5].markCount != 100)
+		{
+			_npc[5].markCount++;
+		}
+		else if (_npc[5].markCount == 100)
+		{
+			_npc[5].moveCount++;
+			if (_npc[5].moveCount <= 16)
+			{
+				_npc[5].npcX -= 8;
+			}
+		}
+	}
 }

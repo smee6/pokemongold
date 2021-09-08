@@ -59,7 +59,6 @@ private:
 	int _cameraX;							//맵 카메라 X좌표
 	int _cameraY;							//맵 카메라 y좌표
 
-	bool _isMove;							//움직일 때는  속성바꾸는 것을 꺼주기 위해 만듬
 public:
 	tileMap();
 	~tileMap();

@@ -8,8 +8,10 @@ struct tagNPC
 	image* markImg;				//느낌표 이미지
 	RECT rc;					//npc 렉트
 	RECT detectRC;				//감지렉트(말걸 때)
-	RECT moveRC;				//움직임 렉트(이 렉트 안에 오면 npc가 다가감)
+	RECT moveRC;				//움직임 렉트(이 렉트 안에 오면 npc가 다가감
 
+	int npcX, npcY;				//npc 움직이게 하는 변수
+	int moveCount;				//움직이는 시간카운트
 	int markCount;				//느낌표 지속카운트
 };
 
@@ -28,6 +30,8 @@ private:
 
 	int count;					//프레임 돌리는 카운트
 
+	bool _isMove;							//움직일 때는  속성바꾸는 것을 꺼주기 위해 만듬
+
 public:
 	npc();
 	~npc();
@@ -37,12 +41,13 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void setNPC();							//NPC 초기화 함수
-	void updateNPC();						//NPC 업데이트 함수
-	void move();							//움직임 함수(플레이어 엄마, 부하1, 부하2)
+	void setNPC();									//NPC 초기화 함수
+	void updateNPC();								//NPC 업데이트 함수
+	void move();									//움직임 함수(플레이어 엄마, 부하1, 부하2)
 
 	//접근자
-	tagNPC* getnpcRC() { return _npc; }		//npc에 대한 접근자
+	tagNPC* getnpcRC() { return _npc; }				//npc에 대한 접근자
+	inline bool getIsMove() { return _isMove; }		//isMove에 대한 접근자
 
 	//주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }

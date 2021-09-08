@@ -211,7 +211,7 @@ void character::npcScript() // npc 대화 스크립트 처리
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
 
-        if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시
+        if (IntersectRect(&temp, &_rc, &npc) && !UIMANAGER->isUiOpen()) // npc 탐지 렉트랑 충돌 시
         {
             if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
             {

@@ -580,7 +580,7 @@ void uiManager::script()
 	
 
 	// 대화 스킵
-	if (KEYMANAGER->isOnceKeyDown('I'))
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		_isScriptSkip = true;
 	}
@@ -617,7 +617,7 @@ void uiManager::script()
 			else if (_txtIndex >= _txt.length())
 			{
 				// 버튼을 누르면
-				if (KEYMANAGER->isOnceKeyDown('I'))
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 				{
 					// 스킵 상태 false(다음 문장 스킵되지 않도록)
 					_isScriptSkip = false;

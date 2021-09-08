@@ -13,31 +13,36 @@ enum class NPC
 	TITLE,
 
 	// mom
-	MOM_FIRST,
-	MOM_NORMAL,
+	//MOM_FIRST,
+	//MOM_NORMAL,
+	MOM,
 
 	// Dr.Gong
-	DR_FIRST,
-	DR_BEFORE_POKEMON,
-	DR_AFTER_POKEMON,
-	DR_NORMAL,
+	//DR_FIRST,
+	//DR_BEFORE_POKEMON,
+	//DR_AFTER_POKEMON,
+	//DR_NORMAL,
+	GONG,
 	SUPPORTER,
 
 	// champion
-	CHAMPION_BATTLE_START,
-	CHAMPION_BATTLE_AFTER,
-	CHAMPION_BATTLE_END,
+	//CHAMPION_BATTLE_START,
+	//CHAMPION_BATTLE_AFTER,
+	//CHAMPION_BATTLE_END,
+	CHAMPION,
 
 	// trainers
-	TRAINER1_BATTLE_BEFORE,
-	TRAINER1_BATTLE_START,
-	TRAINER1_BATTLE_END,
-	TRAINER1_BATTLE_WIN,
+	//TRAINER1_BATTLE_BEFORE,
+	//TRAINER1_BATTLE_START,
+	//TRAINER1_BATTLE_END,
+	//TRAINER1_BATTLE_WIN,
+	TRAINER1,
 
-	TRAINER2_BATTLE_BEFORE,
-	TRAINER2_BATTLE_START,
-	TRAINER2_BATTLE_END,
-	TRAINER2_BATTLE_WIN,
+	//TRAINER2_BATTLE_BEFORE,
+	//TRAINER2_BATTLE_START,
+	//TRAINER2_BATTLE_END,
+	//TRAINER2_BATTLE_WIN,
+	TRAINER2,
 
 	// where connect to player
 	POKECENTER,
@@ -100,6 +105,15 @@ private:
 	vector<string> _vScript;					// 스크립트를 담을 벡터
 	string _txt;								// 실제 텍스트 파일
 
+	int _momCount;								// 엄마 대화 진행도 카운트
+	int _drCount;								// 공박사 대화 진행도 카운트
+	int _championCount;							// 관장 대화 진행도 카운트
+	int _trainer1Count;							// 트레이너1 대화 진행도 카운트
+	int _trainer2Count;							// 트레이너2 대화 진행도 카운트
+
+	bool _isCount;
+
+
 	// pokeCenter
 	int cnt = 0;
 
@@ -158,7 +172,7 @@ public:
 	void setVScript(vector<string> vScript) { _vScript = vScript; }
 
 	NPC getNPC() { return _npc; }
-	void setNPC(NPC npc) { _npc = npc; }
+	void setNPC(NPC npc, bool isCount) { _npc = npc; _isCount = isCount; }
 
 	bool isUiOpen();
 

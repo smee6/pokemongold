@@ -90,6 +90,7 @@ private:
 	int _championCount;							// 관장 대화 진행도 카운트
 	int _trainer1Count;							// 트레이너1 대화 진행도 카운트
 	int _trainer2Count;							// 트레이너2 대화 진행도 카운트
+	int _pokecenterCount;						// 간호순 눈나 대화 진행도 카운트
 
 	bool _isCount;
 

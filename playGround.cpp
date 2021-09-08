@@ -21,6 +21,8 @@ HRESULT playGround::init()
 	_pM = new poketmonManager;
 	_npc = new npc;
 
+	_skill = new skill;					//스킬 
+
 	_tileMap->setCharacterMemoryAddressLink(_character);
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
@@ -36,6 +38,8 @@ HRESULT playGround::init()
 	_npc->init();
 	_character->init();
 	_pM->init();
+
+	_skill->init();						//스킬
 
 
 	UIMANAGER->init();
@@ -65,6 +69,8 @@ void playGround::update()
 	_character->update();
 	_pM->update();
 
+	_skill->update();					//스킬
+
 	//if (KEYMANAGER->isOnceKeyDown('P'))
 	//{
 	//	UIMANAGER->setVScript(TXTDATA->txtLoad("script/쫄따구2_승리정산.txt"));
@@ -85,6 +91,8 @@ void playGround::render()
 	_npc->render();
 	_character->render();
 	_pM->render();
+
+	_skill->render();					//스킬
 
 	//UIMANAGER->pokeShift();
 	//UIMANAGER->script();

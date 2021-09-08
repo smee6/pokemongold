@@ -7,6 +7,8 @@
 #include "openingScene.h"
 #include "npc.h"
 
+#include "skill.h"		//스킬 띄우려고 헤더파일 등록
+
 
 class playGround : public gameNode
 {
@@ -15,6 +17,8 @@ private:
 	character* _character;						// 캐릭터 클래스
 	poketmonManager* _pM;						// 포켓몬 매니저 클래스
 	npc* _npc;									// npc 클래스
+
+	skill* _skill;								// skill 클래스
 
 public:
 	playGround();

@@ -223,7 +223,9 @@ void uiManager::pokeCenter()
 
 	if (_index > 10) {
 		_index = 0;
-		uiOpen = false;
+		//uiOpen = false;
+		_isCount = true;
+		_isScript = true;
 		_isOpenPokecenter = false;
 	}
 }
@@ -499,9 +501,10 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/조수.txt");
 			break;
 		case NPC::CHAMPION:
-			if (_championCount == 0) _vScript = TXTDATA->txtLoad("script/관장배틀시작.txt");
-			if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장배틀후.txt");
-			else _vScript = TXTDATA->txtLoad("script/관장배틀끝.txt");
+			if (_championCount == 0) _vScript = TXTDATA->txtLoad("script/관장_배틀시작.txt");
+			else if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장_배틀후.txt");
+			else if (_championCount == 2) _vScript = TXTDATA->txtLoad("script/관장_배틀끝.txt");
+			else _vScript = TXTDATA->txtLoad("script/관장_일상.txt");
 
 			_championCount++;
 
@@ -525,7 +528,11 @@ void uiManager::script()
 
 			break;
 		case NPC::POKECENTER:
-			_vScript = TXTDATA->txtLoad("script/간호순.txt");
+			if (_pokecenterCount == 0) _vScript = TXTDATA->txtLoad("script/간호순_시작.txt");
+			else _vScript = TXTDATA->txtLoad("script/간호순_끝.txt");
+
+			_pokecenterCount++;
+
 			break;
 		case NPC::SHOP:
 			_vScript = TXTDATA->txtLoad("script/상점.txt");
@@ -571,6 +578,11 @@ void uiManager::script()
 			if (_isBattleScript)
 			{
 				_isBattleScript = false;
+			}
+
+			if (_npc == NPC::POKECENTER && _pokecenterCount >= 2)
+			{
+				_pokecenterCount = 0;
 			}
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 			_isScript = false;
@@ -720,7 +732,7 @@ void uiManager::battle()
 	_enemyPokeImage = IMAGEMANAGER->findImage("155F");
 
 	static int px = -_playerImage->getWidth();
-	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 80;
+	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 100;
 
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
@@ -729,12 +741,12 @@ void uiManager::battle()
 
 		if (ex >= WINSIZEX - 200)
 		{
-			ex -= 3;
+			ex -= 5;
 		}
 
 		if (px <= 70)
 		{
-			px += 3; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
+			px += 5; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
 			_npc = NPC::BATTLE;
 		}
 		else if (_isBattleScript)

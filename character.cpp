@@ -192,6 +192,7 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
         {
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
+            UIMANAGER->setIsBattleScript(true); 
             _battleLoadingImage->setFrameX(0);
             _battleLoadingImage->setFrameY(0);
             _loadingCount = 0;
@@ -380,7 +381,7 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
                 break;
             }
 
-            //if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
+            if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
             if (_frontTileType == 3) door(_currentTile);    // 문 타일일 때 처리
         }
     }

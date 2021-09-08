@@ -495,93 +495,6 @@ void uiManager::script()
 {
 	uiOpen = true;
 
-	/*switch (_npc)
-	{
-	case NPC::TITLE:
-		_vScript = TXTDATA->txtLoad("script/타이틀.txt");
-		break;
-	case NPC::MOM_FIRST:
-		_vScript = TXTDATA->txtLoad("script/엄마1.txt");
-		break;
-	case NPC::MOM_NORMAL:
-		_vScript = TXTDATA->txtLoad("script/엄마2.txt");
-		break;
-	case NPC::DR_FIRST:
-		_vScript = TXTDATA->txtLoad("script/공박사_처음.txt");
-		break;
-	case NPC::DR_BEFORE_POKEMON:
-		_vScript = TXTDATA->txtLoad("script/공박사_포켓몬전.txt");
-		break;
-	case NPC::DR_AFTER_POKEMON:
-		_vScript = TXTDATA->txtLoad("script/공박사_포켓몬후.txt");
-		break;
-	case NPC::DR_NORMAL:
-		_vScript = TXTDATA->txtLoad("script/공박사_일상.txt");
-		break;
-	case NPC::SUPPORTER:
-		_vScript = TXTDATA->txtLoad("script/조수.txt");
-		break;
-	case NPC::CHAMPION_BATTLE_START:
-		_vScript = TXTDATA->txtLoad("script/관장배틀시작.txt");
-		break;
-	case NPC::CHAMPION_BATTLE_AFTER:
-		_vScript = TXTDATA->txtLoad("script/관장배틀후.txt");
-		break;
-	case NPC::CHAMPION_BATTLE_END:
-		_vScript = TXTDATA->txtLoad("script/관장배틀끝.txt");
-		break;
-	case NPC::TRAINER1_BATTLE_BEFORE:
-		_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀전.txt");
-		break;
-	case NPC::TRAINER1_BATTLE_START:
-		_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀진입.txt");
-		break;
-	case NPC::TRAINER1_BATTLE_END:
-		_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀후.txt");
-		break;
-	case NPC::TRAINER1_BATTLE_WIN:
-		_vScript = TXTDATA->txtLoad("script/쫄따구1_승리정산.txt");
-		break;
-	case NPC::TRAINER2_BATTLE_BEFORE:
-		_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀전.txt");
-		break;
-	case NPC::TRAINER2_BATTLE_START:
-		_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀진입.txt");
-		break;
-	case NPC::TRAINER2_BATTLE_END:
-		_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀후.txt");
-		break;
-	case NPC::TRAINER2_BATTLE_WIN:
-		_vScript = TXTDATA->txtLoad("script/쫄따구2_승리정산.txt");
-		break;
-	case NPC::POKECENTER:
-		_vScript = TXTDATA->txtLoad("script/간호순.txt");
-		break;
-	case NPC::SHOP:
-		_vScript = TXTDATA->txtLoad("script/상점.txt");
-		break;
-	case NPC::EVOLUTION:
-		_vScript = TXTDATA->txtLoad("script/진화.txt");
-		break;
-	case NPC::TOTODILE:
-		_vScript = TXTDATA->txtLoad("script/리아코.txt");
-		break;
-	case NPC::CHIKORITA:
-		_vScript = TXTDATA->txtLoad("script/치코리타.txt");
-		break;
-	case NPC::CYNDAQUIL:
-		_vScript = TXTDATA->txtLoad("script/브케인.txt");
-		break;
-	case NPC::SELECTCANCEL:
-		_vScript = TXTDATA->txtLoad("script/스타팅선택취소.txt");
-		break;
-	case NPC::BATTLE:
-		_vScript = TXTDATA->txtLoad("script/배틀(임시).txt");
-		break;
-	default:
-		break;
-	}*/
-
 	if (_isCount)
 	{
 		switch (_npc)
@@ -667,7 +580,7 @@ void uiManager::script()
 	
 
 	// 대화 스킵
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
 		_isScriptSkip = true;
 	}
@@ -704,7 +617,7 @@ void uiManager::script()
 			else if (_txtIndex >= _txt.length())
 			{
 				// 버튼을 누르면
-				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+				if (KEYMANAGER->isOnceKeyDown('I'))
 				{
 					// 스킵 상태 false(다음 문장 스킵되지 않도록)
 					_isScriptSkip = false;

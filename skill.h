@@ -23,6 +23,16 @@ class skill : public gameNode
 {
 private:
 
+	string _name;				// 스킬 이름 <민기가 추가 해달라고 한거>
+
+	string _imgName;			// 이미지 띄울때 이름 필요할거 같아서 일단 추가 나중에 상황봐서 지울수도있음.
+
+
+
+	image* _skillImg;			//스킬 이미지
+	int _indexImg;				//프레임 초기화 할거.
+	int _count;					//카운트 뒤 끝나게
+
 	int _power;					// 위력
 	int _accuracy;				// 명중률
 	int _PP;					// PP
@@ -31,6 +41,9 @@ private:
 
 	int _index;					// 확률 조건걸떄 필요한 수
 
+	bool _isSkill;				// 스킬 사용확인
+
+	RECT rc;					//위치 잡을 임시용
 
 public:
 
@@ -77,7 +90,14 @@ public:
 	void rage();			// 분노
 	void waterGun();		// 물대포
 
+
+	void skillAni();		// 스킬 애니메이션
 	void imageInit();		// 이미지
+
+
+
+	bool getIsSkill() { return _isSkill; }					//불값 getter값
+	void setIsSkill(bool skill) { skill = _isSkill; }		//불값 setter값
 
 
 

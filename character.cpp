@@ -218,30 +218,30 @@ void character::npcScript() // npc 대화 스크립트 처리
                 switch (i) // 충돌된 npc의 대사 선택
                 {
                 case 0: // 어머니
-                    UIMANAGER->setNPC(NPC::MOM_FIRST);
+                    UIMANAGER->setNPC(NPC::MOM, true);
                     break;
                 case 1: // 공박사
-                    UIMANAGER->setNPC(NPC::DR_FIRST);
+                    UIMANAGER->setNPC(NPC::GONG, true);
                     break;
                 case 2: // 공박사 조수
-                    UIMANAGER->setNPC(NPC::SUPPORTER);
+                    UIMANAGER->setNPC(NPC::SUPPORTER, true);
                     break;
                 case 3: // 간호순 눈나ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
                     UIMANAGER->setOpenPokecenter(true);
-                    UIMANAGER->setNPC(NPC::POKECENTER);
+                    UIMANAGER->setNPC(NPC::POKECENTER, true);
                     break;
                 case 4: // 부하 1
-                    UIMANAGER->setNPC(NPC::TRAINER1_BATTLE_BEFORE);
+                    UIMANAGER->setNPC(NPC::TRAINER1, true);
                     break;
                 case 5: // 부하 2
-                    UIMANAGER->setNPC(NPC::TRAINER2_BATTLE_BEFORE);
+                    UIMANAGER->setNPC(NPC::TRAINER2, true);
                     break;
                 case 6: // 비상 관장
-                    UIMANAGER->setNPC(NPC::CHAMPION_BATTLE_START);
+                    UIMANAGER->setNPC(NPC::CHAMPION, true);
                     break;
                 case 7: // 상점 주인
                     UIMANAGER->setOpenShop(true);
-                    UIMANAGER->setNPC(NPC::SHOP);
+                    UIMANAGER->setNPC(NPC::SHOP, true);
                     break;
                 }
             }

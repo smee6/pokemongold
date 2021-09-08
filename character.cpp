@@ -53,7 +53,7 @@ void character::update() // 업데이트
 
 void character::controll() // 캐릭터 컨트롤 처리
 {
-    if (_isPoketmonMeet || UIMANAGER->isUiOpen()) // 포켓몬 만나거나 UI떠있다면~
+    if (_isPoketmonMeet || UIMANAGER->isUiOpen() || _npc->getIsMove()) // 포켓몬 만나거나 UI떠있거나 npc만나 느낌표 떠있다면~
     {
         idle(_direction); // 아이들 처리
         return; // 함수 빠져나감 
@@ -104,12 +104,6 @@ void character::controll() // 캐릭터 컨트롤 처리
     // 메뉴창 (enter Key)
     if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
 
-    // 상점창 (Z Key 테스트용)
-    if (KEYMANAGER->isOnceKeyDown('Z')) UIMANAGER->setOpenShop(true);
-
-    // 포켓몬센터창 (X Key 테스트용)
-    if (KEYMANAGER->isOnceKeyDown('X')) UIMANAGER->setOpenPokecenter(true);
-    
 }
 
 void character::imageSetting() // 상태에 따라 현재 이미지 세팅
@@ -213,20 +207,7 @@ void character::npcScript() // npc 대화 스크립트 처리
 
         if (IntersectRect(&temp, &_rc, &npc) && !UIMANAGER->isUiOpen() && !_isMoving) // npc 탐지 렉트랑 충돌 시, ui없을 시, 서있을 때
         {
-            // 간호순 눈나ㅏㅏㅏ 포켓볼 액션
-            if (_scriptAction == 1 && i == 3) 
-            {
-                //UIMANAGER->setOpenPokecenter(true);     // 포켓몬 애니 재생
-                _scriptAction = 2;                      // 스크립트 액션 = 2
-            }
-            else if (_scriptAction == 2 && i == 3)
-            {
-                UIMANAGER->setIsScript(true);           // 스크립트 켜줌.
-                UIMANAGER->setNPC(NPC::SHOP, true);     // 엔드 스크립트 대사 재생
-                _scriptAction = 0;                      // 스크립트 액션 초기화
-            }
-
-            // 상점 아제 엔드 스크립트 대사 선택
+            // 상점 아재 엔드 스크립트 대사 선택
             if (_scriptAction == 1 && i == 7) 
             {
                 UIMANAGER->setIsScript(true);           // 스크립트 켜줌.
@@ -250,8 +231,7 @@ void character::npcScript() // npc 대화 스크립트 처리
                     UIMANAGER->setNPC(NPC::SUPPORTER, true);
                     break;
                 case 3: // 간호순 눈나ㅏㅏㅏㅏㅏㅏ
-                    UIMANAGER->setNPC(NPC::POKECENTER, true);   // 스타트 스크립트 대사 선택해주고
-                    _scriptAction = 1;                          // 스크립트 액션 = 1
+                    UIMANAGER->setNPC(NPC::POKECENTER, true);
                     break;
                 case 4: // 부하 1
                     UIMANAGER->setNPC(NPC::TRAINER1, true);
@@ -262,7 +242,7 @@ void character::npcScript() // npc 대화 스크립트 처리
                 case 6: // 비상 관장
                     UIMANAGER->setNPC(NPC::CHAMPION, true);
                     break;
-                case 7: // 상점 아제
+                case 7: // 상점 아재
                     UIMANAGER->setIsScript(false);              // 스크립트 꺼주고
                     UIMANAGER->setOpenShop(true);               // 상점 오픈
                     _scriptAction = 1;                          // 스크립트 액션 = 1

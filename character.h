@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-#define POKETMONMEET 10						// 포켓몬 조우 확률
+#define POKETMONMEET 7						// 포켓몬 조우 확률
 #define JUMPPOWER 10						// 점프 파워
 #define GRAVITY	1							// 중력 파워
 
@@ -138,10 +138,10 @@ public:
 	character();
 	~character();
 
-	virtual HRESULT init();			//초기화 함수
-	virtual void release();			//메모리 해제 함슈
-	virtual void update();			//연산하는 함수
-	virtual void render();			//그리기 함수
+	virtual HRESULT init();															//초기화 함수
+	virtual void release();															//메모리 해제 함슈
+	virtual void update();															//연산하는 함수
+	virtual void render();															//그리기 함수
 
 	void imageInit();																// 이미지 파일들 불러옴
 	void imageSetting();															// 상태에 따라 현재 이미지 세팅

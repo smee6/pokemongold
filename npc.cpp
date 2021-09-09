@@ -217,7 +217,7 @@ void npc::move()
 			{
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER1, true);
-				//_character->setScriptAction(true);
+				_character->setScriptAction(1);
 				_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 0, 0);
 				_isMove = false;
 				_npc[4].moveCount = 100;
@@ -245,6 +245,7 @@ void npc::move()
 			{
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER2, true);
+				_character->setScriptAction(1);
 				_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 0, 0);
 				_isMove = false;
 				_npc[5].moveCount = 100;

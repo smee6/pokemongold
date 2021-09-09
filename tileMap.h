@@ -80,6 +80,8 @@ public:
 	int getCameraY() { return _cameraY; }			//맵 카메라 y좌표에 대한 접근자
 
 	//설정자
+	void setTile6183Type(TILETYPE _type) { _tile[6183].type = _type; }	//6183번 타일 속성 설정자
+	void setTile5328Type(TILETYPE _type) { _tile[5328].type = _type; }	//5328번 타일 속성 설정자
 	void setCameraX(int x) { _cameraX = x; }		//맵 카메라 x좌표에 대한 설정자
 	void setCameraY(int y) { _cameraY = y; }		//맵 카메라 y좌표에 대한 설정자
 

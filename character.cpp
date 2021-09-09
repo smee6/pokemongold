@@ -187,6 +187,8 @@ void character::poketmonMeet() // 器南阁 炼快 矫 贸府
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
             UIMANAGER->setIsBattleScript(true); 
+            _pM->wildPoketmonSetting();
+
             _battleLoadingImage->setFrameX(0);
             _battleLoadingImage->setFrameY(0);
             _loadingCount = 0;

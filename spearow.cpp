@@ -13,7 +13,7 @@ spearow::~spearow()
 
 HRESULT spearow::init()
 {
-	switch (RND->getFromIntTo(0, 1))
+	switch (RND->getFromIntTo(0, 2))
 	{
 	case 0:
 
@@ -43,10 +43,19 @@ HRESULT spearow::init()
 		_poketmon.maxHP = _poketmon.currentHP = 40;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//100레벨 경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 15;
+		_poketmon.skill2 = 16;
+		_poketmon.skill3 = 0;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 
@@ -78,10 +87,20 @@ HRESULT spearow::init()
 		_poketmon.maxHP = _poketmon.currentHP = 65;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 15;
+		_poketmon.skill2 = 16;
+		_poketmon.skill3 = 17;
+		_poketmon.skill4 = 0;
+
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 	}
@@ -89,7 +108,7 @@ HRESULT spearow::init()
 
 	return S_OK;
 
-  
+
 }
 
 void spearow::release()

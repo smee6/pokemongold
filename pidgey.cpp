@@ -13,7 +13,7 @@ pidgey::~pidgey()
 
 HRESULT pidgey::init()
 {
-    switch (RND->getFromIntTo(0, 2))
+    switch (RND->getFromIntTo(0, 3))
     {
     case 0:
 
@@ -43,10 +43,19 @@ HRESULT pidgey::init()
         _poketmon.maxHP = _poketmon.currentHP = 40;			//체력
         _poketmon.currentExp;
         _poketmon.maxExp = 1059860;							//100레벨 경험치량
-        _poketmon.skill1;
-        _poketmon.skill2;
-        _poketmon.skill3;
-        _poketmon.skill4;
+
+        //스킬
+
+        _poketmon.skill1 = 10;
+        _poketmon.skill2 = 11;
+        _poketmon.skill3 = 0;
+        _poketmon.skill4 = 0;
+
+        //potketmonEXP();
+
+        genderSettings();
+
+        ability();
 
         break;
 
@@ -78,10 +87,19 @@ HRESULT pidgey::init()
         _poketmon.maxHP = _poketmon.currentHP = 63;			//체력
         _poketmon.currentExp;
         _poketmon.maxExp;									//경험치량
-        _poketmon.skill1;
-        _poketmon.skill2;
-        _poketmon.skill3;
-        _poketmon.skill4;
+
+        //스킬
+
+        _poketmon.skill1 = 10;
+        _poketmon.skill2 = 11;
+        _poketmon.skill3 = 12;
+        _poketmon.skill4 = 0;
+
+        //potketmonEXP();
+
+        genderSettings();
+
+        ability();
 
         break;
 
@@ -113,10 +131,20 @@ HRESULT pidgey::init()
         _poketmon.maxHP = _poketmon.currentHP = 83;			//체력
         _poketmon.currentExp;
         _poketmon.maxExp;									//경험치량
-        _poketmon.skill1;
-        _poketmon.skill2;
-        _poketmon.skill3;
-        _poketmon.skill4;
+
+        //스킬
+
+        _poketmon.skill1 = 10;
+        _poketmon.skill2 = 11;
+        _poketmon.skill3 = 12;
+        _poketmon.skill4 = 13;
+
+
+        //potketmonEXP();
+
+        genderSettings();
+
+        ability();
 
         break;
     }

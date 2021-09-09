@@ -19,6 +19,29 @@ enum class CLASSIFCATION	// 분류
 
 };
 
+enum class SKILL_TYPE
+{
+	NONE,	//없음
+	NOMAL,	//노말
+	FIRE,	//불
+	WATER,	//물
+	GRASS,	//풀
+	ELECTR,	//전기
+	ICE,	//얼음
+	FIGHT,	//격투
+	POISON,	//독
+	GROUND,	//땅
+	FLYING,	//비행
+	PSYCHC,	//초능력
+	BUG,	//벌레
+	ROCK,	//바위
+	GHOST,	//유령
+	DRAGON,	//드래곤
+	DARK,	//악
+	STEEL,	//강철
+	FAIRY	//요정
+};
+
 class skill : public gameNode
 {
 private:
@@ -33,18 +56,25 @@ private:
 	int _currentFrame;			//프레임 초기화 할거.
 	int _frameCount;			//프레임 카운트
 	int _count;					//카운트 뒤 끝나게
-	
-	
+
+
 
 
 	int _power;					// 위력
 	int _accuracy;				// 명중률
 	int _PP;					// PP
-	int _number;				// 넘버
+
+	int _skillNumber;			// 스킬 넘버
 	int _skillLever;			// 스킬레벨
 
+	int _skilltype;				// 스킬 타입
+
+	STATUS_AILMENT _ifAilment;	// 상태이상
+	CLASSIFCATION _ifcation;	// 분류
+
+
 	POINT _imgPoint;			// 이미지 띄우는 거 조정할려고 만든 함수
-	
+
 
 	int _index;					// 확률 조건걸떄 필요한 수
 
@@ -61,11 +91,10 @@ public:
 	HRESULT init();
 	void release();
 	void update();
-	
 
+	void skillNone();		// 스킬없음
 	void tackle();			// 몸통박치기
 	void stringShot();		// 실뿜기
-	void harden();			// 단단해지기
 	void confusion();		// 염동력
 	void poisonPowder();	// 독가루
 	void stunSpore();		// 저리가루
@@ -97,17 +126,32 @@ public:
 
 	void rage();			// 분노
 	void waterGun();		// 물대포
+	void harden();			// 단단해지기
+
+	void scratch();			// 할퀴기
+	void furyAttack();		// 마구찌르기
 
 	void render();
 
 	void skillAni();		// 스킬 애니메이션
 	void imageInit();		// 이미지
 
-
+	void skillNumLink(int index);
 
 	bool getIsSkill() { return _isSkill; }					//불값 getter값
 	void setIsSkill(bool skill) { skill = _isSkill; }		//불값 setter값
 
+
+	string getSkillName() { return _name; }						//네임 getter
+	string getSkillImgName() { return _imgName; }				//이미지네임 getter
+
+	int getSkillPower() { return _power; }						//위력 getter
+	int getSkillPP() { return _PP; }							//PP getter
+	int getSkillAccuracy() { return _accuracy; }				//명중률 getter
+
+	//CLASSIFCATION getIfcation() { return _ifcation; }			//분류
+	//TYPE getType() { return _Skilltype; }							//타입
+	//STATUS_AILMENT getifAilemnt() { return _ifAilment; }		//상태이상
 
 
 

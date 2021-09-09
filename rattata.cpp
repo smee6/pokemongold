@@ -13,7 +13,7 @@ rattata::~rattata()
 
 HRESULT rattata::init()
 {
-    switch (RND->getFromIntTo(0, 1))
+    switch (RND->getFromIntTo(0, 2))
     {
     case 0:
 
@@ -43,10 +43,19 @@ HRESULT rattata::init()
         _poketmon.maxHP = _poketmon.currentHP = 30;			//체력
         _poketmon.currentExp;
         _poketmon.maxExp = 1000000;							//100레벨 경험치량
-        _poketmon.skill1;
-        _poketmon.skill2;
-        _poketmon.skill3;
-        _poketmon.skill4;
+
+        //스킬
+
+        _poketmon.skill1 = 1;
+        _poketmon.skill2 = 14;
+        _poketmon.skill3 = 0;
+        _poketmon.skill4 = 0;
+
+        //potketmonEXP();
+
+        genderSettings();
+
+        ability();
 
         break;
 
@@ -69,7 +78,7 @@ HRESULT rattata::init()
         _poketmon.iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
         _poketmon.levelAttack = 2.06f;                      //레벨당 공격력 
-        _poketmon.levelDefense  = 1.8f;                     //레벨당 방어력
+        _poketmon.levelDefense = 1.8f;                     //레벨당 방어력
         _poketmon.levelSpecialAttack = 1.68f;               //레벨당 특수공격력
         _poketmon.levelSpecialDefense = 1.92f;              //레벨당 특수방어력
         _poketmon.levelSpeed = 2.25f;                       //레벨당 스피드
@@ -78,10 +87,19 @@ HRESULT rattata::init()
         _poketmon.maxHP = _poketmon.currentHP = 55;			//체력
         _poketmon.currentExp;
         _poketmon.maxExp;									//
-        _poketmon.skill1;
-        _poketmon.skill2;
-        _poketmon.skill3;
-        _poketmon.skill4;
+
+        //스킬
+
+        _poketmon.skill1 = 1;
+        _poketmon.skill2 = 14;
+        _poketmon.skill3 = 12;
+        _poketmon.skill4 = 0;
+
+        // potketmonEXP();
+
+        genderSettings();
+
+        ability();
 
         break;
     }

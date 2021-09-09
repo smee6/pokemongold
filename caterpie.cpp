@@ -13,7 +13,7 @@ caterpie::~caterpie()
 
 HRESULT caterpie::init()
 {
-	switch (RND->getFromIntTo(0, 2))
+	switch (RND->getFromIntTo(0, 3))
 	{
 	case 0:
 
@@ -42,11 +42,20 @@ HRESULT caterpie::init()
 
 		_poketmon.maxHP = _poketmon.currentHP = 45;			//체력
 		_poketmon.currentExp;
-		_poketmon.maxExp;									
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+		_poketmon.maxExp;
+
+		//스킬
+
+		_poketmon.skill1 = 1;
+		_poketmon.skill2 = 2;
+		_poketmon.skill3 = 0;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 
@@ -69,7 +78,7 @@ HRESULT caterpie::init()
 		_poketmon.iconNumY = 1;								//포켓몬 미니 아이콘 좌표y
 
 		_poketmon.levelAttack = 1.32f;						//레벨당 공격력
-		_poketmon.levelDefense	= 1.74f;					//레벨당 방어력
+		_poketmon.levelDefense = 1.74f;					//레벨당 방어력
 		_poketmon.levelSpecialAttack = 1.38f;				//레벨당 특수공격력
 		_poketmon.levelSpecialDefense = 1.38f;				//레벨당 특수방어력
 		_poketmon.levelSpeed = 1.44f;						//레벨당 스피드
@@ -78,10 +87,19 @@ HRESULT caterpie::init()
 		_poketmon.maxHP = _poketmon.currentHP = 50;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 26;
+		_poketmon.skill2 = 0;
+		_poketmon.skill3 = 0;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 
@@ -113,13 +131,24 @@ HRESULT caterpie::init()
 		_poketmon.maxHP = _poketmon.currentHP = 60;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 3;
+		_poketmon.skill2 = 4;
+		_poketmon.skill3 = 5;
+		_poketmon.skill4 = 6;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 	}
+
+
 
 	return S_OK;
 
@@ -131,6 +160,7 @@ void caterpie::release()
 
 void caterpie::update()
 {
+
 }
 
 void caterpie::render()

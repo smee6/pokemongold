@@ -11,7 +11,7 @@ weedle::~weedle()
 
 HRESULT weedle::init()
 {
-	switch (RND->getFromIntTo(0, 2))
+	switch (RND->getFromIntTo(0, 3))
 	{
 	case 0:
 
@@ -41,10 +41,19 @@ HRESULT weedle::init()
 		_poketmon.maxHP = _poketmon.currentHP = 40;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp = 1000000;							//100레벨 경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 7;
+		_poketmon.skill2 = 2;
+		_poketmon.skill3 = 0;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 
@@ -76,10 +85,19 @@ HRESULT weedle::init()
 		_poketmon.maxHP = _poketmon.currentHP = 45;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 26;
+		_poketmon.skill2 = 0;
+		_poketmon.skill3 = 0;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 
@@ -111,10 +129,19 @@ HRESULT weedle::init()
 		_poketmon.maxHP = _poketmon.currentHP = 65;			//체력
 		_poketmon.currentExp;
 		_poketmon.maxExp;									//경험치량
-		_poketmon.skill1;
-		_poketmon.skill2;
-		_poketmon.skill3;
-		_poketmon.skill4;
+
+		//스킬
+
+		_poketmon.skill1 = 28;
+		_poketmon.skill2 = 8;
+		_poketmon.skill3 = 9;
+		_poketmon.skill4 = 0;
+
+		//potketmonEXP();
+
+		genderSettings();
+
+		ability();
 
 		break;
 	}

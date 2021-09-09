@@ -81,14 +81,8 @@ struct tagPOKETMON_PLAYER
 
 	float totalEXP;							// 토탈 경험치
 
-	int	skill1;								// 스킬1 인덱스 
-	int	skill2;								// 스킬2 인덱스 
-	int	skill3;								// 스킬3 인덱스 
-	int	skill4;								// 스킬4 인덱스 
-	int skillPP1;							// 스킬1 현재 PP
-	int skillPP2;							// 스킬2 현재 PP
-	int skillPP3;							// 스킬3 현재 PP
-	int skillPP4;							// 스킬4 현재 PP
+	int	skill[4];							// 스킬1 인덱스 
+	int skillPP[4];							// 스킬1 현재 PP
 
 	int item;								// 보유 중인 아이템 인덱스
 };

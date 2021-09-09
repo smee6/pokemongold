@@ -713,7 +713,7 @@ void uiManager::playerStatus()
 		sprintf_s(str, "Your Name Here");
 		TextOut(_backBuffer->getMemDC(), 180, 60, str, strlen(str));
 
-		sprintf_s(str, "%d",23400);
+		sprintf_s(str, "%d",gold);
 		TextOut(_backBuffer->getMemDC(), 290, 190, str, strlen(str));
 
 

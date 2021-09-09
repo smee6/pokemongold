@@ -49,6 +49,7 @@ class character;
 class uiManager : public singletonBase<uiManager>
 {
 private:
+	int gold = 5000;
 	int soundVolume = 100;
 	int shopCnt = 0;							//상점 메뉴 선택지
 	int buyCnt = 0;								//아이템 메뉴 선택지
@@ -175,6 +176,7 @@ public:
 	void battle();
 	void skill();
 
+	
 
 	// get set
 	bool getIsScript() { return _isScript; }
@@ -209,6 +211,8 @@ public:
 	bool getIsBattleScript() { return _isBattleScript; }
 	void setIsBattleScript(bool isBattleScript) { _isBattleScript = isBattleScript;	}
 
+	int getGold() { return gold; };
+	void setGold(int newgold) { gold = newgold; }
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

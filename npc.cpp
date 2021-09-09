@@ -58,7 +58,7 @@ void npc::render()
 		if(KEYMANAGER->isToggleKey(VK_TAB)) Rectangle(getMemDC(), _npc[i].detectRC);	//대화 상자 렉트
 	}
 
-	Rectangle(getMemDC(), _npc[0].moveRC);
+	//Rectangle(getMemDC(), _npc[0].moveRC);		//무브 렉트
 
 	char str[128];
 	sprintf_s(str, "_isMove : %d", _isMove);

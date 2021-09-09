@@ -568,7 +568,7 @@ void skill::render()
 
 	char str[128];
 
-	if (_isSkill) Rectangle(getMemDC(), rc);
+	//if (_isSkill) Rectangle(getMemDC(), rc);
 
 	if (_isSkill) IMAGEMANAGER->frameRender(_imgName, getMemDC(), _imgPoint.x, _imgPoint.y, _currentFrame, 0);
 
@@ -604,11 +604,11 @@ void skill::skillAni()
 			//IMAGEMANAGER->findImage(_imgName)->setFrameX(IMAGEMANAGER->findImage(_imgName)->getFrameX() + 1);
 
 
-			if (_currentFrame > IMAGEMANAGER->findImage(_imgName)->getMaxFrameX() && _count < 100)		//일단은 예비이미지 파이어 불러오기 && 일정시간이 200count가 흐르면
+			if (_currentFrame > IMAGEMANAGER->findImage(_imgName)->getMaxFrameX() && _count < 30)		//일단은 예비이미지 파이어 불러오기 && 일정시간이 200count가 흐르면
 			{
 				_currentFrame = 0;					//프레임을 초기화 시켜 계속 이미지를 반복시키고
 			}
-			else if (_currentFrame > IMAGEMANAGER->findImage(_imgName)->getMaxFrameX() && _count > 100)		//맥스프레임이고 카운터가 200이상이면 끝나면 이미지를 끝낸다.
+			else if (_currentFrame > IMAGEMANAGER->findImage(_imgName)->getMaxFrameX() && _count > 30)		//맥스프레임이고 카운터가 200이상이면 끝나면 이미지를 끝낸다.
 			{
 				_isSkill = false;					//조건에 맞으면 스킬을 비활성화 시켜서 이미지를 지우고
 				_count = 0;							//카운터를 다시 초기화 시켜준다

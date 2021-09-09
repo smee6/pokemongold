@@ -1083,9 +1083,14 @@ void uiManager::battle()
 	static int px = -_playerImage->getWidth();
 	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 100;
 
+	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
+	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
+
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
+		
+		// 트레이너랑 배틀할 경우에 트레이너 이미지 지워줌
 		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
 
 		if (ex >= WINSIZEX - 200)
@@ -1281,6 +1286,28 @@ void uiManager::skillSelect()
 	}
 
 	IMAGEMANAGER->findImage("커서")->render(_backBuffer->getMemDC(), 25, 335 + (skillCnt * 60));
+
+	switch (skillCnt)
+	{
+	case 0:
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[0]);
+		break;
+	case 1:
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[1]);
+		break;
+	case 2:
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[2]);
+		break;
+	case 3:
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[3]);
+		break;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_poketmonManager->getSkill()->setIsSkill(true);
+		_isOpenSkill = false;
+	}
 
 	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창에서 다시 행동패턴 정하는 UI 호출
 	{

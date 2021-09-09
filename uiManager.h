@@ -54,11 +54,20 @@ private:
 	int menuCnt = 0;
 	int bagCnt = 0;
 	int pokesCnt = 0;
+	int dogamCnt = 0;
+	int settingCnt = 0;
+	int statusCnt = 0;
+	int gearCnt = 0;
 	bool shopWindow = false;					//상점 메뉴창 띄울지 안띄울지
 	bool buyWindow = false;						//아이템 메뉴창 띄울지 안띄울지
 	bool bagWindow = false;
 	bool menuWindow = false;
+	bool pokeshiftWindow = false;
 	bool pokeWindow = false;
+	bool settingWindow = false;
+	bool pokedogamWindow = false;
+	bool statusWindow = false;
+	bool gearWindow = false;
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;
@@ -66,8 +75,16 @@ private:
 	int iconCnt;
 
 	// isOpen
-	bool _isOpenShop;							// 상점 열려있는지
-	bool _isOpenBag;							// 가방 열려있는지
+	bool _isOpenShop;	// 상점 열려있는지
+
+	bool _isOpenPokeShift;
+	bool _isOpenBag;
+	bool _isOpenSetting;
+	bool _isOpenPokeDogam;
+	bool _isOpenPlayerStatus;
+	bool _isOpenPokeGear;
+	// 가방등의 메뉴창에 안에 있는거 열려있는지
+
 	bool _isOpenPokecenter;						// 포케센터 열려있는지
 	bool _isOpenMenu;							// 메뉴 열려있는지
 
@@ -140,7 +157,12 @@ public:
 	void render();
 
 	void shop();
+
 	void bag();
+	void pokeDogam();
+	void pokeGear();
+	void playerStatus();
+	void setting();
 
 	void pokeCenter();
 	void menu();

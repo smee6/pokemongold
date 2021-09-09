@@ -234,13 +234,21 @@ void uiManager::menu()
 {
 	uiOpen = true;
 
-	if (!bagWindow) {
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
-			menuCnt += 1;
-			//메뉴 화살표 위아래 움직이는
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
-			menuCnt -= 1;
+	if (!pokedogamWindow) {
+		if (!statusWindow) {
+			if (!settingWindow) {
+				if (!pokeWindow) {
+					if (!bagWindow) {
+						if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
+							menuCnt += 1;
+							//메뉴 화살표 위아래 움직이는
+						}
+						if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
+							menuCnt -= 1;
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -248,25 +256,45 @@ void uiManager::menu()
 	{
 	case 0: //도감
 		IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenPokeDogam = true;
+		
+		};
 		break;
 	case 1: //포켓몬
 		IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenPokemon = true;
+		
+		};
 		break;
 	case 2://가방
 		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 			_isOpenBag = true;
-			//bag();
+			
 		};
 		break;
 	case 3://포켓기어
 		IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenPokeGear = true;
+			
+		};
 		break;
 	case 4://이름
 		IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenPlayerStatus = true;
+			
+		};
 		break;
 	case 5://설정
 		IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+			_isOpenSetting = true;
+
+		};
 		break;
 	case 6://닫다
 		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
@@ -283,6 +311,25 @@ void uiManager::menu()
 	if (_isOpenBag)
 	{
 		bag();
+	}
+	if (_isOpenPlayerStatus)
+	{
+		playerStatus();
+	}
+	if (_isOpenPokeDogam)
+	{
+		pokeDogam();
+	}
+	if (_isOpenSetting)
+	{
+		setting();
+	}
+	if (_isOpenPokeGear)
+	{
+		pokeGear();
+	}
+	if (_isOpenPokemon) {
+		pokeShift();
 	}
 }
 
@@ -326,6 +373,11 @@ void uiManager::pokeShift()
 			break;
 		case 6:
 			IMAGEMANAGER->findImage("pokeShift6")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
+				pokeWindow = false;
+				_isOpenPokemon = false;
+			}
+
 			break;
 		}
 
@@ -392,6 +444,8 @@ void uiManager::bag()
 {
 	bagWindow = true;
 
+	// KEYMANAGER->init(); 아니 뭔데 이닛해줘도 그러는데 ; 아오 진짜
+
 	if (bagWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && bagCnt < 3) {
@@ -407,7 +461,9 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag0")->render(_backBuffer->getMemDC());
 			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
 			if (pokeballQ > 0) {
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
+
 					pokeballQ++;
 				};
 			}
@@ -415,7 +471,7 @@ void uiManager::bag()
 		case 1:// 가방에서 상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
 					medicineQ++;
 				};
 			}
@@ -423,14 +479,14 @@ void uiManager::bag()
 		case 2:// 가방에서 고급상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
 					goodMedicineQ++;
 				};
 			}
 			break;
 		case 3:// 가방에서 나가기에 커서가 있다
 			IMAGEMANAGER->findImage("bag3")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
 
 				bagCnt = 0;
 				bagWindow = false;
@@ -466,6 +522,26 @@ void uiManager::bag()
 		SelectObject(_backBuffer->getMemDC(), oldFont2);
 		DeleteObject(font2);
 	}
+}
+
+void uiManager::pokeDogam()
+{
+
+}
+
+void uiManager::pokeGear()
+{
+
+}
+
+void uiManager::playerStatus()
+{
+
+}
+
+void uiManager::setting()
+{
+
 }
 
 

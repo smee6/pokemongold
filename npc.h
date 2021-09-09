@@ -51,6 +51,10 @@ public:
 	tagNPC* getPokeBall() { return _pokeball; }		//pokeball에 대한 접근자
 	inline bool getIsMove() { return _isMove; }		//isMove에 대한 접근자
 
+	//설정자
+	void setNPCX4(int npcX) { _npc[4].npcX = npcX; }
+	void setNPCX5(int npcX) { _npc[5].npcX = npcX; }
+
 	//주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

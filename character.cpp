@@ -198,14 +198,14 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
 void character::npcScript() // npc 대화 스크립트 처리
 {
     // 스크립트 떠있으면 빠져나감
-    if (UIMANAGER->getIsScript()) return;
+    if (UIMANAGER->getIsScript() || UIMANAGER->isUiOpen() || _isMoving) return;
 
     for (int i = 0; i < 8; i++)
     {
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
 
-        if (IntersectRect(&temp, &_rc, &npc) && !UIMANAGER->isUiOpen() && !_isMoving) // npc 탐지 렉트랑 충돌 시, ui없을 시, 서있을 때
+        if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시, ui없을 시, 서있을 때
         {
             // 상점 아재 엔드 스크립트 대사 선택
             if (_scriptAction == 1 && i == 7) 
@@ -215,25 +215,25 @@ void character::npcScript() // npc 대화 스크립트 처리
                 _scriptAction = 0;                      // 스크립트 액션 초기화
             }
 
-            if (_scriptAction == 1 && 1 == 4)
+            if (_scriptAction == 1 && i == 4)
             {
                 _isPoketmonMeet = 1;
-                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+                _scriptAction = 0;
             }
 
-            if (_scriptAction == 1 && 1 == 5)
+            if (_scriptAction == 1 && i == 5)
             {
                 _isPoketmonMeet = 1;
-                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+                _scriptAction = 0;
             }
 
-            if (_scriptAction == 1 && 1 == 6)
+            if (_scriptAction == 1 && i == 6)
             {
                 _isPoketmonMeet = 1;
-                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+                _scriptAction = 0;
             }
 
-            if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _scriptAction == 0) // 스페이스바 눌렀을 때
+            if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _scriptAction == 0 && !_npc->getIsMove()) // 스페이스바 눌렀을 때
             {
                 UIMANAGER->setIsScript(true); // 스크립트 켜줌.
 
@@ -475,16 +475,28 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 7253;
         _tileMap->setCameraX(5504);
         _tileMap->setCameraY(704);
+        _npc->setNPCX4(0);              // npc 위치 초기화
+        _npc->setNPCX5(0);              // npc 위치 초기화
+        _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+        _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         break;
     case 7253:  // 체육관에서 필드 이동
         _currentTile = 3656;
         _tileMap->setCameraX(-5568);
         _tileMap->setCameraY(-320);
+        _npc->setNPCX4(0);              // npc 위치 초기화
+        _npc->setNPCX5(0);              // npc 위치 초기화
+        _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+        _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         break;
     case 7254:  // 체육관에서 필드 이동
         _currentTile = 3656;
         _tileMap->setCameraX(-5568);
         _tileMap->setCameraY(-320);
+        _npc->setNPCX4(0);              // npc 위치 초기화
+        _npc->setNPCX5(0);              // npc 위치 초기화
+        _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+        _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         break;
     case 3647:  // 필드에서 상점 이동
         _currentTile = 5554;

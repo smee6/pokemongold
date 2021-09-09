@@ -163,7 +163,7 @@ public:
 	RECT getRect() { return _rc; }													// 렉트 게터
 	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터
 
-	void setScriptAction(bool scriptAction) {_scriptAction = scriptAction; }		// _scriptAction 세터
+	void setScriptAction(int scriptAction) {_scriptAction = scriptAction; }			// _scriptAction 세터
 	void setPoketmonManagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }		// 메모리 주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }		// 메모리 주소 링크
 	void setNPCMemoryAddressLink(npc* npc) { _npc = npc; }							// 메모리 주소 링크

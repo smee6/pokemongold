@@ -3,6 +3,7 @@
 #include "gameNode.h"
 #include "character.h"
 #include "progressBar.h"
+#include "poketmonManager.h"
 
 vector<tagPOKETMON_PLAYER> myPokemon(6);
 
@@ -1228,7 +1229,7 @@ void uiManager::battle()
 	}
 	if (_isOpenSkill)
 	{
-		skill();
+		skillSelect();
 	}
 	if (_isOpenPokemon)
 	{
@@ -1236,7 +1237,7 @@ void uiManager::battle()
 	}
 }
 
-void uiManager::skill()
+void uiManager::skillSelect()
 {
 	static int skillCnt = 0;
 
@@ -1255,19 +1256,10 @@ void uiManager::skill()
 	for (int i = 0; i < 4; i++) {
 		//string strname = myPokemon[i].name;
 		//strcpy_s(poke, strname.c_str());
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[i]);
+		sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 
-		sprintf_s(skill, "¸öÅë¹ÚÄ¡±â");
 		TextOut(_backBuffer->getMemDC(), 55, 330 + (i * 60), skill, strlen(skill));
-
-		//sprintf_s(skill, "/ %d", myPokemon[i].maxHP);
-		//TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), skill, strlen(skill));
-		//
-		//sprintf_s(skill, "HP : %d", myPokemon[i].currentHP);
-		//TextOut(_backBuffer->getMemDC(), 400, 25 + (i * 63), skill, strlen(skill));
-		//
-		//sprintf_s(skill, ": L %d", myPokemon[i].level);
-		//TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), skill, strlen(skill));
-
 	}
 
 	SelectObject(_backBuffer->getMemDC(), oldFont5);

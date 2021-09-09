@@ -5,6 +5,7 @@
 
 
 class progressBar;
+class poketmonManager;
 
 
 enum class NPC
@@ -148,6 +149,7 @@ private:
 
 	NPC _npc;
 	character* _character;
+	poketmonManager* _poketmonManager;
 
 public:
 	uiManager();
@@ -174,7 +176,7 @@ public:
 	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
 
 	void battle();
-	void skill();
+	void skillSelect();
 
 	
 
@@ -216,5 +218,6 @@ public:
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
+	void setSkillMemoryAddressLink(poketmonManager* pm) { _poketmonManager = pm; }
 };
 

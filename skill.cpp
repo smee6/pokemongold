@@ -51,7 +51,7 @@ void skill::update()
 
 void skill::skillNone()			//스킬없음
 {
-	_skillNumber = 0;			//스킬넘버
+	//_skillNumber = 0;			//스킬넘버
 
 	_name = "";					//이름
 
@@ -66,7 +66,7 @@ void skill::skillNone()			//스킬없음
 void skill::tackle()			// 몸통박치기
 {
 
-	_skillNumber = 1;			//스킬넘버
+	//_skillNumber = 1;			//스킬넘버
 
 	_name = "몸통박치기";		//이름
 	_imgName = "attack3";		//이미지이름
@@ -81,7 +81,7 @@ void skill::tackle()			// 몸통박치기
 
 void skill::stringShot()		//실뿜기
 {
-	_skillNumber = 2;			//스킬넘버
+	//_skillNumber = 2;			//스킬넘버
 
 	_name = "실뿜기";			//이름
 	_imgName = "cut";			//이미지이름
@@ -99,7 +99,7 @@ void skill::stringShot()		//실뿜기
 
 void skill::confusion()			//염동력
 {
-	_skillNumber = 3;			//스킬넘버
+	//_skillNumber = 3;			//스킬넘버
 
 	_name = "염동력";			//이름
 	_imgName = "cut";			//이미지이름
@@ -116,7 +116,7 @@ void skill::confusion()			//염동력
 
 void skill::poisonPowder()		//독가루
 {
-	_skillNumber = 4;			//스킬넘버
+	//_skillNumber = 4;			//스킬넘버
 
 	_name = "독가루";			//이름
 	_imgName = "poison";		//이미지이름
@@ -134,7 +134,7 @@ void skill::poisonPowder()		//독가루
 
 void skill::stunSpore()			//저리가루
 {
-	_skillNumber = 5;			//스킬넘버
+	//_skillNumber = 5;			//스킬넘버
 
 	_name = "저리가루";			//이름
 	_imgName = "poison";		//이미지이름
@@ -152,7 +152,7 @@ void skill::stunSpore()			//저리가루
 
 void skill::sleepPowder()		//수면가루
 {
-	_skillNumber = 6;			//스킬넘버
+	//_skillNumber = 6;			//스킬넘버
 
 	_name = "수면가루";			//이름
 	_imgName = "poison";		//이미지이름
@@ -170,7 +170,7 @@ void skill::sleepPowder()		//수면가루
 
 void skill::poisonSting()		//독침
 {
-	_skillNumber = 7;			//스킬넘버
+	//_skillNumber = 7;			//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
@@ -192,7 +192,7 @@ void skill::poisonSting()		//독침
 
 void skill::focusEnergy()		//기충전
 {
-	_skillNumber = 8;			//스킬넘버
+	//_skillNumber = 8;			//스킬넘버
 
 	_name = "기충전";			//이름
 	_imgName = "growth";		//이미지이름
@@ -209,7 +209,7 @@ void skill::focusEnergy()		//기충전
 
 void skill::twineedle()			//더블니들
 {
-	_skillNumber = 9;			//스킬넘버
+	//_skillNumber = 9;			//스킬넘버
 
 	_name = "더블니들";			//이름
 	_imgName = "cut";			//이미지이름
@@ -226,7 +226,7 @@ void skill::twineedle()			//더블니들
 
 void skill::sandAttack()		//모래뿌리기
 {
-	_skillNumber = 10;			//스킬넘버
+	//_skillNumber = 10;			//스킬넘버
 
 	_name = "모래뿌리기";		//이름
 	_imgName = "cut";			//이미지이름
@@ -244,7 +244,7 @@ void skill::sandAttack()		//모래뿌리기
 
 void skill::gust()				//바람일으키기
 {
-	_skillNumber = 11;			//스킬넘버
+	//_skillNumber = 11;			//스킬넘버
 
 	_name = "바람일으키기";		//이름
 	_imgName = "squall";		//이미지이름
@@ -261,7 +261,7 @@ void skill::gust()				//바람일으키기
 
 void skill::quickAttack()		//전광석화
 {
-	_skillNumber = 12;			//스킬넘버
+	//_skillNumber = 12;			//스킬넘버
 
 	_name = "전광석화";			//이름
 	_imgName = "move";			//이미지이름
@@ -278,7 +278,7 @@ void skill::quickAttack()		//전광석화
 
 void skill::wingAttack()		//날개치기
 {
-	_skillNumber = 13;			//스킬넘버
+	//_skillNumber = 13;			//스킬넘버
 
 	_name = "날개치기";			//이름
 	_imgName = "cut";			//이미지이름
@@ -295,7 +295,7 @@ void skill::wingAttack()		//날개치기
 
 void skill::tailWhip()			//꼬리흔들기
 {
-	_skillNumber = 14;			//스킬넘버
+	//_skillNumber = 14;			//스킬넘버
 
 	_name = "꼬리흔들기";		//이름
 	_imgName = "cut";			//이미지이름
@@ -312,7 +312,7 @@ void skill::tailWhip()			//꼬리흔들기
 
 void skill::peck()				//쪼기
 {
-	_skillNumber = 15;			//스킬넘버
+	//_skillNumber = 15;			//스킬넘버
 
 	_name = "쪼기";				//이름
 	_imgName = "cut";			//이미지이름
@@ -329,7 +329,7 @@ void skill::peck()				//쪼기
 
 void skill::growl()				//울음소리
 {
-	_skillNumber = 16;			//스킬넘버
+	//_skillNumber = 16;			//스킬넘버
 
 	_name = "울음소리";			//이름
 	_imgName = "cut";			//이미지이름
@@ -346,7 +346,7 @@ void skill::growl()				//울음소리
 
 void skill::leer()				//째려보기
 {
-	_skillNumber = 17;			//스킬넘버
+	//_skillNumber = 17;			//스킬넘버
 
 	_name = "째려보기";			//이름
 	_imgName = "cut";			//이미지이름
@@ -363,7 +363,7 @@ void skill::leer()				//째려보기
 
 void skill::thunderShock()		//전기쇼크
 {
-	_skillNumber = 18;			//스킬넘버
+	//_skillNumber = 18;			//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
@@ -385,7 +385,7 @@ void skill::thunderShock()		//전기쇼크
 
 void skill::thunderbolt()		//10만볼트
 {
-	_skillNumber = 19;			//스킬넘버
+	//_skillNumber = 19;			//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
@@ -406,7 +406,7 @@ void skill::thunderbolt()		//10만볼트
 
 void skill::razorLeaf()			//잎날가르기
 {
-	_skillNumber = 20;			//스킬넘버
+	//_skillNumber = 20;			//스킬넘버
 
 	_name = "잎날가르기";		//이름
 	_imgName = "bind";			//이미지이름
@@ -423,7 +423,7 @@ void skill::razorLeaf()			//잎날가르기
 
 void skill::reflect()			//리플렉터 물리데미지 반감.
 {
-	_skillNumber = 21;			//스킬넘버
+	//_skillNumber = 21;			//스킬넘버
 
 	_name = "리플렉터";			//이름
 	_imgName = "lightScreen";	//이미지이름
@@ -440,7 +440,7 @@ void skill::reflect()			//리플렉터 물리데미지 반감.
 
 void skill::smokescreen()		//연막
 {
-	_skillNumber = 22;			//스킬넘버
+	//_skillNumber = 22;			//스킬넘버
 
 	_name = "연막";				//이름
 	_imgName = "smokescreen";	//이미지이름
@@ -457,7 +457,7 @@ void skill::smokescreen()		//연막
 
 void skill::ember()				//불꽃세례
 {
-	_skillNumber = 23;			//스킬넘버
+	//_skillNumber = 23;			//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
@@ -479,7 +479,7 @@ void skill::ember()				//불꽃세례
 
 void skill::rage()				//분노
 {
-	_skillNumber = 24;			//스킬넘버
+	//_skillNumber = 24;			//스킬넘버
 
 	_name = "분노";				//이름
 	_imgName = "cut";			//이미지이름
@@ -496,7 +496,7 @@ void skill::rage()				//분노
 
 void skill::waterGun()			//물대포
 {
-	_skillNumber = 25;			//스킬넘버
+	//_skillNumber = 25;			//스킬넘버
 
 	_name = "물대포";			//이름
 	_imgName = "cut";			//이미지이름
@@ -513,7 +513,7 @@ void skill::waterGun()			//물대포
 
 void skill::harden()			//단단해지기
 {
-	_skillNumber = 26;			//스킬넘버
+	//_skillNumber = 26;			//스킬넘버
 
 	_name = "단단해지기";		//이름
 	_imgName = "cut";			//이미지이름
@@ -530,7 +530,7 @@ void skill::harden()			//단단해지기
 
 void skill::scratch()			//할퀴기
 {
-	_skillNumber = 27;			//스킬넘버
+	//_skillNumber = 27;			//스킬넘버
 
 	_name = "할퀴기";			//이름
 	_imgName = "cut";			//이미지이름
@@ -547,7 +547,7 @@ void skill::scratch()			//할퀴기
 
 void skill::furyAttack()		//마구찌르기
 {
-	_skillNumber = 28;			//스킬넘버
+	//_skillNumber = 28;			//스킬넘버
 
 	_name = "마구찌르기";		//이름
 	_imgName = "cut";			//이미지이름
@@ -651,8 +651,8 @@ void skill::imageInit()	//스킬 이미지
 
 void skill::skillNumLink(int index)		// 스킬을 스킬넘버와 연결 해서 넘겨줌?
 {
-	_skillNumber = index;
-	switch (_skillNumber)
+	
+	switch (index)
 	{
 	case 0:
 		skillNone();

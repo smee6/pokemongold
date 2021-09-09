@@ -29,6 +29,7 @@ HRESULT playGround::init()
 	_character->setNPCMemoryAddressLink(_npc);
 	_pM->setCharacterMemoryAddressLink(_character);
 	UIMANAGER->setCharacterMemoryAddressLink(_character);
+	UIMANAGER->setSkillMemoryAddressLink(_pM);
 	_npc->setTileMapMemoryAddressLink(_tileMap);
 	_npc->setCharacterMemoryAddressLink(_character);
 	_tileMap->setNPCMemoryAddressLink(_npc);

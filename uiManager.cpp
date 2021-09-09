@@ -704,14 +704,20 @@ void uiManager::playerStatus()
 
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+		HFONT font2 = CreateFont(52, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
-		sprintf_s(str, "Your Name Here");
-		TextOut(_backBuffer->getMemDC(), 180, 60, str, strlen(str));
+		sprintf_s(str, "ทนตๅ");
+		TextOut(_backBuffer->getMemDC(), 180, 50, str, strlen(str));
+
+		HFONT font21 = CreateFont(32, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont21 = (HFONT)SelectObject(_backBuffer->getMemDC(), font21);
 
 		sprintf_s(str, "%d",gold);
 		TextOut(_backBuffer->getMemDC(), 290, 190, str, strlen(str));
@@ -719,6 +725,9 @@ void uiManager::playerStatus()
 
 		SelectObject(_backBuffer->getMemDC(), oldFont2);
 		DeleteObject(font2);
+
+		SelectObject(_backBuffer->getMemDC(), oldFont21);
+		DeleteObject(font21);
 
 	}
 

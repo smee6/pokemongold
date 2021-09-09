@@ -564,14 +564,29 @@ void uiManager::pokeDogam()
 	pokedogamWindow = true;
 	if (pokedogamWindow) {
 
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 12) {
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 1) {
 			dogamCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && dogamCnt > 0) {
 			dogamCnt--;
 		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
 
-		switch (dogamCnt) {}
+			dogamCnt = 0;
+			pokedogamWindow = false;
+			uiOpen = false;
+			_isOpenPokeDogam = false;
+
+		};
+
+		switch (dogamCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			break;
+		}
 	}
 
 }

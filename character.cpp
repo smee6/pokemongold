@@ -29,10 +29,10 @@ HRESULT character::init() // 인잇
     _frameCount = _currentFrame = _loadingCount = _scriptAction = 0;
     _x = WINSIZEX / 2 + TILESIZE / 2;
     _y = WINSIZEY / 2;
-    _currentTile = 4813;
+    _currentTile = 4853;
     _slopeDistance = 0;
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-    
+
     return S_OK;
 }
 
@@ -46,7 +46,7 @@ void character::update() // 업데이트
     imageFrame();
     poketmonMeet();
     npcScript();
-
+    
     if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 
 }

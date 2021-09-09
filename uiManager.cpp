@@ -68,6 +68,18 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("pokeShift6", "image/menuUI/pokeShift_6.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	// =======================================================================================================================
+	IMAGEMANAGER->addImage("gear0", "image/menuUI/gear_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("gear1", "image/menuUI/gear_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("gear2", "image/menuUI/gear_2.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("status0", "image/menuUI/status_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("status1", "image/menuUI/status_1.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("setting0", "image/menuUI/setting_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("setting1", "image/menuUI/setting_1.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("dogam0", "image/menuUI/dogam_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("배틀배경", "image/battle/battleBackground.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("배틀행동선택", "image/battle/selectBehavior.bmp", 640, 186, true, RGB(255, 0, 255));
@@ -229,6 +241,9 @@ void uiManager::pokeCenter()
 		_isOpenPokecenter = false;
 	}
 }
+/// <메뉴> ////////////////////////////////////////////
+/// <메뉴> ////////////////////////////////////////////
+/// <메뉴> ////////////////////////////////////////////
 
 void uiManager::menu()
 {
@@ -346,7 +361,11 @@ void uiManager::pokeShift()
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
 			pokesCnt -= 1;
 		}
-
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+			pokesCnt = 0;
+			pokeWindow = false;
+			_isOpenPokemon = false;
+		}
 		switch (pokesCnt)
 		{
 		case 0:
@@ -376,6 +395,7 @@ void uiManager::pokeShift()
 			if (KEYMANAGER->isOnceKeyDown('Z')) {
 				pokeWindow = false;
 				_isOpenPokemon = false;
+				pokesCnt = 0;
 			}
 
 			break;
@@ -454,6 +474,15 @@ void uiManager::bag()
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
 			bagCnt --;
 		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			bagCnt = 0;
+			bagWindow = false;
+			uiOpen = false;
+			_isOpenBag = false;
+
+		};
+
 
 		switch (bagCnt) {
 
@@ -463,8 +492,9 @@ void uiManager::bag()
 			if (pokeballQ > 0) {
 				
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-
-					pokeballQ++;
+					pokeballQ--;
+					//전투중이 아닌 경우 못 씀
+					//전투중에 쓸경우 뭐 대충 bool 값 체크해서 사용하게 해줌 
 				};
 			}
 			break;
@@ -472,7 +502,8 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-					medicineQ++;
+					medicineQ--;
+					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
 			}
 			break;
@@ -480,7 +511,8 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-					goodMedicineQ++;
+					goodMedicineQ--;
+					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
 			}
 			break;
@@ -523,29 +555,249 @@ void uiManager::bag()
 		DeleteObject(font2);
 	}
 }
-
+////////////////////////////////////////
+///////////////////////////////////////
+//////////////////////////////////////
+// 추가로 작업할것 //////////////////
+////////////////////////////////////
+///////////////////////////////////
+//////////////////////////////////
 void uiManager::pokeDogam()
 {
+	pokedogamWindow = true;
+	if (pokedogamWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 1) {
+			dogamCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && dogamCnt > 0) {
+			dogamCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			dogamCnt = 0;
+			pokedogamWindow = false;
+			uiOpen = false;
+			_isOpenPokeDogam = false;
+
+		};
+
+		switch (dogamCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			break;
+		}
+	}
 
 }
 
 void uiManager::pokeGear()
 {
 
+	gearWindow = true;
+	if (gearWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && gearCnt < 2) {
+			gearCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && gearCnt > 0) {
+			gearCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			gearCnt = 0;
+			gearWindow = false;
+			uiOpen = false;
+			_isOpenPokeGear = false;
+
+		};
+		switch (gearCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("gear0")->render(_backBuffer->getMemDC());
+
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("gear1")->render(_backBuffer->getMemDC());
+			break;
+		case 2:
+			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
+
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
+
+				gearCnt = 0;
+				gearWindow = false;
+				uiOpen = false;
+				_isOpenPokeGear = false;
+
+			};
+
+			break;
+		
+		}
+
+
+		if (gearCnt == 0) {
+			char str[128];
+
+			SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+			HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+			HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+
+			sprintf_s(str, "포켓기어! 다음장은 맵이다 !");
+			TextOut(_backBuffer->getMemDC(), 135, 190, str, strlen(str));
+			sprintf_s(str, "여기에 날짜랑 요일 뜨면 됨");
+			TextOut(_backBuffer->getMemDC(), 135, 240, str, strlen(str));
+
+			SelectObject(_backBuffer->getMemDC(), oldFont2);
+			DeleteObject(font2);
+		}
+
+
+
+
+	}
+
+
 }
 
 void uiManager::playerStatus()
 {
+	statusWindow = true;
+	if (statusWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && statusCnt < 1) {
+			statusCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && statusCnt > 0) {
+			statusCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			statusCnt = 0;
+			statusWindow = false;
+			uiOpen = false;
+			_isOpenPlayerStatus = false;
+
+		};
+		switch (statusCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("status0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("status1")->render(_backBuffer->getMemDC());
+			break;
+		
+		
+		}
+
+
+
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		sprintf_s(str, "Your Name Here");
+		TextOut(_backBuffer->getMemDC(), 180, 60, str, strlen(str));
+
+		sprintf_s(str, "%d",gold);
+		TextOut(_backBuffer->getMemDC(), 290, 190, str, strlen(str));
+
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+
+	}
+
+
 
 }
 
 void uiManager::setting()
 {
 
+	settingWindow = true;
+	if (settingWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && settingCnt < 3) {
+			settingCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && settingCnt > 0) {
+			settingCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			settingCnt = 0;
+			settingWindow = false;
+			uiOpen = false;
+			_isOpenSetting = false;
+
+		};
+
+		switch (settingCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("setting0")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && soundVolume < 100) {
+				soundVolume++;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && soundVolume > 0) {
+				soundVolume--;
+			}
+
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
+				settingCnt = 0;
+				settingWindow = false;
+				uiOpen = false;
+				_isOpenSetting = false;
+			}
+
+
+			break;
+		
+		}
+
+
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(56, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		sprintf_s(str, "%d", soundVolume);
+		TextOut(_backBuffer->getMemDC(), 500, 50, str, strlen(str));
+
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+
+
+	}
+
+
 }
 
-
-
+// 여기까지 메뉴 안쪽 버튼 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void uiManager::script()
 {
 	uiOpen = true;

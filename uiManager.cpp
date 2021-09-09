@@ -361,7 +361,11 @@ void uiManager::pokeShift()
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
 			pokesCnt -= 1;
 		}
-
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+			pokesCnt = 0;
+			pokeWindow = false;
+			_isOpenPokemon = false;
+		}
 		switch (pokesCnt)
 		{
 		case 0:
@@ -391,6 +395,7 @@ void uiManager::pokeShift()
 			if (KEYMANAGER->isOnceKeyDown('Z')) {
 				pokeWindow = false;
 				_isOpenPokemon = false;
+				pokesCnt = 0;
 			}
 
 			break;

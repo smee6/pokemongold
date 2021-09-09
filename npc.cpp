@@ -38,7 +38,7 @@ void npc::update()
 		}
 	}
 
-	if (_isMove)
+	if (_isMove == true)
 	{
 		move();
 	}
@@ -58,6 +58,11 @@ void npc::render()
 		if(KEYMANAGER->isToggleKey(VK_TAB)) Rectangle(getMemDC(), _npc[i].detectRC);	//대화 상자 렉트
 	}
 
+	Rectangle(getMemDC(), _npc[0].moveRC);
+
+	char str[128];
+	sprintf_s(str, "_isMove : %d", _isMove);
+	TextOut(getMemDC(), 200, 100, str, strlen(str));
 }
 
 void npc::setNPC()
@@ -103,9 +108,18 @@ void npc::updateNPC()
 	_npc[7].detectRC = RectMake(_tileMap->getTile()[4699].rc.left, _tileMap->getTile()[4699].rc.top, 64, 64);
 
 	//npc 무브렉트
-	_npc[0].moveRC = RectMake(_tileMap->getTile()[4204].rc.left, _tileMap->getTile()[4204].rc.top, 64, 64);
-	_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 64, 64);
-	_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
+	if (_npc[0].moveCount != 100)
+	{
+		_npc[0].moveRC = RectMake(_tileMap->getTile()[4204].rc.left, _tileMap->getTile()[4204].rc.top, 64, 64);
+	}
+	if (_npc[4].moveCount != 100)
+	{
+		_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 64, 64);
+	}
+	if (_npc[5].moveCount != 100)
+	{
+		_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
+	}
 }
 
 void npc::move()
@@ -119,7 +133,10 @@ void npc::move()
 		}
 		else if (_npc[0].markCount == 100)
 		{
-			_npc[0].moveCount++;
+			if (_npc[0].moveCount < 25 && _npc[0].moveCount != 100)
+			{
+				_npc[0].moveCount++;
+			}
 			if (_npc[0].moveCount <= 16)
 			{
 				_npc[0].npcX += 8;
@@ -127,6 +144,14 @@ void npc::move()
 			if (_npc[0].moveCount > 16 && _npc[0].moveCount <= 24)
 			{
 				_npc[0].npcY -= 8;
+			}
+			if (_npc[0].moveCount == 25)
+			{
+				UIMANAGER->setIsScript(true);
+				UIMANAGER->setNPC(NPC::MOM, true);
+				_npc[0].moveRC = RectMake(_tileMap->getTile()[4204].rc.left, _tileMap->getTile()[4204].rc.top, 0, 0);
+				_isMove = false;
+				_npc[0].moveCount = 100;
 			}
 		}
 	}
@@ -139,10 +164,21 @@ void npc::move()
 		}
 		else if (_npc[4].markCount == 100)
 		{
-			_npc[4].moveCount++;
+			if (_npc[4].moveCount < 25 && _npc[4].moveCount != 100)
+			{
+				_npc[4].moveCount++;
+			}
 			if (_npc[4].moveCount <= 16)
 			{
 				_npc[4].npcX += 8;
+			}
+			if (_npc[4].moveCount == 17)
+			{
+				UIMANAGER->setIsScript(true);
+				UIMANAGER->setNPC(NPC::TRAINER1, true);
+				_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 0, 0);
+				_isMove = false;
+				_npc[4].moveCount = 100;
 			}
 		}
 	}
@@ -155,10 +191,21 @@ void npc::move()
 		}
 		else if (_npc[5].markCount == 100)
 		{
-			_npc[5].moveCount++;
+			if (_npc[5].moveCount < 25 && _npc[5].moveCount != 100)
+			{
+				_npc[5].moveCount++;
+			}
 			if (_npc[5].moveCount <= 16)
 			{
 				_npc[5].npcX -= 8;
+			}
+			if (_npc[5].moveCount == 17)
+			{
+				UIMANAGER->setIsScript(true);
+				UIMANAGER->setNPC(NPC::TRAINER2, true);
+				_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 0, 0);
+				_isMove = false;
+				_npc[5].moveCount = 100;
 			}
 		}
 	}

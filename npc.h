@@ -30,7 +30,7 @@ private:
 
 	int count;					//프레임 돌리는 카운트
 
-	bool _isMove;							//움직일 때는  속성바꾸는 것을 꺼주기 위해 만듬
+	bool _isMove;				//움직일 때는  속성바꾸는 것을 꺼주기 위해 만듬
 
 public:
 	npc();

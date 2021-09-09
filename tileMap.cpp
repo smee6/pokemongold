@@ -24,7 +24,7 @@ HRESULT tileMap::init()
 	
 
 	//맵 카메라 초기화
-	_cameraX = 0;
+	_cameraX = 2560;
 	_cameraY = 0;
 
 	//타일 속성 초기화 (삭제예정)

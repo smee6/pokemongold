@@ -1159,14 +1159,14 @@ void uiManager::battle()
 			_playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
 
 			_currentHP = _character->getPoketmon(_currentPoke).currentHP;
-			_maxHP = _character->getPoketmon(_currentPoke).maxHP;
+			_maxHP = _character->getPoketmon(_currentPoke).sumMaxHP;
 			_currentEXP = _character->getPoketmon(_currentPoke).currentExp;
 			_maxEXP = _character->getPoketmon(_currentPoke).maxExp;
 
 			_hpBarPlayer->setGauge(_currentHP, _maxHP);
 			_hpBarPlayer->render();
 
-			_hpBarEnemy->setGauge(_poketmonManager->getWildPoketmon().currentHP, _poketmonManager->getWildPoketmon().maxHP);
+			_hpBarEnemy->setGauge(_poketmonManager->getWildPoketmon().currentHP, _poketmonManager->getWildPoketmon().sumMaxHP);
 			_hpBarEnemy->render();
 
 			_expBar->setGauge(_currentEXP, _maxEXP);
@@ -1447,7 +1447,7 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				//_character->setCurrentHP(_poketmonManager->getWildPoketmon().sumAttack);
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
 			}
 		}
 

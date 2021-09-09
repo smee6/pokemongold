@@ -44,10 +44,10 @@ HRESULT weedle::init()
 
 		//스킬
 
-		_poketmon.skill1 = 7;
-		_poketmon.skill2 = 2;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 7;
+		_poketmon.skill[1] = 2;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -88,10 +88,10 @@ HRESULT weedle::init()
 
 		//스킬
 
-		_poketmon.skill1 = 26;
-		_poketmon.skill2 = 0;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 26;
+		_poketmon.skill[1] = 0;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -132,10 +132,10 @@ HRESULT weedle::init()
 
 		//스킬
 
-		_poketmon.skill1 = 28;
-		_poketmon.skill2 = 8;
-		_poketmon.skill3 = 9;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 28;
+		_poketmon.skill[1] = 8;
+		_poketmon.skill[2] = 9;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 

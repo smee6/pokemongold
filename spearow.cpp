@@ -46,10 +46,10 @@ HRESULT spearow::init()
 
 		//스킬
 
-		_poketmon.skill1 = 15;
-		_poketmon.skill2 = 16;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 15;
+		_poketmon.skill[1] = 16;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT spearow::init()
 
 		//스킬
 
-		_poketmon.skill1 = 15;
-		_poketmon.skill2 = 16;
-		_poketmon.skill3 = 17;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 15;
+		_poketmon.skill[1] = 16;
+		_poketmon.skill[2] = 17;
+		_poketmon.skill[3] = 0;
 
 
 		//potketmonEXP();

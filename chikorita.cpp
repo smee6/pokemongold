@@ -46,10 +46,10 @@ HRESULT chikorita::init()
 
         //스킬
 
-        _poketmon.skill1 = 1;
-        _poketmon.skill2 = 16;
-        _poketmon.skill3 = 0;
-        _poketmon.skill4 = 0;
+        _poketmon.skill[0] = 1;
+        _poketmon.skill[1] = 16;
+        _poketmon.skill[2] = 0;
+        _poketmon.skill[3] = 0;
 
         //potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT chikorita::init()
 
         //스킬
 
-        _poketmon.skill1 = 1;
-        _poketmon.skill2 = 16;
-        _poketmon.skill3 = 20;
-        _poketmon.skill4 = 0;
+        _poketmon.skill[0] = 1;
+        _poketmon.skill[1] = 16;
+        _poketmon.skill[2] = 20;
+        _poketmon.skill[3] = 0;
 
 
         //potketmonEXP();
@@ -134,10 +134,10 @@ HRESULT chikorita::init()
 
          //스킬
 
-        _poketmon.skill1 = 1;
-        _poketmon.skill2 = 16;
-        _poketmon.skill3 = 20;
-        _poketmon.skill4 = 21;
+        _poketmon.skill[0] = 1;
+        _poketmon.skill[1] = 16;
+        _poketmon.skill[2] = 20;
+        _poketmon.skill[3] = 21;
 
 
         //potketmonEXP();

@@ -46,10 +46,10 @@ HRESULT pidgey::init()
 
         //스킬
 
-        _poketmon.skill1 = 10;
-        _poketmon.skill2 = 11;
-        _poketmon.skill3 = 0;
-        _poketmon.skill4 = 0;
+        _poketmon.skill[0] = 10;
+        _poketmon.skill[1] = 11;
+        _poketmon.skill[2] = 0;
+        _poketmon.skill[3] = 0;
 
         //potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT pidgey::init()
 
         //스킬
 
-        _poketmon.skill1 = 10;
-        _poketmon.skill2 = 11;
-        _poketmon.skill3 = 12;
-        _poketmon.skill4 = 0;
+        _poketmon.skill[0] = 10;
+        _poketmon.skill[1] = 11;
+        _poketmon.skill[2] = 12;
+        _poketmon.skill[3] = 0;
 
         //potketmonEXP();
 
@@ -134,10 +134,10 @@ HRESULT pidgey::init()
 
         //스킬
 
-        _poketmon.skill1 = 10;
-        _poketmon.skill2 = 11;
-        _poketmon.skill3 = 12;
-        _poketmon.skill4 = 13;
+        _poketmon.skill[0] = 10;
+        _poketmon.skill[1] = 11;
+        _poketmon.skill[2] = 12;
+        _poketmon.skill[3] = 13;
 
 
         //potketmonEXP();

@@ -46,10 +46,10 @@ HRESULT caterpie::init()
 
 		//스킬
 
-		_poketmon.skill1 = 1;
-		_poketmon.skill2 = 2;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 1;
+		_poketmon.skill[1] = 2;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT caterpie::init()
 
 		//스킬
 
-		_poketmon.skill1 = 26;
-		_poketmon.skill2 = 0;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 26;
+		_poketmon.skill[1] = 0;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -134,10 +134,10 @@ HRESULT caterpie::init()
 
 		//스킬
 
-		_poketmon.skill1 = 3;
-		_poketmon.skill2 = 4;
-		_poketmon.skill3 = 5;
-		_poketmon.skill4 = 6;
+		_poketmon.skill[0] = 3;
+		_poketmon.skill[1] = 4;
+		_poketmon.skill[2] = 5;
+		_poketmon.skill[3] = 6;
 
 		//potketmonEXP();
 

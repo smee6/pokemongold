@@ -46,10 +46,10 @@ HRESULT totodile::init()
 
 		 //스킬
 
-		_poketmon.skill1 = 27;
-		_poketmon.skill2 = 17;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 27;
+		_poketmon.skill[1] = 17;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT totodile::init()
 
 		//스킬
 
-		_poketmon.skill1 = 27;
-		_poketmon.skill2 = 17;
-		_poketmon.skill3 = 24;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 27;
+		_poketmon.skill[1] = 17;
+		_poketmon.skill[2] = 24;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -134,10 +134,10 @@ HRESULT totodile::init()
 
 		//스킬
 
-		_poketmon.skill1 = 27;
-		_poketmon.skill2 = 17;
-		_poketmon.skill3 = 24;
-		_poketmon.skill4 = 25;
+		_poketmon.skill[0] = 27;
+		_poketmon.skill[1] = 17;
+		_poketmon.skill[2] = 24;
+		_poketmon.skill[3] = 25;
 
 
 		//potketmonEXP();

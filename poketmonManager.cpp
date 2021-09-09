@@ -146,15 +146,15 @@ void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
     _wildPoketmon.maxExp = _vPoketmon[_randomPoketmon]->getTagPoketmon().maxExp;                       //레벨계산용
     _wildPoketmon.totalEXP = _vPoketmon[_randomPoketmon]->getTagPoketmon().totalEXP;                     //현재 레벨의 최대 경험치
 
-    _wildPoketmon.skill1 = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill1;                       //스킬1
-    _wildPoketmon.skill2 = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill2;                       //스킬2
-    _wildPoketmon.skill3 = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill3;                       //스킬3
-    _wildPoketmon.skill4 = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill4;                       //스킬4
+    _wildPoketmon.skill[0] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[0];                       //스킬1
+    _wildPoketmon.skill[1] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[1];                       //스킬2
+    _wildPoketmon.skill[2] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[2];                       //스킬3
+    _wildPoketmon.skill[3] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[3];                       //스킬4
 
-    _wildPoketmon.skill1PP = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill1PP;                     //스킬1PP
-    _wildPoketmon.skill2PP = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill2PP;                     //스킬2PP
-    _wildPoketmon.skill3PP = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill3PP;                     //스킬3PP
-    _wildPoketmon.skill4PP = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill4PP;                     //스킬4PP
+    _wildPoketmon.skillPP[0] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skillPP[0];                     //스킬1PP
+    _wildPoketmon.skillPP[1] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skillPP[1];                     //스킬2PP
+    _wildPoketmon.skillPP[2] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skillPP[2];                     //스킬3PP
+    _wildPoketmon.skillPP[3] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skillPP[3];                     //스킬4PP
 
     _wildPoketmon.item = _vPoketmon[_randomPoketmon]->getTagPoketmon().item;                         //아이템..
 
@@ -173,14 +173,14 @@ void poketmonManager::render()
     string strnmae = _wildPoketmon.name;
     strcpy_s(poke, strnmae.c_str());
 
-    sprintf_s(str, "포켓몬 이름 : %s", poke);
-    TextOut(getMemDC(), 100, 280, str, strlen(str));
-    sprintf_s(str, "포켓몬 공격력 : %d ", _wildPoketmon.attack);
-    TextOut(getMemDC(), 100, 300, str, strlen(str));
-    sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
-    TextOut(getMemDC(), 100, 320, str, strlen(str));
-    sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);
-    TextOut(getMemDC(), 100, 340, str, strlen(str));
+   // sprintf_s(str, "포켓몬 이름 : %s", poke);
+   // TextOut(getMemDC(), 100, 280, str, strlen(str));
+   // sprintf_s(str, "포켓몬 공격력 : %d ", _wildPoketmon.attack);
+   // TextOut(getMemDC(), 100, 300, str, strlen(str));
+   // sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
+   // TextOut(getMemDC(), 100, 320, str, strlen(str));
+   // sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);
+   // TextOut(getMemDC(), 100, 340, str, strlen(str));
 
     _skill->render();
 }

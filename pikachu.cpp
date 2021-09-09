@@ -46,10 +46,10 @@ HRESULT pikachu::init()
 
 		//스킬
 
-		_poketmon.skill1 = 18;
-		_poketmon.skill2 = 16;
-		_poketmon.skill3 = 0;
-		_poketmon.skill4 = 0;
+		_poketmon.skill[0] = 18;
+		_poketmon.skill[1] = 16;
+		_poketmon.skill[2] = 0;
+		_poketmon.skill[3] = 0;
 
 		//potketmonEXP();
 
@@ -90,10 +90,10 @@ HRESULT pikachu::init()
 
 		//스킬
 
-		_poketmon.skill1 = 18;
-		_poketmon.skill2 = 14;
-		_poketmon.skill3 = 12;
-		_poketmon.skill4 = 19;
+		_poketmon.skill[0] = 18;
+		_poketmon.skill[1] = 14;
+		_poketmon.skill[2] = 12;
+		_poketmon.skill[3] = 19;
 
 		//potketmonEXP();
 

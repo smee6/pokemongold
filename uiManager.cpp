@@ -670,10 +670,13 @@ void uiManager::setting()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
-			settingCnt = 0;
-			settingWindow = false;
-			uiOpen = false;
-			_isOpenSetting = false;
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
+				settingCnt = 0;
+				settingWindow = false;
+				uiOpen = false;
+				_isOpenSetting = false;
+			}
+
 
 			break;
 		

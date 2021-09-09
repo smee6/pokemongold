@@ -373,7 +373,7 @@ void uiManager::pokeShift()
 			break;
 		case 6:
 			IMAGEMANAGER->findImage("pokeShift6")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				pokeWindow = false;
 				_isOpenPokemon = false;
 			}
@@ -462,7 +462,7 @@ void uiManager::bag()
 			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
 			if (pokeballQ > 0) {
 				
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 
 					pokeballQ++;
 				};
@@ -471,7 +471,7 @@ void uiManager::bag()
 		case 1:// 가방에서 상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					medicineQ++;
 				};
 			}
@@ -479,14 +479,14 @@ void uiManager::bag()
 		case 2:// 가방에서 고급상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					goodMedicineQ++;
 				};
 			}
 			break;
 		case 3:// 가방에서 나가기에 커서가 있다
 			IMAGEMANAGER->findImage("bag3")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 
 				bagCnt = 0;
 				bagWindow = false;
@@ -629,7 +629,7 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/스타팅선택취소.txt");
 			break;
 		case NPC::BATTLE:
-			_vScript = TXTDATA->txtLoad("script/배틀(임시).txt");
+			_vScript = TXTDATA->txtLoad("script/배틀.txt");
 			break;
 		default:
 			break;
@@ -678,8 +678,14 @@ void uiManager::script()
 			_scriptImage->render(_backBuffer->getMemDC());
 
 			// 받아온 텍스트정보를 넘겨줌
-			if (_scriptIndex == 1) _txt = _character->getPoketmon(0).name + _vScript[_scriptIndex];
-			else _txt = _vScript[_scriptIndex];
+			_txt = _vScript[_scriptIndex];
+
+			string currentPokemon = _character->getPoketmon(0).name;
+
+			vector<string> _vStr;
+			_vStr.push_back("야생의 " + currentPokemon + "(이)가\n승부를 걸어왔다!;" + currentPokemon + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
+
+			TXTDATA->txtSave("script/배틀.txt", _vStr);
 
 			// 스킵이 아닐 경우에
 			if (!_isScriptSkip)

@@ -200,7 +200,7 @@ void character::npcScript() // npc 대화 스크립트 처리
     // 스크립트 떠있으면 빠져나감
     if (UIMANAGER->getIsScript() || UIMANAGER->isUiOpen() || _isMoving) return;
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < npcMAX; i++)
     {
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
@@ -215,18 +215,19 @@ void character::npcScript() // npc 대화 스크립트 처리
                 _scriptAction = 0;                      // 스크립트 액션 초기화
             }
 
+            // 트레이너 1
             if (_scriptAction == 1 && i == 4)
             {
                 _isPoketmonMeet = 1;
                 _scriptAction = 0;
             }
-
+            // 트레이너 2
             if (_scriptAction == 1 && i == 5)
             {
                 _isPoketmonMeet = 1;
                 _scriptAction = 0;
             }
-
+            // 관장님
             if (_scriptAction == 1 && i == 6)
             {
                 _isPoketmonMeet = 1;
@@ -267,6 +268,18 @@ void character::npcScript() // npc 대화 스크립트 처리
                     UIMANAGER->setIsScript(false);              // 스크립트 꺼주고
                     UIMANAGER->setOpenShop(true);               // 상점 오픈
                     _scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 8: // 브케인
+                    UIMANAGER->setNPC(NPC::CYNDAQUIL, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 9: // 리아코
+                    UIMANAGER->setNPC(NPC::TOTODILE, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 10: // 치코리타
+                    UIMANAGER->setNPC(NPC::CHIKORITA, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 }                
             }

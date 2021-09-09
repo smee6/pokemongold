@@ -68,6 +68,18 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("pokeShift6", "image/menuUI/pokeShift_6.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	// =======================================================================================================================
+	IMAGEMANAGER->addImage("gear0", "image/menuUI/gear_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("gear1", "image/menuUI/gear_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("gear2", "image/menuUI/gear_2.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("status0", "image/menuUI/status_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("status1", "image/menuUI/status_1.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("setting0", "image/menuUI/setting_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("setting1", "image/menuUI/setting_1.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("dogam0", "image/menuUI/dogam_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("배틀배경", "image/battle/battleBackground.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("배틀행동선택", "image/battle/selectBehavior.bmp", 640, 186, true, RGB(255, 0, 255));
@@ -229,6 +241,9 @@ void uiManager::pokeCenter()
 		_isOpenPokecenter = false;
 	}
 }
+/// <메뉴> ////////////////////////////////////////////
+/// <메뉴> ////////////////////////////////////////////
+/// <메뉴> ////////////////////////////////////////////
 
 void uiManager::menu()
 {
@@ -454,6 +469,15 @@ void uiManager::bag()
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
 			bagCnt --;
 		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			bagCnt = 0;
+			bagWindow = false;
+			uiOpen = false;
+			_isOpenBag = false;
+
+		};
+
 
 		switch (bagCnt) {
 
@@ -523,29 +547,144 @@ void uiManager::bag()
 		DeleteObject(font2);
 	}
 }
-
+////////////////////////////////////////
+///////////////////////////////////////
+//////////////////////////////////////
+// 추가로 작업할것 //////////////////
+////////////////////////////////////
+///////////////////////////////////
+//////////////////////////////////
 void uiManager::pokeDogam()
 {
+	pokedogamWindow = true;
+	if (pokedogamWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 12) {
+			dogamCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && dogamCnt > 0) {
+			dogamCnt--;
+		}
+
+		switch (dogamCnt) {}
+	}
 
 }
 
 void uiManager::pokeGear()
 {
 
+	gearWindow = true;
+	if (gearWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && gearCnt < 2) {
+			gearCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && gearCnt > 0) {
+			gearCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			gearCnt = 0;
+			gearWindow = false;
+			uiOpen = false;
+			_isOpenPokeGear = false;
+
+		};
+		switch (gearCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("gear0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("gear1")->render(_backBuffer->getMemDC());
+			break;
+		case 2:
+			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
+			break;
+		
+		}
+	}
+
+
 }
 
 void uiManager::playerStatus()
 {
+	statusWindow = true;
+	if (statusWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && statusCnt < 1) {
+			statusCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && statusCnt > 0) {
+			statusCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			statusCnt = 0;
+			statusWindow = false;
+			uiOpen = false;
+			_isOpenPlayerStatus = false;
+
+		};
+		switch (statusCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("status0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("status1")->render(_backBuffer->getMemDC());
+			break;
+		
+		
+		}
+	}
+
+
 
 }
 
 void uiManager::setting()
 {
 
+	settingWindow = true;
+	if (settingWindow) {
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && settingCnt < 3) {
+			settingCnt++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP) && settingCnt > 0) {
+			settingCnt--;
+		}
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+			settingCnt = 0;
+			settingWindow = false;
+			uiOpen = false;
+			_isOpenSetting = false;
+
+		};
+
+		switch (settingCnt) {
+		case 0:
+			IMAGEMANAGER->findImage("setting0")->render(_backBuffer->getMemDC());
+			break;
+		case 1:
+			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
+			settingCnt = 0;
+			settingWindow = false;
+			uiOpen = false;
+			_isOpenSetting = false;
+
+			break;
+		
+		}
+	}
+
+
 }
 
-
-
+// 여기까지 메뉴 안쪽 버튼 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void uiManager::script()
 {
 	uiOpen = true;

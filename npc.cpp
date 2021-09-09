@@ -29,7 +29,7 @@ void npc::update()
 	updateNPC();
 
 	//npc 무브렉트에 플레이어가 오면  npc움직임
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < npcMAX; i++)
 	{
 		RECT temp;
 		if(IntersectRect(&temp, &_npc[i].moveRC, &_character->getRect()))
@@ -46,7 +46,7 @@ void npc::update()
 
 void npc::render()
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < npcMAX; i++)
 	{
 		_npc[i].Img->render(getMemDC(), _npc[i].rc.left, _npc[i].rc.top);				//npc 이미지
 		if (_npc[i].markCount != 0 && _npc[i].markCount != 100)
@@ -56,18 +56,6 @@ void npc::render()
 
 		if(KEYMANAGER->isToggleKey(VK_TAB)) Rectangle(getMemDC(), _npc[i].detectRC);	//대화 상자 렉트
 	}
-
-
-	//Rectangle(getMemDC(), _npc[0].moveRC);		//무브 렉트
-
-	for (int i = 0; i < 3; i++)
-	{
-		_pokeball[i].Img->render(getMemDC(), _pokeball[i].rc.left, _pokeball[i].rc.top);
-		Rectangle(getMemDC(), _pokeball[i].detectRC);
-	}
-
-	//Rectangle(getMemDC(), _npc[0].moveRC);
-
 
 	char str[128];
 	sprintf_s(str, "_isMove : %d", _isMove);
@@ -92,16 +80,17 @@ void npc::setNPC()
 	_npc[5].Img = IMAGEMANAGER->addImage("부하2", "image/pokemon_minion2.bmp", 64, 64, true, RGB(255, 0, 255));
 	_npc[6].Img = IMAGEMANAGER->addImage("비상", "image/pokemon_master.bmp", 64, 64, true, RGB(255, 0, 255));
 	_npc[7].Img = IMAGEMANAGER->addImage("마트", "image/pokemon_mart.bmp", 64, 64, true, RGB(255, 0, 255));
+	//포켓볼 이미지 초기화
+	{
+		for (int i = 8; i < npcMAX; i++)
+		{
+			_npc[i].Img = IMAGEMANAGER->addImage("볼", "image/pokemon_ball.bmp", 48, 48, true, RGB(255, 0, 255));
+		}
+	}
+	//엄마 움직일 때 이미지 초기화
 	IMAGEMANAGER->addImage("엄마 업", "image/pokemon_mom_up.bmp", 64, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("엄마 다운", "image/pokemon_mom_down.bmp", 64, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("엄마 레프트", "image/pokemon_mom_left.bmp", 64, 64, true, RGB(255, 0, 255));
-	//포켓볼 이미지 초기화
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			_pokeball[i].Img = IMAGEMANAGER->addImage("볼", "image/pokemon_ball.bmp", 48, 48, true, RGB(255, 0, 255));
-		}
-	}
 }
 
 void npc::updateNPC()
@@ -139,11 +128,11 @@ void npc::updateNPC()
 	{
 		_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
 	}
-
-	for (int i = 0; i < 3; i++)
+	//포켓볼
+	for (int i = 8; i < npcMAX; i++)
 	{
-		_pokeball[i].rc = RectMake(_tileMap->getTile()[4657 + i].rc.left + 8, _tileMap->getTile()[4657 + i].rc.top - 8, 64, 64);
-		_pokeball[i].detectRC = RectMake(_tileMap->getTile()[4871 + i].rc.left, _tileMap->getTile()[4871 + i].rc.top, 64, 64);
+		_npc[i].rc = RectMake(_tileMap->getTile()[4657 + (i-8)].rc.left + 8, _tileMap->getTile()[4657 + (i - 8)].rc.top - 8, 64, 64);
+		_npc[i].detectRC = RectMake(_tileMap->getTile()[4871 + (i-8)].rc.left, _tileMap->getTile()[4871 + (i - 8)].rc.top, 64, 64);
 	}
 }
 

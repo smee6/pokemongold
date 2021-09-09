@@ -1,6 +1,8 @@
 #pragma
 #include "gameNode.h"
 
+#define npcMAX 11				//npc max
+
 //npc 구조체
 struct tagNPC
 {
@@ -26,8 +28,7 @@ private:
 	tileMap* _tileMap;
 	character* _character;
 
-	tagNPC _npc[8];				//npc - 0: 플레이어 엄마 1: 오박사 2: 오박사 조수 3: 간호사 4: 부하1 5: 부하2 6: 비상 7: 마트 주인
-	tagNPC _pokeball[3];		//포켓볼 3개
+	tagNPC _npc[11];				//npc - 0: 플레이어 엄마 1: 오박사 2: 오박사 조수 3: 간호사 4: 부하1 5: 부하2 6: 비상 7: 마트 주인 8~10 : 포켓볼
 
 	int count;					//프레임 돌리는 카운트
 
@@ -48,7 +49,6 @@ public:
 
 	//접근자
 	tagNPC* getnpcRC() { return _npc; }				//npc에 대한 접근자
-	tagNPC* getPokeBall() { return _pokeball; }		//pokeball에 대한 접근자
 	inline bool getIsMove() { return _isMove; }		//isMove에 대한 접근자
 
 	//설정자

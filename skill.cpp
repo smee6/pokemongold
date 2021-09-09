@@ -53,7 +53,7 @@ void skill::skillNone()			//스킬없음
 {
 	//_skillNumber = 0;			//스킬넘버
 
-	_name = "";					//이름
+	_name = " -";				//이름
 
 	_power = NULL;				//위력
 	_PP = NULL;					//PP

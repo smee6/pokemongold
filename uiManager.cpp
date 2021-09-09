@@ -492,8 +492,9 @@ void uiManager::bag()
 			if (pokeballQ > 0) {
 				
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-
-					pokeballQ++;
+					pokeballQ--;
+					//전투중이 아닌 경우 못 씀
+					//전투중에 쓸경우 뭐 대충 bool 값 체크해서 사용하게 해줌 
 				};
 			}
 			break;
@@ -501,7 +502,8 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-					medicineQ++;
+					medicineQ--;
+					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
 			}
 			break;
@@ -509,7 +511,8 @@ void uiManager::bag()
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown('Z')) {
-					goodMedicineQ++;
+					goodMedicineQ--;
+					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
 			}
 			break;

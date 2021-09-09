@@ -608,14 +608,14 @@ void character::poketmonSetting() // 테스트 데이터
 
     _poketmon[0].totalEXP = 8800;							// 토탈 경험치
 
-    _poketmon[0].skill1 = 1;								// 스킬1 인덱스 
-    _poketmon[0].skill2 = 2;								// 스킬2 인덱스 
-    _poketmon[0].skill3 = 3;								// 스킬3 인덱스 
-    _poketmon[0].skill4 = 4;								// 스킬4 인덱스 
-    _poketmon[0].skillPP1 = 10;							// 스킬1 현재 PP
-    _poketmon[0].skillPP2 = 10;							// 스킬2 현재 PP
-    _poketmon[0].skillPP3 = 10;							// 스킬3 현재 PP
-    _poketmon[0].skillPP4 = 10;							// 스킬4 현재 PP
+    _poketmon[0].skill[0] = 1;								// 스킬1 인덱스 
+    _poketmon[0].skill[1] = 2;								// 스킬2 인덱스 
+    _poketmon[0].skill[2] = 3;								// 스킬3 인덱스 
+    _poketmon[0].skill[3] = 4;								// 스킬4 인덱스 
+    _poketmon[0].skillPP[0] = 10;							// 스킬1 현재 PP
+    _poketmon[0].skillPP[1] = 10;							// 스킬2 현재 PP
+    _poketmon[0].skillPP[2] = 10;							// 스킬3 현재 PP
+    _poketmon[0].skillPP[3] = 10;							// 스킬4 현재 PP
 
     _poketmon[0].item = 1;								// 보유 중인 아이템 인덱스
 
@@ -660,14 +660,14 @@ void character::poketmonSetting() // 테스트 데이터
               
     _poketmon[1].totalEXP = 8800;							// 토탈 경험치
               
-    _poketmon[1].skill1 = 1;								// 스킬1 인덱스 
-    _poketmon[1].skill2 = 2;								// 스킬2 인덱스 
-    _poketmon[1].skill3 = 3;								// 스킬3 인덱스 
-    _poketmon[1].skill4 = 4;								// 스킬4 인덱스 
-    _poketmon[1].skillPP1 = 10;							// 스킬1 현재 PP
-    _poketmon[1].skillPP2 = 10;							// 스킬2 현재 PP
-    _poketmon[1].skillPP3 = 10;							// 스킬3 현재 PP
-    _poketmon[1].skillPP4 = 10;							// 스킬4 현재 PP
+    _poketmon[1].skill[0] = 1;								// 스킬1 인덱스 
+    _poketmon[1].skill[1] = 2;								// 스킬2 인덱스 
+    _poketmon[1].skill[2] = 3;								// 스킬3 인덱스 
+    _poketmon[1].skill[3] = 4;								// 스킬4 인덱스 
+    _poketmon[1].skillPP[0] = 10;							// 스킬1 현재 PP
+    _poketmon[1].skillPP[1] = 10;							// 스킬2 현재 PP
+    _poketmon[1].skillPP[2] = 10;							// 스킬3 현재 PP
+    _poketmon[1].skillPP[3] = 10;							// 스킬4 현재 PP
               
     _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }

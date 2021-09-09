@@ -63,4 +63,6 @@ public:
 	tagPOKETMON getWildPoketmon() { return _wildPoketmon; }			//具积 器南阁 百磐
 	skill* getSkill() { return _skill; }
 
+	void setCurrentHP(int hp, int index) { _wildPoketmon[index].currentHP -= hp; }
+
 };

@@ -612,14 +612,25 @@ void skill::skillAni()
 			{
 				_isSkill = false;					//조건에 맞으면 스킬을 비활성화 시켜서 이미지를 지우고
 				_count = 0;							//카운터를 다시 초기화 시켜준다
+
+				// 배틀 진행
+				if (UIMANAGER->getAttackCount() < 2)
+				{
+					UIMANAGER->setIsNext(true);
+					UIMANAGER->setIsScript(true);
+					UIMANAGER->setIsCount(true);
+					UIMANAGER->setIsTurn(false);
+				}
+				else if (UIMANAGER->getAttackCount() > 1)
+				{
+					UIMANAGER->setIsAttack(false);
+					UIMANAGER->setAttackCount(0);
+					//UIMANAGER->setIsNext(false);
+					//UIMANAGER->setIsTurn(false);
+				}
 			}
-
 		}
-
 	}
-
-
-
 }
 
 void skill::imageInit()	//스킬 이미지

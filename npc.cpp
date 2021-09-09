@@ -63,7 +63,7 @@ void npc::render()
 	for (int i = 0; i < 3; i++)
 	{
 		_pokeball[i].Img->render(getMemDC(), _pokeball[i].rc.left, _pokeball[i].rc.top);
-		//Rectangle(getMemDC(), _pokeball[i].detectRC);
+		Rectangle(getMemDC(), _pokeball[i].detectRC);
 	}
 
 	//Rectangle(getMemDC(), _npc[0].moveRC);
@@ -217,6 +217,7 @@ void npc::move()
 			{
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER1, true);
+				//_character->setScriptAction(true);
 				_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 0, 0);
 				_isMove = false;
 				_npc[4].moveCount = 100;

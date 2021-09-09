@@ -215,21 +215,23 @@ void character::npcScript() // npc 대화 스크립트 처리
                 _scriptAction = 0;                      // 스크립트 액션 초기화
             }
 
-            //if (_scriptAction == 1 && 1 == 4)
-            //{
-            //    _isPoketmonMeet = 1;
-            //    _scriptAction = 0;
-            //}
+            if (_scriptAction == 1 && 1 == 4)
+            {
+                _isPoketmonMeet = 1;
+                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+            }
 
-            //if (_scriptAction == 1 && 1 == 5)
-            //{
-            //    _isPoketmonMeet = 1;
-            //}
+            if (_scriptAction == 1 && 1 == 5)
+            {
+                _isPoketmonMeet = 1;
+                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+            }
 
-            //if (_scriptAction == 1 && 1 == 6)
-            //{
-            //    _isPoketmonMeet = 1;
-            //}
+            if (_scriptAction == 1 && 1 == 6)
+            {
+                _isPoketmonMeet = 1;
+                if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX()) _scriptAction = 0;
+            }
 
             if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _scriptAction == 0) // 스페이스바 눌렀을 때
             {

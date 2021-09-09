@@ -820,7 +820,7 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/타이틀.txt");
 			break;
 		case NPC::MOM:
-			if (_momCount == 0)	_vScript = TXTDATA->txtLoad("script/엄마1.txt");
+			if (_momCount == 0)	_vScript = TXTDATA->txtLoad("script/조수.txt");
 			else _vScript = TXTDATA->txtLoad("script/엄마2.txt");
 
 			_momCount++;

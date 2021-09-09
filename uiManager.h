@@ -49,6 +49,7 @@ class character;
 class uiManager : public singletonBase<uiManager>
 {
 private:
+	int soundVolume = 100;
 	int shopCnt = 0;							//상점 메뉴 선택지
 	int buyCnt = 0;								//아이템 메뉴 선택지
 	int menuCnt = 0;

@@ -614,15 +614,52 @@ void uiManager::pokeGear()
 		switch (gearCnt) {
 		case 0:
 			IMAGEMANAGER->findImage("gear0")->render(_backBuffer->getMemDC());
+
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("gear1")->render(_backBuffer->getMemDC());
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
+
+			if (KEYMANAGER->isOnceKeyDown('Z')) {
+
+				gearCnt = 0;
+				gearWindow = false;
+				uiOpen = false;
+				_isOpenPokeGear = false;
+
+			};
+
 			break;
 		
 		}
+
+
+		if (gearCnt == 0) {
+			char str[128];
+
+			SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+			HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+			HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+
+			sprintf_s(str, "포켓기어! 다음장은 맵이다 !");
+			TextOut(_backBuffer->getMemDC(), 135, 190, str, strlen(str));
+			sprintf_s(str, "여기에 날짜랑 요일 뜨면 됨");
+			TextOut(_backBuffer->getMemDC(), 135, 240, str, strlen(str));
+
+			SelectObject(_backBuffer->getMemDC(), oldFont2);
+			DeleteObject(font2);
+		}
+
+
+
+
 	}
 
 
@@ -657,6 +694,29 @@ void uiManager::playerStatus()
 		
 		
 		}
+
+
+
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		sprintf_s(str, "Your Name Here");
+		TextOut(_backBuffer->getMemDC(), 180, 60, str, strlen(str));
+
+		sprintf_s(str, "%d",23400);
+		TextOut(_backBuffer->getMemDC(), 290, 190, str, strlen(str));
+
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+
 	}
 
 
@@ -687,6 +747,13 @@ void uiManager::setting()
 		switch (settingCnt) {
 		case 0:
 			IMAGEMANAGER->findImage("setting0")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && soundVolume < 100) {
+				soundVolume++;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && soundVolume > 0) {
+				soundVolume--;
+			}
+
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
@@ -701,6 +768,26 @@ void uiManager::setting()
 			break;
 		
 		}
+
+
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(56, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		sprintf_s(str, "%d", soundVolume);
+		TextOut(_backBuffer->getMemDC(), 500, 50, str, strlen(str));
+
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+
+
 	}
 
 

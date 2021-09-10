@@ -16,7 +16,7 @@ HRESULT skill::init()
 
 	STATUS_AILMENT::NONE;	// 상태이상 초기값은 없음
 
-	_imgName = "lightScreen";							//처음에 들어가는 값
+	_imgName = "poison";							//처음에 들어가는 값
 
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
@@ -35,7 +35,7 @@ void skill::update()
 {
 
 	//밑에 키매니저들은 체크할려고 만든 것들 나중에 지워도 됨
-	if (KEYMANAGER->isOnceKeyDown('P')) _isSkill = true;
+	if (KEYMANAGER->isOnceKeyDown('K')) _isSkill = true;
 	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;	//나 (플레이어)
 	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;	//야생
 
@@ -69,7 +69,7 @@ void skill::tackle()			// 몸통박치기
 	//_skillNumber = 1;			//스킬넘버
 
 	_name = "몸통박치기";		//이름
-	_imgName = "attack3";		//이미지이름
+	_imgName = "growth";		//이미지이름
 
 	_power = 40;				//위력
 	_PP = 35;					//PP
@@ -86,8 +86,7 @@ void skill::stringShot()		//실뿜기
 	_name = "실뿜기";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = NULL;				//위력
 	_PP = 40;					//PP
@@ -104,8 +103,7 @@ void skill::confusion()			//염동력
 	_name = "염동력";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = 50;				//위력
 	_PP = 25;					//PP
@@ -121,8 +119,7 @@ void skill::poisonPowder()		//독가루
 	_name = "독가루";			//이름
 	_imgName = "poison";		//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = NULL;				//위력
 	_PP = 35;					//PP
@@ -139,8 +136,7 @@ void skill::stunSpore()			//저리가루
 	_name = "저리가루";			//이름
 	_imgName = "poison";		//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 30;					//PP
@@ -157,8 +153,7 @@ void skill::sleepPowder()		//수면가루
 	_name = "수면가루";			//이름
 	_imgName = "poison";		//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 15;					//PP
@@ -177,9 +172,7 @@ void skill::poisonSting()		//독침
 	_name = "독침";				//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
+	
 	_power = 15;				//위력
 	_PP = 35;					//PP
 	_accuracy = 100;			//명중률
@@ -197,8 +190,8 @@ void skill::focusEnergy()		//기충전
 	_name = "기충전";			//이름
 	_imgName = "growth";		//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
+	
 
 	_power = NULL;				//위력
 	_PP = 30;					//PP
@@ -214,8 +207,7 @@ void skill::twineedle()			//더블니들
 	_name = "더블니들";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 25;				//위력
 	_PP = 20;					//PP
@@ -231,8 +223,7 @@ void skill::sandAttack()		//모래뿌리기
 	_name = "모래뿌리기";		//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 15;					//PP
@@ -249,8 +240,7 @@ void skill::gust()				//바람일으키기
 	_name = "바람일으키기";		//이름
 	_imgName = "squall";		//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 40;				//위력
 	_PP = 35;					//PP
@@ -266,8 +256,7 @@ void skill::quickAttack()		//전광석화
 	_name = "전광석화";			//이름
 	_imgName = "move";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = 40;				//위력
 	_PP = 30;					//PP
@@ -283,8 +272,7 @@ void skill::wingAttack()		//날개치기
 	_name = "날개치기";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 60;				//위력
 	_PP = 35;					//PP
@@ -300,8 +288,7 @@ void skill::tailWhip()			//꼬리흔들기
 	_name = "꼬리흔들기";		//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 30;					//PP
@@ -317,9 +304,7 @@ void skill::peck()				//쪼기
 	_name = "쪼기";				//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
+	
 	_power = 35;				//위력
 	_PP = 35;					//PP
 	_accuracy = 100;			//명중률
@@ -334,8 +319,7 @@ void skill::growl()				//울음소리
 	_name = "울음소리";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 40;					//PP
@@ -351,8 +335,7 @@ void skill::leer()				//째려보기
 	_name = "째려보기";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 30;					//PP
@@ -370,8 +353,6 @@ void skill::thunderShock()		//전기쇼크
 	_name = "전기쇼크";			//이름
 	_imgName = "spark";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
 	_power = 40;				//위력
 	_PP = 30;					//PP
@@ -392,8 +373,7 @@ void skill::thunderbolt()		//10만볼트
 	_name = "10만볼트";			//이름
 	_imgName = "spark";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 90;				//위력
 	_PP = 15;					//PP
@@ -411,8 +391,7 @@ void skill::razorLeaf()			//잎날가르기
 	_name = "잎날가르기";		//이름
 	_imgName = "bind";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = 55;				//위력
 	_PP = 25;					//PP
@@ -428,8 +407,7 @@ void skill::reflect()			//리플렉터 물리데미지 반감.
 	_name = "리플렉터";			//이름
 	_imgName = "lightScreen";	//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 20;					//PP
@@ -445,8 +423,7 @@ void skill::smokescreen()		//연막
 	_name = "연막";				//이름
 	_imgName = "smokescreen";	//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = NULL;				//위력
 	_PP = 20;					//PP
@@ -464,8 +441,7 @@ void skill::ember()				//불꽃세례
 	_name = "불꽃세례";			//이름
 	_imgName = "fire";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = 40;				//위력
 	_PP = 25;					//PP
@@ -484,8 +460,6 @@ void skill::rage()				//분노
 	_name = "분노";				//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
 	_power = 20;				//위력
 	_PP = 20;					//PP
@@ -501,8 +475,7 @@ void skill::waterGun()			//물대포
 	_name = "물대포";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 40;				//위력
 	_PP = 25;					//PP
@@ -518,8 +491,6 @@ void skill::harden()			//단단해지기
 	_name = "단단해지기";		//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
 	_power = NULL;				//위력
 	_PP = 30;					//PP
@@ -535,8 +506,7 @@ void skill::scratch()			//할퀴기
 	_name = "할퀴기";			//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
 	_power = 40;				//위력
 	_PP = 35;					//PP
@@ -552,8 +522,7 @@ void skill::furyAttack()		//마구찌르기
 	_name = "마구찌르기";		//이름
 	_imgName = "cut";			//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+
 
 	_power = 15;				//위력
 	_PP = 20;					//PP
@@ -645,7 +614,7 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("cut3", "image/skill/cut3.bmp", 144, 36, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("lightScreen", "image/skill/lightScreen.bmp", 900, 126, 10, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("move", "image/skill/move.bmp", 440, 112, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 3240, 100, 27, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 7680, 200, 32, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shine", "image/skill/shine.bmp", 418, 38, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 960, 40, 24, 1, true, RGB(255, 0, 255));

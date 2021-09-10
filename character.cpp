@@ -48,6 +48,8 @@ void character::update() // 업데이트
     npcScript();
 
     if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
+
+    if (_frontTileType == 3) idle(_direction); // 문 타일 이용 후 걷는 상태가 멈췄을 때 아이들로 변경 처리
 }
 
 void character::poketmonSetting() // 포켓몬 데이터 처리
@@ -423,8 +425,6 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
                 break;
             }
 
-            if (_isMoving) idle(_direction);
-
             if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
             if (_frontTileType == 3) door(_currentTile);    // 문 타일일 때 처리
         }
@@ -465,7 +465,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(192);
 
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(3);
         tileAction();
         break;
     case 3990:  // 플레이어 집 1층에서 2층 이동
@@ -474,7 +473,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-256);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 4003:  // 플레이어 집 2층에서 1층 이동
@@ -483,7 +481,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-256);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 5485:  // 플레이어 집 1층에서 필드 이동
@@ -492,7 +489,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(64);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 5486:  // 플레이어 집 1층에서 필드 이동
@@ -501,7 +497,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(64);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 4602:  // 필드에서 오박사 집 이동
@@ -510,7 +505,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(448);
 
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(3);
         tileAction();
         break;
     case 6367:  // 오박사 집에서 필드 이동
@@ -519,7 +513,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-64);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 6368:  // 오박사 집에서 필드 이동
@@ -528,7 +521,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-64);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 5381:  // 필드에서 포켓몬 센터 이동
@@ -537,7 +529,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(192);
 
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(3);
         tileAction();
         break;
     case 5525:  // 포켓몬 센터에서 필드 이동
@@ -546,7 +537,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(192);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 5526:  // 포켓몬 센터에서 필드 이동
@@ -555,7 +545,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(192);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 3656:  // 필드에서 체육관 이동
@@ -568,7 +557,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
 
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(3);
         tileAction();
         break;
     case 7253:  // 체육관에서 필드 이동
@@ -581,7 +569,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 7254:  // 체육관에서 필드 이동
@@ -594,7 +581,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 3647:  // 필드에서 상점 이동
@@ -603,7 +589,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(192);
 
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(3);
         tileAction();
         break;
     case 5554:  // 상점에서 필드 이동
@@ -612,7 +597,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-320);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     case 5555:  // 상점에서 필드 이동
@@ -621,7 +605,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _tileMap->setCameraY(-320);
 
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
-        if (!_isMoving) tileCheck(2);
         tileAction();
         break;
     }

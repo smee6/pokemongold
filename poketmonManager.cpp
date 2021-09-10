@@ -12,16 +12,13 @@ poketmonManager::~poketmonManager()
 
 HRESULT poketmonManager::init()
 {
-
-    _poketmon = new poketmon;
-    _poketmon->init();
-    _poketmon->setSkillMemoryAddressLink(_skill);
-
     _skill = new skill;					//½ºÅ³ 
     _skill->init();
     _skill->setPoketmonmanagerMemoryAddressLink(this);
 
-    
+
+    _skill->setCharacterMemoryAddressLink(_character);
+
 
     poketmonImage();
 

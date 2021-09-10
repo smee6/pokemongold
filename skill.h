@@ -2,6 +2,7 @@
 #include "gameNode.h"
 
 class poketmonManager;
+class character;
 
 enum class STATUS_AILMENT	// 상태이상
 {
@@ -87,6 +88,7 @@ private:
 	RECT rc;					//위치 잡을 임시용
 
 	poketmonManager* _pM;
+	character* _ch;
 
 public:
 
@@ -166,7 +168,7 @@ public:
 	//STATUS_AILMENT getifAilemnt() { return _ifAilment; }		//상태이상
 
 	void setPoketmonmanagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }
-
+	void setCharacterMemoryAddressLink(character* ch) { _ch = ch; }
 
 };
 

@@ -18,7 +18,7 @@ HRESULT caterpie::init()
 	case 0:
 
 		_poketmon.name = "캐터피";							//이름 캐터피
-		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 10;								//전국도감번호 10
 		_poketmon.level = RND->getFromIntTo(1, 6);			//처음 등장 레벨 1~50
 
@@ -65,7 +65,7 @@ HRESULT caterpie::init()
 	case 1:
 
 		_poketmon.name = "단데기";							//이름 단데기
-		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 11;								//전국도감번호 11
 		_poketmon.level = RND->getFromIntTo(7, 50);			//처음 등장 레벨 7~50
 
@@ -112,7 +112,7 @@ HRESULT caterpie::init()
 	case 2:
 
 		_poketmon.name = "버터플";							//이름 버터플
-		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 12;								//전국도감번호 12
 		_poketmon.level = RND->getFromIntTo(10, 50);		//처음 등장 레벨 10~50
 

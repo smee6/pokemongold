@@ -18,7 +18,7 @@ HRESULT pidgey::init()
     case 0:
 
         _poketmon.name = "구구";							    //이름 구구
-        _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+        _poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
         _poketmon.index = 16;								//전국도감번호 16
         _poketmon.level = RND->getFromIntTo(1, 18);			//처음 등장 레벨 1~50
 
@@ -65,7 +65,7 @@ HRESULT pidgey::init()
     case 1:
 
         _poketmon.name = "피죤";							    //이름 피죤
-        _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+        _poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
         _poketmon.index = 17;								//전국도감번호 17
         _poketmon.level = RND->getFromIntTo(19, 50);		//처음 등장 레벨 19~50
 
@@ -112,7 +112,7 @@ HRESULT pidgey::init()
     case 2:
 
         _poketmon.name = "피죤투";							//이름 피죤투
-        _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+        _poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
         _poketmon.index = 18;								//전국도감번호 18
         _poketmon.level = RND->getFromIntTo(36, 50);		//처음 등장 레벨 36~50
 

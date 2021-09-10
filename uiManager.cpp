@@ -369,6 +369,18 @@ void uiManager::pokeShift()
 			pokeWindow = false;
 			_isOpenPokemon = false;
 		}
+
+		if (_isBattle && _character->getPoketmon(pokesCnt).maxHP != 0 && pokesCnt < 6)
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				_currentPoke = pokesCnt;
+
+				pokesCnt = 0;
+				pokeWindow = false;
+				_isOpenPokemon = false;
+			}
+		}
 		switch (pokesCnt)
 		{
 		case 0:
@@ -378,19 +390,15 @@ void uiManager::pokeShift()
 			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
 			break;
 		case 2:
-			
 			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
 			break;
 		case 3:
-			
 			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
 			break;
 		case 4:
-			
 			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
 			break;
 		case 5:
-			
 			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
 			break;
 		case 6:

@@ -79,15 +79,14 @@ enum class TYPE
 //	int item;								// 보유 중인 아이템 인덱스
 //};
 
-class skill;
+
 
 class poketmon : public gameNode
 {
 protected:
 	tagPOKETMON_PLAYER _poketmon;
 
-private:
-	skill* _skill;
+
 
 
 
@@ -108,6 +107,6 @@ public:
 
 	tagPOKETMON_PLAYER getTagPoketmon() { return _poketmon; }	//포켓몬구조체 겟터?
 	
-	void setSkillMemoryAddressLink(skill* skill) { _skill = skill; }
+	
 
 };

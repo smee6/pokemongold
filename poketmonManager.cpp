@@ -13,10 +13,6 @@ poketmonManager::~poketmonManager()
 HRESULT poketmonManager::init()
 {
 
-    _poketmon = new poketmon;
-    _poketmon->init();
-    _poketmon->setSkillMemoryAddressLink(_skill);
-
     _skill = new skill;					//스킬 
     _skill->init();
     _skill->setPoketmonmanagerMemoryAddressLink(this);
@@ -46,7 +42,7 @@ void poketmonManager::update()
         _wildPoketmon.currentHP -= 5;       //체력깍는거 확인
     }
 
-    _poketmon->update();
+   
     _skill->update();
 }
 
@@ -157,9 +153,9 @@ void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
     _wildPoketmon.sumSpeed = _vPoketmon[_randomPoketmon]->getTagPoketmon().sumSpeed;                     //현재 스피드
     _wildPoketmon.sumMaxHP = _vPoketmon[_randomPoketmon]->getTagPoketmon().sumMaxHP;                     //현재 최대HP
 
-    _wildPoketmon.currentExp = _vPoketmon[_randomPoketmon]->getTagPoketmon().currentExp;                   //현재 경험치
-    _wildPoketmon.maxExp = _vPoketmon[_randomPoketmon]->getTagPoketmon().maxExp;                       //레벨계산용
-    _wildPoketmon.totalEXP = _vPoketmon[_randomPoketmon]->getTagPoketmon().totalEXP;                     //현재 레벨의 최대 경험치
+    _wildPoketmon.currentExp = _vPoketmon[_randomPoketmon]->getTagPoketmon().currentExp;                     //현재 경험치
+    _wildPoketmon.maxExp = _vPoketmon[_randomPoketmon]->getTagPoketmon().maxExp;                             //레벨계산용
+    _wildPoketmon.totalEXP = _vPoketmon[_randomPoketmon]->getTagPoketmon().totalEXP;                         //현재 레벨의 최대 경험치
 
     _wildPoketmon.skill[0] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[0];                       //스킬1
     _wildPoketmon.skill[1] = _vPoketmon[_randomPoketmon]->getTagPoketmon().skill[1];                       //스킬2
@@ -197,13 +193,13 @@ void poketmonManager::render()
     //TextOut(getMemDC(), 100, 320, str, strlen(str));
     //sprintf_s(str, "포켓몬 max경험치 : %d ", _wildPoketmon.maxExp);
     //TextOut(getMemDC(), 100, 340, str, strlen(str));
-    //sprintf_s(str, "포켓몬 current경험치 : %d ", _wildPoketmon.currentExp);
-    //TextOut(getMemDC(), 100, 360, str, strlen(str));
+        sprintf_s(str, "포켓몬 attack : %d ", _wildPoketmon.sumAttack);
+        TextOut(getMemDC(), 200, 140, str, strlen(str));
     //sprintf_s(str, "포켓몬 total경험치 : %d ", _wildPoketmon.totalEXP);
     //TextOut(getMemDC(), 100, 380, str, strlen(str));
 
 
-    _poketmon->render();
+    
     _skill->render();
 }
 

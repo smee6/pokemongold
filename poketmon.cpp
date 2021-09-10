@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "poketmon.h"
-#include "skill.h"
+
 
 #include <math.h>
 
@@ -68,18 +68,15 @@ void poketmon::potketmonEXP()
 void poketmon::ability()
 {
     //현재 능력치는     =     1레벨 능력치  +        레벨당 능력치  * 레벨 이다.
-    //스킬 눌렀을시 
 
+    _poketmon.sumAttack = static_cast<int>(_poketmon.attack + (_poketmon.levelAttack * _poketmon.level)/5 + RND->getFromIntTo(0,255));       //공격력       
+    _poketmon.sumDefense = _poketmon.defense + (_poketmon.levelDefense * _poketmon.level);                                                   //방어력
+    _poketmon.sumMaxHP = _poketmon.maxHP + (_poketmon.levelHP * _poketmon.level);                                                            //hp
+    _poketmon.sumSpecialAttack = _poketmon.specialAttack + (_poketmon.levelSpecialAttack * _poketmon.level);                                 //특수공격력
+    _poketmon.sumSpecialDefense = _poketmon.specialDefense + (_poketmon.levelSpecialDefense * _poketmon.level);                              //특수방어력
+    _poketmon.sumSpeed = _poketmon.speed + (_poketmon.levelSpeed * _poketmon.level);                                                         //스피드
 
-
-    _poketmon.sumAttack = _poketmon.attack + (_poketmon.levelAttack * _poketmon.level);                                 //공격력       
-    _poketmon.sumDefense = _poketmon.defense + (_poketmon.levelDefense * _poketmon.level);                              //방어력
-    _poketmon.sumMaxHP = _poketmon.maxHP + (_poketmon.levelHP * _poketmon.level);                                       //hp
-    _poketmon.sumSpecialAttack = _poketmon.specialAttack + (_poketmon.levelSpecialAttack * _poketmon.level);            //특수공격력
-    _poketmon.sumSpecialDefense = _poketmon.specialDefense + (_poketmon.levelSpecialDefense * _poketmon.level);         //특수방어력
-    _poketmon.sumSpeed = _poketmon.speed + (_poketmon.levelSpeed * _poketmon.level);                                    //스피드
-
-    _poketmon.currentHP = _poketmon.sumMaxHP;                                                                           //현재체력 포켓몬볼로 잡으면 저장
+    _poketmon.currentHP = _poketmon.sumMaxHP;                                                                                                //현재체력 포켓몬볼로 잡으면 저장
 
 }
 

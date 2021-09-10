@@ -970,6 +970,12 @@ void uiManager::script()
 				_attackCount++;
 			}
 
+			//if (_isWin)
+			//{
+			//	_time = TIMEMANAGER->getWorldTime();
+			//	_character->setTotalExp(_currentPoke, 50);
+			//}
+
 			if (_isBattle && (_poketmonManager->getWildPoketmon().currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
@@ -1019,6 +1025,11 @@ void uiManager::script()
 				// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
 				else if (_txtIndex >= _txt.length())
 				{
+					if (_isWin && _scriptIndex == 1)
+					{
+						_isWin = false;
+						_character->setTotalExp(_currentPoke, 50);
+					}
 					// 버튼을 누르면
 					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 					{
@@ -1146,6 +1157,16 @@ void uiManager::battle()
 	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
 	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 
+	//if (_isWin && TIMEMANAGER->getWorldTime() >= _time + 1)
+	//{
+	//	_isAttack = false;
+	//	_isBattle = false;
+	//	_attackCount = 0;
+	//	_isTurn = false;
+	//	_isNext = false;
+	//	_whoTurn = 0;
+	//	_isWin = false;
+	//}
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
 		_npc = NPC::BATTLE;
@@ -1218,7 +1239,7 @@ void uiManager::battle()
 			
 
 			//	커서의 위치
-			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack)
+			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack && !_isScript)
 			{
 				if (_behaviorCount == 0)			// 싸우다
 				{
@@ -1386,6 +1407,7 @@ void uiManager::skillSelect()
 	{
 		//_poketmonManager->getSkill()->setIsSkill(true);
 		//skillCnt = 0;
+		_power = _poketmonManager->getSkill()->getSkillPower();
 		_isAttack = true;
 		_isOpenSkill = false;
 		_npc = NPC::BATTLE_ATTACK;
@@ -1398,7 +1420,7 @@ void uiManager::skillSelect()
 	}
 }
 
-void uiManager::attack()
+void uiManager::attack() //어택
 {
 	// 포켓몬 쓰러지는거 체크
 	if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -1436,7 +1458,8 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
+				_poketmonManager->setCurrentHP(10);
 
 				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
 				{
@@ -1450,10 +1473,11 @@ void uiManager::attack()
 					_npc = NPC::BATTLE_DOWN;
 					_isScript = true;
 					_isCount = true;
+					_isWin = true;
 				}
 			}
 		}
-
+		
 		// 상대 턴
 		else if (_attackCount > 0)
 		{
@@ -1462,7 +1486,8 @@ void uiManager::attack()
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
-				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -1487,6 +1512,14 @@ void uiManager::attack()
 				char skill[128];
 
 				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				{
+					while (true)
+					{
+						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+					}
+				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
 
@@ -1512,6 +1545,14 @@ void uiManager::attack()
 				char skill[128];
 
 				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				{
+					while (true)
+					{
+						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+					}
+				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
 
@@ -1528,7 +1569,8 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -1554,7 +1596,8 @@ void uiManager::attack()
 				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
-				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
+				_poketmonManager->setCurrentHP(10);
 
 				_isTurn = false;
 				_isNext = false;
@@ -1571,7 +1614,7 @@ void uiManager::attack()
 					_npc = NPC::BATTLE_DOWN;
 					_isScript = true;
 					_isCount = true;
-
+					_isWin = true;
 				}
 			}
 			else if (_isNext)

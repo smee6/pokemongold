@@ -429,7 +429,7 @@ void uiManager::pokeShift()
 
 		HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
@@ -554,7 +554,7 @@ void uiManager::bag()
 
 		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
@@ -663,7 +663,7 @@ void uiManager::pokeGear()
 
 			HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
 				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 			HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
@@ -723,7 +723,7 @@ void uiManager::playerStatus()
 
 		HFONT font2 = CreateFont(52, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
@@ -732,7 +732,7 @@ void uiManager::playerStatus()
 
 		HFONT font21 = CreateFont(32, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont21 = (HFONT)SelectObject(_backBuffer->getMemDC(), font21);
 
@@ -805,7 +805,7 @@ void uiManager::setting()
 
 		HFONT font2 = CreateFont(56, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
@@ -1125,11 +1125,11 @@ void uiManager::script()
 
 		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
-		RECT rcText = RectMake(30, WINSIZEY - 120, 500, 70);
+		RECT rcText = RectMake(30, WINSIZEY - 150, 500, 120);
 
-		HFONT font = CreateFont(35, 0, 0, 0, 200, false, false, false,
+		HFONT font = CreateFont(60, 0, 0, 0, 500, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("휴먼매직체"));
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont = (HFONT)SelectObject(_backBuffer->getMemDC(), font);
 
@@ -1244,18 +1244,18 @@ void uiManager::battle()
 
 			HFONT font5 = CreateFont(45, 0, 0, 0, 700, false, false, false,
 				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 			HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
 			// 내 포켓몬
 			sprintf_s(str, (_character->getPoketmon(_currentPoke).name + _character->getPoketmon(_currentPoke).gender).c_str());
 			//DrawText(_backBuffer->getMemDC(), TEXT(_txt.c_str()), _txtIndex, &rcText, DT_VCENTER | DT_VCENTER | DT_WORDBREAK);		// 추후에 오른쪽 정렬 쓰려면
-			TextOut(_backBuffer->getMemDC(), 320, 250, str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 320, 245, str, strlen(str));
 
 			// 상대 포켓몬
 			sprintf_s(str, (_poketmonManager->getWildPoketmon().name + _poketmonManager->getWildPoketmon().gender).c_str());
-			TextOut(_backBuffer->getMemDC(), 70, 25, str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 70, 20, str, strlen(str));
 
 			SelectObject(_backBuffer->getMemDC(), oldFont5);
 			DeleteObject(font5);
@@ -1263,18 +1263,18 @@ void uiManager::battle()
 			// 레벨 띄우기
 			font5 = CreateFont(40, 0, 0, 0, 700, false, false, false,
 				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 			oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
 			// 내 포켓몬
 			sprintf_s(str, to_string(_character->getPoketmon(_currentPoke).level).c_str());
 			//DrawText(_backBuffer->getMemDC(), TEXT(_txt.c_str()), _txtIndex, &rcText, DT_VCENTER | DT_VCENTER | DT_WORDBREAK);		// 추후에 오른쪽 정렬 쓰려면
-			TextOut(_backBuffer->getMemDC(), 545, 252, str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 545, 247, str, strlen(str));
 
 			// 상대 포켓몬
 			sprintf_s(str, to_string(_poketmonManager->getWildPoketmon().level).c_str());
-			TextOut(_backBuffer->getMemDC(), 285, 30, str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 285, 25, str, strlen(str));
 
 			SelectObject(_backBuffer->getMemDC(), oldFont5);
 			DeleteObject(font5);
@@ -1392,7 +1392,7 @@ void uiManager::skillSelect()
 
 	HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
 		DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
-		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 	HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 

@@ -22,15 +22,10 @@ enum TILETYPE
 //맵 타일
 struct tagTile
 {
+	image* Img;			//이미지
 	RECT		rc;		//타일 렉트
 	TILETYPE	type;	//타일 속성
-};
-
-//나무 타일
-struct tagTree
-{
-	image*		image;	//타일 이미지
-	RECT		rc;		//타일 렉트
+	int x, y;			//타일 이미지 x인덱스, y인덱스
 };
 
 class character;
@@ -70,6 +65,8 @@ public:
 	
 	//함수
 	void setTile();		//맵에 타일 깔아주는 함수
+	TILETYPE setTiletype(int frameX, int frameY);	//타일 속성 부여 함수
+
 	void save();		//저장 함수
 	void load();		//불러오는 함수
 

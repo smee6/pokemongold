@@ -50,7 +50,7 @@ void character::update() // 업데이트
     if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 }
 
-void character::poketmonSetting() // 포켓몬 데이터 갱신
+void character::poketmonSetting() // 포켓몬 데이터 처리
 {
     for (int i = 0; i < 6; i++)
     {

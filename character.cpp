@@ -726,7 +726,8 @@ void character::deletComingsoon() //삭제예쩡
     _poketmon[0].sumSpecialAttack = 1;					// 최종 특수공격
     _poketmon[0].sumSpecialDefense = 1;					// 최종 특수방어
     _poketmon[0].sumSpeed = 1;							// 최종 스피드
-    _poketmon[0].sumMaxHP = 1;							// 최종 체력
+    _poketmon[0].sumMaxHP = _poketmon[0].maxHP + (_poketmon[0].levelHP * _poketmon[0].level);	// 최종 체력
+    _poketmon[0].currentHP = _poketmon[0].sumMaxHP;
 
     _poketmon[0].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
     _poketmon[0].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
@@ -778,7 +779,8 @@ void character::deletComingsoon() //삭제예쩡
     _poketmon[1].sumSpecialAttack = 1;					// 최종 특수공격
     _poketmon[1].sumSpecialDefense = 1;					// 최종 특수방어
     _poketmon[1].sumSpeed = 1;							// 최종 스피드
-    _poketmon[1].sumMaxHP = 1;							// 최종 체력
+    _poketmon[1].sumMaxHP = _poketmon[1].maxHP + (_poketmon[1].levelHP * _poketmon[1].level); // 최종 체력
+    _poketmon[1].currentHP = _poketmon[1].sumMaxHP;
 
     _poketmon[1].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
     _poketmon[1].maxExp = 1261;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)

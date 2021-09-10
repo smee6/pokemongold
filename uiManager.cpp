@@ -905,7 +905,7 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/공격.txt");
 			break;
 		case NPC::BATTLE_DOWN:
-			_vScript = TXTDATA->txtLoad("script/배틀종료.txt");
+			_vScript = TXTDATA->txtLoad("script/야생배틀승리.txt");
 			break;
 		default:
 			break;
@@ -952,6 +952,15 @@ void uiManager::script()
 			{
 				_isTurn = true;
 				_attackCount++;
+			}
+
+			if (_isBattle && _poketmonManager->getWildPoketmon().currentHP <= 0)
+			{
+				_isAttack = false;
+				_isBattle = false;
+				_attackCount = 0;
+				_isTurn = false;
+				_isNext = false;
 			}
 
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
@@ -1117,6 +1126,7 @@ void uiManager::battle()
 
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
+		_npc = NPC::BATTLE;
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
 		
 		// 트레이너랑 배틀할 경우에 트레이너 이미지 지워줌
@@ -1130,7 +1140,7 @@ void uiManager::battle()
 		if (px <= 70)
 		{
 			px += 5; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
-			_npc = NPC::BATTLE;
+			//_npc = NPC::BATTLE;
 		}
 		else if (_isBattleScript)
 		{
@@ -1373,6 +1383,7 @@ void uiManager::attack()
 	// 플레이어가 더 빠를 때
 	if (_character->getPoketmon(_currentPoke).speed >= _poketmonManager->getWildPoketmon().speed)
 	{
+		// 내 턴
 		if (_attackCount == 0)
 		{
 			if (!_isNext && !_isTurn)
@@ -1392,20 +1403,38 @@ void uiManager::attack()
 			}
 			if (_isTurn)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_attackCount++;
 
 				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+
+				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				{
+
+					vector<string> _vStr;
+
+					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "골드는(은) 500원을 획득했다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+
+				}
 			}
 		}
 
+		// 상대 턴
 		else if (_attackCount > 0)
 		{
 			if (_isTurn && _isNext)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
-				//_character->setCurrentHP(_poketmonManager->getWildPoketmon().sumAttack);
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
 
 				_isTurn = false;
 				_isNext = false;
@@ -1430,6 +1459,7 @@ void uiManager::attack()
 	// 상대가 빠를 때
 	else
 	{
+		// 상대 턴
 		if (_attackCount == 0)
 		{
 			if (!_isNext && !_isTurn)
@@ -1451,6 +1481,7 @@ void uiManager::attack()
 			}
 			if (_isTurn)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_attackCount++;
@@ -1459,16 +1490,33 @@ void uiManager::attack()
 			}
 		}
 
+		// 내 턴
 		else if (_attackCount > 0)
 		{
 			if (_isTurn && _isNext)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
 
 				_isTurn = false;
 				_isNext = false;
+
+				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				{
+
+					vector<string> _vStr;
+
+					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "골드는(은) 500원을 획득했다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+
+				}
 			}
 			else if (_isNext)
 			{

@@ -20,10 +20,9 @@ HRESULT playGround::init()
 	_character = new character;
 	_pM = new poketmonManager;
 	_npc = new npc;
-
 	
-
 	_tileMap->setCharacterMemoryAddressLink(_character);
+	_tileMap->setNPCMemoryAddressLink(_npc);
 	_character->setPoketmonManagerMemoryAddressLink(_pM);
 	_character->setTileMapMemoryAddressLink(_tileMap);
 	_character->setNPCMemoryAddressLink(_npc);
@@ -32,23 +31,17 @@ HRESULT playGround::init()
 	UIMANAGER->setSkillMemoryAddressLink(_pM);
 	_npc->setTileMapMemoryAddressLink(_tileMap);
 	_npc->setCharacterMemoryAddressLink(_character);
-	_tileMap->setNPCMemoryAddressLink(_npc);
-
 
 	_tileMap->init();
 	_npc->init();
 	_character->init();
 	_pM->init();
 
-	
-
-
 	UIMANAGER->init();
 
 	//SCENEMANAGER->addScene("엔딩", new endingScene);
 	//SCENEMANAGER->changeScene("엔딩");
 	
-
 	return S_OK;
 }
 
@@ -65,13 +58,11 @@ void playGround::update()
 {
 	gameNode::update();
 
-	_tileMap->update();
-	_npc->update();
 	_character->update();
 	_pM->update();
-
+	_tileMap->update();
+	_npc->update();
 	
-
 	//if (KEYMANAGER->isOnceKeyDown('P'))
 	//{
 	//	UIMANAGER->setVScript(TXTDATA->txtLoad("script/쫄따구2_승리정산.txt"));
@@ -79,7 +70,6 @@ void playGround::update()
 	//}
 
 	//SCENEMANAGER->update();
-	
 }
 
 //여기다 그려줘라!!!
@@ -92,8 +82,6 @@ void playGround::render()
 	_npc->render();
 	_character->render();
 	_pM->render();
-
-	
 
 	//UIMANAGER->pokeShift();
 	//UIMANAGER->script();

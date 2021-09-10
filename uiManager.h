@@ -157,6 +157,7 @@ private:
 
 	int _attackCount;							// 공격 순서 판정용
 	int _whoTurn;								// 현재 누구의 턴인지(0 == 평시 / 1 == 내 턴 / 2 == 상대 턴)
+	int _power;
 
 	bool _isWin;								// 배틀에서 승리했을때
 

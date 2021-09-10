@@ -989,9 +989,7 @@ void uiManager::script()
 				{
 					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 				}
-
 			}
-		
 
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 			_isScript = false;
@@ -1027,6 +1025,11 @@ void uiManager::script()
 				// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
 				else if (_txtIndex >= _txt.length())
 				{
+					if (_isWin && _scriptIndex == 1)
+					{
+						_isWin = false;
+						_character->setTotalExp(_currentPoke, 50);
+					}
 					// 버튼을 누르면
 					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 					{
@@ -1236,7 +1239,7 @@ void uiManager::battle()
 			
 
 			//	커서의 위치
-			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack)
+			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack && !_isScript)
 			{
 				if (_behaviorCount == 0)			// 싸우다
 				{
@@ -1404,6 +1407,7 @@ void uiManager::skillSelect()
 	{
 		//_poketmonManager->getSkill()->setIsSkill(true);
 		//skillCnt = 0;
+		_power = _poketmonManager->getSkill()->getSkillPower();
 		_isAttack = true;
 		_isOpenSkill = false;
 		_npc = NPC::BATTLE_ATTACK;
@@ -1454,7 +1458,7 @@ void uiManager::attack() //어택
 
 				_attackCount++;
 
-				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
 				_poketmonManager->setCurrentHP(10);
 
 				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
@@ -1467,8 +1471,8 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					//_isScript = true;
-					//_isCount = true;
+					_isScript = true;
+					_isCount = true;
 					_isWin = true;
 				}
 			}
@@ -1482,7 +1486,7 @@ void uiManager::attack() //어택
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
-				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
 				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -1494,8 +1498,8 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					//_isScript = true;
-					//_isCount = true;
+					_isScript = true;
+					_isCount = true;
 				}
 
 				_isTurn = false;
@@ -1508,6 +1512,14 @@ void uiManager::attack() //어택
 				char skill[128];
 
 				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				{
+					while (true)
+					{
+						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+					}
+				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
 
@@ -1533,6 +1545,14 @@ void uiManager::attack() //어택
 				char skill[128];
 
 				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				{
+					while (true)
+					{
+						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+					}
+				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
 
@@ -1549,7 +1569,7 @@ void uiManager::attack() //어택
 
 				_attackCount++;
 
-				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
 				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -1561,8 +1581,8 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					//_isScript = true;
-					//_isCount = true;
+					_isScript = true;
+					_isCount = true;
 				}
 			}
 		}
@@ -1576,7 +1596,7 @@ void uiManager::attack() //어택
 				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
-				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
 				_poketmonManager->setCurrentHP(10);
 
 				_isTurn = false;
@@ -1592,8 +1612,8 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					//_isScript = true;
-					//_isCount = true;
+					_isScript = true;
+					_isCount = true;
 					_isWin = true;
 				}
 			}

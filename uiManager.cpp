@@ -970,6 +970,12 @@ void uiManager::script()
 				_attackCount++;
 			}
 
+			//if (_isWin)
+			//{
+			//	_time = TIMEMANAGER->getWorldTime();
+			//	_character->setTotalExp(_currentPoke, 50);
+			//}
+
 			if (_isBattle && (_poketmonManager->getWildPoketmon().currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
@@ -983,7 +989,9 @@ void uiManager::script()
 				{
 					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 				}
+
 			}
+		
 
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 			_isScript = false;
@@ -1146,6 +1154,16 @@ void uiManager::battle()
 	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
 	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 
+	//if (_isWin && TIMEMANAGER->getWorldTime() >= _time + 1)
+	//{
+	//	_isAttack = false;
+	//	_isBattle = false;
+	//	_attackCount = 0;
+	//	_isTurn = false;
+	//	_isNext = false;
+	//	_whoTurn = 0;
+	//	_isWin = false;
+	//}
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
 		_npc = NPC::BATTLE;
@@ -1398,7 +1416,7 @@ void uiManager::skillSelect()
 	}
 }
 
-void uiManager::attack()
+void uiManager::attack() //어택
 {
 	// 포켓몬 쓰러지는거 체크
 	if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -1436,7 +1454,8 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				_poketmonManager->setCurrentHP(10);
 
 				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
 				{
@@ -1448,12 +1467,13 @@ void uiManager::attack()
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
+					//_isScript = true;
+					//_isCount = true;
+					_isWin = true;
 				}
 			}
 		}
-
+		
 		// 상대 턴
 		else if (_attackCount > 0)
 		{
@@ -1462,7 +1482,8 @@ void uiManager::attack()
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
-				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -1473,8 +1494,8 @@ void uiManager::attack()
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
+					//_isScript = true;
+					//_isCount = true;
 				}
 
 				_isTurn = false;
@@ -1528,7 +1549,8 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -1539,8 +1561,8 @@ void uiManager::attack()
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
+					//_isScript = true;
+					//_isCount = true;
 				}
 			}
 		}
@@ -1554,7 +1576,8 @@ void uiManager::attack()
 				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
-				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+				_poketmonManager->setCurrentHP(10);
 
 				_isTurn = false;
 				_isNext = false;
@@ -1569,9 +1592,9 @@ void uiManager::attack()
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
-
+					//_isScript = true;
+					//_isCount = true;
+					_isWin = true;
 				}
 			}
 			else if (_isNext)

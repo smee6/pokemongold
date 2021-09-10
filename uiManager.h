@@ -158,7 +158,7 @@ private:
 	int _attackCount;							// 공격 순서 판정용
 	int _whoTurn;								// 현재 누구의 턴인지(0 == 평시 / 1 == 내 턴 / 2 == 상대 턴)
 
-
+	bool _isWin;								// 배틀에서 승리했을때
 
 	NPC _npc;
 	character* _character;
@@ -246,6 +246,12 @@ public:
 
 	int getGold() { return gold; };
 	void setGold(int newgold) { gold = newgold; }
+
+	int getCurrentPokemon() { return _currentPoke; }
+	void setCurrentPokemon(int current) { _currentPoke = current; }
+
+	bool getIsWin() { return _isWin; }
+	void setIsWin(bool isWin) { _isWin = isWin; }
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

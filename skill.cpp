@@ -610,8 +610,8 @@ void skill::skillAni()
 				_count = 0;							//카운터를 다시 초기화 시켜준다
 
 				// 배틀 진행
-				if (_pM->getWildPoketmon().currentHP > 0)
-				{
+				//
+				
 					if (UIMANAGER->getAttackCount() < 2)
 					{
 						UIMANAGER->setIsNext(true);
@@ -621,12 +621,18 @@ void skill::skillAni()
 					}
 					else if (UIMANAGER->getAttackCount() > 1)
 					{
+						UIMANAGER->setIsScript(true);
+						UIMANAGER->setIsCount(true);
 						UIMANAGER->setIsAttack(false);
 						UIMANAGER->setAttackCount(0);
+						//if (_pM->getWildPoketmon().currentHP > 0)
+						//{
+						//}
 						//UIMANAGER->setIsNext(false);
 						//UIMANAGER->setIsTurn(false);
+						
 					}
-				}
+				
 			}
 		}
 	}

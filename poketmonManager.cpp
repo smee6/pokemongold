@@ -16,6 +16,8 @@ HRESULT poketmonManager::init()
     _skill->init();
     _skill->setPoketmonmanagerMemoryAddressLink(this);
 
+    _skill->setCharacterMemoryAddressLink(_character);
+
     poketmonImage();
 
     poketmonSpawn();

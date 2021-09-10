@@ -54,7 +54,20 @@ void character::poketmonSetting() // 포켓몬 데이터 갱신
 {
     for (int i = 0; i < 6; i++)
     {
-        //현재 능력치는     =     1레벨 능력치  +        레벨당 능력치  * 레벨 이다.
+        // 포켓몬 성별 체크가 트루일시
+        if (_poketmon[i].isGender) _poketmon[i].gender = "수컷";  // 포켓몬의 성별은 수컷이 된다    
+        else _poketmon[i].gender = "암컷"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
+        // 포켓몬 레벨은 현재 경험치에서 3제곱근 하고 그걸 int로 변경해야함 //cbrt 삼제곱근 
+        _poketmon[i].level = static_cast<int>(cbrt(_poketmon[i].totalEXP));
+
+        // 맥스 경험치는 다음 레벨(레벨 +1)의 맥스 경험치 - 현재 레벨의 맥스 경험치이다
+        _poketmon[i].maxExp = pow(_poketmon[i].level + 1, 3) - pow(_poketmon[i].level, 3);
+
+        // 현재 경험치는 토탈 경험치에서 현재 레벨 3제곱한거를 뺴면 나옴
+        _poketmon[i].currentExp = _poketmon[i].totalEXP - pow(_poketmon[i].level, 3);
+
+        // 현재 능력치 = 1레벨 능력치 + (레벨당 능력치 * 레벨)
         _poketmon[i].sumAttack = _poketmon[i].attack + (_poketmon[i].levelAttack * _poketmon[i].level);                               //공격력       
         _poketmon[i].sumDefense = _poketmon[i].defense + (_poketmon[i].levelDefense * _poketmon[i].level);                            //방어력
         _poketmon[i].sumMaxHP = _poketmon[i].maxHP + (_poketmon[i].levelHP * _poketmon[i].level);                                     //hp

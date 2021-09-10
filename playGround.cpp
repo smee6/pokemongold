@@ -16,7 +16,7 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 
-	//AddFontResource("font/gsc.ttf");
+	AddFontResource("font/gsc.ttf");
 
 	_tileMap = new tileMap;
 	_character = new character;

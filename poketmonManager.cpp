@@ -14,7 +14,7 @@ HRESULT poketmonManager::init()
 {
     _skill = new skill;					//½ºÅ³ 
     _skill->init();
-
+    _skill->setPoketmonmanagerMemoryAddressLink(this);
 
     poketmonImage();
 

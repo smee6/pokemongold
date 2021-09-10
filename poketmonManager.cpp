@@ -43,7 +43,7 @@ void poketmonManager::update()
         _wildPoketmon.currentHP -= 5;       //체력깍는거 확인
     }
 
-    _poketmon->update();
+   
     _skill->update();
 }
 
@@ -200,7 +200,7 @@ void poketmonManager::render()
     //TextOut(getMemDC(), 100, 380, str, strlen(str));
 
 
-    _poketmon->render();
+  
     _skill->render();
 }
 

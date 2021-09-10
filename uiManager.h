@@ -152,7 +152,7 @@ private:
 	bool _isTurn;								// 공격 애니메이션 띄우는 중인지
 	bool _isNext;								// 후턴 포켓몬의 공격 차례인지
 
-	int _currentPoke = 0;							// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
+	int _currentPoke = 0;						// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
 	int _currentSkill;							// 현재 사용한 스킬의 인덱스 번호(0~3)
 
 	int _attackCount;							// 공격 순서 판정용

@@ -1403,6 +1403,7 @@ void uiManager::attack()
 			}
 			if (_isTurn)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_attackCount++;
@@ -1431,6 +1432,7 @@ void uiManager::attack()
 		{
 			if (_isTurn && _isNext)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
 
@@ -1479,6 +1481,7 @@ void uiManager::attack()
 			}
 			if (_isTurn)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_attackCount++;
@@ -1492,6 +1495,7 @@ void uiManager::attack()
 		{
 			if (_isTurn && _isNext)
 			{
+				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
 				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);

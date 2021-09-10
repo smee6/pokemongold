@@ -12,9 +12,16 @@ poketmonManager::~poketmonManager()
 
 HRESULT poketmonManager::init()
 {
+
+    _poketmon = new poketmon;
+    _poketmon->init();
+    _poketmon->setSkillMemoryAddressLink(_skill);
+
     _skill = new skill;					//스킬 
     _skill->init();
     _skill->setPoketmonmanagerMemoryAddressLink(this);
+
+    
 
     poketmonImage();
 
@@ -39,6 +46,7 @@ void poketmonManager::update()
         _wildPoketmon.currentHP -= 5;       //체력깍는거 확인
     }
 
+    _poketmon->update();
     _skill->update();
 }
 
@@ -109,7 +117,7 @@ void poketmonManager::poketmonSpawn()
 void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 {
 
-    _randomPoketmon = RND->getFromIntTo(0, 8);                           //랜덤 야생포켓몬 변수
+    _randomPoketmon = RND->getFromIntTo(0, 9);                           //랜덤 야생포켓몬 변수
 
     //_randomPoketmon = 0;
 
@@ -185,11 +193,17 @@ void poketmonManager::render()
   //TextOut(getMemDC(), 280, 180, str, strlen(str));
   //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
   //TextOut(getMemDC(), 280, 200, str, strlen(str));
-   // sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
-   // TextOut(getMemDC(), 100, 320, str, strlen(str));
-   // sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);
-   // TextOut(getMemDC(), 100, 340, str, strlen(str));
+    //sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
+    //TextOut(getMemDC(), 100, 320, str, strlen(str));
+    //sprintf_s(str, "포켓몬 max경험치 : %d ", _wildPoketmon.maxExp);
+    //TextOut(getMemDC(), 100, 340, str, strlen(str));
+    //sprintf_s(str, "포켓몬 current경험치 : %d ", _wildPoketmon.currentExp);
+    //TextOut(getMemDC(), 100, 360, str, strlen(str));
+    //sprintf_s(str, "포켓몬 total경험치 : %d ", _wildPoketmon.totalEXP);
+    //TextOut(getMemDC(), 100, 380, str, strlen(str));
 
+
+    _poketmon->render();
     _skill->render();
 }
 

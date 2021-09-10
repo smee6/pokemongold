@@ -21,6 +21,9 @@ HRESULT caterpie::init()
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
 		_poketmon.index = 10;								//전국도감번호 10
 		_poketmon.level = RND->getFromIntTo(1, 6);			//처음 등장 레벨 1~50
+
+		potketmonEXP();										//경험치
+
 		_poketmon.type1 = static_cast<int>(TYPE::BUG);		//벌레타입
 		_poketmon.type2 = static_cast<int>(TYPE::NONE);		//
 		_poketmon.evolutionLevel = 0;						//진화단계
@@ -65,6 +68,9 @@ HRESULT caterpie::init()
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
 		_poketmon.index = 11;								//전국도감번호 11
 		_poketmon.level = RND->getFromIntTo(7, 50);			//처음 등장 레벨 7~50
+
+		potketmonEXP();										//경험치
+
 		_poketmon.type1 = static_cast<int>(TYPE::BUG);		//벌레타입
 		_poketmon.type2 = static_cast<int>(TYPE::NONE);		//
 		_poketmon.evolutionLevel = 1;						//진화단계
@@ -109,6 +115,9 @@ HRESULT caterpie::init()
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
 		_poketmon.index = 12;								//전국도감번호 12
 		_poketmon.level = RND->getFromIntTo(10, 50);		//처음 등장 레벨 10~50
+
+		potketmonEXP();										//경험치
+
 		_poketmon.type1 = static_cast<int>(TYPE::BUG);		//벌레타입
 		_poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행타입
 		_poketmon.evolutionLevel = 2;						//진화단계

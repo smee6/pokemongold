@@ -18,7 +18,7 @@ HRESULT spearow::init()
 	case 0:
 
 		_poketmon.name = "깨비참";							//이름 깨비참
-		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 21;								//전국도감번호 21
 		_poketmon.level = RND->getFromIntTo(1, 19);			//처음 등장 레벨 1~50
 
@@ -65,7 +65,7 @@ HRESULT spearow::init()
 	case 1:
 
 		_poketmon.name = "깨비드릴조";						//이름 깨비드릴조
-		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
+		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 22;								//전국도감번호 22
 		_poketmon.level = RND->getFromIntTo(20, 50);		//처음 등장 레벨 20~50
 

@@ -151,7 +151,8 @@ public:
 	void ui();																		// ui창 처리
 	void poketmonMeet();															// 포켓몬 조우 시 처리
 	void npcScript();																// npc 대화 스크립트 처리
-	void poketmonSetting();			// 테스트용 데이터
+	void poketmonSetting();															// 테스트용 데이터
+	void deletComingsoon(); // 삭제예쩡~~데이터
 
 	float getCharacterX() { return _x; }											// 캐릭터 X좌표 게터
 	float getCharacterY() { return _y; }											// 캐릭터 Y좌표 게터
@@ -162,8 +163,8 @@ public:
 	bool getIsPoketmonMeet() { return _isPoketmonMeet; }							// 포켓몬 조우 중인지 불값 게터
 	RECT getRect() { return _rc; }													// 렉트 게터
 	tagPOKETMON_PLAYER getPoketmon(int arrNum) { return _poketmon[arrNum]; }		// 보유 포켓몬 게터
-	void setPoketmon(tagPOKETMON_PLAYER poke,int arrNum) { _poketmon[arrNum] = poke; } //보유 포켓몬 세터
 
+	void setPoketmon(tagPOKETMON_PLAYER poke,int arrNum) { _poketmon[arrNum] = poke; }		// 보유 포켓몬 세터
 	void setCurrentHP(int arrNum, int damage) { _poketmon[arrNum].currentHP -= damage; }	// 체력 감소 세터
 	void setSkillPP(int arrNum, int arrNum2) { _poketmon[arrNum].skillPP[arrNum2]--; }		// PP 감소 세터
 	void setTotalExp(int arrNum, int exp) { _poketmon[arrNum].totalEXP += exp; }			// 현재 경험치 증가 세터

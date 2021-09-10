@@ -885,7 +885,7 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("10B", "image/poketmon/no_10B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("11B", "image/poketmon/no_11B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("12B", "image/poketmon/no_12B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("13B", "image/poketmon/no_13Bbmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("13B", "image/poketmon/no_13B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("14B", "image/poketmon/no_14B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("15B", "image/poketmon/no_15B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
 }

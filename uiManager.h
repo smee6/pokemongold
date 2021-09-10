@@ -188,6 +188,10 @@ public:
 	void battle();
 	void skillSelect();
 	void attack();
+	
+	void usePokeBall();
+	void useMedicine();
+	void useGoodMedicine();
 
 	
 

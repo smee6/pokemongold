@@ -267,61 +267,63 @@ void uiManager::menu()
 			}
 		}
 	}
-
-	switch (menuCnt)
+	if (!_isOpenBag && !_isOpenPokemon && !_isOpenPokeDogam && !_isOpenPokeGear && !_isOpenPlayerStatus && !_isOpenSetting)
 	{
-	case 0: //도감
-		IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokeDogam = true;
-		
-		};
-		break;
-	case 1: //포켓몬
-		IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokemon = true;
-		
-		};
-		break;
-	case 2://가방
-		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenBag = true;
-			
-		};
-		break;
-	case 3://포켓기어
-		IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokeGear = true;
-			
-		};
-		break;
-	case 4://이름
-		IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPlayerStatus = true;
-			
-		};
-		break;
-	case 5://설정
-		IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenSetting = true;
-
-		};
-		break;
-	case 6://닫다
-		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		switch (menuCnt)
 		{
-			uiOpen = false;
-			_isOpenMenu = false;
-			menuCnt = 0;
+		case 0: //도감
+			IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokeDogam = true;
+
+			};
+			break;
+		case 1: //포켓몬
+			IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokemon = true;
+
+			};
+			break;
+		case 2://가방
+			IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenBag = true;
+
+			};
+			break;
+		case 3://포켓기어
+			IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokeGear = true;
+
+			};
+			break;
+		case 4://이름
+			IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPlayerStatus = true;
+
+			};
+			break;
+		case 5://설정
+			IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenSetting = true;
+
+			};
+			break;
+		case 6://닫다
+			IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				uiOpen = false;
+				_isOpenMenu = false;
+				menuCnt = 0;
+			}
+			return;
+			break;
 		}
-		return;
-		break;
 	}
 
 	if (_isOpenBag)
@@ -490,10 +492,12 @@ void uiManager::bag()
 		case 0: // 가방에서 몬스터볼에 커서가 있다
 			IMAGEMANAGER->findImage("bag0")->render(_backBuffer->getMemDC());
 			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
+			
 			if (pokeballQ > 0) {
-				
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+					if (!_isBattle) return;
 					pokeballQ--;
+					usePokeBall();
 					//전투중이 아닌 경우 못 씀
 					//전투중에 쓸경우 뭐 대충 bool 값 체크해서 사용하게 해줌 
 				};
@@ -502,7 +506,7 @@ void uiManager::bag()
 		case 1:// 가방에서 상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					medicineQ--;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
@@ -511,7 +515,7 @@ void uiManager::bag()
 		case 2:// 가방에서 고급상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					goodMedicineQ--;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
@@ -1479,6 +1483,34 @@ void uiManager::attack()
 
 		}
 	}
+}
+
+void uiManager::usePokeBall()
+{
+	//포켓볼 사용시 내 쪽에서 포켓볼 날아가고
+	//포켓볼이 상대 포켓몬에 맞을시 포켓몬 이미지 사라지고 포켓볼 흔들거리는 이미지 출력
+	//확률적으로 포획성공시 성공 시 성공장면 출력 - 내 소유 포켓몬 구조체 정보저장 - 배틀 끝 - 인게임씬
+	//포획 실패시 다시 포켓몬 이미지 출력해주고 배틀 재개
+
+	//포켓볼 포물선으로 날아가는 이미지 출력
+
+	//맞았을때 좌우로 흔들거리는 프레임이미지 출력
+
+	//잡았다 - 보유 구조체 3번에 저장(레벨, 젠더, 보유기술)
+	_character->
+
+}
+
+void uiManager::useMedicine()
+{
+	//사용 대상의 체력을 50 회복한다
+
+}
+
+void uiManager::useGoodMedicine()
+{
+	//사용 대상의 체력을 100 회복한다
+
 }
 
 bool uiManager::isUiOpen()

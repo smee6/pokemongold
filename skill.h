@@ -144,9 +144,11 @@ public:
 
 	void skillNumLink(int index);
 
-	bool getIsSkill() { return _isSkill; }					//불값 getter값
-	void setIsSkill(bool skill) { _isSkill = skill; }		//불값 setter값
+	bool getIsSkill() { return _isSkill; }						//불값 getter값
+	void setIsSkill(bool skill) { _isSkill = skill; }			//불값 setter값
 
+	bool getWhoSkill() {return _isWhoSkill;	}					// whoskill getter값
+	void setWhoSkill(bool whoSkill) { _isWhoSkill = whoSkill; }	// whoskill setter값
 
 	string getSkillName() { return _name; }						//네임 getter
 	string getSkillImgName() { return _imgName; }				//이미지네임 getter

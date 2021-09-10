@@ -1217,23 +1217,67 @@ void uiManager::battle()
 			//string index;
 			//index = _character->getPoketmon(0).index;
 
+			// 이미지 출력
 			_playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
 
 			_currentHP = _character->getPoketmon(_currentPoke).currentHP;
 			_maxHP = _character->getPoketmon(_currentPoke).sumMaxHP;
 			_currentEXP = _character->getPoketmon(_currentPoke).currentExp;
 			_maxEXP = _character->getPoketmon(_currentPoke).maxExp;
-
+			
+			// 플레이어 체력바
 			_hpBarPlayer->setGauge(_currentHP, _maxHP);
 			_hpBarPlayer->render();
 
+			// 에너미 체력바
 			_hpBarEnemy->setGauge(_poketmonManager->getWildPoketmon().currentHP, _poketmonManager->getWildPoketmon().sumMaxHP);
 			_hpBarEnemy->render();
 
+			// 경험치 바
 			_expBar->setGauge(_currentEXP, _maxEXP);
 			_expBar->render();
 
-		
+			// 이름 띄우기
+			char str[128];
+
+			SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+			HFONT font5 = CreateFont(45, 0, 0, 0, 700, false, false, false,
+				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+			HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
+
+			// 내 포켓몬
+			sprintf_s(str, (_character->getPoketmon(_currentPoke).name + _character->getPoketmon(_currentPoke).gender).c_str());
+			//DrawText(_backBuffer->getMemDC(), TEXT(_txt.c_str()), _txtIndex, &rcText, DT_VCENTER | DT_VCENTER | DT_WORDBREAK);		// 추후에 오른쪽 정렬 쓰려면
+			TextOut(_backBuffer->getMemDC(), 320, 250, str, strlen(str));
+
+			// 상대 포켓몬
+			sprintf_s(str, (_poketmonManager->getWildPoketmon().name + _poketmonManager->getWildPoketmon().gender).c_str());
+			TextOut(_backBuffer->getMemDC(), 70, 25, str, strlen(str));
+
+			SelectObject(_backBuffer->getMemDC(), oldFont5);
+			DeleteObject(font5);
+
+			// 레벨 띄우기
+			font5 = CreateFont(40, 0, 0, 0, 700, false, false, false,
+				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Arial"));
+
+			oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
+
+			// 내 포켓몬
+			sprintf_s(str, to_string(_character->getPoketmon(_currentPoke).level).c_str());
+			//DrawText(_backBuffer->getMemDC(), TEXT(_txt.c_str()), _txtIndex, &rcText, DT_VCENTER | DT_VCENTER | DT_WORDBREAK);		// 추후에 오른쪽 정렬 쓰려면
+			TextOut(_backBuffer->getMemDC(), 545, 252, str, strlen(str));
+
+			// 상대 포켓몬
+			sprintf_s(str, to_string(_poketmonManager->getWildPoketmon().level).c_str());
+			TextOut(_backBuffer->getMemDC(), 285, 30, str, strlen(str));
+
+			SelectObject(_backBuffer->getMemDC(), oldFont5);
+			DeleteObject(font5);
 			//IMAGEMANAGER->findImage(index + "");
 
 			

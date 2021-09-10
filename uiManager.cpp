@@ -407,7 +407,7 @@ void uiManager::pokeShift()
 		//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
 		for (int i = 0; i < myPokemon.size(); i++) {
 			myPokemon[i].name = _character->getPoketmon(i).name;
-			myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
+			myPokemon[i].sumMaxHP = _character->getPoketmon(i).sumMaxHP;
 			myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
 			myPokemon[i].level = _character->getPoketmon(i).level;
 			myPokemon[i].iconNumX = _character->getPoketmon(i).iconNumX;
@@ -438,7 +438,7 @@ void uiManager::pokeShift()
 			string strname = myPokemon[i].name;
 			strcpy_s(poke, strname.c_str());
 
-			if (myPokemon[i].maxHP == 0) return;
+			if (myPokemon[i].sumMaxHP == 0) return;
 
 			IMAGEMANAGER->findImage("Icon")->frameRender(_backBuffer->getMemDC(),35,15 + 
 				(i * 65), myPokemon[i].iconNumX+(iconCnt%2), myPokemon[i].iconNumY);
@@ -446,7 +446,7 @@ void uiManager::pokeShift()
 			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
-			sprintf_s(str, "/ %d", myPokemon[i].maxHP);
+			sprintf_s(str, "/ %d", myPokemon[i].sumMaxHP);
 			TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
@@ -634,7 +634,7 @@ void uiManager::pokeGear()
 		case 2:
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
 
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 
 				gearCnt = 0;
 				gearWindow = false;
@@ -778,7 +778,7 @@ void uiManager::setting()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				settingCnt = 0;
 				settingWindow = false;
 				uiOpen = false;
@@ -1302,6 +1302,11 @@ void uiManager::battle()
 	{
 		attack();
 	}
+
+	char str[128];
+
+	sprintf_s(str, "%d", _poketmonManager->getWildPoketmon().level);
+	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
 }
 
 void uiManager::skillSelect()
@@ -1597,6 +1602,7 @@ void uiManager::usePokeBall()
 		if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
 		{
 			_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
+			_character->setLevel(i, _poketmonManager->getWildPoketmon().level);
 
 			// 한마리 잡으면 종료
 			break;

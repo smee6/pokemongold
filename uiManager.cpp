@@ -1102,19 +1102,19 @@ void uiManager::battle()
 	_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");
 
 	static int px = -_playerImage->getWidth();
-	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 100;
+	static int ex = WINSIZEX;
 
 	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
-	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
+	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
 		
 		// 트레이너랑 배틀할 경우에 트레이너 이미지 지워줌
-		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
+		//_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 30);
 
-		if (ex >= WINSIZEX - 200)
+		if (ex >= WINSIZEX - 230)
 		{
 			ex -= 5;
 		}

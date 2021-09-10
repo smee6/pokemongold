@@ -20,7 +20,10 @@ HRESULT spearow::init()
 		_poketmon.name = "깨비참";							//이름 깨비참
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
 		_poketmon.index = 21;								//전국도감번호 21
-		_poketmon.level = RND->getFromIntTo(1, 50);			//처음 등장 레벨 1~50
+		_poketmon.level = RND->getFromIntTo(1, 19);			//처음 등장 레벨 1~50
+
+		potketmonEXP();										//경험치
+
 		_poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노말 타입
 		_poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행 타입
 		_poketmon.evolutionLevel = 0;						//진화단계
@@ -65,6 +68,9 @@ HRESULT spearow::init()
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
 		_poketmon.index = 22;								//전국도감번호 22
 		_poketmon.level = RND->getFromIntTo(20, 50);		//처음 등장 레벨 20~50
+
+		potketmonEXP();										//경험치
+
 		_poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노멀 타입
 		_poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행 타입
 		_poketmon.evolutionLevel = 1;						//진화단계

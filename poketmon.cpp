@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "poketmon.h"
+#include "skill.h"
 
 #include <math.h>
 
@@ -45,15 +46,18 @@ void poketmon::genderSettings()
 
 void poketmon::potketmonEXP()
 {
-
     //포켓몬 레벨은 현제 경험치에서 3제곱근 하고 그걸 int로 변경해야함
     //cbrt 삼제곱근 
 
-    _poketmon.level = static_cast<int>(cbrt(_poketmon.totalEXP));
 
-    //맥스 경험치는  레벨의 3제곱임
+   // _poketmon.level = static_cast<int>(cbrt(_poketmon.totalEXP));
+   //   포켓몬 토탈 경험치는 레벨의 3제곱
 
-    _poketmon.maxExp = pow(_poketmon.level + 1, 3) - pow(_poketmon.level, 3);
+    _poketmon.totalEXP = pow(_poketmon.level, 3);
+
+    //맥스 경험치는  레벨+ 1의  3제곱 - 토탈경험치 입니다
+
+    _poketmon.maxExp = pow(_poketmon.level + 1, 3) - _poketmon.totalEXP;
 
     //현재 경험치는 토탈 경험치에서 현제 레벨 3제곱한거를 뺴면 나옴
 
@@ -64,13 +68,18 @@ void poketmon::potketmonEXP()
 void poketmon::ability()
 {
     //현재 능력치는     =     1레벨 능력치  +        레벨당 능력치  * 레벨 이다.
-    _poketmon.sumAttack = _poketmon.attack + (_poketmon.levelAttack * _poketmon.level);                               //공격력       
-    _poketmon.sumDefense = _poketmon.defense + (_poketmon.levelDefense * _poketmon.level);                            //방어력
-    _poketmon.sumMaxHP = _poketmon.maxHP + (_poketmon.levelHP * _poketmon.level);                                     //hp
-    _poketmon.sumSpecialAttack = _poketmon.specialAttack + (_poketmon.levelSpecialAttack * _poketmon.level);          //특수공격력
-    _poketmon.sumSpecialDefense = _poketmon.specialDefense + (_poketmon.levelSpecialDefense * _poketmon.level);       //특수방어력
-    _poketmon.sumSpeed = _poketmon.speed + (_poketmon.levelSpeed * _poketmon.level);                                  //스피드
+    //스킬 눌렀을시 
 
+
+
+    _poketmon.sumAttack = _poketmon.attack + (_poketmon.levelAttack * _poketmon.level);                                 //공격력       
+    _poketmon.sumDefense = _poketmon.defense + (_poketmon.levelDefense * _poketmon.level);                              //방어력
+    _poketmon.sumMaxHP = _poketmon.maxHP + (_poketmon.levelHP * _poketmon.level);                                       //hp
+    _poketmon.sumSpecialAttack = _poketmon.specialAttack + (_poketmon.levelSpecialAttack * _poketmon.level);            //특수공격력
+    _poketmon.sumSpecialDefense = _poketmon.specialDefense + (_poketmon.levelSpecialDefense * _poketmon.level);         //특수방어력
+    _poketmon.sumSpeed = _poketmon.speed + (_poketmon.levelSpeed * _poketmon.level);                                    //스피드
+
+    _poketmon.currentHP = _poketmon.sumMaxHP;                                                                           //현재체력 포켓몬볼로 잡으면 저장
 
 }
 

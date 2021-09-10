@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 
+class poketmonManager;
+
 enum class STATUS_AILMENT	// 상태이상
 {
 	NONE,					// 없음
@@ -57,6 +59,7 @@ private:
 	int _frameCount;			//프레임 카운트
 	int _count;					//카운트 뒤 끝나게
 
+	int _imgX, _imgY;			//이미지 위치조정
 
 
 
@@ -82,6 +85,8 @@ private:
 	bool _isWhoSkill;			// 이미지 위치 띄우는거 조절할려고 만든 불값 플레이어(true) 인가 야생(false)인가 
 
 	RECT rc;					//위치 잡을 임시용
+
+	poketmonManager* _pM;
 
 public:
 
@@ -130,6 +135,11 @@ public:
 
 	void scratch();			// 할퀴기
 	void furyAttack();		// 마구찌르기
+	
+							
+			  //추가작업
+	void bind();			// 조이기
+	void bite();			// 물기
 
 	void render();
 
@@ -138,9 +148,11 @@ public:
 
 	void skillNumLink(int index);
 
-	bool getIsSkill() { return _isSkill; }					//불값 getter값
-	void setIsSkill(bool skill) { _isSkill = skill; }		//불값 setter값
+	bool getIsSkill() { return _isSkill; }						//불값 getter값
+	void setIsSkill(bool skill) { _isSkill = skill; }			//불값 setter값
 
+	bool getWhoSkill() {return _isWhoSkill;	}					// whoskill getter값
+	void setWhoSkill(bool whoSkill) { _isWhoSkill = whoSkill; }	// whoskill setter값
 
 	string getSkillName() { return _name; }						//네임 getter
 	string getSkillImgName() { return _imgName; }				//이미지네임 getter
@@ -153,8 +165,7 @@ public:
 	//TYPE getType() { return _Skilltype; }							//타입
 	//STATUS_AILMENT getifAilemnt() { return _ifAilment; }		//상태이상
 
-
-
+	void setPoketmonmanagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }
 
 
 };

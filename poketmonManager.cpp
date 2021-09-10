@@ -12,15 +12,24 @@ poketmonManager::~poketmonManager()
 
 HRESULT poketmonManager::init()
 {
+
+    _poketmon = new poketmon;
+    _poketmon->init();
+    _poketmon->setSkillMemoryAddressLink(_skill);
+
     _skill = new skill;					//스킬 
     _skill->init();
+    _skill->setPoketmonmanagerMemoryAddressLink(this);
 
+    
 
     poketmonImage();
 
     poketmonSpawn();
 
     wildPoketmonSetting();
+
+    
 
     return S_OK;
 }
@@ -32,14 +41,18 @@ void poketmonManager::release()
 
 void poketmonManager::update()
 {
+    if (KEYMANAGER->isOnceKeyDown('G'))
+    {
+        _wildPoketmon.currentHP -= 5;       //체력깍는거 확인
+    }
+
+    _poketmon->update();
     _skill->update();
 }
 
 void poketmonManager::poketmonSpawn()
 {
-    //랜덤값 넣고
-    //RND->getFromIntTo(0, 4);
-    //
+   
     // 포켓몬을 벡터로 담아주고 불러올때는 셋팅으로 한번 불러오는게 어떨까 라는 느낌이 들어서 만들고 있음
     // 1번 벡터에 담는다.  2번 벡터를 랜덤으로 돌린다. 3번 벡터에 있는걸 몬스터에 담는다. 4번 몬스터를 겟터로 넘긴다.
     // 5번 넘긴 포켓몬의 겟터를 저장한다.
@@ -104,7 +117,9 @@ void poketmonManager::poketmonSpawn()
 void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 {
 
-    _randomPoketmon = RND->getFromIntTo(0, 8);                           //랜덤 야생포켓몬 변수
+    _randomPoketmon = RND->getFromIntTo(0, 9);                           //랜덤 야생포켓몬 변수
+
+    //_randomPoketmon = 0;
 
     _wildPoketmon.name = _vPoketmon[_randomPoketmon]->getTagPoketmon().name;                         //야생포켓몬 이름
     _wildPoketmon.gender = _vPoketmon[_randomPoketmon]->getTagPoketmon().gender;                       //야생포켓몬 성별
@@ -158,6 +173,7 @@ void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 
     _wildPoketmon.item = _vPoketmon[_randomPoketmon]->getTagPoketmon().item;                         //아이템..
 
+   
 }
 
 void poketmonManager::render()
@@ -173,45 +189,51 @@ void poketmonManager::render()
     string strnmae = _wildPoketmon.name;
     strcpy_s(poke, strnmae.c_str());
 
-   // sprintf_s(str, "포켓몬 이름 : %s", poke);
-   // TextOut(getMemDC(), 100, 280, str, strlen(str));
-   // sprintf_s(str, "포켓몬 공격력 : %d ", _wildPoketmon.attack);
-   // TextOut(getMemDC(), 100, 300, str, strlen(str));
-   // sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
-   // TextOut(getMemDC(), 100, 320, str, strlen(str));
-   // sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);
-   // TextOut(getMemDC(), 100, 340, str, strlen(str));
+  //sprintf_s(str, "포켓몬 이름 : %s", poke);
+  //TextOut(getMemDC(), 280, 180, str, strlen(str));
+  //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
+  //TextOut(getMemDC(), 280, 200, str, strlen(str));
+    //sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
+    //TextOut(getMemDC(), 100, 320, str, strlen(str));
+    //sprintf_s(str, "포켓몬 max경험치 : %d ", _wildPoketmon.maxExp);
+    //TextOut(getMemDC(), 100, 340, str, strlen(str));
+    //sprintf_s(str, "포켓몬 current경험치 : %d ", _wildPoketmon.currentExp);
+    //TextOut(getMemDC(), 100, 360, str, strlen(str));
+    //sprintf_s(str, "포켓몬 total경험치 : %d ", _wildPoketmon.totalEXP);
+    //TextOut(getMemDC(), 100, 380, str, strlen(str));
 
+
+    _poketmon->render();
     _skill->render();
 }
 
 void poketmonManager::poketmonImage()
 {
     //포켓몬 앞
-    IMAGEMANAGER->addFrameImage("155F", "image/poketmon/no_155F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("156F", "image/poketmon/no_156F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("157F", "image/poketmon/no_157F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("152F", "image/poketmon/no_152Fbmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("153F", "image/poketmon/no_153F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("154F", "image/poketmon/no_154F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("158F", "image/poketmon/no_158F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("159F", "image/poketmon/no_159F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("160F", "image/poketmon/no_160F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("25F", "image/poketmon/no_25F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("26F", "image/poketmon/no_26F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("19F", "image/poketmon/no_19F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("20F", "image/poketmon/no_20F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("16F", "image/poketmon/no_16F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("17F", "image/poketmon/no_17F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("18F", "image/poketmon/no_18F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("21F", "image/poketmon/no_21F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("22F", "image/poketmon/no_22F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("10F", "image/poketmon/no_10F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("11F", "image/poketmon/no_11F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("12F", "image/poketmon/no_12F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("13F", "image/poketmon/no_13F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("14F", "image/poketmon/no_14F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("15F", "image/poketmon/no_15F.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("155F", "image/poketmon/no_155F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("156F", "image/poketmon/no_156F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("157F", "image/poketmon/no_157F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("152F", "image/poketmon/no_152F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("153F", "image/poketmon/no_153F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("154F", "image/poketmon/no_154F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("158F", "image/poketmon/no_158F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("159F", "image/poketmon/no_159F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("160F", "image/poketmon/no_160F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("25F", "image/poketmon/no_25F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("26F", "image/poketmon/no_26F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("19F", "image/poketmon/no_19F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("20F", "image/poketmon/no_20F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("16F", "image/poketmon/no_16F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("17F", "image/poketmon/no_17F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("18F", "image/poketmon/no_18F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("21F", "image/poketmon/no_21F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("22F", "image/poketmon/no_22F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("10F", "image/poketmon/no_10F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("11F", "image/poketmon/no_11F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("12F", "image/poketmon/no_12F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("13F", "image/poketmon/no_13F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("14F", "image/poketmon/no_14F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("15F", "image/poketmon/no_15F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
 
 }
 

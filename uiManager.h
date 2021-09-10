@@ -42,6 +42,8 @@ enum class NPC
 
 	// battle(test)
 	BATTLE,
+	BATTLE_ATTACK,
+	BATTLE_DOWN
 };
 
 
@@ -95,6 +97,7 @@ private:
 	bool _isOpenSkill;							// 기술창 열려있는지
 	bool _isOpenPokemon;						// 포켓몬 보유창 열려있는지
 	bool _isBattle;								// 배틀 상태인지 아닌지
+	bool _isAttack;								// 공격 상태인지 아닌지
 
 	// script
 	bool _isScript;								// 대화 여부 (대화 중인지)
@@ -130,20 +133,30 @@ private:
 	image* _enemyImage;							// 상대 트레이너 이미지
 	image* _enemyPokeImage;						// 상대 포켓몬 이미지
 
-	int _appearIndex = 2;							// 포켓몬 출근 시 볼 프레임 이미지 렌더용
+	int _appearIndex = 2;						// 포켓몬 출근 시 볼 프레임 이미지 렌더용
 
-	progressBar* _hpBarPlayer;							// 체력 게이지
+	progressBar* _hpBarPlayer;					// 체력 게이지
 	progressBar* _hpBarEnemy;
-	progressBar* _expBar;							// 경험치 게이지
+	progressBar* _expBar;						// 경험치 게이지
 
-	int _currentHP, _maxHP;							// 현재 hp, 최대 hp
-	int _currentEXP, _maxEXP;						// 현재 경험치, 최대 경험치
+	int _px, _ex;								// 배틀 시 플레이어 및 에너미 이미지 시작 위치
+
+	int _currentHP, _maxHP;						// 현재 hp, 최대 hp
+	int _currentEXP, _maxEXP;					// 현재 경험치, 최대 경험치
 
 	float _time;
 
-	int _behaviorCount;								//커서 움직임을 위한 변수
+	int _behaviorCount;							//커서 움직임을 위한 변수
 
 	bool _isBattleScript;
+	bool _isTurn;								// 공격 애니메이션 띄우는 중인지
+	bool _isNext;								// 후턴 포켓몬의 공격 차례인지
+
+	int _currentPoke = 0;						// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
+	int _currentSkill;							// 현재 사용한 스킬의 인덱스 번호(0~3)
+
+	int _attackCount;							// 공격 순서 판정용
+	int _whoTurn;								// 현재 누구의 턴인지(0 == 평시 / 1 == 내 턴 / 2 == 상대 턴)
 
 
 
@@ -177,6 +190,11 @@ public:
 
 	void battle();
 	void skillSelect();
+	void attack();
+	
+	void usePokeBall();
+	void useMedicine();
+	void useGoodMedicine();
 
 	
 
@@ -189,6 +207,7 @@ public:
 
 	NPC getNPC() { return _npc; }
 	void setNPC(NPC npc, bool isCount) { _npc = npc; _isCount = isCount; }
+	void setIsCount(bool isCount) { _isCount = isCount; }
 
 	bool isUiOpen();
 
@@ -212,6 +231,18 @@ public:
 
 	bool getIsBattleScript() { return _isBattleScript; }
 	void setIsBattleScript(bool isBattleScript) { _isBattleScript = isBattleScript;	}
+
+	bool getIsAttack() { return _isAttack; }
+	void setIsAttack(bool isAttack) { _isAttack = isAttack; }
+
+	bool getIsTurn() { return _isTurn; }
+	void setIsTurn(bool isTurn) { _isTurn = isTurn; }
+
+	bool getIsNext() { return _isNext; }
+	void setIsNext(bool next) { _isNext = next; }
+
+	int getAttackCount() { return _attackCount; }
+	void setAttackCount(int attackCount) { _attackCount = attackCount; }
 
 	int getGold() { return gold; };
 	void setGold(int newgold) { gold = newgold; }

@@ -15,8 +15,7 @@ character::~character()
 HRESULT character::init() // 인잇
 {
     imageInit();
-    poketmonSetting();
-
+    deletComingsoon();
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
@@ -42,13 +41,42 @@ void character::release()
 
 void character::update() // 업데이트
 {
+    poketmonSetting();
     controll();
     imageFrame();
     poketmonMeet();
     npcScript();
-    
+
     if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 
+    if (_frontTileType == 3) idle(_direction); // 문 타일 이용 후 걷는 상태가 멈췄을 때 아이들로 변경 처리
+}
+
+void character::poketmonSetting() // 포켓몬 데이터 처리
+{
+    for (int i = 0; i < 6; i++)
+    {
+        // 포켓몬 성별 체크가 트루일시
+        if (_poketmon[i].isGender) _poketmon[i].gender = "수컷";  // 포켓몬의 성별은 수컷이 된다    
+        else _poketmon[i].gender = "암컷"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
+        // 포켓몬 레벨은 현재 경험치에서 3제곱근 하고 그걸 int로 변경해야함 //cbrt 삼제곱근 
+        _poketmon[i].level = static_cast<int>(cbrt(_poketmon[i].totalEXP));
+
+        // 맥스 경험치는 다음 레벨(레벨 +1)의 맥스 경험치 - 현재 레벨의 맥스 경험치이다
+        _poketmon[i].maxExp = pow(_poketmon[i].level + 1, 3) - pow(_poketmon[i].level, 3);
+
+        // 현재 경험치는 토탈 경험치에서 현재 레벨 3제곱한거를 뺴면 나옴
+        _poketmon[i].currentExp = _poketmon[i].totalEXP - pow(_poketmon[i].level, 3);
+
+        // 현재 능력치 = 1레벨 능력치 + (레벨당 능력치 * 레벨)
+        _poketmon[i].sumAttack = _poketmon[i].attack + (_poketmon[i].levelAttack * _poketmon[i].level);                               //공격력       
+        _poketmon[i].sumDefense = _poketmon[i].defense + (_poketmon[i].levelDefense * _poketmon[i].level);                            //방어력
+        _poketmon[i].sumMaxHP = _poketmon[i].maxHP + (_poketmon[i].levelHP * _poketmon[i].level);                                     //hp
+        _poketmon[i].sumSpecialAttack = _poketmon[i].specialAttack + (_poketmon[i].levelSpecialAttack * _poketmon[i].level);          //특수공격력
+        _poketmon[i].sumSpecialDefense = _poketmon[i].specialDefense + (_poketmon[i].levelSpecialDefense * _poketmon[i].level);       //특수방어력
+        _poketmon[i].sumSpeed = _poketmon[i].speed + (_poketmon[i].levelSpeed * _poketmon[i].level);                                  //스피드
+    }
 }
 
 void character::controll() // 캐릭터 컨트롤 처리
@@ -187,6 +215,8 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
             UIMANAGER->setIsBattleScript(true); 
+            _pM->wildPoketmonSetting();
+
             _battleLoadingImage->setFrameX(0);
             _battleLoadingImage->setFrameY(0);
             _loadingCount = 0;
@@ -200,7 +230,7 @@ void character::npcScript() // npc 대화 스크립트 처리
     // 스크립트 떠있으면 빠져나감
     if (UIMANAGER->getIsScript() || UIMANAGER->isUiOpen() || _isMoving) return;
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < npcMAX; i++)
     {
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
@@ -215,18 +245,19 @@ void character::npcScript() // npc 대화 스크립트 처리
                 _scriptAction = 0;                      // 스크립트 액션 초기화
             }
 
+            // 트레이너 1
             if (_scriptAction == 1 && i == 4)
             {
                 _isPoketmonMeet = 1;
                 _scriptAction = 0;
             }
-
+            // 트레이너 2
             if (_scriptAction == 1 && i == 5)
             {
                 _isPoketmonMeet = 1;
                 _scriptAction = 0;
             }
-
+            // 관장님
             if (_scriptAction == 1 && i == 6)
             {
                 _isPoketmonMeet = 1;
@@ -267,6 +298,18 @@ void character::npcScript() // npc 대화 스크립트 처리
                     UIMANAGER->setIsScript(false);              // 스크립트 꺼주고
                     UIMANAGER->setOpenShop(true);               // 상점 오픈
                     _scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 8: // 브케인
+                    UIMANAGER->setNPC(NPC::CYNDAQUIL, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 9: // 리아코
+                    UIMANAGER->setNPC(NPC::TOTODILE, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
+                    break;
+                case 10: // 치코리타
+                    UIMANAGER->setNPC(NPC::CHIKORITA, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 }                
             }
@@ -420,56 +463,89 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5485;
         _tileMap->setCameraX(1920);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 3990:  // 플레이어 집 1층에서 2층 이동
         _currentTile = 4003;
         _tileMap->setCameraX(2944);
         _tileMap->setCameraY(-256);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 4003:  // 플레이어 집 2층에서 1층 이동
         _currentTile = 3990;
         _tileMap->setCameraX(2112);
         _tileMap->setCameraY(-256);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5485:  // 플레이어 집 1층에서 필드 이동
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5486:  // 플레이어 집 1층에서 필드 이동
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 4602:  // 필드에서 오박사 집 이동
         _currentTile = 6367;
         _tileMap->setCameraX(3584);
         _tileMap->setCameraY(448);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 6367:  // 오박사 집에서 필드 이동
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 6368:  // 오박사 집에서 필드 이동
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5381:  // 필드에서 포켓몬 센터 이동
         _currentTile = 5525;
         _tileMap->setCameraX(4480);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5525:  // 포켓몬 센터에서 필드 이동
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5526:  // 포켓몬 센터에서 필드 이동
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 3656:  // 필드에서 체육관 이동
         _currentTile = 7253;
@@ -479,6 +555,9 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 7253:  // 체육관에서 필드 이동
         _currentTile = 3656;
@@ -488,6 +567,9 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 7254:  // 체육관에서 필드 이동
         _currentTile = 3656;
@@ -497,21 +579,33 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 3647:  // 필드에서 상점 이동
         _currentTile = 5554;
         _tileMap->setCameraX(6336);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5554:  // 상점에서 필드 이동
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     case 5555:  // 상점에서 필드 이동
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        tileAction();
         break;
     }
 }
@@ -580,7 +674,7 @@ void character::ui() // ui창 호출
     if (UIMANAGER->getIsScript()) UIMANAGER->script();
 }
 
-void character::poketmonSetting() // 테스트 데이터
+void character::deletComingsoon() //삭제예쩡
 {
     _poketmon[0].name = "치코리타";							// 이름
     _poketmon[0].gender = "수컷";							// 성별
@@ -594,7 +688,7 @@ void character::poketmonSetting() // 테스트 데이터
 
     _poketmon[0].iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
     _poketmon[0].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
-    
+
     _poketmon[0].attack = 49;								// 1레벨 초기 공격
     _poketmon[0].defense = 65;							// 1레벨 초기 방어	
     _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격
@@ -615,7 +709,8 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[0].sumSpecialAttack = 1;					// 최종 특수공격
     _poketmon[0].sumSpecialDefense = 1;					// 최종 특수방어
     _poketmon[0].sumSpeed = 1;							// 최종 스피드
-    _poketmon[0].sumMaxHP = 1;							// 최종 체력
+    _poketmon[0].sumMaxHP = _poketmon[0].maxHP + (_poketmon[0].levelHP * _poketmon[0].level);	// 최종 체력
+    _poketmon[0].currentHP = _poketmon[0].sumMaxHP;
 
     _poketmon[0].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
     _poketmon[0].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
@@ -640,10 +735,10 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].index = 17;								// 인덱스 번호
     _poketmon[1].level = 20;								// 포켓몬 현재 레벨
     _poketmon[1].evolutionLevel = 1;						// 진화 단계
-              
+
     _poketmon[1].type1 = static_cast<int>(TYPE_PLAYER::FLYING); 								// 포켓몬 타입1	
     _poketmon[1].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
-              
+
     _poketmon[1].iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
     _poketmon[1].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
@@ -654,26 +749,27 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].speed = 45;								// 1레벨 초기 스피드
     _poketmon[1].currentHP = 45;							// 1레벨 초기 현재 체력
     _poketmon[1].maxHP = 45;								// 1레벨 초기 최대 체력
-              
+
     _poketmon[1].levelAttack = 1.67f;                     //레벨당 공격력
     _poketmon[1].levelDefense = 1.86f;                    //레벨당 방어력
     _poketmon[1].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
     _poketmon[1].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
     _poketmon[1].levelSpeed = 1.62f;                      //레벨당 스피드
     _poketmon[1].levelHP = 2.49f;                         //레벨당 체력
-              
+
     _poketmon[1].sumAttack = 1;							// 최종 공격
     _poketmon[1].sumDefense = 1;							// 최종 방어
     _poketmon[1].sumSpecialAttack = 1;					// 최종 특수공격
     _poketmon[1].sumSpecialDefense = 1;					// 최종 특수방어
     _poketmon[1].sumSpeed = 1;							// 최종 스피드
-    _poketmon[1].sumMaxHP = 1;							// 최종 체력
-              
+    _poketmon[1].sumMaxHP = _poketmon[1].maxHP + (_poketmon[1].levelHP * _poketmon[1].level); // 최종 체력
+    _poketmon[1].currentHP = _poketmon[1].sumMaxHP;
+
     _poketmon[1].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-    _poketmon[1].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
-              
+    _poketmon[1].maxExp = 1261;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+
     _poketmon[1].totalEXP = 8800;							// 토탈 경험치
-              
+
     _poketmon[1].skill[0] = 1;								// 스킬1 인덱스 
     _poketmon[1].skill[1] = 2;								// 스킬2 인덱스 
     _poketmon[1].skill[2] = 3;								// 스킬3 인덱스 
@@ -682,7 +778,7 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].skillPP[1] = 10;							// 스킬2 현재 PP
     _poketmon[1].skillPP[2] = 10;							// 스킬3 현재 PP
     _poketmon[1].skillPP[3] = 10;							// 스킬4 현재 PP
-              
+
     _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }
 
@@ -753,30 +849,30 @@ void character::imageInit() // 이미지 파일들 불러옴
     IMAGEMANAGER->addFrameImage("플래시로딩", "image/flash_loading.bmp", 640, 576, 1, 1, true, RGB(255, 0, 255));
 
     //포켓몬 뒤
-    IMAGEMANAGER->addFrameImage("155B", "image/poketmon/no_155B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("156B", "image/poketmon/no_156B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("157B", "image/poketmon/no_157B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("152B", "image/poketmon/no_152B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("153B", "image/poketmon/no_153B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("154B", "image/poketmon/no_154B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("158B", "image/poketmon/no_158B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("159B", "image/poketmon/no_159B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("160B", "image/poketmon/no_160B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("25B", "image/poketmon/no_25B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("26B", "image/poketmon/no_26B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("19B", "image/poketmon/no_19B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("20B", "image/poketmon/no_20B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("16B", "image/poketmon/no_16B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("17B", "image/poketmon/no_17B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("18B", "image/poketmon/no_18B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("21B", "image/poketmon/no_21B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("22B", "image/poketmon/no_22B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("10B", "image/poketmon/no_10B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("11B", "image/poketmon/no_11B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("12B", "image/poketmon/no_12B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("13B", "image/poketmon/no_13Bbmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("14B", "image/poketmon/no_14B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("15B", "image/poketmon/no_15B.bmp", 112, 112, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("155B", "image/poketmon/no_155B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("156B", "image/poketmon/no_156B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("157B", "image/poketmon/no_157B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("152B", "image/poketmon/no_152B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("153B", "image/poketmon/no_153B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("154B", "image/poketmon/no_154B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("158B", "image/poketmon/no_158B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("159B", "image/poketmon/no_159B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("160B", "image/poketmon/no_160B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("25B", "image/poketmon/no_25B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("26B", "image/poketmon/no_26B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("19B", "image/poketmon/no_19B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("20B", "image/poketmon/no_20B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("16B", "image/poketmon/no_16B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("17B", "image/poketmon/no_17B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("18B", "image/poketmon/no_18B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("21B", "image/poketmon/no_21B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("22B", "image/poketmon/no_22B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("10B", "image/poketmon/no_10B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("11B", "image/poketmon/no_11B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("12B", "image/poketmon/no_12B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("13B", "image/poketmon/no_13B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("14B", "image/poketmon/no_14B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("15B", "image/poketmon/no_15B.bmp", 192, 192, 1, 1, true, RGB(255, 0, 255));
 }
 
 

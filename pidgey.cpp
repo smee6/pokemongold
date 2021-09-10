@@ -20,7 +20,10 @@ HRESULT pidgey::init()
         _poketmon.name = "구구";							    //이름 구구
         _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
         _poketmon.index = 16;								//전국도감번호 16
-        _poketmon.level = RND->getFromIntTo(1, 50);			//처음 등장 레벨 1~50
+        _poketmon.level = RND->getFromIntTo(1, 18);			//처음 등장 레벨 1~50
+
+        potketmonEXP();										//경험치
+
         _poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노말타입
         _poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행타입
         _poketmon.evolutionLevel = 0;						//진화단계
@@ -65,6 +68,9 @@ HRESULT pidgey::init()
         _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
         _poketmon.index = 17;								//전국도감번호 17
         _poketmon.level = RND->getFromIntTo(19, 50);		//처음 등장 레벨 19~50
+
+        potketmonEXP();										//경험치
+
         _poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노멀타입
         _poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행타입
         _poketmon.evolutionLevel = 1;						//진화단계
@@ -109,6 +115,9 @@ HRESULT pidgey::init()
         _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
         _poketmon.index = 18;								//전국도감번호 18
         _poketmon.level = RND->getFromIntTo(36, 50);		//처음 등장 레벨 36~50
+
+        potketmonEXP();										//경험치
+
         _poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노멀타입
         _poketmon.type2 = static_cast<int>(TYPE::FLYING);	//비행타입
         _poketmon.evolutionLevel = 2;						//진화단계

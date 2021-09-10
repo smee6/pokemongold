@@ -108,8 +108,8 @@ HRESULT uiManager::init()
 	_hpBarPlayer->init(WINSIZEX - 161 - 192, 297, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp", "hpFront", "hpBack");
 	//_hpBarPlayer->setGauge(100, 100);
 
-	//_hpBarEnemy = new progressBar;
-	//_hpBarEnemy->init(50, 90, 192, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp");
+	_hpBarEnemy = new progressBar;
+	_hpBarEnemy->init(33, 72, 191, 8, "image/battle/hpGauge.bmp", "image/battle/hpGaugeBack.bmp", "eHpFront", "eHpBack");
 
 	_expBar = new progressBar;
 	_expBar->init(WINSIZEX - 193 - 256, 365, 256, 8, "image/battle/expGauge.bmp", "image/battle/expGaugeBack.bmp", "expFront", "expBack");
@@ -267,61 +267,63 @@ void uiManager::menu()
 			}
 		}
 	}
-
-	switch (menuCnt)
+	if (!_isOpenBag && !_isOpenPokemon && !_isOpenPokeDogam && !_isOpenPokeGear && !_isOpenPlayerStatus && !_isOpenSetting)
 	{
-	case 0: //도감
-		IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokeDogam = true;
-		
-		};
-		break;
-	case 1: //포켓몬
-		IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokemon = true;
-		
-		};
-		break;
-	case 2://가방
-		IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenBag = true;
-			
-		};
-		break;
-	case 3://포켓기어
-		IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPokeGear = true;
-			
-		};
-		break;
-	case 4://이름
-		IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenPlayerStatus = true;
-			
-		};
-		break;
-	case 5://설정
-		IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-			_isOpenSetting = true;
-
-		};
-		break;
-	case 6://닫다
-		IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		switch (menuCnt)
 		{
-			uiOpen = false;
-			_isOpenMenu = false;
-			menuCnt = 0;
+		case 0: //도감
+			IMAGEMANAGER->findImage("menu0")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokeDogam = true;
+
+			};
+			break;
+		case 1: //포켓몬
+			IMAGEMANAGER->findImage("menu1")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokemon = true;
+
+			};
+			break;
+		case 2://가방
+			IMAGEMANAGER->findImage("menu2")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenBag = true;
+
+			};
+			break;
+		case 3://포켓기어
+			IMAGEMANAGER->findImage("menu3")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPokeGear = true;
+
+			};
+			break;
+		case 4://이름
+			IMAGEMANAGER->findImage("menu4")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenPlayerStatus = true;
+
+			};
+			break;
+		case 5://설정
+			IMAGEMANAGER->findImage("menu5")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_isOpenSetting = true;
+
+			};
+			break;
+		case 6://닫다
+			IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				uiOpen = false;
+				_isOpenMenu = false;
+				menuCnt = 0;
+			}
+			return;
+			break;
 		}
-		return;
-		break;
 	}
 
 	if (_isOpenBag)
@@ -367,6 +369,18 @@ void uiManager::pokeShift()
 			pokeWindow = false;
 			_isOpenPokemon = false;
 		}
+
+		if (_isBattle && _character->getPoketmon(pokesCnt).maxHP != 0 && pokesCnt < 6)
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				_currentPoke = pokesCnt;
+
+				pokesCnt = 0;
+				pokeWindow = false;
+				_isOpenPokemon = false;
+			}
+		}
 		switch (pokesCnt)
 		{
 		case 0:
@@ -376,19 +390,15 @@ void uiManager::pokeShift()
 			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
 			break;
 		case 2:
-			
 			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
 			break;
 		case 3:
-			
 			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
 			break;
 		case 4:
-			
 			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
 			break;
 		case 5:
-			
 			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
 			break;
 		case 6:
@@ -405,7 +415,7 @@ void uiManager::pokeShift()
 		//아래와 같은식으로 필요할때 포켓몬 정보를 받아온다 <- 나중에 코드 놓는 위치를 유동적으로 바꿔야함
 		for (int i = 0; i < myPokemon.size(); i++) {
 			myPokemon[i].name = _character->getPoketmon(i).name;
-			myPokemon[i].maxHP = _character->getPoketmon(i).maxHP;
+			myPokemon[i].sumMaxHP = _character->getPoketmon(i).sumMaxHP;
 			myPokemon[i].currentHP = _character->getPoketmon(i).currentHP;
 			myPokemon[i].level = _character->getPoketmon(i).level;
 			myPokemon[i].iconNumX = _character->getPoketmon(i).iconNumX;
@@ -436,7 +446,7 @@ void uiManager::pokeShift()
 			string strname = myPokemon[i].name;
 			strcpy_s(poke, strname.c_str());
 
-			if (myPokemon[i].maxHP == 0) return;
+			if (myPokemon[i].sumMaxHP == 0) return;
 
 			IMAGEMANAGER->findImage("Icon")->frameRender(_backBuffer->getMemDC(),35,15 + 
 				(i * 65), myPokemon[i].iconNumX+(iconCnt%2), myPokemon[i].iconNumY);
@@ -444,7 +454,7 @@ void uiManager::pokeShift()
 			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
-			sprintf_s(str, "/ %d", myPokemon[i].maxHP);
+			sprintf_s(str, "/ %d", myPokemon[i].sumMaxHP);
 			TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
@@ -490,10 +500,16 @@ void uiManager::bag()
 		case 0: // 가방에서 몬스터볼에 커서가 있다
 			IMAGEMANAGER->findImage("bag0")->render(_backBuffer->getMemDC());
 			//클릭했을때 수량이 1개 이상이면 사용됨 아니면 걍 무시
+			
 			if (pokeballQ > 0) {
-				
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+					// 배틀 중일 때에만 사용 가능
+					if (!_isBattle) return;
+
+					// 보유 포켓몬이 꽉찬 경우에 사용 불가
+					if (_character->getPoketmon(5).maxHP != 0) return;
 					pokeballQ--;
+					usePokeBall();
 					//전투중이 아닌 경우 못 씀
 					//전투중에 쓸경우 뭐 대충 bool 값 체크해서 사용하게 해줌 
 				};
@@ -502,7 +518,7 @@ void uiManager::bag()
 		case 1:// 가방에서 상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag1")->render(_backBuffer->getMemDC());
 			if (medicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					medicineQ--;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
@@ -511,7 +527,7 @@ void uiManager::bag()
 		case 2:// 가방에서 고급상처약에 커서가 있다
 			IMAGEMANAGER->findImage("bag2")->render(_backBuffer->getMemDC());
 			if (goodMedicineQ > 0) {
-				if (KEYMANAGER->isOnceKeyDown('Z')) {
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					goodMedicineQ--;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
 				};
@@ -626,7 +642,7 @@ void uiManager::pokeGear()
 		case 2:
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
 
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 
 				gearCnt = 0;
 				gearWindow = false;
@@ -770,7 +786,7 @@ void uiManager::setting()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown('Z')) {
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				settingCnt = 0;
 				settingWindow = false;
 				uiOpen = false;
@@ -893,6 +909,20 @@ void uiManager::script()
 		case NPC::BATTLE:
 			_vScript = TXTDATA->txtLoad("script/배틀.txt");
 			break;
+		case NPC::BATTLE_ATTACK:
+			_vScript = TXTDATA->txtLoad("script/공격.txt");
+			break;
+		case NPC::BATTLE_DOWN:
+			switch (_whoTurn)
+			{
+			case 1:
+				_vScript = TXTDATA->txtLoad("script/야생배틀승리.txt");
+				break;
+			case 2:
+				_vScript = TXTDATA->txtLoad("script/패배.txt");
+				break;
+			}
+			break;
 		default:
 			break;
 		}
@@ -917,11 +947,6 @@ void uiManager::script()
 			{
 				_isBattleScript = false;
 			}
-			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
-			_isScript = false;
-			_txtIndex = 0;
-			_scriptIndex = 0;
-			uiOpen = false;
 			if (_npc == NPC::POKECENTER && _pokecenterCount == 1)
 			{
 				_isOpenPokecenter = true;
@@ -932,6 +957,39 @@ void uiManager::script()
 			{
 				_pokecenterCount = 0;
 			}
+
+			if (_isAttack && _attackCount < 1)
+			{
+				_isTurn = true;
+				_isNext = false;
+			}
+
+			if (_attackCount > 0)
+			{
+				_isTurn = true;
+				_attackCount++;
+			}
+
+			if (_isBattle && (_poketmonManager->getWildPoketmon().currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
+			{
+				_isAttack = false;
+				_isBattle = false;
+				_attackCount = 0;
+				_isTurn = false;
+				_isNext = false;
+				_whoTurn = 0;
+
+				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+				{
+					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
+				}
+			}
+
+			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
+			_isScript = false;
+			_txtIndex = 0;
+			_scriptIndex = 0;
+			uiOpen = false;
 		}
 
 		if (_isBattle)
@@ -945,7 +1003,7 @@ void uiManager::script()
 			string currentPokemon = _character->getPoketmon(0).name;
 
 			vector<string> _vStr;
-			_vStr.push_back("야생의 " + currentPokemon + "(이)가\n승부를 걸어왔다!;" + currentPokemon + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
+			_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "(이)가\n승부를 걸어왔다!;" + "레드" + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
 
 			TXTDATA->txtSave("script/배틀.txt", _vStr);
 
@@ -1077,23 +1135,26 @@ void uiManager::battle()
 
 	// 배경색 RGB(248, 248, 248)
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
+
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
-	_enemyPokeImage = IMAGEMANAGER->findImage("155F");
+	_playerPokeImage = IMAGEMANAGER->findImage(to_string(_character->getPoketmon(_currentPoke).index) + "B");
+	_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");
 
 	static int px = -_playerImage->getWidth();
-	static int ex = WINSIZEX + _enemyPokeImage->getWidth() - 100;
+	static int ex = WINSIZEX;
 
 	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
-	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
+	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
+		_npc = NPC::BATTLE;
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
 		
 		// 트레이너랑 배틀할 경우에 트레이너 이미지 지워줌
-		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 50);
+		//_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 30);
 
-		if (ex >= WINSIZEX - 200)
+		if (ex >= WINSIZEX - 230)
 		{
 			ex -= 5;
 		}
@@ -1101,7 +1162,7 @@ void uiManager::battle()
 		if (px <= 70)
 		{
 			px += 5; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
-			_npc = NPC::BATTLE;
+			//_npc = NPC::BATTLE;
 		}
 		else if (_isBattleScript)
 		{
@@ -1135,13 +1196,18 @@ void uiManager::battle()
 			//string index;
 			//index = _character->getPoketmon(0).index;
 
-			_currentHP = _character->getPoketmon(0).currentHP;
-			_maxHP = _character->getPoketmon(0).maxHP;
-			_currentEXP = _character->getPoketmon(0).currentExp;
-			_maxEXP = _character->getPoketmon(0).maxExp;
+			_playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
+
+			_currentHP = _character->getPoketmon(_currentPoke).currentHP;
+			_maxHP = _character->getPoketmon(_currentPoke).sumMaxHP;
+			_currentEXP = _character->getPoketmon(_currentPoke).currentExp;
+			_maxEXP = _character->getPoketmon(_currentPoke).maxExp;
 
 			_hpBarPlayer->setGauge(_currentHP, _maxHP);
 			_hpBarPlayer->render();
+
+			_hpBarEnemy->setGauge(_poketmonManager->getWildPoketmon().currentHP, _poketmonManager->getWildPoketmon().sumMaxHP);
+			_hpBarEnemy->render();
 
 			_expBar->setGauge(_currentEXP, _maxEXP);
 			_expBar->render();
@@ -1152,7 +1218,7 @@ void uiManager::battle()
 			
 
 			//	커서의 위치
-			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag)
+			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack)
 			{
 				if (_behaviorCount == 0)			// 싸우다
 				{
@@ -1240,6 +1306,15 @@ void uiManager::battle()
 	{
 		pokeShift();
 	}
+	if (_isAttack)
+	{
+		attack();
+	}
+
+	char str[128];
+
+	sprintf_s(str, "%d", _poketmonManager->getWildPoketmon().level);
+	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
 }
 
 void uiManager::skillSelect()
@@ -1261,7 +1336,7 @@ void uiManager::skillSelect()
 	for (int i = 0; i < 4; i++) {
 		//string strname = myPokemon[i].name;
 		//strcpy_s(poke, strname.c_str());
-		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[i]);
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[i]);
 		sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 
 		TextOut(_backBuffer->getMemDC(), 55, 330 + (i * 60), skill, strlen(skill));
@@ -1290,30 +1365,277 @@ void uiManager::skillSelect()
 	switch (skillCnt)
 	{
 	case 0:
-		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[0]);
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[0]);
+		_currentSkill = 0;
 		break;
 	case 1:
-		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[1]);
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[1]);
+		_currentSkill = 1;
 		break;
 	case 2:
-		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[2]);
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[2]);
+		_currentSkill = 2;
 		break;
 	case 3:
-		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(0).skill[3]);
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[3]);
+		_currentSkill = 3;
 		break;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_poketmonManager->getSkill()->setIsSkill(true);
+		//_poketmonManager->getSkill()->setIsSkill(true);
+		//skillCnt = 0;
+		_isAttack = true;
 		_isOpenSkill = false;
+		_npc = NPC::BATTLE_ATTACK;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창에서 다시 행동패턴 정하는 UI 호출
 	{
-		skillCnt = 0;
+		//skillCnt = 0;
 		_isOpenSkill = false;
 	}
+}
+
+void uiManager::attack()
+{
+	// 포켓몬 쓰러지는거 체크
+	if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+	{
+
+	}
+
+	// 속도 비교
+	// 플레이어가 더 빠를 때
+	if (_character->getPoketmon(_currentPoke).speed >= _poketmonManager->getWildPoketmon().speed)
+	{
+		// 내 턴
+		if (_attackCount == 0)
+		{
+			if (!_isNext && !_isTurn)
+			{
+				vector<string> _vStr;
+
+				char skill[128];
+
+				_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[_currentSkill]);
+				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
+				_vStr.push_back(_character->getPoketmon(_currentPoke).name + "의\n" + skill + "!;" + "aaa;");
+
+				TXTDATA->txtSave("script/공격.txt", _vStr);
+
+				_isScript = true;
+				_isCount = true;
+			}
+			if (_isTurn)
+			{
+				_whoTurn = 1;
+				_poketmonManager->getSkill()->setWhoSkill(false);
+				_poketmonManager->getSkill()->setIsSkill(true);
+
+				_attackCount++;
+
+				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+
+				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				{
+
+					vector<string> _vStr;
+
+					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+				}
+			}
+		}
+
+		// 상대 턴
+		else if (_attackCount > 0)
+		{
+			if (_isTurn && _isNext)
+			{
+				_whoTurn = 2;
+				_poketmonManager->getSkill()->setWhoSkill(true);
+				_poketmonManager->getSkill()->setIsSkill(true);
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+
+				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+				{
+					vector<string> _vStr;
+
+					_vStr.push_back(_character->getPoketmon(_currentPoke).name + "는(은) 쓰러졌다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/패배.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+				}
+
+				_isTurn = false;
+				_isNext = false;
+			}
+			else if (_isNext)
+			{
+				vector<string> _vStr;
+
+				char skill[128];
+
+				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
+				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
+
+				TXTDATA->txtSave("script/공격.txt", _vStr);
+				//_poketmonManager->getWildPoketmon();//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
+			}
+
+		}
+	}
+
+	// 상대가 빠를 때
+	else
+	{
+		// 상대 턴
+		if (_attackCount == 0)
+		{
+			if (!_isNext && !_isTurn)
+			{
+				_isNext = true;
+
+				vector<string> _vStr;
+
+				char skill[128];
+
+				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
+				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
+
+				TXTDATA->txtSave("script/공격.txt", _vStr);
+
+				_isScript = true;
+				_isCount = true;
+			}
+			if (_isTurn)
+			{
+				_whoTurn = 2;
+				_poketmonManager->getSkill()->setWhoSkill(true);
+				_poketmonManager->getSkill()->setIsSkill(true);
+
+				_attackCount++;
+
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
+
+				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+				{
+					vector<string> _vStr;
+
+					_vStr.push_back(_character->getPoketmon(_currentPoke).name + "는(은) 쓰러졌다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/패배.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+				}
+			}
+		}
+
+		// 내 턴
+		else if (_attackCount > 0)
+		{
+			if (_isTurn && _isNext)
+			{
+				_whoTurn = 1;
+				_poketmonManager->getSkill()->setWhoSkill(false);
+				_poketmonManager->getSkill()->setIsSkill(true);
+
+				_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack);
+
+				_isTurn = false;
+				_isNext = false;
+
+				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				{
+
+					vector<string> _vStr;
+
+					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+
+					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+					_npc = NPC::BATTLE_DOWN;
+					_isScript = true;
+					_isCount = true;
+
+				}
+			}
+			else if (_isNext)
+			{
+				vector<string> _vStr;
+
+				char skill[128];
+
+				_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[_currentSkill]);
+				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
+				_vStr.push_back(_character->getPoketmon(_currentPoke).name + "의\n" + skill + "!;" + "aaa;");
+
+				TXTDATA->txtSave("script/공격.txt", _vStr);
+				
+				//_poketmonManager->getWildPoketmon();//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
+			}
+
+		}
+	}
+}
+
+void uiManager::usePokeBall()
+{
+	//포켓볼 사용시 내 쪽에서 포켓볼 날아가고
+	//포켓볼이 상대 포켓몬에 맞을시 포켓몬 이미지 사라지고 포켓볼 흔들거리는 이미지 출력
+	//확률적으로 포획성공시 성공 시 성공장면 출력 - 내 소유 포켓몬 구조체 정보저장 - 배틀 끝 - 인게임씬
+	//포획 실패시 다시 포켓몬 이미지 출력해주고 배틀 재개
+
+	//포켓볼 포물선으로 날아가는 이미지 출력
+
+	//맞았을때 좌우로 흔들거리는 프레임이미지 출력
+
+	//잡았다 - 보유 구조체 3번에 저장(레벨, 젠더, 보유기술)
+	for (int i = 0; i < 6; i++)
+	{
+		if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
+		{
+			_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
+
+			// 한마리 잡으면 종료
+			break;
+		}
+	}
+
+	uiOpen = false;
+	_isBattle = false;
+	_isOpenBag = false;
+	bagWindow = false;
+	_px = -_playerImage->getWidth();
+	_ex = WINSIZEX + _enemyPokeImage->getWidth();
+	_behaviorCount = 0;
+	_appearIndex = 2;
+}
+
+void uiManager::useMedicine()
+{
+	//사용 대상의 체력을 50 회복한다
+
+}
+
+void uiManager::useGoodMedicine()
+{
+	//사용 대상의 체력을 100 회복한다
+
 }
 
 bool uiManager::isUiOpen()

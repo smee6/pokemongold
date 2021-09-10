@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "skill.h"
 #include "poketmon.h"
+#include "poketmonManager.h"
 
 skill::skill()
 {
@@ -16,13 +17,12 @@ HRESULT skill::init()
 
 	STATUS_AILMENT::NONE;	// 상태이상 초기값은 없음
 
-	_imgName = "lightScreen";							//처음에 들어가는 값
-
+	_imgName = "snap";							//처음에 들어가는 값
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
 
 	_isWhoSkill = false;							//초기화
-	_isSkill = false;							//초기화
+	_isSkill = false;								//초기화
 
 	return S_OK;
 }
@@ -33,538 +33,534 @@ void skill::release()
 
 void skill::update()
 {
+	
 
 	//밑에 키매니저들은 체크할려고 만든 것들 나중에 지워도 됨
-	if (KEYMANAGER->isOnceKeyDown('P')) _isSkill = true;
-	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;	//나 (플레이어)
-	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;	//야생
+	if (KEYMANAGER->isOnceKeyDown('K')) _isSkill = true;
+	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;			//나 (플레이어)
+	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;		//야생
 
-	if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
+
+	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
+	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
 
 	rc = RectMake(480, _imgPoint.y, 112, 112);	// 포켓몬이 없어서 대신 할 것을 만듬
 
 
 	skillAni();
+	
+
 
 }
 
-void skill::skillNone()			//스킬없음
+void skill::skillNone()													//스킬없음
 {
-	//_skillNumber = 0;			//스킬넘버
+	//_skillNumber = 0;													//스킬넘버
 
-	_name = " -";				//이름
+	_name = " -";														//이름
 
-	_power = NULL;				//위력
-	_PP = NULL;					//PP
-	_accuracy = NULL;			//명중률
+	_power = NULL;														//위력
+	_PP = NULL;															//PP
+	_accuracy = NULL;													//명중률
 
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::tackle()			// 몸통박치기
+void skill::tackle()													// 몸통박치기
 {
 
-	//_skillNumber = 1;			//스킬넘버
+	//_skillNumber = 1;													//스킬넘버
 
-	_name = "몸통박치기";		//이름
-	_imgName = "attack3";		//이미지이름
+	_name = "몸통박치기";												//이름
+	_imgName = "attack";												//이미지이름
 
-	_power = 40;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_imgX = 25;
+	_imgY = 0;
 
-}
-
-void skill::stringShot()		//실뿜기
-{
-	//_skillNumber = 2;			//스킬넘버
-
-	_name = "실뿜기";			//이름
-	_imgName = "cut";			//이미지이름
-
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = NULL;				//위력
-	_PP = 40;					//PP
-	_accuracy = 95;				//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::BUG);					//타입
+	_power = 40;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 
 }
 
-void skill::confusion()			//염동력
+void skill::stringShot()												//실뿜기
 {
-	//_skillNumber = 3;			//스킬넘버
+	//_skillNumber = 2;													//스킬넘버
 
-	_name = "염동력";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "실뿜기";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	_power = NULL;														//위력
+	_PP = 40;															//PP
+	_accuracy = 95;														//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::BUG);						//타입
 
-	_power = 50;				//위력
-	_PP = 25;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::PSYCHC);				//타입	
 }
 
-void skill::poisonPowder()		//독가루
+void skill::confusion()													//염동력
 {
-	//_skillNumber = 4;			//스킬넘버
+	//_skillNumber = 3;													//스킬넘버
 
-	_name = "독가루";			//이름
-	_imgName = "poison";		//이미지이름
+	_name = "염동력";													//이름
+	_imgName = "confuseRay";											//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	_imgX = 25;
+	_imgY = 0;
 
-	_power = NULL;				//위력
-	_PP = 35;					//PP
-	_accuracy = 75;				//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::POISON);				//타입
-	_ifAilment = STATUS_AILMENT::POISON;		//상태이상
+	_power = 50;														//위력
+	_PP = 25;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::PSYCHC);					//타입	
 }
 
-void skill::stunSpore()			//저리가루
+void skill::poisonPowder()												//독가루
 {
-	//_skillNumber = 5;			//스킬넘버
+	//_skillNumber = 4;													//스킬넘버
 
-	_name = "저리가루";			//이름
-	_imgName = "poison";		//이미지이름
+	_name = "독가루";													//이름
+	_imgName = "poison";												//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	_imgX = -80;
+	_imgY = -50;
 
-	_power = NULL;				//위력
-	_PP = 30;					//PP
-	_accuracy = 75;				//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);				//타입
-	_ifAilment = STATUS_AILMENT::PARALYSIS;	//상태이상
+	_power = NULL;														//위력
+	_PP = 35;															//PP
+	_accuracy = 75;														//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::POISON);					//타입
+	_ifAilment = STATUS_AILMENT::POISON;								//상태이상
 }
 
-void skill::sleepPowder()		//수면가루
+void skill::stunSpore()													//저리가루
 {
-	//_skillNumber = 6;			//스킬넘버
+	//_skillNumber = 5;													//스킬넘버
 
-	_name = "수면가루";			//이름
-	_imgName = "poison";		//이미지이름
+	_name = "저리가루";													//이름
+	_imgName = "poison";												//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	_imgX = -80;
+	_imgY = -50;
 
-	_power = NULL;				//위력
-	_PP = 15;					//PP
-	_accuracy = 75;				//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);				//타입
-	_ifAilment = STATUS_AILMENT::SLEEP;		//상태이상
+	_power = NULL;														//위력
+	_PP = 30;															//PP
+	_accuracy = 75;														//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);					//타입
+	_ifAilment = STATUS_AILMENT::PARALYSIS;								//상태이상
 }
 
-void skill::poisonSting()		//독침
+void skill::sleepPowder()												//수면가루
 {
-	//_skillNumber = 7;			//스킬넘버
+	//_skillNumber = 6;													//스킬넘버
+
+	_name = "수면가루";													//이름
+	_imgName = "poison";												//이미지이름
+
+	_imgX = -80;
+	_imgY = -50;
+
+	_power = NULL;								 						//위력
+	_PP = 15;															//PP
+	_accuracy = 75;														//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);					//타입
+	_ifAilment = STATUS_AILMENT::SLEEP;									//상태이상
+}
+
+void skill::poisonSting()												//독침
+{
+	//_skillNumber = 7;													//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
-	_name = "독침";				//이름
-	_imgName = "cut";			//이미지이름
+	_name = "독침";														//이름
+	_imgName = "horn";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
+	_power = 15;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::POISON);					//타입
 
-	_power = 15;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::POISON);				//타입
-
-	if (_index > 80) STATUS_AILMENT::POISON;	//상태이상 20퍼 확률로..
+	if (_index > 80) STATUS_AILMENT::POISON;							//상태이상 20퍼 확률로..
 
 }
 
-void skill::focusEnergy()		//기충전
+void skill::focusEnergy()												//기충전
 {
-	//_skillNumber = 8;			//스킬넘버
+	//_skillNumber = 8;													//스킬넘버
 
-	_name = "기충전";			//이름
-	_imgName = "growth";		//이미지이름
+	_name = "기충전";													//이름
+	_imgName = "growth";												//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = NULL;				//위력
-	_PP = 30;					//PP
-	_accuracy = NULL;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 30;															//PP
+	_accuracy = NULL;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::twineedle()			//더블니들
+void skill::twineedle()													//더블니들
 {
-	//_skillNumber = 9;			//스킬넘버
+	//_skillNumber = 9;													//스킬넘버
 
-	_name = "더블니들";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "더블니들";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 25;				//위력
-	_PP = 20;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::BUG);					//타입
+	_power = 25;														//위력
+	_PP = 20;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::BUG);						//타입
 }
 
-void skill::sandAttack()		//모래뿌리기
+void skill::sandAttack()												//모래뿌리기
 {
-	//_skillNumber = 10;			//스킬넘버
+	//_skillNumber = 10;												//스킬넘버
 
-	_name = "모래뿌리기";		//이름
-	_imgName = "cut";			//이미지이름
+	_name = "모래뿌리기";												//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = NULL;				//위력
-	_PP = 15;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::GROUND);				//타입
+	_power = NULL;														//위력
+	_PP = 15;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::GROUND);					//타입
 
 }
 
-void skill::gust()				//바람일으키기
+void skill::gust()														//바람일으키기
 {
-	//_skillNumber = 11;			//스킬넘버
+	//_skillNumber = 11;												//스킬넘버
 
-	_name = "바람일으키기";		//이름
-	_imgName = "squall";		//이미지이름
+	_name = "바람일으키기";												//이름
+	_imgName = "squall";												//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 40;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);				//타입
+	_power = 40;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);					//타입
 }
 
-void skill::quickAttack()		//전광석화
+void skill::quickAttack()												//전광석화
 {
-	//_skillNumber = 12;			//스킬넘버
+	//_skillNumber = 12;												//스킬넘버
 
-	_name = "전광석화";			//이름
-	_imgName = "move";			//이미지이름
+	_name = "전광석화";													//이름
+	_imgName = "move";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 40;				//위력
-	_PP = 30;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = 40;														//위력
+	_PP = 30;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::wingAttack()		//날개치기
+void skill::wingAttack()												//날개치기
 {
-	//_skillNumber = 13;			//스킬넘버
+	//_skillNumber = 13;												//스킬넘버
 
-	_name = "날개치기";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "날개치기";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = 60;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);				//타입
+	_power = 60;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);					//타입
 }
 
-void skill::tailWhip()			//꼬리흔들기
+void skill::tailWhip()													//꼬리흔들기
 {
-	//_skillNumber = 14;			//스킬넘버
+	//_skillNumber = 14;												//스킬넘버
 
-	_name = "꼬리흔들기";		//이름
-	_imgName = "cut";			//이미지이름
+	_name = "꼬리흔들기";												//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = NULL;				//위력
-	_PP = 30;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 30;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::peck()				//쪼기
+void skill::peck()														//쪼기
 {
-	//_skillNumber = 15;			//스킬넘버
+	//_skillNumber = 15;												//스킬넘버
 
-	_name = "쪼기";				//이름
-	_imgName = "cut";			//이미지이름
+	_name = "쪼기";														//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 35;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);				//타입
+	_power = 35;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::FLYING);					//타입
 }
 
-void skill::growl()				//울음소리
+void skill::growl()														//울음소리
 {
-	//_skillNumber = 16;			//스킬넘버
+	//_skillNumber = 16;												//스킬넘버
 
-	_name = "울음소리";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "울음소리";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = NULL;				//위력
-	_PP = 40;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 40;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::leer()				//째려보기
+void skill::leer()														//째려보기
 {
-	//_skillNumber = 17;			//스킬넘버
+	//_skillNumber = 17;												//스킬넘버
 
-	_name = "째려보기";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "째려보기";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = NULL;				//위력
-	_PP = 30;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 30;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::thunderShock()		//전기쇼크
+void skill::thunderShock()												//전기쇼크
 {
-	//_skillNumber = 18;			//스킬넘버
+	//_skillNumber = 18;												//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
-	_name = "전기쇼크";			//이름
-	_imgName = "spark";			//이미지이름
+	_name = "전기쇼크";													//이름
+	_imgName = "spark";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
-	_power = 40;				//위력
-	_PP = 30;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::ELECTR);				//타입
+	_power = 40;														//위력
+	_PP = 30;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::ELECTR);					//타입
 
-	if (_index > 90) STATUS_AILMENT::PARALYSIS;	//상태이상 10퍼확률로 마비
+	if (_index > 90) STATUS_AILMENT::PARALYSIS;							//상태이상 10퍼확률로 마비
 
 }
 
-void skill::thunderbolt()		//10만볼트
+void skill::thunderbolt()												//10만볼트
 {
-	//_skillNumber = 19;			//스킬넘버
+	//_skillNumber = 19;												//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
-	_name = "10만볼트";			//이름
-	_imgName = "spark";			//이미지이름
+	_name = "10만볼트";													//이름
+	_imgName = "spark";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = 90;				//위력
-	_PP = 15;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::ELECTR);				//타입
+	_power = 90;														//위력
+	_PP = 15;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::ELECTR);					//타입
 
-	if (_index > 90) STATUS_AILMENT::PARALYSIS;	//상태이상 10퍼 확률로 마비
+	if (_index > 90) STATUS_AILMENT::PARALYSIS;							//상태이상 10퍼 확률로 마비
 }
 
-void skill::razorLeaf()			//잎날가르기
+void skill::razorLeaf()													//잎날가르기
 {
-	//_skillNumber = 20;			//스킬넘버
+	//_skillNumber = 20;												//스킬넘버
 
-	_name = "잎날가르기";		//이름
-	_imgName = "bind";			//이미지이름
+	_name = "잎날가르기";												//이름
+	_imgName = "bind";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
-	_power = 55;				//위력
-	_PP = 25;					//PP
-	_accuracy = 95;				//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);				//타입
+
+	_power = 55;														//위력
+	_PP = 25;															//PP
+	_accuracy = 95;														//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);					//타입
 }
 
-void skill::reflect()			//리플렉터 물리데미지 반감.
+void skill::reflect()													//리플렉터 물리데미지 반감.
 {
-	//_skillNumber = 21;			//스킬넘버
+	//_skillNumber = 21;												//스킬넘버
 
-	_name = "리플렉터";			//이름
-	_imgName = "lightScreen";	//이미지이름
+	_name = "리플렉터";													//이름
+	_imgName = "lightScreen";											//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = NULL;				//위력
-	_PP = 20;					//PP
-	_accuracy = NULL;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::PSYCHC);				//타입
+	_power = NULL;														//위력
+	_PP = 20;															//PP
+	_accuracy = NULL;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::PSYCHC);					//타입
 }
 
-void skill::smokescreen()		//연막
+void skill::smokescreen()												//연막
 {
-	//_skillNumber = 22;			//스킬넘버
+	//_skillNumber = 22;												//스킬넘버
 
-	_name = "연막";				//이름
-	_imgName = "smokescreen";	//이미지이름
+	_name = "연막";														//이름
+	_imgName = "smokescreen";											//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = NULL;				//위력
-	_PP = 20;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 20;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::ember()				//불꽃세례
+void skill::ember()														//불꽃세례
 {
-	//_skillNumber = 23;			//스킬넘버
+	//_skillNumber = 23;												//스킬넘버
 
 	_index = RND->getFromIntTo(0, 100);
 
-	_name = "불꽃세례";			//이름
-	_imgName = "fire";			//이미지이름
+	_name = "불꽃세례";													//이름
+	_imgName = "fire";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 40;				//위력
-	_PP = 25;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
+	_power = 40;														//위력
+	_PP = 25;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
 	_skilltype = static_cast<int>(SKILL_TYPE::FIRE);					//타입
 
-	if (_index > 90) STATUS_AILMENT::BURN; //상태이상
+	if (_index > 90) STATUS_AILMENT::BURN;								//상태이상
 	if (static_cast<int>(STATUS_AILMENT::FREEZE)) STATUS_AILMENT::NONE;	//상대가 얼음상태면 녹일 수 있음 --지워질것--
 }
 
-void skill::rage()				//분노
+void skill::rage()														//분노
 {
-	//_skillNumber = 24;			//스킬넘버
+	//_skillNumber = 24;												//스킬넘버
 
-	_name = "분노";				//이름
-	_imgName = "cut";			//이미지이름
+	_name = "분노";														//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 20;				//위력
-	_PP = 20;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = 20;														//위력
+	_PP = 20;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::waterGun()			//물대포
+void skill::waterGun()													//물대포
 {
-	//_skillNumber = 25;			//스킬넘버
+	//_skillNumber = 25;												//스킬넘버
 
-	_name = "물대포";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "물대포";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = 40;				//위력
-	_PP = 25;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::SPECIAL;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::WATER);				//타입
+	_power = 40;														//위력
+	_PP = 25;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::SPECIAL;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::WATER);					//타입
 }
 
-void skill::harden()			//단단해지기
+void skill::harden()													//단단해지기
 {
-	//_skillNumber = 26;			//스킬넘버
+	//_skillNumber = 26;												//스킬넘버
 
-	_name = "단단해지기";		//이름
-	_imgName = "cut";			//이미지이름
+	_name = "단단해지기";												//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
 
-	_power = NULL;				//위력
-	_PP = 30;					//PP
-	_accuracy = NULL;			//명중률
-	_ifcation = CLASSIFCATION::CHANGE;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = NULL;														//위력
+	_PP = 30;															//PP
+	_accuracy = NULL;													//명중률
+	_ifcation = CLASSIFCATION::CHANGE;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::scratch()			//할퀴기
+void skill::scratch()													//할퀴기
 {
-	//_skillNumber = 27;			//스킬넘버
+	//_skillNumber = 27;												//스킬넘버
 
-	_name = "할퀴기";			//이름
-	_imgName = "cut";			//이미지이름
+	_name = "할퀴기";													//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
+	
 
-	_power = 40;				//위력
-	_PP = 35;					//PP
-	_accuracy = 100;			//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = 40;														//위력
+	_PP = 35;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
-void skill::furyAttack()		//마구찌르기
+void skill::furyAttack()												//마구찌르기
 {
-	//_skillNumber = 28;			//스킬넘버
+	//_skillNumber = 28;												//스킬넘버
 
-	_name = "마구찌르기";		//이름
-	_imgName = "cut";			//이미지이름
+	_name = "마구찌르기";												//이름
+	_imgName = "cut";													//이미지이름
 
-	//if (_isWhoSkill) _imgPoint = { 100,250 };		//	플레이어 일시
-	//if (!_isWhoSkill) _imgPoint = { 450,70 };		//	야생일시
-
-	_power = 15;				//위력
-	_PP = 20;					//PP
-	_accuracy = 85;				//명중률
-	_ifcation = CLASSIFCATION::PHYSICS;		//분류
-	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);				//타입
+	_power = 15;														//위력
+	_PP = 20;															//PP
+	_accuracy = 85;														//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
+		
+void skill::bind()														//조이기
+{
+	//_skillNumber = 29;												//스킬넘버
+
+	_name = "조이기";													//이름
+	_imgName = "bind";													//이미지이름
+
+	_imgX = -50;
+
+	_power = 15;														//위력
+	_PP = 20;															//PP
+	_accuracy = 85;														//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
+}
+
+void skill::bite()
+{
+	//_skillNumber = 30;												//스킬넘버
+
+	_name = "물기";														//이름
+	_imgName = "snap";													//이미지이름
+
+	
+	_imgX = -50;
+	_imgY = -50;
+		
+	
+	
+
+	_power = 60;														//위력
+	_PP = 25;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::DARK);					//타입
+}
+
 
 void skill::render()
 {
-
+	
 
 	char str[128];
 
@@ -574,9 +570,9 @@ void skill::render()
 
 
 
-	//sprintf_s(str, "좌표x : %d ", _imgPoint.x);
+	//sprintf_s(str, "좌표x : %d ", _imgX);
 	//TextOut(getMemDC(), 50, 50, str, strlen(str));
-	//sprintf_s(str, "좌표y : % d ", _imgPoint.y);
+	//sprintf_s(str, "좌표y : % d ", _imgY);
 	//TextOut(getMemDC(), 50, 70, str, strlen(str));
 	//sprintf_s(str, "상태 : %d ", _isWhoSkill);
 	//TextOut(getMemDC(), 50, 90, str, strlen(str));
@@ -612,20 +608,34 @@ void skill::skillAni()
 			{
 				_isSkill = false;					//조건에 맞으면 스킬을 비활성화 시켜서 이미지를 지우고
 				_count = 0;							//카운터를 다시 초기화 시켜준다
+
+				// 배틀 진행
+				if (_pM->getWildPoketmon().currentHP > 0)
+				{
+					if (UIMANAGER->getAttackCount() < 2)
+					{
+						UIMANAGER->setIsNext(true);
+						UIMANAGER->setIsScript(true);
+						UIMANAGER->setIsCount(true);
+						UIMANAGER->setIsTurn(false);
+					}
+					else if (UIMANAGER->getAttackCount() > 1)
+					{
+						UIMANAGER->setIsAttack(false);
+						UIMANAGER->setAttackCount(0);
+						//UIMANAGER->setIsNext(false);
+						//UIMANAGER->setIsTurn(false);
+					}
+				}
 			}
-
 		}
-
 	}
-
-
-
 }
 
 void skill::imageInit()	//스킬 이미지
 {
 	IMAGEMANAGER->addFrameImage("attack", "image/skill/attack.bmp", 192, 64, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bind", "image/skill/bind.bmp", 1440, 90, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bind", "image/skill/bind.bmp", 2880, 180, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("cut", "image/skill/cut.bmp", 1440, 150, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("fire", "image/skill/fire.bmp", 176, 100, 2, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("growth", "image/skill/growth.bmp", 2160, 144, 12, 1, true, RGB(255, 0, 255));
@@ -634,12 +644,12 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("cut3", "image/skill/cut3.bmp", 144, 36, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("lightScreen", "image/skill/lightScreen.bmp", 900, 126, 10, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("move", "image/skill/move.bmp", 440, 112, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 3240, 100, 27, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 7680, 200, 32, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shine", "image/skill/shine.bmp", 418, 38, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 960, 40, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 4147, 173, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("spark", "image/skill/spark.bmp", 352, 44, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 1118, 57, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 2236, 114, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("slash", "image/skill/slash.bmp", 480, 60, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("skyAttack", "image/skill/skyAttack.bmp", 600, 70, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("smokescreen", "image/skill/smokescreen.bmp", 560, 20, 8, 1, true, RGB(255, 0, 255));
@@ -650,8 +660,7 @@ void skill::imageInit()	//스킬 이미지
 }
 
 void skill::skillNumLink(int index)		// 스킬을 스킬넘버와 연결 해서 넘겨줌?
-{
-	
+{	
 	switch (index)
 	{
 	case 0:
@@ -741,6 +750,11 @@ void skill::skillNumLink(int index)		// 스킬을 스킬넘버와 연결 해서 넘겨줌?
 	case 28:
 		furyAttack();
 		break;
+	case 29:
+		bind();
+		break;
+	case 30:
+		bite();
 	}
 
 }

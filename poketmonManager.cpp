@@ -22,6 +22,8 @@ HRESULT poketmonManager::init()
 
     wildPoketmonSetting();
 
+    
+
     return S_OK;
 }
 
@@ -32,14 +34,17 @@ void poketmonManager::release()
 
 void poketmonManager::update()
 {
+    if (KEYMANAGER->isOnceKeyDown('G'))
+    {
+        _wildPoketmon.currentHP -= 5;       //체력깍는거 확인
+    }
+
     _skill->update();
 }
 
 void poketmonManager::poketmonSpawn()
 {
-    //랜덤값 넣고
-    //RND->getFromIntTo(0, 4);
-    //
+   
     // 포켓몬을 벡터로 담아주고 불러올때는 셋팅으로 한번 불러오는게 어떨까 라는 느낌이 들어서 만들고 있음
     // 1번 벡터에 담는다.  2번 벡터를 랜덤으로 돌린다. 3번 벡터에 있는걸 몬스터에 담는다. 4번 몬스터를 겟터로 넘긴다.
     // 5번 넘긴 포켓몬의 겟터를 저장한다.
@@ -158,6 +163,7 @@ void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 
     _wildPoketmon.item = _vPoketmon[_randomPoketmon]->getTagPoketmon().item;                         //아이템..
 
+   
 }
 
 void poketmonManager::render()
@@ -173,10 +179,10 @@ void poketmonManager::render()
     string strnmae = _wildPoketmon.name;
     strcpy_s(poke, strnmae.c_str());
 
-   // sprintf_s(str, "포켓몬 이름 : %s", poke);
-   // TextOut(getMemDC(), 100, 280, str, strlen(str));
-   // sprintf_s(str, "포켓몬 공격력 : %d ", _wildPoketmon.attack);
-   // TextOut(getMemDC(), 100, 300, str, strlen(str));
+  sprintf_s(str, "포켓몬 이름 : %s", poke);
+  TextOut(getMemDC(), 280, 180, str, strlen(str));
+  sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
+  TextOut(getMemDC(), 280, 200, str, strlen(str));
    // sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
    // TextOut(getMemDC(), 100, 320, str, strlen(str));
    // sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);

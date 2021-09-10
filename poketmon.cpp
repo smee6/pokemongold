@@ -71,6 +71,7 @@ void poketmon::ability()
     _poketmon.sumSpecialDefense = _poketmon.specialDefense + (_poketmon.levelSpecialDefense * _poketmon.level);       //특수방어력
     _poketmon.sumSpeed = _poketmon.speed + (_poketmon.levelSpeed * _poketmon.level);                                  //스피드
 
+    _poketmon.currentHP = _poketmon.sumMaxHP;                                                                         //현재체력 포켓몬볼로 잡으면 저장
 
 }
 

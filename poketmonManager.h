@@ -36,6 +36,7 @@ private:
 
 	character* _character;
 	skill* _skill;
+	poketmon* _poketmon;
 
 	tagPOKETMON_PLAYER _wildPoketmon;				//야생포켓몬
 

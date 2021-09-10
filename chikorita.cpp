@@ -21,6 +21,9 @@ HRESULT chikorita::init()
         _poketmon.isGender = RND->getFromIntTo(0, 1);	    //성별체크 랜덤
         _poketmon.index = 152;							    //전국도감번호 152
         _poketmon.level = RND->getFromIntTo(1, 15);		//처음 등장 레벨 1~50
+       
+        potketmonEXP();										//경험치
+        
         _poketmon.type1 = static_cast<int>(TYPE::GRASS);   //풀타입
         _poketmon.type2 = static_cast<int>(TYPE::NONE);    //
         _poketmon.evolutionLevel = 0;					    //진화단계
@@ -41,8 +44,8 @@ HRESULT chikorita::init()
         _poketmon.levelHP = 2.49f;                         //레벨당 체력
 
         _poketmon.maxHP = _poketmon.currentHP = 45;		//체력
-        _poketmon.currentExp;
-        _poketmon.maxExp;
+        //_poketmon.currentExp;
+        //_poketmon.maxExp;
 
         //스킬
 
@@ -65,6 +68,9 @@ HRESULT chikorita::init()
         _poketmon.isGender = RND->getFromIntTo(0, 1);	    //성별체크 랜덤
         _poketmon.index = 153;							    //전국도감번호 153
         _poketmon.level = RND->getFromIntTo(16, 50);	    //처음 등장 레벨 16~50
+
+        potketmonEXP();										//경험치
+
         _poketmon.type1 = static_cast<int>(TYPE::GRASS);   //풀타입
         _poketmon.type2 = static_cast<int>(TYPE::NONE);	//
         _poketmon.evolutionLevel = 1;					    //진화단계
@@ -109,6 +115,9 @@ HRESULT chikorita::init()
         _poketmon.isGender = RND->getFromIntTo(0, 1);	    //성별체크 랜덤
         _poketmon.index = 154;							    //전국도감번호 154
         _poketmon.level = RND->getFromIntTo(33, 70);	    //처음 등장 레벨 33~70
+
+        potketmonEXP();										//경험치
+
         _poketmon.type1 = static_cast<int>(TYPE::GRASS);   //풀타입
         _poketmon.type2 = static_cast<int>(TYPE::NONE);	//
         _poketmon.evolutionLevel = 2;					    //진화단계

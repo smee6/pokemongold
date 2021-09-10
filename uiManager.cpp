@@ -495,7 +495,11 @@ void uiManager::bag()
 			
 			if (pokeballQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+					// 배틀 중일 때에만 사용 가능
 					if (!_isBattle) return;
+
+					// 보유 포켓몬이 꽉찬 경우에 사용 불가
+					if (_character->getPoketmon(5).maxHP != 0) return;
 					pokeballQ--;
 					usePokeBall();
 					//전투중이 아닌 경우 못 씀
@@ -1497,8 +1501,25 @@ void uiManager::usePokeBall()
 	//맞았을때 좌우로 흔들거리는 프레임이미지 출력
 
 	//잡았다 - 보유 구조체 3번에 저장(레벨, 젠더, 보유기술)
-	_character->
+	for (int i = 0; i < 6; i++)
+	{
+		if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
+		{
+			_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
 
+			// 한마리 잡으면 종료
+			break;
+		}
+	}
+
+	uiOpen = false;
+	_isBattle = false;
+	_isOpenBag = false;
+	bagWindow = false;
+	_px = -_playerImage->getWidth();
+	_ex = WINSIZEX + _enemyPokeImage->getWidth();
+	_behaviorCount = 0;
+	_appearIndex = 2;
 }
 
 void uiManager::useMedicine()

@@ -131,14 +131,16 @@ public:
 
 	void scratch();			// 할퀴기
 	void furyAttack();		// 마구찌르기
+	
+							
+			  //추가작업
 	void bind();			// 조이기
+	void bite();			// 물기
 
 	void render();
 
 	void skillAni();		// 스킬 애니메이션
 	void imageInit();		// 이미지
-
-	void imageLocation(int x, int y);	// 이미지위치조정을 위한 함수
 
 	void skillNumLink(int index);
 

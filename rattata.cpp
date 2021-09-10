@@ -20,7 +20,7 @@ HRESULT rattata::init()
         _poketmon.name = "꼬렛";							    //이름 꼬렛
         _poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤
         _poketmon.index = 19;								//전국도감번호 19
-        _poketmon.level = RND->getFromIntTo(1, 50);			//처음 등장 레벨 1~50
+        _poketmon.level = RND->getFromIntTo(1, 19);			//처음 등장 레벨 1~50
         _poketmon.type1 = static_cast<int>(TYPE::NOMAL);	//노말 타입
         _poketmon.type2 = static_cast<int>(TYPE::NONE);		//
         _poketmon.evolutionLevel = 0;						//진화단계

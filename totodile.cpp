@@ -20,7 +20,7 @@ HRESULT totodile::init()
 		_poketmon.name = "리아코";							//이름 리아코
 		_poketmon.isGender = RND->getFromIntTo(0, 1);		//성별체크 랜덤	
 		_poketmon.index = 158;								//전국도감번호 158
-		_poketmon.level = RND->getFromIntTo(1, 50);			//처음 등장 레벨 1~50
+		_poketmon.level = RND->getFromIntTo(1, 18);			//처음 등장 레벨 1~50
 		_poketmon.type1 = static_cast<int>(TYPE::WATER);	//물타입
 		_poketmon.type2 = static_cast<int>(TYPE::NONE);		//	
 		_poketmon.evolutionLevel = 0;						//진화단계	

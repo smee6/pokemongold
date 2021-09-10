@@ -111,6 +111,8 @@ void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 
     _randomPoketmon = RND->getFromIntTo(0, 8);                           //랜덤 야생포켓몬 변수
 
+    //_randomPoketmon = 0;
+
     _wildPoketmon.name = _vPoketmon[_randomPoketmon]->getTagPoketmon().name;                         //야생포켓몬 이름
     _wildPoketmon.gender = _vPoketmon[_randomPoketmon]->getTagPoketmon().gender;                       //야생포켓몬 성별
     _wildPoketmon.isGender = _vPoketmon[_randomPoketmon]->getTagPoketmon().isGender;                     //야생포켓몬 성별확인
@@ -179,10 +181,10 @@ void poketmonManager::render()
     string strnmae = _wildPoketmon.name;
     strcpy_s(poke, strnmae.c_str());
 
-  sprintf_s(str, "포켓몬 이름 : %s", poke);
-  TextOut(getMemDC(), 280, 180, str, strlen(str));
-  sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
-  TextOut(getMemDC(), 280, 200, str, strlen(str));
+  //sprintf_s(str, "포켓몬 이름 : %s", poke);
+  //TextOut(getMemDC(), 280, 180, str, strlen(str));
+  //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
+  //TextOut(getMemDC(), 280, 200, str, strlen(str));
    // sprintf_s(str, "포켓몬 레벨 : %d ", _wildPoketmon.level);
    // TextOut(getMemDC(), 100, 320, str, strlen(str));
    // sprintf_s(str, "포켓몬 스킬번호 : %d ", _wildPoketmon.skill1);
@@ -197,7 +199,7 @@ void poketmonManager::poketmonImage()
     IMAGEMANAGER->addFrameImage("155F", "image/poketmon/no_155F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("156F", "image/poketmon/no_156F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("157F", "image/poketmon/no_157F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
-    IMAGEMANAGER->addFrameImage("152F", "image/poketmon/no_152Fbmp", 160, 160, 1, 1, true, RGB(255, 0, 255));
+    IMAGEMANAGER->addFrameImage("152F", "image/poketmon/no_152F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("153F", "image/poketmon/no_153F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("154F", "image/poketmon/no_154F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));
     IMAGEMANAGER->addFrameImage("158F", "image/poketmon/no_158F.bmp", 180, 180, 1, 1, true, RGB(255, 0, 255));

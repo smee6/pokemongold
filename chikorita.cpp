@@ -20,7 +20,7 @@ HRESULT chikorita::init()
         _poketmon.name = "치코리타";						//이름 치코리타
         _poketmon.isGender = RND->getFromIntTo(0, 1);	    //성별체크 랜덤
         _poketmon.index = 152;							    //전국도감번호 152
-        _poketmon.level = RND->getFromIntTo(1, 50);		//처음 등장 레벨 1~50
+        _poketmon.level = RND->getFromIntTo(1, 15);		//처음 등장 레벨 1~50
         _poketmon.type1 = static_cast<int>(TYPE::GRASS);   //풀타입
         _poketmon.type2 = static_cast<int>(TYPE::NONE);    //
         _poketmon.evolutionLevel = 0;					    //진화단계

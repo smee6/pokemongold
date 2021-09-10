@@ -16,9 +16,7 @@ HRESULT skill::init()
 
 	STATUS_AILMENT::NONE;	// 상태이상 초기값은 없음
 
-	_imgName = "bind";							//처음에 들어가는 값
-
-	
+	_imgName = "snap";							//처음에 들어가는 값
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
 
@@ -34,18 +32,20 @@ void skill::release()
 
 void skill::update()
 {
+	
 
 	//밑에 키매니저들은 체크할려고 만든 것들 나중에 지워도 됨
 	if (KEYMANAGER->isOnceKeyDown('K')) _isSkill = true;
-	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;	//나 (플레이어)
-	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;	//야생
+	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;			//나 (플레이어)
+	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;		//야생
+
+	
 
 	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
 
 	rc = RectMake(480, _imgPoint.y, 112, 112);	// 포켓몬이 없어서 대신 할 것을 만듬
 
-	//imageLocation(x, y);				// 이미지 세밀한 위치 조정
 
 	skillAni();
 	
@@ -75,7 +75,8 @@ void skill::tackle()													// 몸통박치기
 	_name = "몸통박치기";												//이름
 	_imgName = "attack";												//이미지이름
 
-	
+	_imgX = 25;
+	_imgY = 0;
 
 	_power = 40;														//위력
 	_PP = 35;															//PP
@@ -105,7 +106,10 @@ void skill::confusion()													//염동력
 	//_skillNumber = 3;													//스킬넘버
 
 	_name = "염동력";													//이름
-	_imgName = "cut";													//이미지이름
+	_imgName = "confuseRay";											//이미지이름
+
+	_imgX = 25;
+	_imgY = 0;
 
 	_power = 50;														//위력
 	_PP = 25;															//PP
@@ -121,14 +125,15 @@ void skill::poisonPowder()												//독가루
 	_name = "독가루";													//이름
 	_imgName = "poison";												//이미지이름
 
-	
+	_imgX = -80;
+	_imgY = -50;
 
 	_power = NULL;														//위력
 	_PP = 35;															//PP
 	_accuracy = 75;														//명중률
 	_ifcation = CLASSIFCATION::CHANGE;									//분류
 	_skilltype = static_cast<int>(SKILL_TYPE::POISON);					//타입
-	_ifAilment = STATUS_AILMENT::POISON;		//상태이상
+	_ifAilment = STATUS_AILMENT::POISON;								//상태이상
 }
 
 void skill::stunSpore()													//저리가루
@@ -138,14 +143,15 @@ void skill::stunSpore()													//저리가루
 	_name = "저리가루";													//이름
 	_imgName = "poison";												//이미지이름
 
-	
+	_imgX = -80;
+	_imgY = -50;
 
 	_power = NULL;														//위력
 	_PP = 30;															//PP
 	_accuracy = 75;														//명중률
 	_ifcation = CLASSIFCATION::CHANGE;									//분류
 	_skilltype = static_cast<int>(SKILL_TYPE::GRASS);					//타입
-	_ifAilment = STATUS_AILMENT::PARALYSIS;	//상태이상
+	_ifAilment = STATUS_AILMENT::PARALYSIS;								//상태이상
 }
 
 void skill::sleepPowder()												//수면가루
@@ -155,9 +161,10 @@ void skill::sleepPowder()												//수면가루
 	_name = "수면가루";													//이름
 	_imgName = "poison";												//이미지이름
 
-	
+	_imgX = -80;
+	_imgY = -50;
 
-	_power = NULL;														//위력
+	_power = NULL;								 						//위력
 	_PP = 15;															//PP
 	_accuracy = 75;														//명중률
 	_ifcation = CLASSIFCATION::CHANGE;									//분류
@@ -172,7 +179,7 @@ void skill::poisonSting()												//독침
 	_index = RND->getFromIntTo(0, 100);
 
 	_name = "독침";														//이름
-	_imgName = "cut";													//이미지이름
+	_imgName = "horn";													//이미지이름
 
 	
 	_power = 15;														//위력
@@ -514,7 +521,7 @@ void skill::furyAttack()												//마구찌르기
 		
 void skill::bind()														//조이기
 {
-	//_skillNumber = 28;												//스킬넘버
+	//_skillNumber = 29;												//스킬넘버
 
 	_name = "조이기";													//이름
 	_imgName = "bind";													//이미지이름
@@ -528,10 +535,27 @@ void skill::bind()														//조이기
 	_skilltype = static_cast<int>(SKILL_TYPE::NOMAL);					//타입
 }
 
+void skill::bite()
+{
+	//_skillNumber = 30;												//스킬넘버
+
+	_name = "물기";														//이름
+	_imgName = "snap";													//이미지이름
+
+	_imgX = -50;
+	_imgY = -20;
+
+	_power = 60;														//위력
+	_PP = 25;															//PP
+	_accuracy = 100;													//명중률
+	_ifcation = CLASSIFCATION::PHYSICS;									//분류
+	_skilltype = static_cast<int>(SKILL_TYPE::DARK);					//타입
+}
+
 
 void skill::render()
 {
-
+	
 
 	char str[128];
 
@@ -541,9 +565,9 @@ void skill::render()
 
 
 
-	//sprintf_s(str, "좌표x : %d ", _imgPoint.x);
+	//sprintf_s(str, "좌표x : %d ", _imgX);
 	//TextOut(getMemDC(), 50, 50, str, strlen(str));
-	//sprintf_s(str, "좌표y : % d ", _imgPoint.y);
+	//sprintf_s(str, "좌표y : % d ", _imgY);
 	//TextOut(getMemDC(), 50, 70, str, strlen(str));
 	//sprintf_s(str, "상태 : %d ", _isWhoSkill);
 	//TextOut(getMemDC(), 50, 90, str, strlen(str));
@@ -580,6 +604,8 @@ void skill::skillAni()
 				_isSkill = false;					//조건에 맞으면 스킬을 비활성화 시켜서 이미지를 지우고
 				_count = 0;							//카운터를 다시 초기화 시켜준다
 
+				_imgX = _imgY = 0;
+
 				// 배틀 진행
 				if (UIMANAGER->getAttackCount() < 2)
 				{
@@ -615,7 +641,7 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 7680, 200, 32, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shine", "image/skill/shine.bmp", 418, 38, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 960, 40, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 3840, 160, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("spark", "image/skill/spark.bmp", 352, 44, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 1118, 57, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("slash", "image/skill/slash.bmp", 480, 60, 43, 1, true, RGB(255, 0, 255));
@@ -627,23 +653,8 @@ void skill::imageInit()	//스킬 이미지
 
 }
 
-void skill::imageLocation(int x, int y)
-{
-
-	_imgX = x;
-	_imgY = y;
-
-	if (_imgName == "attack")
-	{
-		x = 100;
-		y = 25;
-	}
-
-}
-
 void skill::skillNumLink(int index)		// 스킬을 스킬넘버와 연결 해서 넘겨줌?
-{
-	
+{	
 	switch (index)
 	{
 	case 0:
@@ -736,6 +747,8 @@ void skill::skillNumLink(int index)		// 스킬을 스킬넘버와 연결 해서 넘겨줌?
 	case 29:
 		bind();
 		break;
+	case 30:
+		bite();
 	}
 
 }

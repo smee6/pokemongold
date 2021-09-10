@@ -1602,7 +1602,6 @@ void uiManager::usePokeBall()
 		if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
 		{
 			_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
-			_character->setLevel(i, _poketmonManager->getWildPoketmon().level);
 
 			// 한마리 잡으면 종료
 			break;

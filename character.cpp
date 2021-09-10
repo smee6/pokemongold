@@ -15,8 +15,7 @@ character::~character()
 HRESULT character::init() // 인잇
 {
     imageInit();
-    poketmonSetting();
-
+    deletComingsoon();
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
@@ -42,13 +41,27 @@ void character::release()
 
 void character::update() // 업데이트
 {
+    poketmonSetting();
     controll();
     imageFrame();
     poketmonMeet();
     npcScript();
-    
-    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
 
+    if (_tileMap->getCameraX() % TILESIZE != 0 || _tileMap->getCameraY() % TILESIZE != 0) tileAction();
+}
+
+void character::poketmonSetting() // 포켓몬 데이터 갱신
+{
+    for (int i = 0; i < 6; i++)
+    {
+        //현재 능력치는     =     1레벨 능력치  +        레벨당 능력치  * 레벨 이다.
+        _poketmon[i].sumAttack = _poketmon[i].attack + (_poketmon[i].levelAttack * _poketmon[i].level);                               //공격력       
+        _poketmon[i].sumDefense = _poketmon[i].defense + (_poketmon[i].levelDefense * _poketmon[i].level);                            //방어력
+        _poketmon[i].sumMaxHP = _poketmon[i].maxHP + (_poketmon[i].levelHP * _poketmon[i].level);                                     //hp
+        _poketmon[i].sumSpecialAttack = _poketmon[i].specialAttack + (_poketmon[i].levelSpecialAttack * _poketmon[i].level);          //특수공격력
+        _poketmon[i].sumSpecialDefense = _poketmon[i].specialDefense + (_poketmon[i].levelSpecialDefense * _poketmon[i].level);       //특수방어력
+        _poketmon[i].sumSpeed = _poketmon[i].speed + (_poketmon[i].levelSpeed * _poketmon[i].level);                                  //스피드
+    }
 }
 
 void character::controll() // 캐릭터 컨트롤 처리
@@ -397,6 +410,8 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
                 break;
             }
 
+            if (_isMoving) idle(_direction);
+
             if (_frontTileType == 2) grass();               // 풀 타일일 때 처리
             if (_frontTileType == 3) door(_currentTile);    // 문 타일일 때 처리
         }
@@ -435,56 +450,100 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5485;
         _tileMap->setCameraX(1920);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(3);
+        tileAction();
         break;
     case 3990:  // 플레이어 집 1층에서 2층 이동
         _currentTile = 4003;
         _tileMap->setCameraX(2944);
         _tileMap->setCameraY(-256);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 4003:  // 플레이어 집 2층에서 1층 이동
         _currentTile = 3990;
         _tileMap->setCameraX(2112);
         _tileMap->setCameraY(-256);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 5485:  // 플레이어 집 1층에서 필드 이동
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 5486:  // 플레이어 집 1층에서 필드 이동
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 4602:  // 필드에서 오박사 집 이동
         _currentTile = 6367;
         _tileMap->setCameraX(3584);
         _tileMap->setCameraY(448);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(3);
+        tileAction();
         break;
     case 6367:  // 오박사 집에서 필드 이동
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 6368:  // 오박사 집에서 필드 이동
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 5381:  // 필드에서 포켓몬 센터 이동
         _currentTile = 5525;
         _tileMap->setCameraX(4480);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(3);
+        tileAction();
         break;
     case 5525:  // 포켓몬 센터에서 필드 이동
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 5526:  // 포켓몬 센터에서 필드 이동
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 3656:  // 필드에서 체육관 이동
         _currentTile = 7253;
@@ -494,6 +553,10 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(3);
+        tileAction();
         break;
     case 7253:  // 체육관에서 필드 이동
         _currentTile = 3656;
@@ -503,6 +566,10 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 7254:  // 체육관에서 필드 이동
         _currentTile = 3656;
@@ -512,21 +579,37 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 3647:  // 필드에서 상점 이동
         _currentTile = 5554;
         _tileMap->setCameraX(6336);
         _tileMap->setCameraY(192);
+
+        run(3);                                     // 위로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(3);
+        tileAction();
         break;
     case 5554:  // 상점에서 필드 이동
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     case 5555:  // 상점에서 필드 이동
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
+
+        run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
+        if (!_isMoving) tileCheck(2);
+        tileAction();
         break;
     }
 }
@@ -595,7 +678,7 @@ void character::ui() // ui창 호출
     if (UIMANAGER->getIsScript()) UIMANAGER->script();
 }
 
-void character::poketmonSetting() // 테스트 데이터
+void character::deletComingsoon() //삭제예쩡
 {
     _poketmon[0].name = "치코리타";							// 이름
     _poketmon[0].gender = "수컷";							// 성별
@@ -609,7 +692,7 @@ void character::poketmonSetting() // 테스트 데이터
 
     _poketmon[0].iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
     _poketmon[0].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
-    
+
     _poketmon[0].attack = 49;								// 1레벨 초기 공격
     _poketmon[0].defense = 65;							// 1레벨 초기 방어	
     _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격
@@ -655,10 +738,10 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].index = 17;								// 인덱스 번호
     _poketmon[1].level = 20;								// 포켓몬 현재 레벨
     _poketmon[1].evolutionLevel = 1;						// 진화 단계
-              
+
     _poketmon[1].type1 = static_cast<int>(TYPE_PLAYER::FLYING); 								// 포켓몬 타입1	
     _poketmon[1].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
-              
+
     _poketmon[1].iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
     _poketmon[1].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
 
@@ -669,26 +752,26 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].speed = 45;								// 1레벨 초기 스피드
     _poketmon[1].currentHP = 45;							// 1레벨 초기 현재 체력
     _poketmon[1].maxHP = 45;								// 1레벨 초기 최대 체력
-              
+
     _poketmon[1].levelAttack = 1.67f;                     //레벨당 공격력
     _poketmon[1].levelDefense = 1.86f;                    //레벨당 방어력
     _poketmon[1].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
     _poketmon[1].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
     _poketmon[1].levelSpeed = 1.62f;                      //레벨당 스피드
     _poketmon[1].levelHP = 2.49f;                         //레벨당 체력
-              
+
     _poketmon[1].sumAttack = 1;							// 최종 공격
     _poketmon[1].sumDefense = 1;							// 최종 방어
     _poketmon[1].sumSpecialAttack = 1;					// 최종 특수공격
     _poketmon[1].sumSpecialDefense = 1;					// 최종 특수방어
     _poketmon[1].sumSpeed = 1;							// 최종 스피드
     _poketmon[1].sumMaxHP = 1;							// 최종 체력
-              
+
     _poketmon[1].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-    _poketmon[1].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
-              
+    _poketmon[1].maxExp = 1261;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
+
     _poketmon[1].totalEXP = 8800;							// 토탈 경험치
-              
+
     _poketmon[1].skill[0] = 1;								// 스킬1 인덱스 
     _poketmon[1].skill[1] = 2;								// 스킬2 인덱스 
     _poketmon[1].skill[2] = 3;								// 스킬3 인덱스 
@@ -697,7 +780,7 @@ void character::poketmonSetting() // 테스트 데이터
     _poketmon[1].skillPP[1] = 10;							// 스킬2 현재 PP
     _poketmon[1].skillPP[2] = 10;							// 스킬3 현재 PP
     _poketmon[1].skillPP[3] = 10;							// 스킬4 현재 PP
-              
+
     _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }
 

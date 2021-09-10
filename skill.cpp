@@ -543,8 +543,12 @@ void skill::bite()
 	_name = "물기";														//이름
 	_imgName = "snap";													//이미지이름
 
+	
 	_imgX = -50;
-	_imgY = -20;
+	_imgY = -50;
+		
+	
+	
 
 	_power = 60;														//위력
 	_PP = 25;															//PP
@@ -605,8 +609,6 @@ void skill::skillAni()
 				_isSkill = false;					//조건에 맞으면 스킬을 비활성화 시켜서 이미지를 지우고
 				_count = 0;							//카운터를 다시 초기화 시켜준다
 
-				_imgX = _imgY = 0;
-
 				// 배틀 진행
 				if (_pM->getWildPoketmon().currentHP > 0)
 				{
@@ -645,9 +647,9 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("poison", "image/skill/poison.bmp", 7680, 200, 32, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shine", "image/skill/shine.bmp", 418, 38, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 5760, 240, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 4147, 173, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("spark", "image/skill/spark.bmp", 352, 44, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 1118, 57, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 2236, 114, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("slash", "image/skill/slash.bmp", 480, 60, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("skyAttack", "image/skill/skyAttack.bmp", 600, 70, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("smokescreen", "image/skill/smokescreen.bmp", 560, 20, 8, 1, true, RGB(255, 0, 255));

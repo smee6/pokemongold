@@ -1432,7 +1432,7 @@ void uiManager::attack()
 			if (_isTurn && _isNext)
 			{
 				_poketmonManager->getSkill()->setIsSkill(true);
-				_character->setCurrentHP(_poketmonManager->getWildPoketmon().sumAttack, _currentPoke);
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
 
 				_isTurn = false;
 				_isNext = false;
@@ -1483,7 +1483,7 @@ void uiManager::attack()
 
 				_attackCount++;
 
-				_character->setCurrentHP(_poketmonManager->getWildPoketmon().sumAttack, _currentPoke);
+				_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack);
 			}
 		}
 

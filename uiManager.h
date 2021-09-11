@@ -174,6 +174,7 @@ private:
 	bool _isConfirm;							// 확인창 유무
 	bool _isAccept;								// true == 예, false == 아니오
 	int _acceptCount;							// 0 == 예, 1 == 아니오
+	int _check;
 
 	// class
 	NPC _npc;

@@ -1383,9 +1383,10 @@ void uiManager::script()
 						_isAccept = false;
 						_isConfirm = true;
 						_txtIndex++;
+						_check++;
 					}
 					// 버튼을 누르면
-					else if (!_isAccept)
+					if (!_isConfirm)
 					{
 						if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 						{
@@ -1448,7 +1449,7 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		sprintf_s(str, "acceptCount : %d", _acceptCount);
+		sprintf_s(str, "check : %d", _check);
 		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
@@ -2125,6 +2126,7 @@ void uiManager::confirm()
 {
 	uiOpen = true;
 	_isAccept = false;
+	_check++;
 
 	if (_acceptCount == 0)
 	{
@@ -2137,7 +2139,8 @@ void uiManager::confirm()
 		{
 			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
 			{
-
+				_txtIndex = 0;
+				_scriptIndex++;
 			}
 			_isAccept = true;
 			_isConfirm = false;
@@ -2160,8 +2163,9 @@ void uiManager::confirm()
 				_isCount = true;
 				_txtIndex = 0;
 				_scriptIndex = 0;
+				_check = 0;
 			}
-			_isAccept = true;
+			_isAccept = false;
 			_isConfirm = false;
 			uiOpen = false;
 			_acceptCount = 0;

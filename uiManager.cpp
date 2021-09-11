@@ -354,6 +354,7 @@ void uiManager::menu()
 void uiManager::pokeShift()
 {
 	pokeWindow = true;
+
 	if (pokeWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
@@ -370,36 +371,160 @@ void uiManager::pokeShift()
 			_isOpenPokemon = false;
 		}
 
-		if (_isBattle && _character->getPoketmon(pokesCnt).maxHP != 0 && pokesCnt < 6)
-		{
-			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-			{
-				_currentPoke = pokesCnt;
+		if (!useMedicineWindow) {
+			if (!useGoodMedicineWindow) {
+				if (_isBattle && _character->getPoketmon(pokesCnt).maxHP != 0 && pokesCnt < 6)
+				{
+					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					{
+						_currentPoke = pokesCnt;
 
-				pokesCnt = 0;
-				pokeWindow = false;
-				_isOpenPokemon = false;
+						pokesCnt = 0;
+						pokeWindow = false;
+						_isOpenPokemon = false;
+					}
+				}
 			}
 		}
 		switch (pokesCnt)
 		{
 		case 0:
 			IMAGEMANAGER->findImage("pokeShift0")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(0, -50);
+				if (_character->getPoketmon(0).currentHP >= _character->getPoketmon(0).sumMaxHP) {
+					_character->setCurrentHP(0, _character->getPoketmon(0).currentHP - _character->getPoketmon(0).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(0, -100);
+				if (_character->getPoketmon(0).currentHP >= _character->getPoketmon(0).sumMaxHP) {
+					_character->setCurrentHP(0, _character->getPoketmon(0).currentHP - _character->getPoketmon(0).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 1: 
 			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(1, -50);
+				if (_character->getPoketmon(1).currentHP >= _character->getPoketmon(1).sumMaxHP) {
+					_character->setCurrentHP(1, _character->getPoketmon(1).currentHP - _character->getPoketmon(1).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(1, -100);
+				if (_character->getPoketmon(1).currentHP >= _character->getPoketmon(1).sumMaxHP) {
+					_character->setCurrentHP(1, _character->getPoketmon(1).currentHP - _character->getPoketmon(1).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(2, -50);
+				if (_character->getPoketmon(2).currentHP >= _character->getPoketmon(2).sumMaxHP) {
+					_character->setCurrentHP(2, _character->getPoketmon(2).currentHP - _character->getPoketmon(2).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(2, -100);
+				if (_character->getPoketmon(2).currentHP >= _character->getPoketmon(2).sumMaxHP) {
+					_character->setCurrentHP(2, _character->getPoketmon(0).currentHP - _character->getPoketmon(2).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 3:
 			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(3, -50);
+				if (_character->getPoketmon(3).currentHP >= _character->getPoketmon(3).sumMaxHP) {
+					_character->setCurrentHP(3, _character->getPoketmon(3).currentHP - _character->getPoketmon(3).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(3, -100);
+				if (_character->getPoketmon(3).currentHP >= _character->getPoketmon(3).sumMaxHP) {
+					_character->setCurrentHP(3, _character->getPoketmon(3).currentHP - _character->getPoketmon(3).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 4:
 			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(4, -50);
+				if (_character->getPoketmon(4).currentHP >= _character->getPoketmon(4).sumMaxHP) {
+					_character->setCurrentHP(4, _character->getPoketmon(4).currentHP - _character->getPoketmon(4).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(4, -100);
+				if (_character->getPoketmon(4).currentHP >= _character->getPoketmon(4).sumMaxHP) {
+					_character->setCurrentHP(4, _character->getPoketmon(4).currentHP - _character->getPoketmon(4).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 5:
 			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
+			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(5, -50);
+				if (_character->getPoketmon(5).currentHP >= _character->getPoketmon(5).sumMaxHP) {
+					_character->setCurrentHP(5, _character->getPoketmon(5).currentHP - _character->getPoketmon(5).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useMedicineWindow = false;
+			}
+			if (useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				_character->setCurrentHP(5, -100);
+				if (_character->getPoketmon(5).currentHP >= _character->getPoketmon(5).sumMaxHP) {
+					_character->setCurrentHP(5, _character->getPoketmon(5).currentHP - _character->getPoketmon(5).sumMaxHP);
+				}
+				pokeWindow = false;
+				_isOpenPokemon = false;
+				pokesCnt = 0;
+				useGoodMedicineWindow = false;
+			}
 			break;
 		case 6:
 			IMAGEMANAGER->findImage("pokeShift6")->render(_backBuffer->getMemDC());
@@ -427,7 +552,7 @@ void uiManager::pokeShift()
 		
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font5 = CreateFont(38, 0, 0, 0, 700, false, false, false,
+		HFONT font5 = CreateFont(32, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
@@ -520,7 +645,13 @@ void uiManager::bag()
 			if (medicineQ > 0) {
 				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					medicineQ--;
+					bagCnt = 0;
+					bagWindow = false;
+					uiOpen = false;
+					_isOpenBag = false;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
+					useMedicineWindow = true;
+					_isOpenPokemon = true;
 				};
 			}
 			break;
@@ -530,6 +661,13 @@ void uiManager::bag()
 				if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 					goodMedicineQ--;
 					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
+					bagCnt = 0;
+					bagWindow = false;
+					uiOpen = false;
+					_isOpenBag = false;
+					//포켓몬 선택창으로 이동후 대상지정해서 체력회복
+					useGoodMedicineWindow = true;
+					_isOpenPokemon = true;
 				};
 			}
 			break;
@@ -552,21 +690,21 @@ void uiManager::bag()
 
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+		HFONT font2 = CreateFont(28, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
 		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
 		sprintf_s(str, "%d", pokeballQ);
-		TextOut(_backBuffer->getMemDC(), 595, 78, str, strlen(str));
+		TextOut(_backBuffer->getMemDC(), 590, 78, str, strlen(str));
 
 
 		sprintf_s(str, "%d", medicineQ);
-		TextOut(_backBuffer->getMemDC(), 595, 143, str, strlen(str));
+		TextOut(_backBuffer->getMemDC(), 590, 143, str, strlen(str));
 
 		sprintf_s(str, "%d", goodMedicineQ);
-		TextOut(_backBuffer->getMemDC(), 595, 210, str, strlen(str));
+		TextOut(_backBuffer->getMemDC(), 590, 210, str, strlen(str));
 
 		SelectObject(_backBuffer->getMemDC(), oldFont2);
 		DeleteObject(font2);
@@ -1716,13 +1854,13 @@ void uiManager::usePokeBall()
 void uiManager::useMedicine()
 {
 	//사용 대상의 체력을 50 회복한다
-
+	//함수로 안하고 직접 가방안에 넣어서 만들었습니다.
 }
 
 void uiManager::useGoodMedicine()
 {
 	//사용 대상의 체력을 100 회복한다
-
+	//함수로 안하고 직접 가방안에 넣어서 만들었습니다.
 }
 
 bool uiManager::isUiOpen()

@@ -73,6 +73,8 @@ private:
 	bool pokedogamWindow = false;
 	bool statusWindow = false;
 	bool gearWindow = false;
+	bool useMedicineWindow = false;
+	bool useGoodMedicineWindow = false;
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;

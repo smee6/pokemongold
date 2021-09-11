@@ -1144,8 +1144,9 @@ void uiManager::script()
 			break;
 		case NPC::CHAMPION:
 			if (_championCount == 0) _vScript = TXTDATA->txtLoad("script/관장_배틀시작.txt");
-			else if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장_배틀후.txt");
+			else if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장_배틀승리.txt");
 			else if (_championCount == 2) _vScript = TXTDATA->txtLoad("script/관장_배틀끝.txt");
+			else if (_championCount == 3) _vScript = TXTDATA->txtLoad("script/관장_배틀후.txt");
 			else _vScript = TXTDATA->txtLoad("script/관장_일상.txt");
 
 			_championCount++;
@@ -1284,7 +1285,7 @@ void uiManager::script()
 
 			if (_npc == NPC::CHAMPION_BATTLE_DOWN || _npc == NPC::TRAINER1_BATTLE_DOWN || _npc == NPC::TRAINER2_BATTLE_DOWN)
 			{
-				_npc == NPC::CHAMPION;
+				//_npc = NPC::CHAMPION;
 				_currentEnemyIndex++;
 				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
 				_isAttack = false;
@@ -1292,36 +1293,63 @@ void uiManager::script()
 				_isNext = false;
 			}
 
+			if (_npc == NPC::CHAMPION && _championCount == 2 || _championCount == 3)
+			{
+				_npc = NPC::CHAMPION;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+				_isScript = true;
+				_isCount = true;
+				if (_championCount == 3)
+				{
+					_isBattle = false;
+					_isAttack = false;
+					_attackCount = 0;
+					_isTurn = false;
+					_isNext = false;
+					_whoTurn = 0;
+					_currentEnemyIndex = 0;
+				}
+			}
+
 			if (_npc == NPC::CHAMPION_BATTLE_WIN || _npc == NPC::TRAINER1_BATTLE_WIN || _npc == NPC::TRAINER2_BATTLE_WIN)
 			{
 				if (_npc == NPC::CHAMPION_BATTLE_WIN)
 				{
-					_npc == NPC::CHAMPION;
+					_npc = NPC::CHAMPION;
+					_txtIndex = 0;
+					_scriptIndex = 0;
+					uiOpen = false;
 					_isScript = true;
 					_isCount = true;
 				}
-				_isBattle = false;
-				_isAttack = false;
-				_attackCount = 0;
-				_isTurn = false;
-				_isNext = false;
-				_whoTurn = 0;
-				_currentEnemyIndex = 0;
+				//_isBattle = false;
+				//_isAttack = false;
+				//_attackCount = 0;
+				//_isTurn = false;
+				//_isNext = false;
+				//_whoTurn = 0;
+				//_currentEnemyIndex = 0;
+
 			}
-
-			if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 2)
 			{
-				_isAttack = false;
-				_isBattle = false;
-				_attackCount = 0;
-				_isTurn = false;
-				_isNext = false;
-				_whoTurn = 0;
-				_currentEnemyIndex = 0;
-
-				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+				if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 				{
-					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
+					_isAttack = false;
+					_isBattle = false;
+					_attackCount = 0;
+					_isTurn = false;
+					_isNext = false;
+					_whoTurn = 0;
+					_currentEnemyIndex = 0;
+					_championCount++;
+
+					if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+					{
+						_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
+					}
 				}
 			}
 
@@ -1332,7 +1360,7 @@ void uiManager::script()
 			}
 
 			// 배틀 승리 상황이 아니면
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN)
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 2 && _championCount != 3)
 			{
 				// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 				_isScript = false;
@@ -1832,6 +1860,9 @@ void uiManager::battle()
 
 	sprintf_s(str, "%d", _currentEnemyPokemon.level);
 	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
+
+	sprintf_s(str, "%d", _currentEnemyIndex);
+	TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 }
 
 void uiManager::skillSelect()
@@ -2054,7 +2085,7 @@ void uiManager::attack() //어택
 					{
 						vector<string> _vStr;
 
-						if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP == 0)
+						if (_currentEnemyIndex + 1 >= 3)
 						{
 							_npc = NPC::CHAMPION_BATTLE_WIN;
 						}
@@ -2243,7 +2274,7 @@ void uiManager::attack() //어택
 					{
 						vector<string> _vStr;
 
-						if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP == 0)
+						if (_currentEnemyIndex + 1 >= 3)
 						{
 							_npc = NPC::CHAMPION_BATTLE_WIN;
 						}

@@ -168,6 +168,7 @@ private:
 	int _power;
 
 	bool _isWin;								// 배틀에서 승리했을때
+	bool _isWild;								// 야생 포켓몬인지 아닌지(트레이너(false) or 야생(true))
 
 	// getStarting Pokemon
 	bool _isStarting;
@@ -220,6 +221,8 @@ public:
 
 	void getStartingPokemon();	// 스타팅 포켓몬 획득
 	void confirm();				// 확인창(예/아니오)
+
+	void levelUp();
 
 	
 

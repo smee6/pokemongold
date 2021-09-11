@@ -1027,7 +1027,7 @@ void uiManager::howStrong()
 
 	SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-	HFONT font2 = CreateFont(42, 0, 0, 0, 700, false, false, false,
+	HFONT font2 = CreateFont(38, 0, 0, 0, 700, false, false, false,
 		DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
@@ -1066,6 +1066,18 @@ void uiManager::howStrong()
 
 	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumSpeed);
 	TextOut(_backBuffer->getMemDC(), 510, 500, str, strlen(str));
+
+
+	for (int i = 0; i < 4; i++) {
+		_poketmonManager->getSkill()->skillNumLink(_character->getPoketmon(_currentPoke).skill[i]);
+		sprintf_s(str, _poketmonManager->getSkill()->getSkillName().c_str());
+
+		TextOut(_backBuffer->getMemDC(), 285, 5 + (i * 37), str, strlen(str));
+	}
+
+
+
+
 
 	SelectObject(_backBuffer->getMemDC(), oldFont2);
 	DeleteObject(font2);

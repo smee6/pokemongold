@@ -75,6 +75,7 @@ private:
 	bool gearWindow = false;
 	bool useMedicineWindow = false;
 	bool useGoodMedicineWindow = false;
+	bool howStrongWindow = false;
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;
@@ -90,6 +91,7 @@ private:
 	bool _isOpenPokeDogam;
 	bool _isOpenPlayerStatus;
 	bool _isOpenPokeGear;
+	bool _isOpenHowStrong;
 	// 가방등의 메뉴창에 안에 있는거 열려있는지
 
 	bool _isOpenPokecenter;						// 포케센터 열려있는지
@@ -183,6 +185,8 @@ public:
 	void pokeGear();
 	void playerStatus();
 	void setting();
+
+	void howStrong();
 
 	void pokeCenter();
 	void menu();

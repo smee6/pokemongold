@@ -58,6 +58,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("bag2", "image/bag/bag_2.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("bag3", "image/bag/bag_3.bmp", 640, 576, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("power", "image/menuUI/power_0.bmp", 640, 576, true, RGB(255, 0, 255));
+
 	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("pokeShift0", "image/menuUI/pokeShift_0.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -397,6 +399,16 @@ void uiManager::pokeShift()
 		{
 		case 0:
 			IMAGEMANAGER->findImage("pokeShift0")->render(_backBuffer->getMemDC());
+			if (!_isBattle &&!useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				
+				//강한정도를 보다
+				IMAGEMANAGER->findImage("power")->render(_backBuffer->getMemDC());
+				
+
+
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(0, -50);
 				if (_character->getPoketmon(0).currentHP >= _character->getPoketmon(0).sumMaxHP) {
@@ -559,7 +571,7 @@ void uiManager::pokeShift()
 		
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font5 = CreateFont(32, 0, 0, 0, 700, false, false, false,
+		HFONT font5 = CreateFont(30, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 
@@ -966,6 +978,10 @@ void uiManager::setting()
 	}
 
 
+}
+
+void uiManager::howStrong()
+{
 }
 
 // 여기까지 메뉴 안쪽 버튼 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

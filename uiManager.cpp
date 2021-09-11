@@ -1300,13 +1300,6 @@ void uiManager::script()
 			// 받아온 텍스트정보를 넘겨줌
 			_txt = _vScript[_scriptIndex];
 
-			string currentPokemon = _character->getPoketmon(0).name;
-
-			vector<string> _vStr;
-			_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "(이)가\n승부를 걸어왔다!;" + "레드" + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
-
-			TXTDATA->txtSave("script/배틀.txt", _vStr);
-
 			// 스킵이 아닐 경우에
 			if (!_isScriptSkip)
 			{
@@ -1458,7 +1451,7 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		sprintf_s(str, "champion : %d", _championCount);
+		sprintf_s(str, "%s", _currentEnemyPokemon.name.c_str());
 		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
@@ -1501,6 +1494,14 @@ void uiManager::battle()
 			_npc = NPC::CHAMPION;
 		}
 	}
+
+	_currentPokemon = _character->getPoketmon(0);
+
+	vector<string> _vStr;
+	_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "(이)가\n승부를 걸어왔다!;" + "레드" + "는(은)\n" + _currentPokemon.name + "를(을);차례로 꺼냈다!;가랏! " + _currentPokemon.name + "!;" + _currentPokemon.name + "\n와(과)의 승부에서 이겼다!;");
+
+	TXTDATA->txtSave("script/배틀.txt", _vStr);
+
 	_playerPokeImage = IMAGEMANAGER->findImage(to_string(_character->getPoketmon(_currentPoke).index) + "B");
 
 	// 야생포켓몬과의 배틀일 경우
@@ -1508,6 +1509,14 @@ void uiManager::battle()
 
 	static int px = -_playerImage->getWidth();
 	static int ex = WINSIZEX;
+
+	// 야생 포켓몬과의 전투일 때
+	if (_isWild)
+	{
+		//_npc = NPC::BATTLE;
+		// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
+		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
+	}
 
 	// 경험치 올라가는거 시간 조정하려고 했던 것
 	//if (_isWin && TIMEMANAGER->getWorldTime() >= _time + 1)
@@ -1525,13 +1534,6 @@ void uiManager::battle()
 	{
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
 
-		// 야생 포켓몬과의 전투일 때
-		if (_isWild)
-		{
-			//_npc = NPC::BATTLE;
-			// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
-			_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
-		}
 		// 트레이너와의 전투일 때
 		if (!_isWild)
 		{

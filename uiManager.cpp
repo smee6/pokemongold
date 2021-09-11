@@ -109,6 +109,11 @@ HRESULT uiManager::init()
 
 	// =======================================================================================================================
 
+	IMAGEMANAGER->addImage("관장", "image/battle/champion.bmp", 220, 220, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("트레이너", "image/battle/trainer.bmp", 220, 220, true, RGB(255, 0, 255));
+
+	// =======================================================================================================================
+
 	_isAnimation = true;
 
 	_hpBarPlayer = new progressBar;
@@ -1460,15 +1465,44 @@ void uiManager::battle()
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
 
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
+	
+	if (!_isWild)
+	{
+		switch (_npc)
+		{
+		case NPC::CHAMPION:
+			_enemyImage = IMAGEMANAGER->findImage("관장");
+			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_npc = NPC::CHAMPION;
+			break;
+		case NPC::TRAINER1:
+			_enemyImage = IMAGEMANAGER->findImage("트레이너");
+			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_npc = NPC::TRAINER1;
+			break;
+		case NPC::TRAINER2:
+			_enemyImage = IMAGEMANAGER->findImage("트레이너");
+			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_npc = NPC::TRAINER2;
+			break;
+		default:
+			_enemyImage = IMAGEMANAGER->findImage("트레이너");
+			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_npc = NPC::TRAINER2;
+		}
+	}
 	_playerPokeImage = IMAGEMANAGER->findImage(to_string(_character->getPoketmon(_currentPoke).index) + "B");
-	_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");
+
+	// 야생포켓몬과의 배틀일 경우
+	if (_isWild)
+	{
+		_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");
+	}
 
 	static int px = -_playerImage->getWidth();
 	static int ex = WINSIZEX;
 
-	// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
-	_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
-
+	// 경험치 올라가는거 시간 조정하려고 했던 것
 	//if (_isWin && TIMEMANAGER->getWorldTime() >= _time + 1)
 	//{
 	//	_isAttack = false;
@@ -1479,13 +1513,23 @@ void uiManager::battle()
 	//	_whoTurn = 0;
 	//	_isWin = false;
 	//}
+
 	if (_isAnimation) //플레이어쪽에서 트루로 바꿔줘야함
 	{
-		_npc = NPC::BATTLE;
 		_playerImage->render(_backBuffer->getMemDC(), px, 200);
-		
-		// 트레이너랑 배틀할 경우에 트레이너 이미지 지워줌
-		//_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 30);
+
+		// 야생 포켓몬과의 전투일 때
+		if (_isWild)
+		{
+			_npc = NPC::BATTLE;
+			// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
+			_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
+		}
+		// 트레이너와의 전투일 때
+		else if (!_isWild)
+		{
+			_enemyImage->render(_backBuffer->getMemDC(), ex, 0);
+		}
 
 		if (ex >= WINSIZEX - 230)
 		{
@@ -1513,6 +1557,10 @@ void uiManager::battle()
 		if (_appearIndex >= 0)
 		{
 			IMAGEMANAGER->findImage("포켓몬출근")->frameRender(_backBuffer->getMemDC(), 70, 200, _appearIndex, 0);
+
+			// 트레이너와의 배틀일 경우
+			if (!_isWild) IMAGEMANAGER->findImage("포켓몬출근")->frameRender(_backBuffer->getMemDC(), WINSIZEX - 230, 0, _appearIndex, 0);
+
 			_behaviorCount = 0;
 		}
 
@@ -1531,6 +1579,9 @@ void uiManager::battle()
 
 			// 이미지 출력
 			_playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
+
+			// 트레이너와의 배틀일 경우
+			if (!_isWild) _enemyPokeImage->frameRender(_backBuffer->getMemDC(), WINSIZEX - 230, 0);
 
 			_currentHP = _character->getPoketmon(_currentPoke).currentHP;
 			_maxHP = _character->getPoketmon(_currentPoke).sumMaxHP;
@@ -1835,7 +1886,7 @@ void uiManager::skillSelect()
 		_npc = NPC::BATTLE_ATTACK;
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창 끄기
+	if (KEYMANAGER->isOnceKeyDown('X')) // 스킬창 끄기
 	{
 		//skillCnt = 0;
 		_isOpenSkill = false;
@@ -2138,44 +2189,57 @@ void uiManager::confirm()
 
 	if (_acceptCount == 0)
 	{
-		IMAGEMANAGER->findImage("예")->render(_backBuffer->getMemDC(), 0, 0);
+		// 예 선택 이미지
+		IMAGEMANAGER->findImage("예")->render(_backBuffer->getMemDC(), WINSIZEX - 192, 210);			// y값이 212정도면 딱 맞을거같음
+		
+		// 방향키로 아래 이동
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
 			_acceptCount++;
 		}
+		// 스페이스바로 선택
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
+			// 만약 스타팅 포켓몬을 고르는 중이라면
 			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
 			{
+				// 선택하는 순간 다음 스크립트 진행
 				_txtIndex = 0;
 				_scriptIndex++;
 			}
-			_isAccept = true;
-			_isConfirm = false;
-			uiOpen = false;
-			_acceptCount = 0;
+			
+			_isAccept = true;		// 예 선택
+			_isConfirm = false;		// 확인창 종료
+			uiOpen = false;			// UI종료
+			_acceptCount = 0;		// 다음번에 다시 예로 커서가 가 있게끔 초기화
 		}
 	}
 	else if (_acceptCount == 1)
 	{
-		IMAGEMANAGER->findImage("아니오")->render(_backBuffer->getMemDC(), 0, 0);
+		// 아니오 선택 이미지
+		IMAGEMANAGER->findImage("아니오")->render(_backBuffer->getMemDC(), WINSIZEX - 192, 210);
+		
+		// 방향키로 위 이동
 		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
 			_acceptCount--;
 		}
+		// 스페이스바로 선택
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
  			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
 			{
-				_npc = NPC::SELECTCANCEL;
-				_isCount = true;
+				_npc = NPC::SELECTCANCEL;	// 선택취소로 스크립트 값 변경
+				_isCount = true;			// 스크립트 변경할 수 있게끔 설정
+
+				// 텍스트 초기화
 				_txtIndex = 0;
 				_scriptIndex = 0;
 			}
-			_isAccept = false;
-			_isConfirm = false;
-			uiOpen = false;
-			_acceptCount = 0;
+			_isAccept = false;		// 아니오 선택
+			_isConfirm = false;		// 확인창 종료
+			uiOpen = false;			// UI종료
+			_acceptCount = 0;		// 다음번에 다시 예로 커서가 가 있게끔 초기화
 		}
 	}
 }

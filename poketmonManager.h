@@ -38,9 +38,16 @@ private:
 	skill* _skill;
 	poketmon* _poketmon;
 
-	tagPOKETMON_PLAYER _wildPoketmon;				//야생포켓몬
+	tagPOKETMON_PLAYER _wildPoketmon;					//야생포켓몬
 
-	tagPOKETMON_PLAYER _startPoketmon[3];			//처음시작 포켓몬
+	tagPOKETMON_PLAYER _startPoketmon[3];				//처음시작 포켓몬
+
+
+	tagPOKETMON_PLAYER _championPoketmon[3];			//챔피언 포켓몬[3]
+	tagPOKETMON_PLAYER _trainer1Poketmon[2];			//트레이너1포켓몬[2]
+	tagPOKETMON_PLAYER _trainer2Poketmon[2];			//트레이너1포켓몬[2]
+
+
 
 
 	int _randomPoketmon;						//포켓몬 랜덤으로 돌리기위해 만든 변수
@@ -60,13 +67,24 @@ public:
 
 	void wildPoketmonSetting();									//야생 포켓몬 셋팅
 
+	//각 상황의 포켓몬 넣어놓은거
+
 	void startPoketmonSetting();
+
+	void championPoketmonSetting();
+	void trainer1Poketmon();
+	void trainer2Poketmon();
 
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }		// 메모리 주소 링크
 
 
 	tagPOKETMON_PLAYER getWildPoketmon() { return _wildPoketmon; }			//야생 포켓몬 겟터
 	tagPOKETMON_PLAYER* getStartPoketmon() { return _startPoketmon; }		//스타트 포켓몬 
+
+	tagPOKETMON_PLAYER* getChampionPoketmon() { return _championPoketmon; }	//챔피언 포켓몬
+	tagPOKETMON_PLAYER* getTrainer1Poketmon() { return _trainer1Poketmon; }	//트레이너1 포켓몬
+	tagPOKETMON_PLAYER* getTrainer2Poketmon() { return _trainer2Poketmon; }	//트레이너2 포켓몬
+	
 
 	skill* getSkill() { return _skill; }
 

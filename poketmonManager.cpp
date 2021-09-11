@@ -28,6 +28,10 @@ HRESULT poketmonManager::init()
     startPoketmonSetting();         //스타트 포켓몬
     wildPoketmonSetting();          //야생포켓몬
 
+    championPoketmonSetting();
+    trainer1Poketmon();
+    trainer2Poketmon();
+
     
 
     return S_OK;
@@ -279,7 +283,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].name = "치코리타";
                    
     _startPoketmon[2].isGender = RND->getFromIntTo(0, 2);
-    _startPoketmon[2].index = 154;
+    _startPoketmon[2].index = 152;
     _startPoketmon[2].level = 5;
     _startPoketmon[2].evolutionLevel = 0;
 
@@ -324,6 +328,348 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
 
 }
 
+void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
+{
+    _championPoketmon[0].name = "피죤";
+   
+    _championPoketmon[0].isGender = RND->getFromIntTo(0, 2);
+    _championPoketmon[0].index = 17;
+    _championPoketmon[0].level = 21;
+    _championPoketmon[0].evolutionLevel = 1;
+
+    _championPoketmon[0].totalEXP = pow(_championPoketmon[0].level, 3);
+    _championPoketmon[0].maxExp = pow(_championPoketmon[0].level + 1, 3) - _championPoketmon[0].totalEXP;
+    _championPoketmon[0].currentExp = _championPoketmon[0].totalEXP - pow(_championPoketmon[0].level, 3);
+    
+    _championPoketmon[0].iconNumX = 12;
+    _championPoketmon[0].iconNumY = 0;
+   
+    _championPoketmon[0].type1 = static_cast<int>(TYPE::NOMAL);
+    _championPoketmon[0].type2 = static_cast<int>(TYPE::FLYING);
+   
+    _championPoketmon[0].attack = 60;
+    _championPoketmon[0].defense = 55;
+    _championPoketmon[0].specialAttack = 50;
+    _championPoketmon[0].specialDefense = 50;
+    _championPoketmon[0].speed = 71;
+    
+    _championPoketmon[0].maxHP = _championPoketmon[0].currentHP = 63;
+  
+    _championPoketmon[0].levelAttack = 1.8f;
+    _championPoketmon[0].levelDefense = 1.74f;
+    _championPoketmon[0].levelSpecialAttack = 1.68f;
+    _championPoketmon[0].levelSpecialDefense = 1.68f;
+    _championPoketmon[0].levelSpeed = 1.94f;
+    _championPoketmon[0].levelHP = 2.67f;
+  
+    _championPoketmon[0].skill[0] = 10;
+    _championPoketmon[0].skill[1] = 11;
+    _championPoketmon[0].skill[2] = 12;
+    _championPoketmon[0].skill[3] = 0;
+  
+    _championPoketmon[0].sumAttack = static_cast<int>(_championPoketmon[0].attack + (_championPoketmon[0].levelAttack * _championPoketmon[0].level));
+    _championPoketmon[0].sumDefense = _championPoketmon[0].defense + (_championPoketmon[0].levelDefense * _championPoketmon[0].level);
+    _championPoketmon[0].sumSpecialAttack = _championPoketmon[0].specialAttack + (_championPoketmon[0].levelSpecialAttack * _championPoketmon[0].level);
+    _championPoketmon[0].sumSpecialDefense = _championPoketmon[0].specialDefense + (_championPoketmon[0].levelSpecialDefense * _championPoketmon[0].level);
+    _championPoketmon[0].sumSpeed = _championPoketmon[0].speed + (_championPoketmon[0].levelSpeed * _championPoketmon[0].level);
+    _championPoketmon[0].sumMaxHP = _championPoketmon[0].maxHP + (_championPoketmon[0].levelHP * _championPoketmon[0].level);
+
+    _championPoketmon[0].currentHP = _championPoketmon[0].sumMaxHP;
+
+    //-------------------------------------------------------------------------------------------------------------
+
+    _championPoketmon[1].name = "깨비드릴조";
+
+    _championPoketmon[1].isGender = RND->getFromIntTo(0, 2);
+    _championPoketmon[1].index = 22;
+    _championPoketmon[1].level = 24;
+    _championPoketmon[1].evolutionLevel = 1;
+
+    _championPoketmon[1].totalEXP = pow(_championPoketmon[1].level, 3);
+    _championPoketmon[1].maxExp = pow(_championPoketmon[1].level + 1, 3) - _championPoketmon[1].totalEXP;
+    _championPoketmon[1].currentExp = _championPoketmon[1].totalEXP - pow(_championPoketmon[1].level, 3);
+
+    _championPoketmon[1].iconNumX = 12;
+    _championPoketmon[1].iconNumY = 0;
+
+    _championPoketmon[1].type1 = static_cast<int>(TYPE::NOMAL);
+    _championPoketmon[1].type2 = static_cast<int>(TYPE::FLYING);
+
+    _championPoketmon[1].attack = 90;
+    _championPoketmon[1].defense = 65;
+    _championPoketmon[1].specialAttack = 61;
+    _championPoketmon[1].specialDefense = 61;
+    _championPoketmon[1].speed = 100;
+
+    _championPoketmon[1].maxHP = _championPoketmon[1].currentHP = 65;
+
+    _championPoketmon[1].levelAttack = 2.16f;
+    _championPoketmon[1].levelDefense = 1.86f;
+    _championPoketmon[1].levelSpecialAttack = 1.82f;
+    _championPoketmon[1].levelSpecialDefense = 1.82f;
+    _championPoketmon[1].levelSpeed = 2.28f;
+    _championPoketmon[1].levelHP = 2.69f;
+
+    _championPoketmon[1].skill[0] = 15;
+    _championPoketmon[1].skill[1] = 16;
+    _championPoketmon[1].skill[2] = 17;
+    _championPoketmon[1].skill[3] = 0;
+
+    _championPoketmon[1].sumAttack = static_cast<int>(_championPoketmon[1].attack + (_championPoketmon[1].levelAttack * _championPoketmon[1].level));
+    _championPoketmon[1].sumDefense = _championPoketmon[1].defense + (_championPoketmon[1].levelDefense * _championPoketmon[1].level);
+    _championPoketmon[1].sumSpecialAttack = _championPoketmon[1].specialAttack + (_championPoketmon[1].levelSpecialAttack * _championPoketmon[1].level);
+    _championPoketmon[1].sumSpecialDefense = _championPoketmon[1].specialDefense + (_championPoketmon[1].levelSpecialDefense * _championPoketmon[1].level);
+    _championPoketmon[1].sumSpeed = _championPoketmon[1].speed + (_championPoketmon[1].levelSpeed * _championPoketmon[1].level);
+    _championPoketmon[1].sumMaxHP = _championPoketmon[1].maxHP + (_championPoketmon[1].levelHP * _championPoketmon[1].level);
+
+    _championPoketmon[1].currentHP = _championPoketmon[1].sumMaxHP;
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+
+    _championPoketmon[2].name = "피죤투";
+                      
+    _championPoketmon[2].isGender = RND->getFromIntTo(0, 2);
+    _championPoketmon[2].index = 18;
+    _championPoketmon[2].level = 29;
+    _championPoketmon[2].evolutionLevel = 2;
+                      
+    _championPoketmon[2].totalEXP = pow(_championPoketmon[2].level, 3);
+    _championPoketmon[2].maxExp = pow(_championPoketmon[2].level + 1, 3) - _championPoketmon[2].totalEXP;
+    _championPoketmon[2].currentExp = _championPoketmon[2].totalEXP - pow(_championPoketmon[2].level, 3);
+                      
+    _championPoketmon[2].iconNumX = 12;
+    _championPoketmon[2].iconNumY = 0;
+                      
+    _championPoketmon[2].type1 = static_cast<int>(TYPE::NOMAL);
+    _championPoketmon[2].type2 = static_cast<int>(TYPE::FLYING);
+                      
+    _championPoketmon[2].attack = 80;
+    _championPoketmon[2].defense = 75;
+    _championPoketmon[2].specialAttack = 70;
+    _championPoketmon[2].specialDefense = 70;
+    _championPoketmon[2].speed = 101;
+                      
+    _championPoketmon[2].maxHP = _championPoketmon[2].currentHP = 83;
+                      
+    _championPoketmon[2].levelAttack = 2.04f;
+    _championPoketmon[2].levelDefense = 1.98f;
+    _championPoketmon[2].levelSpecialAttack = 1.92f;
+    _championPoketmon[2].levelSpecialDefense = 1.92f;
+    _championPoketmon[2].levelSpeed = 2.3f;
+    _championPoketmon[2].levelHP = 2.87f;
+                      
+    _championPoketmon[2].skill[0] = 10;
+    _championPoketmon[2].skill[1] = 11;
+    _championPoketmon[2].skill[2] = 12;
+    _championPoketmon[2].skill[3] = 13;
+                      
+    _championPoketmon[2].sumAttack = static_cast<int>(_championPoketmon[2].attack + (_championPoketmon[2].levelAttack * _championPoketmon[2].level));
+    _championPoketmon[2].sumDefense = _championPoketmon[2].defense + (_championPoketmon[2].levelDefense * _championPoketmon[2].level);
+    _championPoketmon[2].sumSpecialAttack = _championPoketmon[2].specialAttack + (_championPoketmon[2].levelSpecialAttack * _championPoketmon[2].level);
+    _championPoketmon[2].sumSpecialDefense = _championPoketmon[2].specialDefense + (_championPoketmon[2].levelSpecialDefense * _championPoketmon[2].level);
+    _championPoketmon[2].sumSpeed = _championPoketmon[2].speed + (_championPoketmon[2].levelSpeed * _championPoketmon[2].level);
+    _championPoketmon[2].sumMaxHP = _championPoketmon[2].maxHP + (_championPoketmon[2].levelHP * _championPoketmon[2].level);
+                      
+    _championPoketmon[2].currentHP = _championPoketmon[2].sumMaxHP;
+
+}
+
+void poketmonManager::trainer1Poketmon() //트레이너 1
+{
+    _trainer1Poketmon[0].name = "구구";
+ 
+    _trainer1Poketmon[0].isGender = RND->getFromIntTo(0, 2);
+    _trainer1Poketmon[0].index = 16;
+    _trainer1Poketmon[0].level = 15;
+    _trainer1Poketmon[0].evolutionLevel = 0;
+  
+    _trainer1Poketmon[0].totalEXP = pow(_trainer1Poketmon[0].level, 3);
+    _trainer1Poketmon[0].maxExp = pow(_trainer1Poketmon[0].level + 1, 3) - _trainer1Poketmon[0].totalEXP;
+    _trainer1Poketmon[0].currentExp = _trainer1Poketmon[0].totalEXP - pow(_trainer1Poketmon[0].level, 3);
+ 
+    _trainer1Poketmon[0].iconNumX = 12;
+    _trainer1Poketmon[0].iconNumY = 0;
+  
+    _trainer1Poketmon[0].type1 = static_cast<int>(TYPE::NOMAL);
+    _trainer1Poketmon[0].type2 = static_cast<int>(TYPE::FLYING);
+
+    _trainer1Poketmon[0].attack = 45;
+    _trainer1Poketmon[0].defense = 40;
+    _trainer1Poketmon[0].specialAttack = 35;
+    _trainer1Poketmon[0].specialDefense = 35;
+    _trainer1Poketmon[0].speed = 56;
+   
+    _trainer1Poketmon[0].maxHP = _trainer1Poketmon[0].currentHP = 40;
+
+    _trainer1Poketmon[0].levelAttack = 1.62f;
+    _trainer1Poketmon[0].levelDefense = 1.56f;
+    _trainer1Poketmon[0].levelSpecialAttack = 1.5f;
+    _trainer1Poketmon[0].levelSpecialDefense = 1.5f;
+    _trainer1Poketmon[0].levelSpeed = 1.76f;
+    _trainer1Poketmon[0].levelHP = 2.44f;
+
+    _trainer1Poketmon[0].skill[0] = 10;
+    _trainer1Poketmon[0].skill[1] = 11;
+    _trainer1Poketmon[0].skill[2] = 0;
+    _trainer1Poketmon[0].skill[3] = 0;
+
+    _trainer1Poketmon[0].sumAttack = static_cast<int>(_trainer1Poketmon[0].attack + (_trainer1Poketmon[0].levelAttack * _trainer1Poketmon[0].level));
+    _trainer1Poketmon[0].sumDefense = _trainer1Poketmon[0].defense + (_trainer1Poketmon[0].levelDefense * _trainer1Poketmon[0].level);
+    _trainer1Poketmon[0].sumSpecialAttack = _trainer1Poketmon[0].specialAttack + (_trainer1Poketmon[0].levelSpecialAttack * _trainer1Poketmon[0].level);
+    _trainer1Poketmon[0].sumSpecialDefense = _trainer1Poketmon[0].specialDefense + (_trainer1Poketmon[0].levelSpecialDefense * _trainer1Poketmon[0].level);
+    _trainer1Poketmon[0].sumSpeed = _trainer1Poketmon[0].speed + (_trainer1Poketmon[0].levelSpeed * _trainer1Poketmon[0].level);
+    _trainer1Poketmon[0].sumMaxHP = _trainer1Poketmon[0].maxHP + (_trainer1Poketmon[0].levelHP * _trainer1Poketmon[0].level);
+
+    _trainer1Poketmon[0].currentHP = _trainer1Poketmon[0].sumMaxHP;
+
+    //------------------------------------------------------------------------------------------
+
+
+    _trainer1Poketmon[1].name = "피죤";
+
+    _trainer1Poketmon[1].isGender = RND->getFromIntTo(0, 2);
+    _trainer1Poketmon[1].index = 17;
+    _trainer1Poketmon[1].level = 19;
+    _trainer1Poketmon[1].evolutionLevel = 1;
+                      
+    _trainer1Poketmon[1].totalEXP = pow(_trainer1Poketmon[1].level, 3);
+    _trainer1Poketmon[1].maxExp = pow(_trainer1Poketmon[1].level + 1, 3) - _trainer1Poketmon[1].totalEXP;
+    _trainer1Poketmon[1].currentExp = _trainer1Poketmon[1].totalEXP - pow(_trainer1Poketmon[1].level, 3);
+                      
+    _trainer1Poketmon[1].iconNumX = 12;
+    _trainer1Poketmon[1].iconNumY = 0;
+                      
+    _trainer1Poketmon[1].type1 = static_cast<int>(TYPE::NOMAL);
+    _trainer1Poketmon[1].type2 = static_cast<int>(TYPE::FLYING);
+                      
+    _trainer1Poketmon[1].attack = 60;
+    _trainer1Poketmon[1].defense = 55;
+    _trainer1Poketmon[1].specialAttack = 50;
+    _trainer1Poketmon[1].specialDefense = 50;
+    _trainer1Poketmon[1].speed = 71;
+                      
+    _trainer1Poketmon[1].maxHP = _trainer1Poketmon[1].currentHP = 40;
+                      
+    _trainer1Poketmon[1].levelAttack = 1.8f;
+    _trainer1Poketmon[1].levelDefense = 1.74f;
+    _trainer1Poketmon[1].levelSpecialAttack = 1.68f;
+    _trainer1Poketmon[1].levelSpecialDefense = 1.68f;
+    _trainer1Poketmon[1].levelSpeed = 1.94f;
+    _trainer1Poketmon[1].levelHP = 2.67f;
+                     
+    _trainer1Poketmon[1].skill[0] = 10;
+    _trainer1Poketmon[1].skill[1] = 11;
+    _trainer1Poketmon[1].skill[2] = 12;
+    _trainer1Poketmon[1].skill[3] = 0;
+                      
+    _trainer1Poketmon[1].sumAttack = static_cast<int>(_trainer1Poketmon[1].attack + (_trainer1Poketmon[1].levelAttack * _trainer1Poketmon[1].level));
+    _trainer1Poketmon[1].sumDefense = _trainer1Poketmon[1].defense + (_trainer1Poketmon[1].levelDefense * _trainer1Poketmon[1].level);
+    _trainer1Poketmon[1].sumSpecialAttack = _trainer1Poketmon[1].specialAttack + (_trainer1Poketmon[1].levelSpecialAttack * _trainer1Poketmon[1].level);
+    _trainer1Poketmon[1].sumSpecialDefense = _trainer1Poketmon[1].specialDefense + (_trainer1Poketmon[1].levelSpecialDefense * _trainer1Poketmon[1].level);
+    _trainer1Poketmon[1].sumSpeed = _trainer1Poketmon[1].speed + (_trainer1Poketmon[1].levelSpeed * _trainer1Poketmon[1].level);
+    _trainer1Poketmon[1].sumMaxHP = _trainer1Poketmon[1].maxHP + (_trainer1Poketmon[1].levelHP * _trainer1Poketmon[1].level);
+                      
+    _trainer1Poketmon[1].currentHP = _trainer1Poketmon[1].sumMaxHP;
+
+}
+
+void poketmonManager::trainer2Poketmon()  //트레이너2
+{
+    _trainer2Poketmon[0].name = "깨비참";
+                      
+    _trainer2Poketmon[0].isGender = RND->getFromIntTo(0, 2);
+    _trainer2Poketmon[0].index = 21;
+    _trainer2Poketmon[0].level = 17;
+    _trainer2Poketmon[0].evolutionLevel = 0;
+                      
+    _trainer2Poketmon[0].totalEXP = pow(_trainer2Poketmon[0].level, 3);
+    _trainer2Poketmon[0].maxExp = pow(_trainer2Poketmon[0].level + 1, 3) - _trainer2Poketmon[0].totalEXP;
+    _trainer2Poketmon[0].currentExp = _trainer2Poketmon[0].totalEXP - pow(_trainer2Poketmon[0].level, 3);
+                      
+    _trainer2Poketmon[0].iconNumX = 12;
+    _trainer2Poketmon[0].iconNumY = 0;
+                      
+    _trainer2Poketmon[0].type1 = static_cast<int>(TYPE::NOMAL);
+    _trainer2Poketmon[0].type2 = static_cast<int>(TYPE::FLYING);
+                      
+    _trainer2Poketmon[0].attack = 60;
+    _trainer2Poketmon[0].defense = 30;
+    _trainer2Poketmon[0].specialAttack = 31;
+    _trainer2Poketmon[0].specialDefense = 31;
+    _trainer2Poketmon[0].speed = 70;
+                      
+    _trainer2Poketmon[0].maxHP = _trainer2Poketmon[0].currentHP = 40;
+                      
+    _trainer2Poketmon[0].levelAttack = 1.8f;
+    _trainer2Poketmon[0].levelDefense = 1.44f;
+    _trainer2Poketmon[0].levelSpecialAttack = 1.46f;
+    _trainer2Poketmon[0].levelSpecialDefense = 1.46f;
+    _trainer2Poketmon[0].levelSpeed = 1.92f;
+    _trainer2Poketmon[0].levelHP = 2.44f;
+                      
+    _trainer2Poketmon[0].skill[0] = 15;
+    _trainer2Poketmon[0].skill[1] = 16;
+    _trainer2Poketmon[0].skill[2] = 0;
+    _trainer2Poketmon[0].skill[3] = 0;
+                      
+    _trainer2Poketmon[0].sumAttack = static_cast<int>(_trainer2Poketmon[0].attack + (_trainer2Poketmon[0].levelAttack * _trainer2Poketmon[0].level));
+    _trainer2Poketmon[0].sumDefense = _trainer2Poketmon[0].defense + (_trainer2Poketmon[0].levelDefense * _trainer2Poketmon[0].level);
+    _trainer2Poketmon[0].sumSpecialAttack = _trainer2Poketmon[0].specialAttack + (_trainer2Poketmon[0].levelSpecialAttack * _trainer2Poketmon[0].level);
+    _trainer2Poketmon[0].sumSpecialDefense = _trainer2Poketmon[0].specialDefense + (_trainer2Poketmon[0].levelSpecialDefense * _trainer2Poketmon[0].level);
+    _trainer2Poketmon[0].sumSpeed = _trainer2Poketmon[0].speed + (_trainer2Poketmon[0].levelSpeed * _trainer2Poketmon[0].level);
+    _trainer2Poketmon[0].sumMaxHP = _trainer2Poketmon[0].maxHP + (_trainer2Poketmon[0].levelHP * _trainer2Poketmon[0].level);
+                      
+    _trainer2Poketmon[0].currentHP = _trainer2Poketmon[0].sumMaxHP;
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------
+
+    _trainer2Poketmon[1].name = "깨비드릴조";
+                      
+    _trainer2Poketmon[1].isGender = RND->getFromIntTo(0, 2);
+    _trainer2Poketmon[1].index = 22;
+    _trainer2Poketmon[1].level = 22;
+    _trainer2Poketmon[1].evolutionLevel = 1;
+                      
+    _trainer2Poketmon[1].totalEXP = pow(_trainer2Poketmon[1].level, 3);
+    _trainer2Poketmon[1].maxExp = pow(_trainer2Poketmon[1].level + 1, 3) - _trainer2Poketmon[1].totalEXP;
+    _trainer2Poketmon[1].currentExp = _trainer2Poketmon[1].totalEXP - pow(_trainer2Poketmon[1].level, 3);
+                      
+    _trainer2Poketmon[1].iconNumX = 12;
+    _trainer2Poketmon[1].iconNumY = 0;
+                      
+    _trainer2Poketmon[1].type1 = static_cast<int>(TYPE::NOMAL);
+    _trainer2Poketmon[1].type2 = static_cast<int>(TYPE::FLYING);
+                      
+    _trainer2Poketmon[1].attack = 90;
+    _trainer2Poketmon[1].defense = 65;
+    _trainer2Poketmon[1].specialAttack = 61;
+    _trainer2Poketmon[1].specialDefense = 61;
+    _trainer2Poketmon[1].speed = 100;
+                      
+    _trainer2Poketmon[1].maxHP = _trainer2Poketmon[1].currentHP = 65;
+                      
+    _trainer2Poketmon[1].levelAttack = 2.16f;
+    _trainer2Poketmon[1].levelDefense = 1.86f;
+    _trainer2Poketmon[1].levelSpecialAttack = 1.82f;
+    _trainer2Poketmon[1].levelSpecialDefense = 1.82f;
+    _trainer2Poketmon[1].levelSpeed = 2.28f;
+    _trainer2Poketmon[1].levelHP = 2.69f;
+                      
+    _trainer2Poketmon[1].skill[0] = 15;
+    _trainer2Poketmon[1].skill[1] = 16;
+    _trainer2Poketmon[1].skill[2] = 17;
+    _trainer2Poketmon[1].skill[3] = 0;
+                      
+    _trainer2Poketmon[1].sumAttack = static_cast<int>(_trainer2Poketmon[1].attack + (_trainer2Poketmon[1].levelAttack * _trainer2Poketmon[1].level));
+    _trainer2Poketmon[1].sumDefense = _trainer2Poketmon[1].defense + (_trainer2Poketmon[1].levelDefense * _trainer2Poketmon[1].level);
+    _trainer2Poketmon[1].sumSpecialAttack = _trainer2Poketmon[1].specialAttack + (_trainer2Poketmon[1].levelSpecialAttack * _trainer2Poketmon[1].level);
+    _trainer2Poketmon[1].sumSpecialDefense = _trainer2Poketmon[1].specialDefense + (_trainer2Poketmon[1].levelSpecialDefense * _trainer2Poketmon[1].level);
+    _trainer2Poketmon[1].sumSpeed = _trainer2Poketmon[1].speed + (_trainer2Poketmon[1].levelSpeed * _trainer2Poketmon[1].level);
+    _trainer2Poketmon[1].sumMaxHP = _trainer2Poketmon[1].maxHP + (_trainer2Poketmon[1].levelHP * _trainer2Poketmon[1].level);
+                      
+    _trainer2Poketmon[1].currentHP = _trainer2Poketmon[1].sumMaxHP;
+}
+
 void poketmonManager::render()
 {
     char str[128];
@@ -341,8 +687,8 @@ void poketmonManager::render()
     //TextOut(getMemDC(), 280, 180, str, strlen(str));
     //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
     //TextOut(getMemDC(), 280, 200, str, strlen(str));
-    sprintf_s(str, "포켓몬 : %d ", _startPoketmon[0].sumMaxHP);
-    TextOut(getMemDC(), 100, 320, str, strlen(str));
+    //sprintf_s(str, "포켓몬 : %d ", _championPoketmon[1].sumMaxHP);
+    //TextOut(getMemDC(), 100, 320, str, strlen(str));
     //sprintf_s(str, "포켓몬 max경험치 : %d ", _wildPoketmon.maxExp);
     //TextOut(getMemDC(), 100, 340, str, strlen(str));
     //sprintf_s(str, "포켓몬 current경험치 : %d ", _wildPoketmon.currentExp);

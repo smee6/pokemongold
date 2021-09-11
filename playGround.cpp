@@ -65,11 +65,10 @@ void playGround::update()
 	_tileMap->update();
 	_npc->update();
 	
-	//if (KEYMANAGER->isOnceKeyDown('P'))
-	//{
-	//	UIMANAGER->setVScript(TXTDATA->txtLoad("script/ÂÌµû±¸2_½Â¸®Á¤»ê.txt"));
-	//	UIMANAGER->setIsScript(true);
-	//}
+	if (KEYMANAGER->isOnceKeyDown('M'))
+	{
+		UIMANAGER->update();
+	}
 
 	//SCENEMANAGER->update();
 }

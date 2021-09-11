@@ -672,6 +672,7 @@ void character::ui() // ui창 호출
     if (UIMANAGER->getOpenPokecenter()) UIMANAGER->pokeCenter();
     if (UIMANAGER->getIsBattle()) UIMANAGER->battle();
     if (UIMANAGER->getIsScript()) UIMANAGER->script();
+    if (UIMANAGER->getIsConfirm()) UIMANAGER->confirm();
 }
 
 void character::deletComingsoon() //삭제예쩡

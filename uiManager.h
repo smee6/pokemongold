@@ -170,7 +170,10 @@ private:
 
 
 	// 확인창(예/아니오)
-	bool _isAccept;
+	image* _confirmImage;						// 확인창 이미지
+	bool _isConfirm;							// 확인창 유무
+	bool _isAccept;								// true == 예, false == 아니오
+	int _acceptCount;							// 0 == 예, 1 == 아니오
 
 	// class
 	NPC _npc;
@@ -186,32 +189,33 @@ public:
 	void update();
 	void render();
 
-	void shop();
+	void shop();				// 상점창
 
-	void bag();
-	void pokeDogam();
-	void pokeGear();
-	void playerStatus();
-	void setting();
+	void bag();					// 가방창
+	void pokeDogam();			// 도감창
+	void pokeGear();			// 포켓기어창
+	void playerStatus();		// 플레이어 정보창
+	void setting();				// 설정창
 
-	void howStrong();
+	void howStrong();			// 강한 정보를 보다 창
 
-	void pokeCenter();
-	void menu();
+	void pokeCenter();			// 포켓몬 센터(회복)
+	void menu();				// 메뉴창
 
-	void pokeShift();
+	void pokeShift();			// 포켓몬창
 
-	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
+	void script();				// 스크립트 출력창
 
-	void battle();
-	void skillSelect();
-	void attack();
+	void battle();				// 배틀창
+	void skillSelect();			// 스킬선택창
+	void attack();				// 공격실행
 	
-	void usePokeBall();
-	void useMedicine();
-	void useGoodMedicine();
+	void usePokeBall();			// 포켓볼 사용
+	void useMedicine();			// 상처약 사용
+	void useGoodMedicine();		// 좋은 상처약 사용
 
-	void getStartingPokemon();
+	void getStartingPokemon();	// 스타팅 포켓몬 획득
+	void confirm();				// 확인창(예/아니오)
 
 	
 
@@ -277,6 +281,9 @@ public:
 
 	bool getIsAccept() { return _isAccept; }
 	void setIsAccept(bool accept) { _isAccept = accept; }
+
+	bool getIsConfirm() { return _isConfirm; }
+	void setIsConfirm(bool confirm) { _isConfirm = confirm; }
 
 	int getDrCount() { return _drCount; }
 

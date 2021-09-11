@@ -104,6 +104,11 @@ HRESULT uiManager::init()
 
 	// =======================================================================================================================
 
+	IMAGEMANAGER->addImage("예", "image/Yes.bmp", 192, 183, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아니오", "image/No.bmp", 192, 183, true, RGB(255, 0, 255));
+
+	// =======================================================================================================================
+
 	_isAnimation = true;
 
 	_hpBarPlayer = new progressBar;
@@ -127,6 +132,7 @@ void uiManager::release()
 
 void uiManager::update()
 {
+	_isConfirm = true;
 }
 
 void uiManager::render()
@@ -2071,11 +2077,11 @@ void uiManager::useGoodMedicine()
 
 void uiManager::getStartingPokemon()
 {
-	// 공박사와 대화 한 번 진행된 후에
-	if (_drCount == 1)
-	{
-
-	}
+	//// 공박사와 대화 한 번 진행된 후에
+	//if (_drCount == 1)
+	//{
+	//
+	//}
 	// 포켓볼에 말걸면 스크립트 출력
 
 	// (예/아니오 선택)
@@ -2084,6 +2090,42 @@ void uiManager::getStartingPokemon()
 	_character->setPoketmon(_poketmonManager->getWildPoketmon(), 0);		// 0번 슬롯에 포켓몬 추가
 	_drCount++;
 	//_isStarting = true;
+}
+
+void uiManager::confirm()
+{
+	uiOpen = true;
+
+	if (_acceptCount == 0)
+	{
+		IMAGEMANAGER->findImage("예")->render(_backBuffer->getMemDC(), 0, 0);
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_acceptCount++;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		{
+			_isAccept = true;
+			_isConfirm = false;
+			uiOpen = false;
+			_acceptCount = 0;
+		}
+	}
+	else if (_acceptCount == 1)
+	{
+		IMAGEMANAGER->findImage("아니오")->render(_backBuffer->getMemDC(), 0, 0);
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			_acceptCount--;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		{
+			_isAccept = false;
+			_isConfirm = false;
+			uiOpen = false;
+			_acceptCount = 0;
+		}
+	}
 }
 
 bool uiManager::isUiOpen()

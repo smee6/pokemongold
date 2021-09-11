@@ -1543,6 +1543,8 @@ void uiManager::skillSelect()
 	HFONT oldFont5 = (HFONT)SelectObject(_backBuffer->getMemDC(), font5);
 
 	char skill[128];
+	char type[128];
+	char pp[128];
 
 	for (int i = 0; i < 4; i++) {
 		//string strname = myPokemon[i].name;
@@ -1552,9 +1554,6 @@ void uiManager::skillSelect()
 
 		TextOut(_backBuffer->getMemDC(), 55, 330 + (i * 60), skill, strlen(skill));
 	}
-
-	SelectObject(_backBuffer->getMemDC(), oldFont5);
-	DeleteObject(font5);
 
 	if (skillCnt > 0)
 	{
@@ -1592,7 +1591,14 @@ void uiManager::skillSelect()
 		_currentSkill = 3;
 		break;
 	}
+	sprintf_s(type, to_string(_poketmonManager->getSkill()->getSkillType()).c_str());
+	sprintf_s(pp, "%00d/%00d", _character->getPoketmon(_currentPoke).skillPP[_currentSkill], _poketmonManager->getSkill()->getSkillPP());
+	TextOut(_backBuffer->getMemDC(), 445, 425, pp, strlen(pp));
 
+	SelectObject(_backBuffer->getMemDC(), oldFont5);
+	DeleteObject(font5);
+
+	// 선택하면 공격 실행
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		//_poketmonManager->getSkill()->setIsSkill(true);
@@ -1603,7 +1609,7 @@ void uiManager::skillSelect()
 		_npc = NPC::BATTLE_ATTACK;
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창에서 다시 행동패턴 정하는 UI 호출
+	if (KEYMANAGER->isOnceKeyDown('V')) // 스킬창 끄기
 	{
 		//skillCnt = 0;
 		_isOpenSkill = false;

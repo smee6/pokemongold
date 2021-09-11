@@ -1716,9 +1716,69 @@ void uiManager::skillSelect()
 		_currentSkill = 3;
 		break;
 	}
-	sprintf_s(type, to_string(_poketmonManager->getSkill()->getSkillType()).c_str());
+
+	switch ((SKILL_TYPE)_poketmonManager->getSkill()->getSkillType())
+	{
+	case SKILL_TYPE::NOMAL:
+		sprintf_s(type, "노말");
+		break;
+	case SKILL_TYPE::FIRE:
+		sprintf_s(type, "불꽃");
+		break;
+	case SKILL_TYPE::WATER:
+		sprintf_s(type, "물");
+		break;
+	case SKILL_TYPE::GRASS:
+		sprintf_s(type, "풀");
+		break;
+	case SKILL_TYPE::ELECTR:
+		sprintf_s(type, "전기");
+		break;
+	case SKILL_TYPE::ICE:
+		sprintf_s(type, "얼음");
+		break;
+	case SKILL_TYPE::FIGHT:
+		sprintf_s(type, "격투");
+		break;
+	case SKILL_TYPE::POISON:
+		sprintf_s(type, "독");
+		break;
+	case SKILL_TYPE::GROUND:
+		sprintf_s(type, "땅");
+		break;
+	case SKILL_TYPE::FLYING:
+		sprintf_s(type, "비행");
+		break;
+	case SKILL_TYPE::PSYCHC:
+		sprintf_s(type, "에스퍼");
+		break;
+	case SKILL_TYPE::BUG:
+		sprintf_s(type, "벌레");
+		break;
+	case SKILL_TYPE::ROCK:
+		sprintf_s(type, "바위");
+		break;
+	case SKILL_TYPE::GHOST:
+		sprintf_s(type, "고스트");
+		break;
+	case SKILL_TYPE::DRAGON:
+		sprintf_s(type, "드래곤");
+		break;
+	case SKILL_TYPE::DARK:
+		sprintf_s(type, "악");
+		break;
+	case SKILL_TYPE::STEEL:
+		sprintf_s(type, "강철");
+		break;
+	case SKILL_TYPE::FAIRY:
+		sprintf_s(type, "페어리");
+		break;
+	default:
+		break;
+	}
 	sprintf_s(pp, "%00d/%00d", _character->getPoketmon(_currentPoke).skillPP[_currentSkill], _poketmonManager->getSkill()->getSkillPP());
 	TextOut(_backBuffer->getMemDC(), 445, 425, pp, strlen(pp));
+	TextOut(_backBuffer->getMemDC(), 485, 510, type, strlen(type));
 
 	SelectObject(_backBuffer->getMemDC(), oldFont5);
 	DeleteObject(font5);

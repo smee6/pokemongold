@@ -57,8 +57,8 @@ void character::poketmonSetting() // 포켓몬 데이터 처리
     for (int i = 0; i < 6; i++)
     {
         // 포켓몬 성별 체크가 트루일시
-        if (_poketmon[i].isGender) _poketmon[i].gender = "수컷";  // 포켓몬의 성별은 수컷이 된다    
-        else _poketmon[i].gender = "암컷"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+        if (_poketmon[i].isGender) _poketmon[i].gender = "♂";  // 포켓몬의 성별은 수컷이 된다    
+        else _poketmon[i].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
 
         // 포켓몬 레벨은 현재 경험치에서 3제곱근 하고 그걸 int로 변경해야함 //cbrt 삼제곱근 
         _poketmon[i].level = static_cast<int>(cbrt(_poketmon[i].totalEXP));

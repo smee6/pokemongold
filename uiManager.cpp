@@ -1303,7 +1303,7 @@ void uiManager::script()
 			string currentPokemon = _character->getPoketmon(0).name;
 
 			vector<string> _vStr;
-			_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "(이)가\n승부를 걸어왔다!;" + "레드" + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
+			_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "(이)가\n승부를 걸어왔다!;" + "레드" + "는(은)\n" + currentPokemon + "를(을);차례로 꺼냈다!;가랏! " + currentPokemon + "!;" + currentPokemon + "\n와(과)의 승부에서 이겼다!;");
 
 			TXTDATA->txtSave("script/배틀.txt", _vStr);
 
@@ -1458,8 +1458,8 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		//sprintf_s(str, "check : %d", _check);
-		//TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
+		sprintf_s(str, "champion : %d", _championCount);
+		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
 
@@ -1472,38 +1472,39 @@ void uiManager::battle()
 
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
 	
-	if (!_isWild)
+	if (_isWild)
+	{
+		_currentEnemyPokemon = _poketmonManager->getWildPoketmon();
+	}
+	else if (!_isWild)
 	{
 		switch (_npc)
 		{
 		case NPC::CHAMPION:
 			_enemyImage = IMAGEMANAGER->findImage("관장");
-			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[0];
 			_npc = NPC::CHAMPION;
 			break;
 		case NPC::TRAINER1:
 			_enemyImage = IMAGEMANAGER->findImage("트레이너");
-			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[0];
 			_npc = NPC::TRAINER1;
 			break;
 		case NPC::TRAINER2:
 			_enemyImage = IMAGEMANAGER->findImage("트레이너");
-			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
+			_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[0];
 			_npc = NPC::TRAINER2;
 			break;
 		default:
-			_enemyImage = IMAGEMANAGER->findImage("트레이너");
-			_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");		// 추후 트레이너의 첫번째 포켓몬 넣어주기
-			_npc = NPC::TRAINER2;
+			_enemyImage = IMAGEMANAGER->findImage("관장");
+			_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[0];
+			_npc = NPC::CHAMPION;
 		}
 	}
 	_playerPokeImage = IMAGEMANAGER->findImage(to_string(_character->getPoketmon(_currentPoke).index) + "B");
 
 	// 야생포켓몬과의 배틀일 경우
-	if (_isWild)
-	{
-		_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_poketmonManager->getWildPoketmon().index) + "F");
-	}
+	_enemyPokeImage = IMAGEMANAGER->findImage(to_string(_currentEnemyPokemon.index) + "F");
 
 	static int px = -_playerImage->getWidth();
 	static int ex = WINSIZEX;
@@ -1527,12 +1528,12 @@ void uiManager::battle()
 		// 야생 포켓몬과의 전투일 때
 		if (_isWild)
 		{
-			_npc = NPC::BATTLE;
+			//_npc = NPC::BATTLE;
 			// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
 			_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 		}
 		// 트레이너와의 전투일 때
-		else if (!_isWild)
+		if (!_isWild)
 		{
 			_enemyImage->render(_backBuffer->getMemDC(), ex, 0);
 		}
@@ -1547,12 +1548,12 @@ void uiManager::battle()
 			px += 5; // 플레이어 이미지가 화면밖에서 제자리 까지 이동하는것을 구현하기 위함
 			//_npc = NPC::BATTLE;
 		}
-		else if (_isBattleScript)
+		else if (_isBattleScript && !_isScript)
 		{
 			_isCount = true;
 			_isScript = true;
 		}
-		else
+		else if (!_isScript)
 		{
 			_time = TIMEMANAGER->getWorldTime();
 			_isAnimation = false;
@@ -1599,7 +1600,7 @@ void uiManager::battle()
 			_hpBarPlayer->render();
 
 			// 에너미 체력바
-			_hpBarEnemy->setGauge(_poketmonManager->getWildPoketmon().currentHP, _poketmonManager->getWildPoketmon().sumMaxHP);
+			_hpBarEnemy->setGauge(_currentEnemyPokemon.currentHP, _currentEnemyPokemon.sumMaxHP);
 			_hpBarEnemy->render();
 
 			// 경험치 바
@@ -1623,7 +1624,7 @@ void uiManager::battle()
 			TextOut(_backBuffer->getMemDC(), 320, 245, str, strlen(str));
 
 			// 상대 포켓몬
-			sprintf_s(str, (_poketmonManager->getWildPoketmon().name + _poketmonManager->getWildPoketmon().gender).c_str());
+			sprintf_s(str, (_currentEnemyPokemon.name + _currentEnemyPokemon.gender).c_str());
 			TextOut(_backBuffer->getMemDC(), 70, 20, str, strlen(str));
 
 			SelectObject(_backBuffer->getMemDC(), oldFont5);
@@ -1642,7 +1643,7 @@ void uiManager::battle()
 			TextOut(_backBuffer->getMemDC(), 545, 247, str, strlen(str));
 
 			// 상대 포켓몬
-			sprintf_s(str, to_string(_poketmonManager->getWildPoketmon().level).c_str());
+			sprintf_s(str, to_string(_currentEnemyPokemon.level).c_str());
 			TextOut(_backBuffer->getMemDC(), 285, 25, str, strlen(str));
 
 			SelectObject(_backBuffer->getMemDC(), oldFont5);
@@ -2174,14 +2175,17 @@ void uiManager::getStartingPokemon()
 	// 포켓몬 획득 (스타팅 포켓몬 초기값 정보 필요 - 이름, 레벨, 공격력 등등)
 	switch (_npc)
 	{
+	case NPC::CYNDAQUIL:
+		_character->setPoketmon(_poketmonManager->getStartPoketmon()[0], 0);		// 0번 슬롯에 포켓몬 추가
+		_isGetCyndaquil = true;
+		break;
 	case NPC::TOTODILE:
 		_character->setPoketmon(_poketmonManager->getStartPoketmon()[1], 0);		// 0번 슬롯에 포켓몬 추가
+		_isGetTotodile = true;
 		break;
 	case NPC::CHIKORITA:
 		_character->setPoketmon(_poketmonManager->getStartPoketmon()[2], 0);		// 0번 슬롯에 포켓몬 추가
-		break;
-	case NPC::CYNDAQUIL:
-		_character->setPoketmon(_poketmonManager->getStartPoketmon()[0], 0);		// 0번 슬롯에 포켓몬 추가
+		_isGetChikorita = true;
 		break;
 	}
 	_drCount++;

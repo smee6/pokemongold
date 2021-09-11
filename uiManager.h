@@ -134,6 +134,7 @@ private:
 	bool uiOpen = false;						// ui 켜져 있는지 여부
 
 	//battle
+	tagPOKETMON_PLAYER _currentEnemyPokemon;
 	bool _isAnimation;							// 애니메이션이 끝났는지에 대한 체크변수
 
 	image* _playerImage;						// 플레이어 이미지
@@ -168,11 +169,13 @@ private:
 	int _power;
 
 	bool _isWin;								// 배틀에서 승리했을때
-	bool _isWild;								// 야생 포켓몬인지 아닌지(트레이너(false) or 야생(true))
+	bool _isWild = true;								// 야생 포켓몬인지 아닌지(트레이너(false) or 야생(true))
 
 	// getStarting Pokemon
-	bool _isStarting;
-
+	bool _isStarting;							// 스타팅 포켓몬 받았는지
+	bool _isGetCyndaquil;						// 브케인 획득
+	bool _isGetTotodile;						// 리아코 획득
+	bool _isGetChikorita;						// 치코리타 획득
 
 	// 확인창(예/아니오)
 	image* _confirmImage;						// 확인창 이미지
@@ -291,6 +294,15 @@ public:
 
 	bool getIsConfirm() { return _isConfirm; }
 	void setIsConfirm(bool confirm) { _isConfirm = confirm; }
+
+	bool getIsCyndaquil() { return _isGetCyndaquil; }
+	void setIsCyndaquil(bool Cyndaquil) { _isGetCyndaquil = Cyndaquil; }
+
+	bool getIsTotodile() { return _isGetTotodile; }
+	void setIsTotodile(bool Totodile) { _isGetTotodile = Totodile; }
+
+	bool getIsChikorita() { return _isGetChikorita; }
+	void setIsChikorita(bool Chikorita) { _isGetChikorita = Chikorita; }
 
 	int getDrCount() { return _drCount; }
 

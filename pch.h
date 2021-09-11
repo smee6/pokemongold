@@ -13,49 +13,6 @@
 
 using namespace std;
 
-#include "commonMacroFunction.h"
-#include "randomFunction.h"
-#include "keyManager.h"
-#include "imageManager.h"
-#include "timeManager.h"
-#include "effectManager.h"
-#include "sceneManager.h"
-#include "soundManager.h"
-#include "keyAniManager.h"
-#include "utils.h"
-#include "txtData.h"
-#include "iniDataManager.h"
-#include "uiManager.h"
-
-using namespace TN_UTILS;
-
-//========================================
-// ## 윈도우 설정 디파인문 ## 2021.05.26 ##
-//========================================
-
-#define WINNAME		(LPTSTR)TEXT("Class29")			//윈도우 이름
-#define WINSTARTX	50								//윈도우 시작좌표(left)
-#define WINSTARTY	50								//윈도우 시작좌표(top)
-#define WINSIZEX	640								//윈도우 가로크기
-#define WINSIZEY	576								//윈도우 세로크기
-#define WINSTYLE	WS_CAPTION | WS_SYSMENU
-
-#define RND randomFunction::getSingleton()
-#define KEYMANAGER keyManager::getSingleton()
-#define IMAGEMANAGER imageManager::getSingleton()
-#define TIMEMANAGER timeManager::getSingleton()
-#define EFFECTMANAGER effectManager::getSingleton()
-#define SCENEMANAGER sceneManager::getSingleton()
-#define SOUNDMANAGER soundManager::getSingleton()
-#define KEYANIMANAGER keyAniManager::getSingleton()
-#define TXTDATA txtData::getSingleton()
-#define INIDATA iniDataManager::getSingleton()
-#define UIMANAGER uiManager::getSingleton()
-
-
-#define SAFE_DELETE(p) {if(p) {delete(p); (p) = nullptr;}}
-#define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = nullptr;}}
-
 struct tagPOKETMON_PLAYER
 {
 	string name;							// 이름
@@ -103,6 +60,49 @@ struct tagPOKETMON_PLAYER
 
 	int item;								// 보유 중인 아이템 인덱스
 };
+
+#include "commonMacroFunction.h"
+#include "randomFunction.h"
+#include "keyManager.h"
+#include "imageManager.h"
+#include "timeManager.h"
+#include "effectManager.h"
+#include "sceneManager.h"
+#include "soundManager.h"
+#include "keyAniManager.h"
+#include "utils.h"
+#include "txtData.h"
+#include "iniDataManager.h"
+#include "uiManager.h"
+
+using namespace TN_UTILS;
+
+//========================================
+// ## 윈도우 설정 디파인문 ## 2021.05.26 ##
+//========================================
+
+#define WINNAME		(LPTSTR)TEXT("Class29")			//윈도우 이름
+#define WINSTARTX	50								//윈도우 시작좌표(left)
+#define WINSTARTY	50								//윈도우 시작좌표(top)
+#define WINSIZEX	640								//윈도우 가로크기
+#define WINSIZEY	576								//윈도우 세로크기
+#define WINSTYLE	WS_CAPTION | WS_SYSMENU
+
+#define RND randomFunction::getSingleton()
+#define KEYMANAGER keyManager::getSingleton()
+#define IMAGEMANAGER imageManager::getSingleton()
+#define TIMEMANAGER timeManager::getSingleton()
+#define EFFECTMANAGER effectManager::getSingleton()
+#define SCENEMANAGER sceneManager::getSingleton()
+#define SOUNDMANAGER soundManager::getSingleton()
+#define KEYANIMANAGER keyAniManager::getSingleton()
+#define TXTDATA txtData::getSingleton()
+#define INIDATA iniDataManager::getSingleton()
+#define UIMANAGER uiManager::getSingleton()
+
+
+#define SAFE_DELETE(p) {if(p) {delete(p); (p) = nullptr;}}
+#define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = nullptr;}}
 
 //===========================
 // ## extern ## 21.05.28 ##

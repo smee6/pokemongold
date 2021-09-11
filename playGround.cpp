@@ -42,7 +42,7 @@ HRESULT playGround::init()
 
 	UIMANAGER->init();
 
-	//SCENEMANAGER->addScene("엔딩", new endingScene);
+	SCENEMANAGER->addScene("엔딩", new endingScene);
 	//SCENEMANAGER->changeScene("엔딩");
 	
 	return S_OK;
@@ -71,7 +71,7 @@ void playGround::update()
 		UIMANAGER->update();
 	}
 
-	//SCENEMANAGER->update();
+	SCENEMANAGER->update();
 }
 
 //여기다 그려줘라!!!
@@ -87,7 +87,7 @@ void playGround::render()
 
 	//UIMANAGER->pokeShift();
 	//UIMANAGER->script();
-	//SCENEMANAGER->render();
+	SCENEMANAGER->render();
 	//UIMANAGER->battle();
 
 	//=============== 밑에도 건들지마라 ================

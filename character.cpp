@@ -609,6 +609,9 @@ void character::door(int doorIndex) // 문 타일 처리
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
+    case 1093:  // 불탄 탑 들어갔을 때 게임 엔딩
+        SCENEMANAGER->changeScene("엔딩");
+        break;
     }
 }
 

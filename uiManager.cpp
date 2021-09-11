@@ -636,11 +636,11 @@ void uiManager::pokeShift()
 			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
-			sprintf_s(str, "/ %d", myPokemon[i].sumMaxHP);
+			sprintf_s(str, "/%d", myPokemon[i].sumMaxHP);
 			TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
-			TextOut(_backBuffer->getMemDC(), 400, 25 + (i * 63), str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 386, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, ": L %d", myPokemon[i].level);
 			TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), str, strlen(str));

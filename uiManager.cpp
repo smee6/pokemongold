@@ -358,28 +358,33 @@ void uiManager::menu()
 	if (_isOpenPokemon) {
 		pokeShift();
 	}
+
+	if (_isOpenHowStrong) {
+		howStrong();
+	}
 }
 
 void uiManager::pokeShift()
 {
 	pokeWindow = true;
 
-	if (pokeWindow) {
+	if(!howStrongWindow) {
+		if (pokeWindow) {
 
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
-			pokesCnt += 1;
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
+				pokesCnt += 1;
 
-			//메뉴 화살표 위아래 움직이는
+				//메뉴 화살표 위아래 움직이는
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
+				pokesCnt -= 1;
+			}
+			if (KEYMANAGER->isOnceKeyDown('X')) {
+				pokesCnt = 0;
+				pokeWindow = false;
+				_isOpenPokemon = false;
+			}
 		}
-		if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
-			pokesCnt -= 1;
-		}
-		if (KEYMANAGER->isOnceKeyDown('X')) {
-			pokesCnt = 0;
-			pokeWindow = false;
-			_isOpenPokemon = false;
-		}
-
 		if (!useMedicineWindow) {
 			if (!useGoodMedicineWindow) {
 				if (_isBattle && _character->getPoketmon(pokesCnt).maxHP != 0 && pokesCnt < 6)
@@ -401,11 +406,9 @@ void uiManager::pokeShift()
 			IMAGEMANAGER->findImage("pokeShift0")->render(_backBuffer->getMemDC());
 			if (!_isBattle &&!useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
 				//강한정도를 보다
-				IMAGEMANAGER->findImage("power")->render(_backBuffer->getMemDC());
-				
-
-
+				_isOpenHowStrong = true;
 				//강한정도를 보다 끝
 
 			}
@@ -432,6 +435,13 @@ void uiManager::pokeShift()
 			break;
 		case 1: 
 			IMAGEMANAGER->findImage("pokeShift1")->render(_backBuffer->getMemDC());
+			if (!_isBattle && !useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
+				//강한정도를 보다
+				_isOpenHowStrong = true;
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(1, -50);
 				if (_character->getPoketmon(1).currentHP >= _character->getPoketmon(1).sumMaxHP) {
@@ -455,6 +465,13 @@ void uiManager::pokeShift()
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("pokeShift2")->render(_backBuffer->getMemDC());
+			if (!_isBattle && !useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
+				//강한정도를 보다
+				_isOpenHowStrong = true;
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(2, -50);
 				if (_character->getPoketmon(2).currentHP >= _character->getPoketmon(2).sumMaxHP) {
@@ -478,6 +495,13 @@ void uiManager::pokeShift()
 			break;
 		case 3:
 			IMAGEMANAGER->findImage("pokeShift3")->render(_backBuffer->getMemDC());
+			if (!_isBattle && !useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
+				//강한정도를 보다
+				_isOpenHowStrong = true;
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(3, -50);
 				if (_character->getPoketmon(3).currentHP >= _character->getPoketmon(3).sumMaxHP) {
@@ -501,6 +525,13 @@ void uiManager::pokeShift()
 			break;
 		case 4:
 			IMAGEMANAGER->findImage("pokeShift4")->render(_backBuffer->getMemDC());
+			if (!_isBattle && !useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
+				//강한정도를 보다
+				_isOpenHowStrong = true;
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(4, -50);
 				if (_character->getPoketmon(4).currentHP >= _character->getPoketmon(4).sumMaxHP) {
@@ -524,6 +555,13 @@ void uiManager::pokeShift()
 			break;
 		case 5:
 			IMAGEMANAGER->findImage("pokeShift5")->render(_backBuffer->getMemDC());
+			if (!_isBattle && !useMedicineWindow && !useGoodMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				if (_character->getPoketmon(pokesCnt).maxHP == 0) return;
+				//강한정도를 보다
+				_isOpenHowStrong = true;
+				//강한정도를 보다 끝
+
+			}
 			if (useMedicineWindow && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 				_character->setCurrentHP(5, -50);
 				if (_character->getPoketmon(5).currentHP >= _character->getPoketmon(5).sumMaxHP) {
@@ -982,6 +1020,65 @@ void uiManager::setting()
 
 void uiManager::howStrong()
 {
+	howStrongWindow = true;
+	IMAGEMANAGER->findImage("power")->render(_backBuffer->getMemDC());
+
+	char str[128];
+
+	SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+	HFONT font2 = CreateFont(42, 0, 0, 0, 700, false, false, false,
+		DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+	HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).index);
+	TextOut(_backBuffer->getMemDC(), 85, 1, str, strlen(str));
+
+	sprintf_s(str, (_character->getPoketmon(pokesCnt).name + _character->getPoketmon(pokesCnt).gender).c_str());
+	TextOut(_backBuffer->getMemDC(), 50, 430, str, strlen(str));
+
+	IMAGEMANAGER->findImage(to_string(_character->getPoketmon(pokesCnt).index) + "F")->render(_backBuffer->getMemDC(),20,150);
+
+	sprintf_s(str, ":L %d", _character->getPoketmon(pokesCnt).level);
+	TextOut(_backBuffer->getMemDC(), 50, 370, str, strlen(str));
+
+
+	sprintf_s(str, "/ %d", _character->getPoketmon(pokesCnt).sumMaxHP);
+	TextOut(_backBuffer->getMemDC(), 460, 150, str, strlen(str));
+
+	sprintf_s(str, "HP : %d", _character->getPoketmon(pokesCnt).currentHP);
+	TextOut(_backBuffer->getMemDC(), 280, 150, str, strlen(str));
+
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumAttack);
+	TextOut(_backBuffer->getMemDC(), 510, 240, str, strlen(str));
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumDefense);
+	TextOut(_backBuffer->getMemDC(), 510, 310, str, strlen(str));
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumSpecialAttack);
+	TextOut(_backBuffer->getMemDC(), 510, 380, str, strlen(str));
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumSpecialDefense);
+	TextOut(_backBuffer->getMemDC(), 510, 440, str, strlen(str));
+
+	sprintf_s(str, "%d", _character->getPoketmon(pokesCnt).sumSpeed);
+	TextOut(_backBuffer->getMemDC(), 510, 500, str, strlen(str));
+
+	SelectObject(_backBuffer->getMemDC(), oldFont2);
+	DeleteObject(font2);
+
+
+	if (KEYMANAGER->isOnceKeyDown('X')) {
+
+		howStrongWindow = false;
+		_isOpenHowStrong = false;
+
+	};
+
+
 }
 
 // 여기까지 메뉴 안쪽 버튼 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

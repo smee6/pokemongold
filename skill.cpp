@@ -61,6 +61,10 @@ void skill::skillNone()													//스킬없음
 
 	_name = " -";														//이름
 
+
+	_imgX = 0;
+	_imgY = 0;
+
 	_power = NULL;														//위력
 	_PP = NULL;															//PP
 	_accuracy = NULL;													//명중률
@@ -388,7 +392,7 @@ void skill::quickAttack()												//전광석화
 	{
 		_imgName = "wildquickAttack";
 
-		_imgX =  -50;
+		_imgX =  -100;
 		_imgY = -250;
 	}
 
@@ -404,7 +408,19 @@ void skill::wingAttack()												//날개치기
 	//_skillNumber = 13;												//스킬넘버
 
 	_name = "날개치기";													//이름
-	_imgName = "cut";													//이미지이름
+	_imgName = "wingAttack";											//이미지이름
+
+	if (_isWhoSkill)
+	{
+		_imgX = -50;
+		_imgY = 0;
+	}
+	if (!_isWhoSkill)
+	{
+
+		_imgX = -20;
+		_imgY = 20;
+	}
 
 	
 
@@ -420,7 +436,20 @@ void skill::tailWhip()													//꼬리흔들기
 	//_skillNumber = 14;												//스킬넘버
 
 	_name = "꼬리흔들기";												//이름
-	_imgName = "cut";													//이미지이름
+	_imgName = "tailWhip";													//이미지이름
+
+	if (_isWhoSkill)
+	{
+		_imgX = -50;
+		_imgY = -50;
+	}
+	if (!_isWhoSkill)
+	{
+
+		_imgX = -20;
+		_imgY = -50;
+	}
+
 
 	_power = NULL;														//위력
 	_PP = 30;															//PP
@@ -434,7 +463,23 @@ void skill::peck()														//쪼기
 	//_skillNumber = 15;												//스킬넘버
 
 	_name = "쪼기";														//이름
-	_imgName = "cut";													//이미지이름
+	
+	if (_isWhoSkill)
+	{
+		_imgName = "mypoisonSting";
+
+		_imgX = -150;
+		_imgY = 70;
+
+	}
+
+	if (!_isWhoSkill)
+	{
+		_imgName = "wildpoisonSting";
+
+		_imgX = 150;
+		_imgY = -70;
+	}
 
 	_power = 35;														//위력
 	_PP = 35;															//PP
@@ -448,7 +493,7 @@ void skill::growl()														//울음소리
 	//_skillNumber = 16;												//스킬넘버
 
 	_name = "울음소리";													//이름
-	_imgName = "cut";													//이미지이름
+	_imgName = "cut";		 											//이미지이름
 
 	_power = NULL;														//위력
 	_PP = 40;															//PP
@@ -799,6 +844,8 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("wildsandAttack", "image/skill/wildsandAttack.bmp", 2750, 198, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("myquickAttack", "image/skill/myquickAttack.bmp", 6360, 340, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("wildquickAttack", "image/skill/wildquickAttack.bmp", 7440, 400, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wingAttack", "image/skill/wingAttack.bmp", 1600, 80, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("tailWhip", "image/skill/tailWhip.bmp", 1260, 190, 6, 1, true, RGB(255, 0, 255));
 
 
 }

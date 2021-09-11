@@ -184,6 +184,10 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[0].level = 5;
     _startPoketmon[0].evolutionLevel = 0;
 
+    _startPoketmon[0].totalEXP = pow(_startPoketmon[0].level, 3);
+    _startPoketmon[0].maxExp = pow(_startPoketmon[0].level + 1, 3) - _startPoketmon[0].totalEXP;
+    _startPoketmon[0].currentExp = _startPoketmon[0].totalEXP - pow(_startPoketmon[0].level, 3);
+
     _startPoketmon[0].iconNumX = 30;
     _startPoketmon[0].iconNumY = 0;
 
@@ -196,7 +200,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[0].specialDefense = 50;
     _startPoketmon[0].speed = 65;
 
-    _startPoketmon[1].maxHP = _startPoketmon[1].currentHP = 45;
+    _startPoketmon[0].maxHP = _startPoketmon[0].currentHP = 45;
 
     _startPoketmon[0].levelAttack = 1.71f;
     _startPoketmon[0].levelDefense = 1.6f;
@@ -204,6 +208,11 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[0].levelSpecialDefense = 1.68f;
     _startPoketmon[0].levelSpeed = 1.86f;
     _startPoketmon[0].levelHP = 2.43f;
+
+    _startPoketmon[0].skill[0] = 1;
+    _startPoketmon[0].skill[1] = 17;
+    _startPoketmon[0].skill[2] = 0;
+    _startPoketmon[0].skill[3] = 0;
 
     _startPoketmon[0].sumAttack = static_cast<int>(_startPoketmon[0].attack + (_startPoketmon[0].levelAttack * _startPoketmon[0].level));
     _startPoketmon[0].sumDefense = _startPoketmon[0].defense + (_startPoketmon[0].levelDefense * _startPoketmon[0].level);
@@ -213,16 +222,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[0].sumMaxHP = _startPoketmon[0].maxHP + (_startPoketmon[0].levelHP * _startPoketmon[0].level);
 
     _startPoketmon[0].currentHP = _startPoketmon[0].sumMaxHP;
-
-    _startPoketmon[0].totalEXP = pow(_startPoketmon[0].level, 3);
-    _startPoketmon[0].maxExp = pow(_startPoketmon[0].level + 1, 3) - _startPoketmon[0].totalEXP;
-    _startPoketmon[0].currentExp = _startPoketmon[0].totalEXP - pow(_startPoketmon[0].level, 3);
-
-    _startPoketmon[0].skill[0] = 1;
-    _startPoketmon[0].skill[1] = 17;
-    _startPoketmon[0].skill[2] = 0;
-    _startPoketmon[0].skill[3] = 0;
-
+       
     //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     _startPoketmon[1].name = "리아코";
@@ -231,6 +231,10 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[1].index = 158;
     _startPoketmon[1].level = 5;
     _startPoketmon[1].evolutionLevel = 0;
+
+    _startPoketmon[1].totalEXP = pow(_startPoketmon[1].level, 3);
+    _startPoketmon[1].maxExp = pow(_startPoketmon[1].level + 1, 3) - _startPoketmon[1].totalEXP;
+    _startPoketmon[1].currentExp = _startPoketmon[1].totalEXP - pow(_startPoketmon[1].level, 3);
 
     _startPoketmon[1].iconNumX = 14;
     _startPoketmon[1].iconNumY = 0;
@@ -252,6 +256,11 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[1].levelSpecialDefense = 1.66f;
     _startPoketmon[1].levelSpeed = 1.6f;
     _startPoketmon[1].levelHP = 2.54f;
+
+    _startPoketmon[1].skill[0] = 27;
+    _startPoketmon[1].skill[1] = 17;
+    _startPoketmon[1].skill[2] = 0;
+    _startPoketmon[1].skill[3] = 0;
                    
     _startPoketmon[1].sumAttack = static_cast<int>(_startPoketmon[1].attack + (_startPoketmon[1].levelAttack * _startPoketmon[1].level));
     _startPoketmon[1].sumDefense = _startPoketmon[1].defense + (_startPoketmon[1].levelDefense * _startPoketmon[1].level);
@@ -262,14 +271,9 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
                    
     _startPoketmon[1].currentHP = _startPoketmon[1].sumMaxHP;
                    
-    _startPoketmon[1].totalEXP = pow(_startPoketmon[1].level, 3);
-    _startPoketmon[1].maxExp = pow(_startPoketmon[1].level + 1, 3) - _startPoketmon[1].totalEXP;
-    _startPoketmon[1].currentExp = _startPoketmon[1].totalEXP - pow(_startPoketmon[1].level, 3);
+    
                    
-    _startPoketmon[1].skill[0] = 27;
-    _startPoketmon[1].skill[1] = 17;
-    _startPoketmon[1].skill[2] = 0;
-    _startPoketmon[1].skill[3] = 0;
+    
   
     //----------------------------------------------------------------------------------------------------------------------------------
     _startPoketmon[2].name = "치코리타";
@@ -278,6 +282,10 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].index = 154;
     _startPoketmon[2].level = 5;
     _startPoketmon[2].evolutionLevel = 0;
+
+    _startPoketmon[2].totalEXP = pow(_startPoketmon[2].level, 3);
+    _startPoketmon[2].maxExp = pow(_startPoketmon[2].level + 1, 3) - _startPoketmon[2].totalEXP;
+    _startPoketmon[2].currentExp = _startPoketmon[2].totalEXP - pow(_startPoketmon[2].level, 3);
                    
     _startPoketmon[2].iconNumX = 30;
     _startPoketmon[2].iconNumY = 0;
@@ -291,7 +299,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].specialDefense = 65;
     _startPoketmon[2].speed = 45;
                    
-    _startPoketmon[2].maxHP = _startPoketmon[1].currentHP = 45;              
+    _startPoketmon[2].maxHP = _startPoketmon[2].currentHP = 45;              
                 
     _startPoketmon[2].levelAttack = 1.67f;
     _startPoketmon[2].levelDefense = 1.86f;
@@ -299,7 +307,12 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].levelSpecialDefense = 1.86f;
     _startPoketmon[2].levelSpeed = 1.62f;
     _startPoketmon[2].levelHP = 2.49f;
-                   
+                                   
+    _startPoketmon[2].skill[0] = 1;
+    _startPoketmon[2].skill[1] = 16;
+    _startPoketmon[2].skill[2] = 0;
+    _startPoketmon[2].skill[3] = 0;
+    
     _startPoketmon[2].sumAttack = static_cast<int>(_startPoketmon[2].attack + (_startPoketmon[2].levelAttack * _startPoketmon[2].level));
     _startPoketmon[2].sumDefense = _startPoketmon[2].defense + (_startPoketmon[2].levelDefense * _startPoketmon[2].level);
     _startPoketmon[2].sumSpecialAttack = _startPoketmon[2].specialAttack + (_startPoketmon[2].levelSpecialAttack * _startPoketmon[2].level);
@@ -308,16 +321,6 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].sumMaxHP = _startPoketmon[2].maxHP + (_startPoketmon[2].levelHP * _startPoketmon[2].level);
                    
     _startPoketmon[2].currentHP = _startPoketmon[2].sumMaxHP;
-                   
-    _startPoketmon[2].totalEXP = pow(_startPoketmon[2].level, 3);
-    _startPoketmon[2].maxExp = pow(_startPoketmon[2].level + 1, 3) - _startPoketmon[2].totalEXP;
-    _startPoketmon[2].currentExp = _startPoketmon[2].totalEXP - pow(_startPoketmon[2].level, 3);
-                   
-    _startPoketmon[2].skill[0] = 1;
-    _startPoketmon[2].skill[1] = 16;
-    _startPoketmon[2].skill[2] = 0;
-    _startPoketmon[2].skill[3] = 0;
-    
 
 }
 
@@ -338,8 +341,8 @@ void poketmonManager::render()
     //TextOut(getMemDC(), 280, 180, str, strlen(str));
     //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
     //TextOut(getMemDC(), 280, 200, str, strlen(str));
-    //sprintf_s(str, "포켓몬 : %d ", _startPoketmon[2].sumAttack);
-    //TextOut(getMemDC(), 100, 320, str, strlen(str));
+    sprintf_s(str, "포켓몬 : %d ", _startPoketmon[0].sumMaxHP);
+    TextOut(getMemDC(), 100, 320, str, strlen(str));
     //sprintf_s(str, "포켓몬 max경험치 : %d ", _wildPoketmon.maxExp);
     //TextOut(getMemDC(), 100, 340, str, strlen(str));
     //sprintf_s(str, "포켓몬 current경험치 : %d ", _wildPoketmon.currentExp);

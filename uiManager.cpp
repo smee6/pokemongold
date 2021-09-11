@@ -1382,7 +1382,6 @@ void uiManager::script()
 					{
 						_isAccept = false;
 						_isConfirm = true;
-						_txtIndex++;
 					}
 					// 버튼을 누르면
 					if (!_isConfirm)
@@ -1423,7 +1422,7 @@ void uiManager::script()
 
 		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
-		RECT rcText = RectMake(30, WINSIZEY - 150, 500, 120);
+		RECT rcText = RectMake(30, WINSIZEY - 150, 600, 120);
 
 		HFONT font = CreateFont(60, 0, 0, 0, 500, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,

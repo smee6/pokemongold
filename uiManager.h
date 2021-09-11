@@ -43,7 +43,14 @@ enum class NPC
 	// battle(test)
 	BATTLE,
 	BATTLE_ATTACK,
-	BATTLE_DOWN
+	BATTLE_DOWN,
+
+	CHAMPION_BATTLE_DOWN,
+	CHAMPION_BATTLE_WIN,
+	TRAINER1_BATTLE_DOWN,
+	TRAINER1_BATTLE_WIN,
+	TRAINER2_BATTLE_DOWN,
+	TRAINER2_BATTLE_WIN
 };
 
 class tileMap;
@@ -173,7 +180,7 @@ private:
 	int _power;
 
 	bool _isWin;								// 배틀에서 승리했을때
-	bool _isWild = true;								// 야생 포켓몬인지 아닌지(트레이너(false) or 야생(true))
+	bool _isWild;								// 야생 포켓몬인지 아닌지(트레이너(false) or 야생(true))
 
 	// getStarting Pokemon
 	bool _isStarting;							// 스타팅 포켓몬 받았는지

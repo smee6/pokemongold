@@ -62,7 +62,7 @@ private:
 
 	int _imgX, _imgY;			//이미지 위치조정
 
-	SKILL_TYPE _skilltype;		//스킬타입
+	//SKILL_TYPE _skilltype;		//스킬타입
 
 
 	int _power;					// 위력
@@ -164,7 +164,7 @@ public:
 	int getSkillPP() { return _PP; }							//PP getter
 	int getSkillAccuracy() { return _accuracy; }				//명중률 getter
 
-	SKILL_TYPE getSkillType() { return _skilltype; }
+	int getSkillType() { return _skilltype; }
 
 	//CLASSIFCATION getIfcation() { return _ifcation; }			//분류
 					//타입

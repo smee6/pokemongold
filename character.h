@@ -119,6 +119,7 @@ public:
 	void setSkillPP(int arrNum, int arrNum2) { _poketmon[arrNum].skillPP[arrNum2]--; }		// PP 감소 세터
 	void setTotalExp(int arrNum, int exp) { _poketmon[arrNum].totalEXP += exp; }			// 현재 경험치 증가 세터
 	void setScriptAction(int scriptAction) {_scriptAction = scriptAction; }					// _scriptAction 세터
+	void levelUp(int arrNum) { _poketmon[arrNum].level++; }				// 레벨 세터
 
 	void setPoketmonManagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }				// 메모리 주소 링크
 	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }				// 메모리 주소 링크

@@ -1317,6 +1317,10 @@ void uiManager::script()
 					{
 						_isWin = false;
 						_character->setTotalExp(_currentPoke, 50);
+						if (_character->getPoketmon(0).totalEXP >= _character->getPoketmon(0).maxExp)
+						{
+							_character->levelUp(_currentPoke);
+						}
 					}
 					// 버튼을 누르면
 					if (!_isConfirm)
@@ -1973,6 +1977,20 @@ void uiManager::attack() //어택
 				{
 				case 0:		// 야생
 					_poketmonManager->setCurrentWildHP(10);
+
+					if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+
+						TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+						_npc = NPC::BATTLE_DOWN;
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 1:		// 트레이너1
 					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
@@ -1985,20 +2003,20 @@ void uiManager::attack() //어택
 					break;
 				}
 
-				if (_currentEnemyPokemon.currentHP <= 0)
-				{
-
-					vector<string> _vStr;
-
-					_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
-
-					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
-
-					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
-					_isWin = true;
-				}
+				//if (_currentEnemyPokemon.currentHP <= 0)
+				//{
+				//
+				//	vector<string> _vStr;
+				//
+				//	_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+				//
+				//	TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+				//
+				//	_npc = NPC::BATTLE_DOWN;
+				//	_isScript = true;
+				//	_isCount = true;
+				//	_isWin = true;
+				//}
 			}
 		}
 		
@@ -2022,8 +2040,6 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
 				}
 
 				_isTurn = false;
@@ -2105,8 +2121,6 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
 				}
 			}
 		}
@@ -2126,6 +2140,22 @@ void uiManager::attack() //어택
 				{
 				case 0:		// 야생
 					_poketmonManager->setCurrentWildHP(10);
+
+					_isTurn = false;
+					_isNext = false;
+					if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+
+						TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+
+						_npc = NPC::BATTLE_DOWN;
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 1:		// 트레이너1
 					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
@@ -2141,20 +2171,20 @@ void uiManager::attack() //어택
 				_isTurn = false;
 				_isNext = false;
 
-				if (_currentEnemyPokemon.currentHP <= 0)
-				{
-
-					vector<string> _vStr;
-
-					_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
-
-					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
-
-					_npc = NPC::BATTLE_DOWN;
-					_isScript = true;
-					_isCount = true;
-					_isWin = true;
-				}
+				//if (_currentEnemyPokemon.currentHP <= 0)
+				//{
+				//
+				//	vector<string> _vStr;
+				//
+				//	_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+				//
+				//	TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
+				//
+				//	_npc = NPC::BATTLE_DOWN;
+				//	_isScript = true;
+				//	_isCount = true;
+				//	_isWin = true;
+				//}
 			}
 			else if (_isNext)
 			{

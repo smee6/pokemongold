@@ -1315,14 +1315,17 @@ void uiManager::script()
 						_character->setTotalExp(_currentPoke, 50);
 					}
 					// 버튼을 누르면
-					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+					if (!_isConfirm)
 					{
-						// 스킵 상태 false(다음 문장 스킵되지 않도록)
-						_isScriptSkip = false;
+						if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+						{
+							// 스킵 상태 false(다음 문장 스킵되지 않도록)
+							_isScriptSkip = false;
 
-						// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
-						_txtIndex = 0;
-						_scriptIndex++;
+							// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
+							_txtIndex = 0;
+							_scriptIndex++;
+						}
 					}
 				}
 			}
@@ -1350,6 +1353,7 @@ void uiManager::script()
 				}
 			}
 		}
+		// 배틀 아닐 때
 		else if (!_isBattle)
 		{
 			// 배경이미지 렌더
@@ -1370,15 +1374,25 @@ void uiManager::script()
 				// 현재 문자열의 길이가 문장 전체 길이보다 커지려고하면
 				else if (_txtIndex >= _txt.length())
 				{
-					// 버튼을 누르면
-					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-					{
-						// 스킵 상태 false(다음 문장 스킵되지 않도록)
-						_isScriptSkip = false;
+					// 스킵 상태 false(다음 문장 스킵되지 않도록)
+					_isScriptSkip = false;
 
-						// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
-						_txtIndex = 0;
-						_scriptIndex++;
+					// 스타팅 포켓몬 선택중인 경우
+					if ((_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA) && _scriptIndex == 0 && _txtIndex == _txt.length())
+					{
+						_isAccept = false;
+						_isConfirm = true;
+						_txtIndex++;
+					}
+					// 버튼을 누르면
+					else if (!_isAccept)
+					{
+						if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+						{
+							// 문자 인덱스 초기화 해주고 다음 줄로 넘겨줌
+							_txtIndex = 0;
+							_scriptIndex++;
+						}
 					}
 				}
 			}
@@ -1421,6 +1435,21 @@ void uiManager::script()
 
 		SelectObject(_backBuffer->getMemDC(), oldFont);
 		DeleteObject(font);
+
+
+		char str[128];
+
+		sprintf_s(str, "battle : %d", _isBattle);
+		TextOut(_backBuffer->getMemDC(), 300, 10, str, strlen(str));
+
+		sprintf_s(str, "confirm : %d", _isConfirm);
+		TextOut(_backBuffer->getMemDC(), 300, 30, str, strlen(str));
+
+		sprintf_s(str, "script : %d", _isScript);
+		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
+
+		sprintf_s(str, "acceptCount : %d", _acceptCount);
+		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
 
@@ -2095,6 +2124,7 @@ void uiManager::getStartingPokemon()
 void uiManager::confirm()
 {
 	uiOpen = true;
+	_isAccept = false;
 
 	if (_acceptCount == 0)
 	{
@@ -2105,6 +2135,10 @@ void uiManager::confirm()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
+			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
+			{
+
+			}
 			_isAccept = true;
 			_isConfirm = false;
 			uiOpen = false;
@@ -2120,7 +2154,14 @@ void uiManager::confirm()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
-			_isAccept = false;
+ 			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
+			{
+				_npc = NPC::SELECTCANCEL;
+				_isCount = true;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+			}
+			_isAccept = true;
 			_isConfirm = false;
 			uiOpen = false;
 			_acceptCount = 0;

@@ -1211,6 +1211,24 @@ void uiManager::script()
 				break;
 			}
 			break;
+		case NPC::CHAMPION_BATTLE_DOWN:
+			_vScript = TXTDATA->txtLoad("script/관장포켓몬기절.txt");
+			break;
+		case NPC::CHAMPION_BATTLE_WIN:
+			_vScript = TXTDATA->txtLoad("script/관장_배틀승리.txt");
+			break;
+		case NPC::TRAINER1_BATTLE_DOWN:
+			_vScript = TXTDATA->txtLoad("script/트레이너1포켓몬기절.txt");
+			break;
+		case NPC::TRAINER1_BATTLE_WIN:
+			_vScript = TXTDATA->txtLoad("script/트레이너1_배틀승리.txt");
+			break;
+		case NPC::TRAINER2_BATTLE_DOWN:
+			_vScript = TXTDATA->txtLoad("script/트레이너2포켓몬기절.txt");
+			break;
+		case NPC::TRAINER2_BATTLE_WIN:
+			_vScript = TXTDATA->txtLoad("script/트레이너2_배틀승리.txt");
+			break;
 		default:
 			break;
 		}
@@ -1264,6 +1282,33 @@ void uiManager::script()
 			//	_character->setTotalExp(_currentPoke, 50);
 			//}
 
+			if (_npc == NPC::CHAMPION_BATTLE_DOWN || _npc == NPC::TRAINER1_BATTLE_DOWN || _npc == NPC::TRAINER2_BATTLE_DOWN)
+			{
+				_npc == NPC::CHAMPION;
+				_currentEnemyIndex++;
+				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+				_isAttack = false;
+				_isTurn = false;
+				_isNext = false;
+			}
+
+			if (_npc == NPC::CHAMPION_BATTLE_WIN || _npc == NPC::TRAINER1_BATTLE_WIN || _npc == NPC::TRAINER2_BATTLE_WIN)
+			{
+				if (_npc == NPC::CHAMPION_BATTLE_WIN)
+				{
+					_npc == NPC::CHAMPION;
+					_isScript = true;
+					_isCount = true;
+				}
+				_isBattle = false;
+				_isAttack = false;
+				_attackCount = 0;
+				_isTurn = false;
+				_isNext = false;
+				_whoTurn = 0;
+				_currentEnemyIndex = 0;
+			}
+
 			if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
@@ -1286,11 +1331,15 @@ void uiManager::script()
 				getStartingPokemon();
 			}
 
-			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
-			_isScript = false;
-			_txtIndex = 0;
-			_scriptIndex = 0;
-			uiOpen = false;
+			// 배틀 승리 상황이 아니면
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN)
+			{
+				// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
+				_isScript = false;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+			}
 		}
 
 		if (_isBattle)
@@ -1456,7 +1505,7 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		sprintf_s(str, "%s", _currentEnemyPokemon.name.c_str());
+		sprintf_s(str, "%d", _currentEnemyIndex);
 		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
@@ -1999,7 +2048,28 @@ void uiManager::attack() //어택
 					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
 					break;
 				case 3:		// 관장
-					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
+
+					if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP == 0)
+						{
+							_npc = NPC::CHAMPION_BATTLE_WIN;
+						}
+						else if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n 50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/관장포켓몬기절.txt", _vStr);
+
+							_npc = NPC::CHAMPION_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						//_isWin = true;
+					}
 					break;
 				}
 
@@ -2164,7 +2234,31 @@ void uiManager::attack() //어택
 					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
 					break;
 				case 3:		// 관장
-					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
+
+					_isTurn = false;
+					_isNext = false;
+
+					if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP == 0)
+						{
+							_npc = NPC::CHAMPION_BATTLE_WIN;
+						}
+						else if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n 50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/관장포켓몬기절.txt", _vStr);
+
+							_npc = NPC::CHAMPION_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						//_isWin = true;
+					}
 					break;
 				}
 

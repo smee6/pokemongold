@@ -388,8 +388,8 @@ void skill::quickAttack()												//전광석화
 	{
 		_imgName = "wildquickAttack";
 
-		_imgX = -50;
-		_imgY = -200;
+		_imgX =  -50;
+		_imgY = -250;
 	}
 
 	_power = 40;														//위력
@@ -798,7 +798,7 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("mysandAttack", "image/skill/mysandAttack.bmp", 2750, 198, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("wildsandAttack", "image/skill/wildsandAttack.bmp", 2750, 198, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("myquickAttack", "image/skill/myquickAttack.bmp", 6360, 340, 12, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("wildquickAttack", "image/skill/wildquickAttack.bmp", 6324, 366, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildquickAttack", "image/skill/wildquickAttack.bmp", 7440, 400, 12, 1, true, RGB(255, 0, 255));
 
 
 }

@@ -24,7 +24,6 @@ enum class CLASSIFCATION	// 분류
 
 enum class SKILL_TYPE
 {
-	NONE,	//없음
 	NOMAL,	//노말
 	FIRE,	//불
 	WATER,	//물

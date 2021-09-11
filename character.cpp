@@ -212,6 +212,7 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
         // 맥스 프레임 도달하면 배틀씬으로 전환
         if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
         {
+            UIMANAGER->setNPC(NPC::BATTLE, true);
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
             UIMANAGER->setIsBattleScript(true); 

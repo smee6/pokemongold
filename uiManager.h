@@ -134,7 +134,8 @@ private:
 	bool uiOpen = false;						// ui 켜져 있는지 여부
 
 	//battle
-	tagPOKETMON_PLAYER _currentEnemyPokemon;
+	tagPOKETMON_PLAYER _currentEnemyPokemon;	// 현재 나와있는 상대 포켓몬
+	tagPOKETMON_PLAYER _currentPokemon;			// 현재 나와있는 내 포켓몬
 	bool _isAnimation;							// 애니메이션이 끝났는지에 대한 체크변수
 
 	image* _playerImage;						// 플레이어 이미지

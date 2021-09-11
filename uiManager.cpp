@@ -1119,6 +1119,7 @@ void uiManager::script()
 			else if (_drCount == 2) _vScript = TXTDATA->txtLoad("script/공박사_포켓몬후.txt");
 			else _vScript = TXTDATA->txtLoad("script/공박사_일상.txt");
 
+			if (_drCount == 1 && !_isStarting) break;
 			_drCount++;
 
 			break;
@@ -1260,6 +1261,12 @@ void uiManager::script()
 				{
 					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 				}
+			}
+
+			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
+			{
+				_isStarting == true;
+				getStartingPokemon();
 			}
 
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
@@ -2060,6 +2067,23 @@ void uiManager::useGoodMedicine()
 {
 	//사용 대상의 체력을 100 회복한다
 	//함수로 안하고 직접 가방안에 넣어서 만들었습니다.
+}
+
+void uiManager::getStartingPokemon()
+{
+	// 공박사와 대화 한 번 진행된 후에
+	if (_drCount == 1)
+	{
+
+	}
+	// 포켓볼에 말걸면 스크립트 출력
+
+	// (예/아니오 선택)
+	
+	// 포켓몬 획득 (스타팅 포켓몬 초기값 정보 필요 - 이름, 레벨, 공격력 등등)
+	_character->setPoketmon(_poketmonManager->getWildPoketmon(), 0);		// 0번 슬롯에 포켓몬 추가
+	_drCount++;
+	//_isStarting = true;
 }
 
 bool uiManager::isUiOpen()

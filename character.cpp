@@ -266,8 +266,6 @@ void character::npcScript() // npc 대화 스크립트 처리
 
             if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _scriptAction == 0 && !_npc->getIsMove()) // 스페이스바 눌렀을 때
             {
-                UIMANAGER->setIsScript(true); // 스크립트 켜줌.
-
                 switch (i) // 충돌된 npc의 대사 선택
                 {
                 case 0: // 어머니
@@ -300,18 +298,20 @@ void character::npcScript() // npc 대화 스크립트 처리
                     _scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 8: // 브케인
-                    UIMANAGER->setNPC(NPC::CYNDAQUIL, true);
+                    if (!UIMANAGER->getIsStarting() && UIMANAGER->getDrCount() == 1) UIMANAGER->setNPC(NPC::CYNDAQUIL, true);
                     //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 9: // 리아코
-                    UIMANAGER->setNPC(NPC::TOTODILE, true);
+                    if (!UIMANAGER->getIsStarting() && UIMANAGER->getDrCount() == 1) UIMANAGER->setNPC(NPC::TOTODILE, true);
                     //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 10: // 치코리타
-                    UIMANAGER->setNPC(NPC::CHIKORITA, true);
+                    if (!UIMANAGER->getIsStarting() && UIMANAGER->getDrCount() == 1) UIMANAGER->setNPC(NPC::CHIKORITA, true);
                     //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
-                }                
+                }
+                if (UIMANAGER->getIsCount()) UIMANAGER->setIsScript(true); // 스크립트 켜줌.
+
             }
         }
     }

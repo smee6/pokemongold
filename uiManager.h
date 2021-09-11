@@ -33,9 +33,9 @@ enum class NPC
 
 	// about pokemon
 	EVOLUTION,
+	CYNDAQUIL,		// 브케인
 	TOTODILE,		// 리아코
 	CHIKORITA,		// 치코리타
-	CYNDAQUIL,		// 브케인
 
 	// starting select cancel
 	SELECTCANCEL,
@@ -174,7 +174,6 @@ private:
 	bool _isConfirm;							// 확인창 유무
 	bool _isAccept;								// true == 예, false == 아니오
 	int _acceptCount;							// 0 == 예, 1 == 아니오
-	int _check;
 
 	// class
 	NPC _npc;

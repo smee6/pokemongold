@@ -1383,7 +1383,6 @@ void uiManager::script()
 						_isAccept = false;
 						_isConfirm = true;
 						_txtIndex++;
-						_check++;
 					}
 					// 버튼을 누르면
 					if (!_isConfirm)
@@ -1449,8 +1448,8 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		sprintf_s(str, "check : %d", _check);
-		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
+		//sprintf_s(str, "check : %d", _check);
+		//TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
 
@@ -2117,7 +2116,18 @@ void uiManager::getStartingPokemon()
 	// (예/아니오 선택)
 	
 	// 포켓몬 획득 (스타팅 포켓몬 초기값 정보 필요 - 이름, 레벨, 공격력 등등)
-	_character->setPoketmon(_poketmonManager->getWildPoketmon(), 0);		// 0번 슬롯에 포켓몬 추가
+	switch (_npc)
+	{
+	case NPC::TOTODILE:
+		_character->setPoketmon(_poketmonManager->getStartPoketmon()[1], 0);		// 0번 슬롯에 포켓몬 추가
+		break;
+	case NPC::CHIKORITA:
+		_character->setPoketmon(_poketmonManager->getStartPoketmon()[2], 0);		// 0번 슬롯에 포켓몬 추가
+		break;
+	case NPC::CYNDAQUIL:
+		_character->setPoketmon(_poketmonManager->getStartPoketmon()[0], 0);		// 0번 슬롯에 포켓몬 추가
+		break;
+	}
 	_drCount++;
 	//_isStarting = true;
 }
@@ -2126,7 +2136,6 @@ void uiManager::confirm()
 {
 	uiOpen = true;
 	_isAccept = false;
-	_check++;
 
 	if (_acceptCount == 0)
 	{
@@ -2163,7 +2172,6 @@ void uiManager::confirm()
 				_isCount = true;
 				_txtIndex = 0;
 				_scriptIndex = 0;
-				_check = 0;
 			}
 			_isAccept = false;
 			_isConfirm = false;

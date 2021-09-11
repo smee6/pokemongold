@@ -46,12 +46,16 @@ enum class NPC
 	BATTLE_DOWN
 };
 
-
+class tileMap;
 class character;
 
 class uiManager : public singletonBase<uiManager>
 {
 private:
+
+	tileMap* _tileMap;
+
+
 	int gold = 5000;
 	int soundVolume = 100;
 	int shopCnt = 0;							//상점 메뉴 선택지
@@ -290,5 +294,6 @@ public:
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 	void setSkillMemoryAddressLink(poketmonManager* pm) { _poketmonManager = pm; }
+	void setTileMapMemoryAddressLink(tileMap* tileMap) { _tileMap = tileMap; }
 };
 

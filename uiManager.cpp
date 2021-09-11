@@ -4,6 +4,7 @@
 #include "character.h"
 #include "progressBar.h"
 #include "poketmonManager.h"
+#include "tileMap.h"
 
 vector<tagPOKETMON_PLAYER> myPokemon(6);
 
@@ -74,6 +75,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("gear0", "image/menuUI/gear_0.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("gear1", "image/menuUI/gear_1.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("gear2", "image/menuUI/gear_2.bmp", 640, 576, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("pointer", "image/menuUI/map_p.bmp", 50, 50, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("status0", "image/menuUI/status_0.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("status1", "image/menuUI/status_1.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -839,7 +842,9 @@ void uiManager::pokeGear()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("gear1")->render(_backBuffer->getMemDC());
-
+			IMAGEMANAGER->findImage("pointer")->render(_backBuffer->getMemDC(),
+				535+_tileMap->getCameraX() / 13, 
+				240+ _tileMap->getCameraY() /16);
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
@@ -870,9 +875,9 @@ void uiManager::pokeGear()
 			HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
 
 
-			sprintf_s(str, "포켓기어! 다음장은 맵이다 !");
+			sprintf_s(str, "포켓기어를 사용할 수 있습니다.");
 			TextOut(_backBuffer->getMemDC(), 135, 190, str, strlen(str));
-			sprintf_s(str, "여기에 날짜랑 요일 뜨면 됨");
+			sprintf_s(str, "목요일 10 시 00 분");
 			TextOut(_backBuffer->getMemDC(), 135, 240, str, strlen(str));
 
 			SelectObject(_backBuffer->getMemDC(), oldFont2);
@@ -1382,6 +1387,7 @@ void uiManager::script()
 					{
 						_isAccept = false;
 						_isConfirm = true;
+						_txtIndex++;
 					}
 					// 버튼을 누르면
 					if (!_isConfirm)
@@ -1422,7 +1428,7 @@ void uiManager::script()
 
 		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
-		RECT rcText = RectMake(30, WINSIZEY - 150, 600, 120);
+		RECT rcText = RectMake(30, WINSIZEY - 150, 500, 120);
 
 		HFONT font = CreateFont(60, 0, 0, 0, 500, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,

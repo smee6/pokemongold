@@ -158,11 +158,14 @@ private:
 
 	int _behaviorCount;							//커서 움직임을 위한 변수
 
-	bool _isBattleScript;
+	bool _isBattleScript;						// 배틀 시작 스크립트 실행 여부
 	bool _isTurn;								// 공격 애니메이션 띄우는 중인지
 	bool _isNext;								// 후턴 포켓몬의 공격 차례인지
+	bool _isBattleStart;						// 배틀 시작 시 한 번 체크
 
-	int _currentPoke = 0;						// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
+	int _currentPoke;							// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
+	int _currentEnemyIndex;						// 상대방의 현재 포켓몬의 인덱스 번호
+	int _currentEnemy;							// 현재 상대방 종류 (0 == 야생 / 1 == 트레이너1 / 2 == 트레이너2 / 3 == 관장)
 	int _currentSkill;							// 현재 사용한 스킬의 인덱스 번호(0~3)
 
 	int _attackCount;							// 공격 순서 판정용
@@ -304,6 +307,9 @@ public:
 
 	bool getIsChikorita() { return _isGetChikorita; }
 	void setIsChikorita(bool Chikorita) { _isGetChikorita = Chikorita; }
+
+	bool getIsBattleStart() { return _isBattleStart; }
+	void setIsBattleStart(bool battleStart) { _isBattleStart = battleStart; }
 
 	int getDrCount() { return _drCount; }
 

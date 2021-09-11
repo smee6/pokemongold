@@ -1264,7 +1264,7 @@ void uiManager::script()
 			//	_character->setTotalExp(_currentPoke, 50);
 			//}
 
-			if (_isBattle && (_poketmonManager->getWildPoketmon().currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
+			if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
 				_isBattle = false;
@@ -1272,6 +1272,7 @@ void uiManager::script()
 				_isTurn = false;
 				_isNext = false;
 				_whoTurn = 0;
+				_currentEnemyIndex = 0;
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -1465,35 +1466,61 @@ void uiManager::battle()
 
 	_playerImage = IMAGEMANAGER->findImage("플레이어");
 	
-	if (_isWild)
-	{
-		_currentEnemyPokemon = _poketmonManager->getWildPoketmon();
-	}
-	else if (!_isWild)
-	{
-		switch (_npc)
+		if (_isWild)
 		{
-		case NPC::CHAMPION:
-			_enemyImage = IMAGEMANAGER->findImage("관장");
-			_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[0];
-			_npc = NPC::CHAMPION;
-			break;
-		case NPC::TRAINER1:
-			_enemyImage = IMAGEMANAGER->findImage("트레이너");
-			_currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[0];
-			_npc = NPC::TRAINER1;
-			break;
-		case NPC::TRAINER2:
-			_enemyImage = IMAGEMANAGER->findImage("트레이너");
-			_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[0];
-			_npc = NPC::TRAINER2;
-			break;
-		default:
-			_enemyImage = IMAGEMANAGER->findImage("관장");
-			_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[0];
-			_npc = NPC::CHAMPION;
+			_currentEnemy = 0;
+			_currentEnemyPokemon = _poketmonManager->getWildPoketmon();
 		}
-	}
+		else if (!_isWild)
+		{
+			switch (_npc)
+			{
+			case NPC::CHAMPION:
+				if (_isBattleStart)
+				{
+					_isBattleStart = false;
+
+					_currentEnemyIndex = 0;
+				}
+				_currentEnemy = 3;
+				_enemyImage = IMAGEMANAGER->findImage("관장");
+				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+				break;
+			case NPC::TRAINER1:
+				if (_isBattleStart)
+				{
+					_isBattleStart = false;
+
+					_currentEnemyIndex = 0;
+				}
+				_currentEnemy = 1;
+				_enemyImage = IMAGEMANAGER->findImage("트레이너");
+				_currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex];
+				break;
+			case NPC::TRAINER2:
+				if (_isBattleStart)
+				{
+					_isBattleStart = false;
+
+					_currentEnemyIndex = 0;
+				}
+				_currentEnemy = 2;
+				_enemyImage = IMAGEMANAGER->findImage("트레이너");
+				_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex];
+				break;
+			default:
+				if (_isBattleStart)
+				{
+					_isBattleStart = false;
+
+					_npc = NPC::CHAMPION;
+					_currentEnemyIndex = 0;
+				}
+				_currentEnemy = 3;
+				_enemyImage = IMAGEMANAGER->findImage("관장");
+				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+			}
+		}
 
 	_currentPokemon = _character->getPoketmon(0);
 
@@ -1750,7 +1777,7 @@ void uiManager::battle()
 
 	char str[128];
 
-	sprintf_s(str, "%d", _poketmonManager->getWildPoketmon().level);
+	sprintf_s(str, "%d", _currentEnemyPokemon.level);
 	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
 }
 
@@ -1912,7 +1939,7 @@ void uiManager::attack() //어택
 
 	// 속도 비교
 	// 플레이어가 더 빠를 때
-	if (_character->getPoketmon(_currentPoke).speed >= _poketmonManager->getWildPoketmon().speed)
+	if (_character->getPoketmon(_currentPoke).speed >= _currentEnemyPokemon.speed)
 	{
 		// 내 턴
 		if (_attackCount == 0)
@@ -1940,15 +1967,30 @@ void uiManager::attack() //어택
 
 				_attackCount++;
 
+				// 상대별로 데미지 적용
 				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
-				_poketmonManager->setCurrentHP(10);
+				switch (_currentEnemy)
+				{
+				case 0:		// 야생
+					_poketmonManager->setCurrentWildHP(10);
+					break;
+				case 1:		// 트레이너1
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
+					break;
+				case 2:		// 트레이너2
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
+					break;
+				case 3:		// 관장
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
+					break;
+				}
 
-				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				if (_currentEnemyPokemon.currentHP <= 0)
 				{
 
 					vector<string> _vStr;
 
-					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+					_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
 
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
@@ -1968,7 +2010,7 @@ void uiManager::attack() //어택
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
-				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
+				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
 				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -1993,20 +2035,20 @@ void uiManager::attack() //어택
 
 				char skill[128];
 
-				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
 				if (_poketmonManager->getSkill()->getSkillName() == " -")
 				{
 					while (true)
 					{
 						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
-						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+						_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
 					}
 				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
-				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
+				_vStr.push_back(_currentEnemyPokemon.name + "의\n" + skill + "!;" + "aaa;");
 
 				TXTDATA->txtSave("script/공격.txt", _vStr);
-				//_poketmonManager->getWildPoketmon();//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
+				//_currentEnemyPokemon;//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
 			}
 
 		}
@@ -2026,17 +2068,17 @@ void uiManager::attack() //어택
 
 				char skill[128];
 
-				_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
 				if (_poketmonManager->getSkill()->getSkillName() == " -")
 				{
 					while (true)
 					{
 						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
-						_poketmonManager->getSkill()->skillNumLink(_poketmonManager->getWildPoketmon().skill[RND->getInt(4)]);
+						_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
 					}
 				}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
-				_vStr.push_back(_poketmonManager->getWildPoketmon().name + "의\n" + skill + "!;" + "aaa;");
+				_vStr.push_back(_currentEnemyPokemon.name + "의\n" + skill + "!;" + "aaa;");
 
 				TXTDATA->txtSave("script/공격.txt", _vStr);
 
@@ -2051,7 +2093,7 @@ void uiManager::attack() //어택
 
 				_attackCount++;
 
-				//_character->setCurrentHP(_currentPoke, _poketmonManager->getWildPoketmon().sumAttack * _poketmonManager->getSkill()->getSkillPower());
+				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
 				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
@@ -2078,18 +2120,33 @@ void uiManager::attack() //어택
 				_poketmonManager->getSkill()->setWhoSkill(false);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
+				// 상대별로 데미지 적용
 				//_poketmonManager->setCurrentHP(_character->getPoketmon(_currentPoke).sumAttack * _power);
-				_poketmonManager->setCurrentHP(10);
+				switch (_currentEnemy)
+				{
+				case 0:		// 야생
+					_poketmonManager->setCurrentWildHP(10);
+					break;
+				case 1:		// 트레이너1
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
+					break;
+				case 2:		// 트레이너2
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
+					break;
+				case 3:		// 관장
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
+					break;
+				}
 
 				_isTurn = false;
 				_isNext = false;
 
-				if (_poketmonManager->getWildPoketmon().currentHP <= 0)
+				if (_currentEnemyPokemon.currentHP <= 0)
 				{
 
 					vector<string> _vStr;
 
-					_vStr.push_back("야생의 " + _poketmonManager->getWildPoketmon().name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+					_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
 
 					TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
@@ -2111,7 +2168,7 @@ void uiManager::attack() //어택
 
 				TXTDATA->txtSave("script/공격.txt", _vStr);
 				
-				//_poketmonManager->getWildPoketmon();//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
+				//_currentEnemyPokemon;//getSkill()->setIsSkill(true);						// 야생 포켓몬 공격 애니메이션 출력
 			}
 
 		}

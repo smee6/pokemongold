@@ -88,6 +88,9 @@ public:
 
 	skill* getSkill() { return _skill; }
 
-	void setCurrentHP(int hp) { _wildPoketmon.currentHP -= hp; }
+	void setCurrentWildHP(int hp) { _wildPoketmon.currentHP -= hp; }
+	void setCurrentChampionHP(int arrNum, int hp) { _championPoketmon[arrNum].currentHP -= hp; }
+	void setCurrentTrainer1HP(int arrNum, int hp) { _trainer1Poketmon[arrNum].currentHP -= hp; }
+	void setCurrentTrainer2HP(int arrNum, int hp) { _trainer2Poketmon[arrNum].currentHP -= hp; }
 
 };

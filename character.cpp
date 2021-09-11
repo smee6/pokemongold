@@ -213,6 +213,7 @@ void character::poketmonMeet() // 器南阁 炼快 矫 贸府
         if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
         {
             UIMANAGER->setNPC(NPC::BATTLE, true);
+            UIMANAGER->setIsBattleStart(true);
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
             UIMANAGER->setIsBattleScript(true); 

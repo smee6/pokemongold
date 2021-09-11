@@ -62,6 +62,7 @@ private:
 
 	int _imgX, _imgY;			//이미지 위치조정
 
+	
 
 
 	int _power;					// 위력

@@ -21,7 +21,7 @@ HRESULT skill::init()
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
 
-	_isWhoSkill = false;							//초기화
+	_isWhoSkill = true;
 	_isSkill = false;								//초기화
 
 	return S_OK;
@@ -42,10 +42,11 @@ void skill::update()
 
 	
 
-	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
-	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
 
-	rc = RectMake(480, _imgPoint.y, 112, 112);	// 포켓몬이 없어서 대신 할 것을 만듬
+	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
+	else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
+
+
 
 
 	skillAni();
@@ -74,10 +75,13 @@ void skill::tackle()													// 몸통박치기
 	//_skillNumber = 1;													//스킬넘버
 
 	_name = "몸통박치기";												//이름
-	_imgName = "attack";												//이미지이름
-
+	
 	_imgX = 25;
 	_imgY = 0;
+
+	_imgName = "attack";												//이미지이름
+
+	
 
 	_power = 40;														//위력
 	_PP = 35;															//PP
@@ -92,7 +96,27 @@ void skill::stringShot()												//실뿜기
 	//_skillNumber = 2;													//스킬넘버
 
 	_name = "실뿜기";													//이름
-	_imgName = "cut";													//이미지이름
+	
+	if (_isWhoSkill)
+	{
+
+		_imgX = -200;
+		_imgY = 0;
+
+		_imgName = "mystringShot";											//이미지이름
+	
+	}
+
+
+	if (!_isWhoSkill)
+	{
+		_imgX = 0;
+		_imgY = -100;
+
+		_imgName = "wildstringShot";											//이미지이름
+		
+	}
+
 
 	_power = NULL;														//위력
 	_PP = 40;															//PP
@@ -107,10 +131,23 @@ void skill::confusion()													//염동력
 	//_skillNumber = 3;													//스킬넘버
 
 	_name = "염동력";													//이름
-	_imgName = "confuseRay";											//이미지이름
+	if (_isWhoSkill)
+	{
+		_imgX = -200;
+		_imgY = 50;
 
-	_imgX = 25;
-	_imgY = 0;
+		_imgName = "myconfusion";											//이미지이름
+	}
+	
+	
+	if (!_isWhoSkill)
+	{
+		_imgX = 125;
+		_imgY = -100;
+
+		_imgName = "wildconfusion";											//이미지이름
+	}										
+
 
 	_power = 50;														//위력
 	_PP = 25;															//PP
@@ -180,9 +217,26 @@ void skill::poisonSting()												//독침
 	_index = RND->getFromIntTo(0, 100);
 
 	_name = "독침";														//이름
-	_imgName = "horn";													//이미지이름
-
 	
+	
+	if (_isWhoSkill)
+	{
+		_imgName = "mypoisonSting";											//이미지이름
+		
+		_imgX = -150;
+		_imgY = 70;
+
+	}
+	
+	if (!_isWhoSkill)
+	{
+		_imgName = "wildpoisonSting";
+
+		_imgX = 150;
+		_imgY = -70;
+	}
+
+
 	_power = 15;														//위력
 	_PP = 35;															//PP
 	_accuracy = 100;													//명중률
@@ -198,7 +252,24 @@ void skill::focusEnergy()												//기충전
 	//_skillNumber = 8;													//스킬넘버
 
 	_name = "기충전";													//이름
-	_imgName = "growth";												//이미지이름
+
+	if (_isWhoSkill)
+	{
+		_imgName = "growth";
+
+		_imgX = -380;
+		_imgY = 160;
+
+	}
+
+	if (!_isWhoSkill)
+	{
+		_imgName = "growth";
+
+		_imgX = 300;
+		_imgY = -220;
+	}
+
 
 	_power = NULL;														//위력
 	_PP = 30;															//PP
@@ -212,7 +283,26 @@ void skill::twineedle()													//더블니들
 	//_skillNumber = 9;													//스킬넘버
 
 	_name = "더블니들";													//이름
-	_imgName = "cut";													//이미지이름
+	
+	if (_isWhoSkill)
+	{
+		_imgName = "myhorn";
+
+		_imgX = -150;
+		_imgY = 70;
+
+	}
+
+	if (!_isWhoSkill)
+	{
+		_imgName = "wildhorn";
+
+		_imgX = 150;
+		_imgY = -70;
+	}
+
+
+
 
 	_power = 25;														//위력
 	_PP = 20;															//PP
@@ -226,7 +316,23 @@ void skill::sandAttack()												//모래뿌리기
 	//_skillNumber = 10;												//스킬넘버
 
 	_name = "모래뿌리기";												//이름
-	_imgName = "cut";													//이미지이름
+	
+	if (_isWhoSkill)
+	{
+		_imgName = "mysandAttack";
+
+		_imgX = -200;
+		_imgY = 0;
+
+	}
+
+	if (!_isWhoSkill)
+	{
+		_imgName = "wildsandAttack";
+
+		_imgX = 80;
+		_imgY = -150;
+	}
 
 	_power = NULL;														//위력
 	_PP = 15;															//PP
@@ -243,6 +349,21 @@ void skill::gust()														//바람일으키기
 	_name = "바람일으키기";												//이름
 	_imgName = "squall";												//이미지이름
 
+	if (_isWhoSkill)
+	{
+		
+		_imgX = 0;
+		_imgY = 0;
+
+	}
+
+	if (!_isWhoSkill)
+	{
+		_imgX = 0;
+		_imgY = 25;
+	}
+
+
 	_power = 40;														//위력
 	_PP = 35;															//PP
 	_accuracy = 100;													//명중률
@@ -255,7 +376,21 @@ void skill::quickAttack()												//전광석화
 	//_skillNumber = 12;												//스킬넘버
 
 	_name = "전광석화";													//이름
-	_imgName = "move";													//이미지이름
+	
+	if (_isWhoSkill)
+	{
+		_imgName = "myquickAttack";
+
+		_imgX = -400;
+		_imgY = -15;
+	}
+	if (!_isWhoSkill)
+	{
+		_imgName = "wildquickAttack";
+
+		_imgX = -50;
+		_imgY = -200;
+	}
 
 	_power = 40;														//위력
 	_PP = 30;															//PP
@@ -564,7 +699,8 @@ void skill::render()
 
 	char str[128];
 
-	//if (_isSkill) Rectangle(getMemDC(), rc);
+	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
+	else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 
 	if (_isSkill) IMAGEMANAGER->frameRender(_imgName, getMemDC(), _imgPoint.x, _imgPoint.y, _currentFrame, 0);
 
@@ -612,11 +748,13 @@ void skill::skillAni()
 				// 배틀 진행
 				if (UIMANAGER->getAttackCount() < 2)
 				{
+
 					UIMANAGER->setIsNext(true);
 					UIMANAGER->setIsScript(true);
 					UIMANAGER->setIsCount(true);
 					UIMANAGER->setIsTurn(false);
 				}
+
 				else if (UIMANAGER->getAttackCount() > 1)
 				{
 					UIMANAGER->setIsAttack(false);
@@ -633,8 +771,9 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("bind", "image/skill/bind.bmp", 2880, 180, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("cut", "image/skill/cut.bmp", 1440, 150, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("fire", "image/skill/fire.bmp", 176, 100, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("growth", "image/skill/growth.bmp", 2160, 144, 12, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("horn", "image/skill/horn.bmp", 108, 27, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("growth", "image/skill/growth.bmp", 2400, 150, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("myhorn", "image/skill/myhorn.bmp", 900, 90, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildhorn", "image/skill/wildhorn.bmp", 900, 90, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("attack3", "image/skill/attack3.bmp", 192, 64, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("cut3", "image/skill/cut3.bmp", 144, 36, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("lightScreen", "image/skill/lightScreen.bmp", 900, 126, 10, 1, true, RGB(255, 0, 255));
@@ -644,12 +783,22 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("shock", "image/skill/shock.bmp", 138, 42, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("snap", "image/skill/snap.bmp", 4147, 173, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("spark", "image/skill/spark.bmp", 352, 44, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 2236, 114, 43, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("squall", "image/skill/squall.bmp", 4300, 114, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("slash", "image/skill/slash.bmp", 480, 60, 43, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("skyAttack", "image/skill/skyAttack.bmp", 600, 70, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("smokescreen", "image/skill/smokescreen.bmp", 560, 20, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("razonWind", "image/skill/razonWind.bmp", 1456, 112, 13, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("confuseRay", "image/skill/confuseRay.bmp", 312, 78, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mystringShot", "image/skill/mystringShot.bmp", 5940, 150, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildstringShot", "image/skill/wildstringShot.bmp", 5940, 235, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("myconfusion", "image/skill/myconfusion.bmp", 1680, 160, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildconfusion", "image/skill/wildconfusion.bmp", 1680, 160, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mypoisonSting", "image/skill/mypoisonSting.bmp", 450, 90, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildpoisonSting", "image/skill/wildpoisonSting.bmp", 450, 90, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mysandAttack", "image/skill/mysandAttack.bmp", 2750, 198, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildsandAttack", "image/skill/wildsandAttack.bmp", 2750, 198, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("myquickAttack", "image/skill/myquickAttack.bmp", 6360, 340, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildquickAttack", "image/skill/wildquickAttack.bmp", 6324, 366, 12, 1, true, RGB(255, 0, 255));
 
 
 }

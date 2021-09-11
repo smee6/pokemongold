@@ -199,16 +199,4 @@ void tileMap::load()
 	CloseHandle(file);
 }
 
-TILETYPE tileMap::setTiletype(int frameX, int frameY)
-{
-	if (frameX <= 7 && frameY == 0) return TILETYPE_OPEN;
-	if (frameX == 13 && frameY == 3) return TILETYPE_OPEN;
-	else if (frameX == 8 && frameY == 0) return TILETYPE_GRASS;
-	else if (frameX == 9 && frameY == 0) return TILETYPE_DOOR;
-	else if (frameX >= 6 && frameX <= 10 && frameY == 1) return TILETYPE_DOOR;
-	else if (frameX == 7 && frameY == 7) return TILETYPE_DOOR;
-	else if (frameX == 0 && frameY == 1) return TILETYPE_LEFTSLOPE;
-	else if (frameX == 3 && frameY == 1) return TILETYPE_RIGHTSLOPE;
-	else if ((frameX == 1 || frameX == 2) && frameY == 1) return TILETYPE_BOTTOMSLOPE;
-	return TILETYPE_CLOSE;
-}
+

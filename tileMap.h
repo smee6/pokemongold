@@ -65,8 +65,6 @@ public:
 	
 	//함수
 	void setTile();		//맵에 타일 깔아주는 함수
-	TILETYPE setTiletype(int frameX, int frameY);	//타일 속성 부여 함수
-
 	void save();		//저장 함수
 	void load();		//불러오는 함수
 

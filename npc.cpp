@@ -48,6 +48,19 @@ void npc::render()
 {
 	for (int i = 0; i < npcMAX; i++)
 	{
+		if (i==8 && UIMANAGER->getIsCyndaquil() == true)
+		{
+			continue;
+		}
+		if (i == 9 && UIMANAGER->getIsTotodile() == true)
+		{
+			continue;
+		}
+		if (i == 10 && UIMANAGER->getIsChikorita() == true)
+		{
+			continue;
+		}
+
 		_npc[i].Img->render(getMemDC(), _npc[i].rc.left, _npc[i].rc.top);				//npc ÀÌ¹ÌÁö
 		if (_npc[i].markCount != 0 && _npc[i].markCount != 100)
 		{

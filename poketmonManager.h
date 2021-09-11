@@ -40,6 +40,8 @@ private:
 
 	tagPOKETMON_PLAYER _wildPoketmon;				//야생포켓몬
 
+	tagPOKETMON_PLAYER _startPoketmon[3];			//처음시작 포켓몬
+
 
 	int _randomPoketmon;						//포켓몬 랜덤으로 돌리기위해 만든 변수
 
@@ -58,10 +60,14 @@ public:
 
 	void wildPoketmonSetting();									//야생 포켓몬 셋팅
 
+	void startPoketmonSetting();
+
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }		// 메모리 주소 링크
 
 
 	tagPOKETMON_PLAYER getWildPoketmon() { return _wildPoketmon; }			//야생 포켓몬 겟터
+	tagPOKETMON_PLAYER* getStartPoketmon() { return _startPoketmon; }		//스타트 포켓몬 
+
 	skill* getSkill() { return _skill; }
 
 	void setCurrentHP(int hp) { _wildPoketmon.currentHP -= hp; }

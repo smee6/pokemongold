@@ -33,9 +33,9 @@ enum class NPC
 
 	// about pokemon
 	EVOLUTION,
+	CYNDAQUIL,		// 브케인
 	TOTODILE,		// 리아코
 	CHIKORITA,		// 치코리타
-	CYNDAQUIL,		// 브케인
 
 	// starting select cancel
 	SELECTCANCEL,
@@ -73,6 +73,9 @@ private:
 	bool pokedogamWindow = false;
 	bool statusWindow = false;
 	bool gearWindow = false;
+	bool useMedicineWindow = false;
+	bool useGoodMedicineWindow = false;
+	bool howStrongWindow = false;
 	int pokeballQ = 50;   // 포켓볼 보유 갯수 , 아래는 상처약, 고급상처약 갯수 (Q)
 	int medicineQ = 22;
 	int goodMedicineQ = 13;
@@ -88,6 +91,7 @@ private:
 	bool _isOpenPokeDogam;
 	bool _isOpenPlayerStatus;
 	bool _isOpenPokeGear;
+	bool _isOpenHowStrong;
 	// 가방등의 메뉴창에 안에 있는거 열려있는지
 
 	bool _isOpenPokecenter;						// 포케센터 열려있는지
@@ -161,6 +165,17 @@ private:
 
 	bool _isWin;								// 배틀에서 승리했을때
 
+	// getStarting Pokemon
+	bool _isStarting;
+
+
+	// 확인창(예/아니오)
+	image* _confirmImage;						// 확인창 이미지
+	bool _isConfirm;							// 확인창 유무
+	bool _isAccept;								// true == 예, false == 아니오
+	int _acceptCount;							// 0 == 예, 1 == 아니오
+
+	// class
 	NPC _npc;
 	character* _character;
 	poketmonManager* _poketmonManager;
@@ -174,28 +189,33 @@ public:
 	void update();
 	void render();
 
-	void shop();
+	void shop();				// 상점창
 
-	void bag();
-	void pokeDogam();
-	void pokeGear();
-	void playerStatus();
-	void setting();
+	void bag();					// 가방창
+	void pokeDogam();			// 도감창
+	void pokeGear();			// 포켓기어창
+	void playerStatus();		// 플레이어 정보창
+	void setting();				// 설정창
 
-	void pokeCenter();
-	void menu();
+	void howStrong();			// 강한 정보를 보다 창
 
-	void pokeShift();
+	void pokeCenter();			// 포켓몬 센터(회복)
+	void menu();				// 메뉴창
 
-	void script();		// 추후에 매개변수로 npc번호 받아와서 각 상황에 맞는 텍스트 출력해주면 될 듯함.
+	void pokeShift();			// 포켓몬창
 
-	void battle();
-	void skillSelect();
-	void attack();
+	void script();				// 스크립트 출력창
+
+	void battle();				// 배틀창
+	void skillSelect();			// 스킬선택창
+	void attack();				// 공격실행
 	
-	void usePokeBall();
-	void useMedicine();
-	void useGoodMedicine();
+	void usePokeBall();			// 포켓볼 사용
+	void useMedicine();			// 상처약 사용
+	void useGoodMedicine();		// 좋은 상처약 사용
+
+	void getStartingPokemon();	// 스타팅 포켓몬 획득
+	void confirm();				// 확인창(예/아니오)
 
 	
 
@@ -208,6 +228,8 @@ public:
 
 	NPC getNPC() { return _npc; }
 	void setNPC(NPC npc, bool isCount) { _npc = npc; _isCount = isCount; }
+
+	bool getIsCount() { return _isCount; }
 	void setIsCount(bool isCount) { _isCount = isCount; }
 
 	bool isUiOpen();
@@ -253,6 +275,17 @@ public:
 
 	bool getIsWin() { return _isWin; }
 	void setIsWin(bool isWin) { _isWin = isWin; }
+
+	bool getIsStarting() { return _isStarting; }
+	void setIsStarting(bool starting) { _isStarting = starting; }
+
+	bool getIsAccept() { return _isAccept; }
+	void setIsAccept(bool accept) { _isAccept = accept; }
+
+	bool getIsConfirm() { return _isConfirm; }
+	void setIsConfirm(bool confirm) { _isConfirm = confirm; }
+
+	int getDrCount() { return _drCount; }
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

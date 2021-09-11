@@ -24,7 +24,6 @@ enum class CLASSIFCATION	// 분류
 
 enum class SKILL_TYPE
 {
-	NONE,	//없음
 	NOMAL,	//노말
 	FIRE,	//불
 	WATER,	//물
@@ -62,6 +61,7 @@ private:
 
 	int _imgX, _imgY;			//이미지 위치조정
 
+	//SKILL_TYPE _skilltype;		//스킬타입
 
 
 	int _power;					// 위력
@@ -163,8 +163,10 @@ public:
 	int getSkillPP() { return _PP; }							//PP getter
 	int getSkillAccuracy() { return _accuracy; }				//명중률 getter
 
+	int getSkillType() { return _skilltype; }
+
 	//CLASSIFCATION getIfcation() { return _ifcation; }			//분류
-	//TYPE getType() { return _Skilltype; }							//타입
+					//타입
 	//STATUS_AILMENT getifAilemnt() { return _ifAilment; }		//상태이상
 
 	void setPoketmonmanagerMemoryAddressLink(poketmonManager* pM) { _pM = pM; }

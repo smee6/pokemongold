@@ -120,7 +120,7 @@ void poketmonManager::poketmonSpawn()
 void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 {
 
-    _randomPoketmon = RND->getFromIntTo(0, 9);                           //랜덤 야생포켓몬 변수
+    _randomPoketmon = RND->getFromIntTo(0, 1);                           //랜덤 야생포켓몬 변수
 
     //_randomPoketmon = 0;
 
@@ -188,6 +188,12 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[0].level = 5;
     _startPoketmon[0].evolutionLevel = 0;
 
+    if (_startPoketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _startPoketmon[0].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _startPoketmon[0].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
     _startPoketmon[0].totalEXP = pow(_startPoketmon[0].level, 3);
     _startPoketmon[0].maxExp = pow(_startPoketmon[0].level + 1, 3) - _startPoketmon[0].totalEXP;
     _startPoketmon[0].currentExp = _startPoketmon[0].totalEXP - pow(_startPoketmon[0].level, 3);
@@ -235,6 +241,12 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[1].index = 158;
     _startPoketmon[1].level = 5;
     _startPoketmon[1].evolutionLevel = 0;
+
+    if (_startPoketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _startPoketmon[1].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _startPoketmon[1].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
 
     _startPoketmon[1].totalEXP = pow(_startPoketmon[1].level, 3);
     _startPoketmon[1].maxExp = pow(_startPoketmon[1].level + 1, 3) - _startPoketmon[1].totalEXP;
@@ -287,6 +299,12 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
     _startPoketmon[2].level = 5;
     _startPoketmon[2].evolutionLevel = 0;
 
+    if (_startPoketmon[2].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _startPoketmon[2].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _startPoketmon[2].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
     _startPoketmon[2].totalEXP = pow(_startPoketmon[2].level, 3);
     _startPoketmon[2].maxExp = pow(_startPoketmon[2].level + 1, 3) - _startPoketmon[2].totalEXP;
     _startPoketmon[2].currentExp = _startPoketmon[2].totalEXP - pow(_startPoketmon[2].level, 3);
@@ -337,6 +355,12 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
     _championPoketmon[0].level = 21;
     _championPoketmon[0].evolutionLevel = 1;
 
+    if (_championPoketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _championPoketmon[0].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _championPoketmon[0].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
     _championPoketmon[0].totalEXP = pow(_championPoketmon[0].level, 3);
     _championPoketmon[0].maxExp = pow(_championPoketmon[0].level + 1, 3) - _championPoketmon[0].totalEXP;
     _championPoketmon[0].currentExp = _championPoketmon[0].totalEXP - pow(_championPoketmon[0].level, 3);
@@ -385,6 +409,12 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
     _championPoketmon[1].level = 24;
     _championPoketmon[1].evolutionLevel = 1;
 
+    if (_championPoketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _championPoketmon[1].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _championPoketmon[1].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
     _championPoketmon[1].totalEXP = pow(_championPoketmon[1].level, 3);
     _championPoketmon[1].maxExp = pow(_championPoketmon[1].level + 1, 3) - _championPoketmon[1].totalEXP;
     _championPoketmon[1].currentExp = _championPoketmon[1].totalEXP - pow(_championPoketmon[1].level, 3);
@@ -432,7 +462,13 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
     _championPoketmon[2].index = 18;
     _championPoketmon[2].level = 29;
     _championPoketmon[2].evolutionLevel = 2;
-                      
+    
+    if (_championPoketmon[2].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _championPoketmon[2].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _championPoketmon[2].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
+
     _championPoketmon[2].totalEXP = pow(_championPoketmon[2].level, 3);
     _championPoketmon[2].maxExp = pow(_championPoketmon[2].level + 1, 3) - _championPoketmon[2].totalEXP;
     _championPoketmon[2].currentExp = _championPoketmon[2].totalEXP - pow(_championPoketmon[2].level, 3);
@@ -482,6 +518,12 @@ void poketmonManager::trainer1Poketmon() //트레이너 1
     _trainer1Poketmon[0].index = 16;
     _trainer1Poketmon[0].level = 15;
     _trainer1Poketmon[0].evolutionLevel = 0;
+
+    if (_trainer1Poketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _trainer1Poketmon[0].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _trainer1Poketmon[0].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
   
     _trainer1Poketmon[0].totalEXP = pow(_trainer1Poketmon[0].level, 3);
     _trainer1Poketmon[0].maxExp = pow(_trainer1Poketmon[0].level + 1, 3) - _trainer1Poketmon[0].totalEXP;
@@ -531,6 +573,12 @@ void poketmonManager::trainer1Poketmon() //트레이너 1
     _trainer1Poketmon[1].index = 17;
     _trainer1Poketmon[1].level = 19;
     _trainer1Poketmon[1].evolutionLevel = 1;
+
+    if (_trainer1Poketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _trainer1Poketmon[1].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _trainer1Poketmon[1].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
                       
     _trainer1Poketmon[1].totalEXP = pow(_trainer1Poketmon[1].level, 3);
     _trainer1Poketmon[1].maxExp = pow(_trainer1Poketmon[1].level + 1, 3) - _trainer1Poketmon[1].totalEXP;
@@ -581,6 +629,12 @@ void poketmonManager::trainer2Poketmon()  //트레이너2
     _trainer2Poketmon[0].index = 21;
     _trainer2Poketmon[0].level = 17;
     _trainer2Poketmon[0].evolutionLevel = 0;
+
+    if (_trainer2Poketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _trainer2Poketmon[0].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _trainer2Poketmon[0].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
                       
     _trainer2Poketmon[0].totalEXP = pow(_trainer2Poketmon[0].level, 3);
     _trainer2Poketmon[0].maxExp = pow(_trainer2Poketmon[0].level + 1, 3) - _trainer2Poketmon[0].totalEXP;
@@ -629,6 +683,12 @@ void poketmonManager::trainer2Poketmon()  //트레이너2
     _trainer2Poketmon[1].index = 22;
     _trainer2Poketmon[1].level = 22;
     _trainer2Poketmon[1].evolutionLevel = 1;
+
+    if (_trainer2Poketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
+    {
+        _trainer2Poketmon[1].gender = "♂";  // 포켓몬의 성별은 수컷이 된다
+    }
+    else  _trainer2Poketmon[1].gender = "♀"; // 그 외의 포켓몬의 성별은 암컷이 된다.
                       
     _trainer2Poketmon[1].totalEXP = pow(_trainer2Poketmon[1].level, 3);
     _trainer2Poketmon[1].maxExp = pow(_trainer2Poketmon[1].level + 1, 3) - _trainer2Poketmon[1].totalEXP;
@@ -680,11 +740,11 @@ void poketmonManager::render()
     // strcpy_s(poke, strname.c_str());
 
 
-    string strnmae = _wildPoketmon.name;
+    string strnmae = _trainer2Poketmon[1].name;
     strcpy_s(poke, strnmae.c_str());
 
-    //sprintf_s(str, "포켓몬 이름 : %s", poke);
-    //TextOut(getMemDC(), 280, 180, str, strlen(str));
+   //sprintf_s(str, "포켓몬 이름 : %s", poke);
+   //TextOut(getMemDC(), 280, 180, str, strlen(str));
     //sprintf_s(str, "포켓몬 현재체력 : %d ", _wildPoketmon.currentHP);
     //TextOut(getMemDC(), 280, 200, str, strlen(str));
     //sprintf_s(str, "포켓몬 : %d ", _championPoketmon[1].sumMaxHP);

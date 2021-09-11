@@ -269,6 +269,13 @@ void uiManager::menu()
 	}
 	if (!_isOpenBag && !_isOpenPokemon && !_isOpenPokeDogam && !_isOpenPokeGear && !_isOpenPlayerStatus && !_isOpenSetting)
 	{
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+
+				uiOpen = false;
+				_isOpenMenu = false;
+				menuCnt = 0;
+		
+		}
 		switch (menuCnt)
 		{
 		case 0: //µµ°¨
@@ -776,6 +783,7 @@ void uiManager::pokeGear()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("gear1")->render(_backBuffer->getMemDC());
+
 			break;
 		case 2:
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());

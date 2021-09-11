@@ -636,11 +636,11 @@ void uiManager::pokeShift()
 			sprintf_s(str, "%s",poke);
 			TextOut(_backBuffer->getMemDC(), 100, 15+ (i * 65), str, strlen(str));
 
-			sprintf_s(str, "/ %d", myPokemon[i].sumMaxHP);
+			sprintf_s(str, "/%d", myPokemon[i].sumMaxHP);
 			TextOut(_backBuffer->getMemDC(), 530, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, "HP : %d", myPokemon[i].currentHP);
-			TextOut(_backBuffer->getMemDC(), 400, 25 + (i * 63), str, strlen(str));
+			TextOut(_backBuffer->getMemDC(), 386, 25 + (i * 63), str, strlen(str));
 
 			sprintf_s(str, ": L %d", myPokemon[i].level);
 			TextOut(_backBuffer->getMemDC(), 260, 25 + (i * 63), str, strlen(str));
@@ -1119,6 +1119,7 @@ void uiManager::script()
 			else if (_drCount == 2) _vScript = TXTDATA->txtLoad("script/공박사_포켓몬후.txt");
 			else _vScript = TXTDATA->txtLoad("script/공박사_일상.txt");
 
+			if (_drCount == 1 && !_isStarting) break;
 			_drCount++;
 
 			break;
@@ -1260,6 +1261,12 @@ void uiManager::script()
 				{
 					_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 				}
+			}
+
+			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
+			{
+				_isStarting == true;
+				getStartingPokemon();
 			}
 
 			// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
@@ -1716,9 +1723,69 @@ void uiManager::skillSelect()
 		_currentSkill = 3;
 		break;
 	}
-	sprintf_s(type, to_string(_poketmonManager->getSkill()->getSkillType()).c_str());
+
+	switch ((SKILL_TYPE)_poketmonManager->getSkill()->getSkillType())
+	{
+	case SKILL_TYPE::NOMAL:
+		sprintf_s(type, "노말");
+		break;
+	case SKILL_TYPE::FIRE:
+		sprintf_s(type, "불꽃");
+		break;
+	case SKILL_TYPE::WATER:
+		sprintf_s(type, "물");
+		break;
+	case SKILL_TYPE::GRASS:
+		sprintf_s(type, "풀");
+		break;
+	case SKILL_TYPE::ELECTR:
+		sprintf_s(type, "전기");
+		break;
+	case SKILL_TYPE::ICE:
+		sprintf_s(type, "얼음");
+		break;
+	case SKILL_TYPE::FIGHT:
+		sprintf_s(type, "격투");
+		break;
+	case SKILL_TYPE::POISON:
+		sprintf_s(type, "독");
+		break;
+	case SKILL_TYPE::GROUND:
+		sprintf_s(type, "땅");
+		break;
+	case SKILL_TYPE::FLYING:
+		sprintf_s(type, "비행");
+		break;
+	case SKILL_TYPE::PSYCHC:
+		sprintf_s(type, "에스퍼");
+		break;
+	case SKILL_TYPE::BUG:
+		sprintf_s(type, "벌레");
+		break;
+	case SKILL_TYPE::ROCK:
+		sprintf_s(type, "바위");
+		break;
+	case SKILL_TYPE::GHOST:
+		sprintf_s(type, "고스트");
+		break;
+	case SKILL_TYPE::DRAGON:
+		sprintf_s(type, "드래곤");
+		break;
+	case SKILL_TYPE::DARK:
+		sprintf_s(type, "악");
+		break;
+	case SKILL_TYPE::STEEL:
+		sprintf_s(type, "강철");
+		break;
+	case SKILL_TYPE::FAIRY:
+		sprintf_s(type, "페어리");
+		break;
+	default:
+		break;
+	}
 	sprintf_s(pp, "%00d/%00d", _character->getPoketmon(_currentPoke).skillPP[_currentSkill], _poketmonManager->getSkill()->getSkillPP());
 	TextOut(_backBuffer->getMemDC(), 445, 425, pp, strlen(pp));
+	TextOut(_backBuffer->getMemDC(), 485, 510, type, strlen(type));
 
 	SelectObject(_backBuffer->getMemDC(), oldFont5);
 	DeleteObject(font5);
@@ -2000,6 +2067,23 @@ void uiManager::useGoodMedicine()
 {
 	//사용 대상의 체력을 100 회복한다
 	//함수로 안하고 직접 가방안에 넣어서 만들었습니다.
+}
+
+void uiManager::getStartingPokemon()
+{
+	// 공박사와 대화 한 번 진행된 후에
+	if (_drCount == 1)
+	{
+
+	}
+	// 포켓볼에 말걸면 스크립트 출력
+
+	// (예/아니오 선택)
+	
+	// 포켓몬 획득 (스타팅 포켓몬 초기값 정보 필요 - 이름, 레벨, 공격력 등등)
+	_character->setPoketmon(_poketmonManager->getWildPoketmon(), 0);		// 0번 슬롯에 포켓몬 추가
+	_drCount++;
+	//_isStarting = true;
 }
 
 bool uiManager::isUiOpen()

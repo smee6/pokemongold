@@ -165,6 +165,14 @@ private:
 
 	bool _isWin;								// 배틀에서 승리했을때
 
+	// getStarting Pokemon
+	bool _isStarting;
+
+
+	// 확인창(예/아니오)
+	bool _isAccept;
+
+	// class
 	NPC _npc;
 	character* _character;
 	poketmonManager* _poketmonManager;
@@ -203,6 +211,8 @@ public:
 	void useMedicine();
 	void useGoodMedicine();
 
+	void getStartingPokemon();
+
 	
 
 	// get set
@@ -214,6 +224,8 @@ public:
 
 	NPC getNPC() { return _npc; }
 	void setNPC(NPC npc, bool isCount) { _npc = npc; _isCount = isCount; }
+
+	bool getIsCount() { return _isCount; }
 	void setIsCount(bool isCount) { _isCount = isCount; }
 
 	bool isUiOpen();
@@ -259,6 +271,14 @@ public:
 
 	bool getIsWin() { return _isWin; }
 	void setIsWin(bool isWin) { _isWin = isWin; }
+
+	bool getIsStarting() { return _isStarting; }
+	void setIsStarting(bool starting) { _isStarting = starting; }
+
+	bool getIsAccept() { return _isAccept; }
+	void setIsAccept(bool accept) { _isAccept = accept; }
+
+	int getDrCount() { return _drCount; }
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

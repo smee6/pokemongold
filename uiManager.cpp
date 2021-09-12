@@ -43,6 +43,7 @@ HRESULT uiManager::init()
 
 	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
 
+	SOUNDMANAGER->addSound("pokecenter", "soundFX/pokecenter.mp3", false, false);
 	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", false, false);
 	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", false, false);
 

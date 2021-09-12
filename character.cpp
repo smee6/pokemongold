@@ -212,12 +212,16 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
         // 맥스 프레임 도달하면 배틀씬으로 전환
         if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
         {
-            UIMANAGER->setNPC(NPC::BATTLE, true);
+            if (UIMANAGER->getIsWild())
+            {
+                UIMANAGER->setNPC(NPC::BATTLE, true);
+                _pM->wildPoketmonSetting();
+            }
+            //UIMANAGER->setIsWild(true);
             UIMANAGER->setIsBattleStart(true);
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
             UIMANAGER->setIsBattleScript(true); 
-            _pM->wildPoketmonSetting();
 
             _battleLoadingImage->setFrameX(0);
             _battleLoadingImage->setFrameY(0);
@@ -283,16 +287,20 @@ void character::npcScript() // npc 대화 스크립트 처리
                     UIMANAGER->setNPC(NPC::POKECENTER, true);
                     break;
                 case 4: // 부하 1
-                    UIMANAGER->setNPC(NPC::TRAINER1, true);
-                    _scriptAction = 1;                          // 스크립트 액션 = 1
+                    if (UIMANAGER->getTrainer1Count() >= 2) UIMANAGER->setNPC(NPC::TRAINER1, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 5: // 부하 2
-                    UIMANAGER->setNPC(NPC::TRAINER2, true);
-                    _scriptAction = 1;                          // 스크립트 액션 = 1
+                    if (UIMANAGER->getTrainer2Count() >= 2) UIMANAGER->setNPC(NPC::TRAINER2, true);
+                    //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 case 6: // 비상 관장
-                    UIMANAGER->setNPC(NPC::CHAMPION, true);
-                    _scriptAction = 1;                          // 스크립트 액션 = 1
+                    if (UIMANAGER->getChampionCount() == 0 || UIMANAGER->getChampionCount() >= 3)
+                    {
+                        UIMANAGER->setNPC(NPC::CHAMPION, true);
+                        UIMANAGER->setIsWild(false);
+                        if (UIMANAGER->getChampionCount() == 0) _scriptAction = 1;                          // 스크립트 액션 = 1
+                    }
                     break;
                 case 7: // 상점 아재
                     UIMANAGER->setIsScript(false);              // 스크립트 꺼주고
@@ -452,7 +460,11 @@ void character::grass() // 풀 타일 처리
     {
         int rndPoketmonMeet = RND->getFromIntTo(1, 100);
 
-        if (rndPoketmonMeet <= POKETMONMEET) _isPoketmonMeet = 1;
+        if (rndPoketmonMeet <= POKETMONMEET)
+        {
+            _isPoketmonMeet = 1;
+            UIMANAGER->setIsWild(true);
+        }
         else _isPoketmonMeet = 0;
     }
 }
@@ -610,7 +622,7 @@ void character::door(int doorIndex) // 문 타일 처리
         tileAction();
         break;
     case 1093:  // 불탄 탑 들어갔을 때 게임 엔딩
-        SCENEMANAGER->changeScene("엔딩");
+        if (UIMANAGER->getIsBadge()) SCENEMANAGER->changeScene("엔딩");
         break;
     }
 }

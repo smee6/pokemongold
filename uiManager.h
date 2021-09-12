@@ -194,6 +194,9 @@ private:
 	bool _isAccept;								// true == 예, false == 아니오
 	int _acceptCount;							// 0 == 예, 1 == 아니오
 
+	// 배지 획득여부
+	bool _isGetBadge;
+
 	// class
 	NPC _npc;
 	character* _character;
@@ -318,7 +321,15 @@ public:
 	bool getIsBattleStart() { return _isBattleStart; }
 	void setIsBattleStart(bool battleStart) { _isBattleStart = battleStart; }
 
+	bool getIsWild() { return _isWild; }
+	void setIsWild(bool isWild) { _isWild = isWild; }
+
 	int getDrCount() { return _drCount; }
+	int getChampionCount() { return _championCount; }
+	int getTrainer1Count() { return _trainer1Count; }
+	int getTrainer2Count() { return _trainer2Count; }
+
+	bool getIsBadge() { return _isGetBadge; }
 
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }

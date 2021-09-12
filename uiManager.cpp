@@ -1212,29 +1212,30 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/조수.txt");
 			break;
 		case NPC::CHAMPION:
-			if (_championCount == 0) _vScript = TXTDATA->txtLoad("script/관장_배틀시작.txt");
-			else if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장_배틀승리.txt");
-			else if (_championCount == 2) _vScript = TXTDATA->txtLoad("script/관장_배틀끝.txt");
-			else if (_championCount == 3) _vScript = TXTDATA->txtLoad("script/관장_배틀후.txt");
+			if (_championCount == 0) _vScript = TXTDATA->txtLoad("script/관장_배틀전.txt");
+			else if (_championCount == 1) _vScript = TXTDATA->txtLoad("script/관장_배틀시작.txt");
+			else if (_championCount == 2) _vScript = TXTDATA->txtLoad("script/관장_배틀승리.txt");
+			else if (_championCount == 3) _vScript = TXTDATA->txtLoad("script/관장_배틀끝.txt");
+			else if (_championCount == 4) _vScript = TXTDATA->txtLoad("script/관장_배틀후.txt");
 			else _vScript = TXTDATA->txtLoad("script/관장_일상.txt");
 
 			_championCount++;
 
 			break;
 		case NPC::TRAINER1:
-			if (_trainer1Count == 0)_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀전.txt");
-			else if (_trainer1Count == 1)_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀진입.txt");
-			else if (_trainer1Count == 2)_vScript = TXTDATA->txtLoad("script/쫄따구1_배틀후.txt");
-			else _vScript = TXTDATA->txtLoad("script/쫄따구1_승리정산.txt");
+			if (_trainer1Count == 0) _vScript = TXTDATA->txtLoad("script/쫄따구1_배틀전.txt");
+			else if (_trainer1Count == 1) _vScript = TXTDATA->txtLoad("script/쫄따구1_배틀진입.txt");
+			else if (_trainer1Count == 2) _vScript = TXTDATA->txtLoad("script/쫄따구1_승리정산.txt");
+			else _vScript = TXTDATA->txtLoad("script/쫄따구1_배틀후.txt");
 
 			_trainer1Count++;
 
 			break;
 		case NPC::TRAINER2:
-			if (_trainer2Count == 0)_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀전.txt");
-			else if (_trainer2Count == 1)_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀진입.txt");
-			else if (_trainer2Count == 2)_vScript = TXTDATA->txtLoad("script/쫄따구2_배틀후.txt");
-			else _vScript = TXTDATA->txtLoad("script/쫄따구2_승리정산.txt");
+			if (_trainer2Count == 0) _vScript = TXTDATA->txtLoad("script/쫄따구2_배틀전.txt");
+			else if (_trainer2Count == 1) _vScript = TXTDATA->txtLoad("script/쫄따구2_배틀진입.txt");
+			else if (_trainer2Count == 2) _vScript = TXTDATA->txtLoad("script/쫄따구2_승리정산.txt");
+			else _vScript = TXTDATA->txtLoad("script/쫄따구2_배틀후.txt");
 
 			_trainer2Count++;
 
@@ -1288,13 +1289,13 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/관장_배틀승리.txt");
 			break;
 		case NPC::TRAINER1_BATTLE_DOWN:
-			_vScript = TXTDATA->txtLoad("script/트레이너1포켓몬기절.txt");
+			_vScript = TXTDATA->txtLoad("script/트레이너1_포켓몬기절.txt");
 			break;
 		case NPC::TRAINER1_BATTLE_WIN:
 			_vScript = TXTDATA->txtLoad("script/트레이너1_배틀승리.txt");
 			break;
 		case NPC::TRAINER2_BATTLE_DOWN:
-			_vScript = TXTDATA->txtLoad("script/트레이너2포켓몬기절.txt");
+			_vScript = TXTDATA->txtLoad("script/트레이너2_포켓몬기절.txt");
 			break;
 		case NPC::TRAINER2_BATTLE_WIN:
 			_vScript = TXTDATA->txtLoad("script/트레이너2_배틀승리.txt");
@@ -1323,17 +1324,22 @@ void uiManager::script()
 			{
 				_isBattleScript = false;
 			}
+
+			// 포켓몬 센터 처음 말걸 경우 포켓몬 회복 애니메이션 출력
 			if (_npc == NPC::POKECENTER && _pokecenterCount == 1)
 			{
 				_isOpenPokecenter = true;
 				uiOpen = true;
 			}
 
+			// 포켓몬 센터 회복 후
 			if (_npc == NPC::POKECENTER && _pokecenterCount >= 2)
 			{
 				_pokecenterCount = 0;
 			}
 
+
+			// 대사가 나오고 나서 공격 이펙트 애니메이션 출력
 			if (_isAttack && _attackCount < 1)
 			{
 				_isTurn = true;
@@ -1352,17 +1358,32 @@ void uiManager::script()
 			//	_character->setTotalExp(_currentPoke, 50);
 			//}
 
+			// 상대방의 포켓몬을 쓰러뜨렸을 경우(야생 제외)
 			if (_npc == NPC::CHAMPION_BATTLE_DOWN || _npc == NPC::TRAINER1_BATTLE_DOWN || _npc == NPC::TRAINER2_BATTLE_DOWN)
 			{
 				//_npc = NPC::CHAMPION;
 				_currentEnemyIndex++;
-				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+
+				if (_npc == NPC::CHAMPION_BATTLE_DOWN)
+				{
+					_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+				}
+				else if (_npc == NPC::TRAINER1_BATTLE_DOWN)
+				{
+					_currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex];
+				}
+				else if (_npc == NPC::TRAINER2_BATTLE_DOWN)
+				{
+					_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex];
+				}
+
 				_isAttack = false;
 				_isTurn = false;
 				_isNext = false;
 			}
 
-			if (_npc == NPC::CHAMPION && _championCount == 2 || _championCount == 3)
+			// 챔피언과 대화중일 경우 다음 스크립트들이 알아서 이어지도록 연결
+			if (_npc == NPC::CHAMPION && _championCount >= 3)
 			{
 				_npc = NPC::CHAMPION;
 				_txtIndex = 0;
@@ -1370,7 +1391,9 @@ void uiManager::script()
 				uiOpen = false;
 				_isScript = true;
 				_isCount = true;
-				if (_championCount == 3)
+				_isGetBadge = true;		// 뱃지 획득
+
+				if (_championCount == 5)
 				{
 					_isBattle = false;
 					_isAttack = false;
@@ -1382,17 +1405,37 @@ void uiManager::script()
 				}
 			}
 
+			// 트레이너들과 대화중일 경우 다음 스크립트들이 알아서 이어지도록 연결
+			//if ((_npc == NPC::TRAINER1 && _trainer1Count >= 3) || (_npc == NPC::TRAINER2 && _trainer2Count >= 3))
+			//{
+			//	_isBattle = false;
+			//	_isAttack = false;
+			//	_attackCount = 0;
+			//	_isTurn = false;
+			//	_isNext = false;
+			//	_whoTurn = 0;
+			//	_currentEnemyIndex = 0;
+			//
+			//	//_npc = NPC::TRAINER1;
+			//	_txtIndex = 0;
+			//	_scriptIndex = 0;
+			//	uiOpen = false;
+			//	_isScript = true;
+			//	_isCount = true;
+			//}
+
+			// 플레이어가 이겼을 경우
 			if (_npc == NPC::CHAMPION_BATTLE_WIN || _npc == NPC::TRAINER1_BATTLE_WIN || _npc == NPC::TRAINER2_BATTLE_WIN)
 			{
-				if (_npc == NPC::CHAMPION_BATTLE_WIN)
-				{
-					_npc = NPC::CHAMPION;
-					_txtIndex = 0;
-					_scriptIndex = 0;
-					uiOpen = false;
-					_isScript = true;
-					_isCount = true;
-				}
+				if (_npc == NPC::CHAMPION_BATTLE_WIN) _npc = NPC::CHAMPION;
+				else if (_npc == NPC::TRAINER1_BATTLE_WIN) _npc = NPC::TRAINER1;
+				else if (_npc == NPC::TRAINER2_BATTLE_WIN) _npc = NPC::TRAINER2;
+
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+				_isScript = true;
+				_isCount = true;
 				//_isBattle = false;
 				//_isAttack = false;
 				//_attackCount = 0;
@@ -1402,7 +1445,9 @@ void uiManager::script()
 				//_currentEnemyIndex = 0;
 
 			}
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 2)
+
+			// 배틀 시 플레이어가 졌을 경우
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
 			{
 				if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
 				{
@@ -1413,7 +1458,7 @@ void uiManager::script()
 					_isNext = false;
 					_whoTurn = 0;
 					_currentEnemyIndex = 0;
-					_championCount++;
+					//_championCount++;
 
 					if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 					{
@@ -1422,6 +1467,7 @@ void uiManager::script()
 				}
 			}
 
+			// 스타팅 포켓몬 획득 시
 			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
 			{
 				_isStarting == true;
@@ -1429,7 +1475,7 @@ void uiManager::script()
 			}
 
 			// 배틀 승리 상황이 아니면
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 2 && _championCount != 3)
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _championCount != 4)
 			{
 				// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 				_isScript = false;
@@ -1437,6 +1483,13 @@ void uiManager::script()
 				_scriptIndex = 0;
 				uiOpen = false;
 			}
+
+			// 트레이너들이 말을 걸었을 경우
+			//if ((_npc == NPC::TRAINER1 && _trainer1Count == 1) || (_npc == NPC::TRAINER2 && _trainer2Count == 1))
+			//{
+			//	_isBattle = true;
+			//	_isCount = true;
+			//}
 		}
 
 		if (_isBattle)
@@ -1577,7 +1630,7 @@ void uiManager::script()
 
 		SetBkMode(_backBuffer->getMemDC(), TRANSPARENT);
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
-		RECT rcText = RectMake(30, WINSIZEY - 150, 500, 120);
+		RECT rcText = RectMake(30, WINSIZEY - 150, 600, 120);
 
 		HFONT font = CreateFont(60, 0, 0, 0, 500, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
@@ -1602,7 +1655,7 @@ void uiManager::script()
 		sprintf_s(str, "script : %d", _isScript);
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
-		sprintf_s(str, "%d", _currentEnemyIndex);
+		sprintf_s(str, "champion : %d", _championCount);
 		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
 	}
 }
@@ -1610,6 +1663,13 @@ void uiManager::script()
 void uiManager::battle()
 {
 	uiOpen = true;
+
+	//// 배틀 시작 시 트레이너 배틀일 경우 대사 출력
+	//if (_championCount == 1 || _trainer1Count == 1 || _trainer2Count == 1)
+	//{
+	//	_isScript = true;
+	//	_isCount = true;
+	//}
 
 	// 배경색 RGB(248, 248, 248)
 	IMAGEMANAGER->findImage("배틀배경")->render(_backBuffer->getMemDC());
@@ -1658,18 +1718,23 @@ void uiManager::battle()
 				_enemyImage = IMAGEMANAGER->findImage("트레이너");
 				_currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex];
 				break;
-			default:
-				if (_isBattleStart)
-				{
-					_isBattleStart = false;
-
-					_npc = NPC::CHAMPION;
-					_currentEnemyIndex = 0;
-				}
-				_currentEnemy = 3;
-				_enemyImage = IMAGEMANAGER->findImage("관장");
-				_currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
+			//default:
+			//	if (_isBattleStart)
+			//	{
+			//		_isBattleStart = false;
+			//
+			//		_npc = NPC::TRAINER1;
+			//		_currentEnemyIndex = 0;
+			//	}
+			//	_currentEnemy = 1;
+			//	_enemyImage = IMAGEMANAGER->findImage("트레이너");
+			//	_currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex];
+			//	break;
 			}
+
+			if (_currentEnemy == 1) _currentEnemyPokemon = _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex];
+			if (_currentEnemy == 2) _currentEnemyPokemon = _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex];
+			if (_currentEnemy == 3) _currentEnemyPokemon = _poketmonManager->getChampionPoketmon()[_currentEnemyIndex];
 		}
 
 	_currentPokemon = _character->getPoketmon(0);
@@ -1930,8 +1995,11 @@ void uiManager::battle()
 	sprintf_s(str, "%d", _currentEnemyPokemon.level);
 	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
 
-	sprintf_s(str, "%d", _currentEnemyIndex);
-	TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
+	sprintf_s(str, "currentEnemy : %d", _currentEnemyIndex);
+	TextOut(_backBuffer->getMemDC(), 300, 90, str, strlen(str));
+
+	sprintf_s(str, "currentEnemyHP : %d", _currentEnemyPokemon.currentHP);
+	TextOut(_backBuffer->getMemDC(), 300, 110, str, strlen(str));
 }
 
 void uiManager::skillSelect()
@@ -2131,7 +2199,7 @@ void uiManager::attack() //어택
 					{
 						vector<string> _vStr;
 
-						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
 
 						TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
@@ -2142,10 +2210,60 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 1:		// 트레이너1
-					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 200);
+
+					_isTurn = false;
+					_isNext = false;
+
+					if (_poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_currentEnemyIndex + 1 >= 2)
+						{
+							_npc = NPC::TRAINER1;
+							_isWin = true;
+						}
+						else if (_poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "새 조련사 소룡는(은)\n;" + _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "새 조련사 소룡는(은)\n" + _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/트레이너1_포켓몬기절.txt", _vStr);
+
+							_npc = NPC::TRAINER1_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 2:		// 트레이너2
-					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 200);
+
+					_isTurn = false;
+					_isNext = false;
+
+					if (_poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_currentEnemyIndex + 1 >= 2)
+						{
+							_npc = NPC::TRAINER2;
+							_isWin = true;
+						}
+						else if (_poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "새 조련사 날개는(은)\n;" + _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "새 조련사 날개는(은)\n" + _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/트레이너2_포켓몬기절.txt", _vStr);
+
+							_npc = NPC::TRAINER2_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 3:		// 관장
 					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
@@ -2156,11 +2274,12 @@ void uiManager::attack() //어택
 
 						if (_currentEnemyIndex + 1 >= 3)
 						{
-							_npc = NPC::CHAMPION_BATTLE_WIN;
+							_npc = NPC::CHAMPION;
+							_isWin = true;
 						}
 						else if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP != 0)
 						{
-							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n 50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
 
 							TXTDATA->txtSave("script/관장포켓몬기절.txt", _vStr);
 
@@ -2168,7 +2287,7 @@ void uiManager::attack() //어택
 						}
 						_isScript = true;
 						_isCount = true;
-						//_isWin = true;
+						_isWin = true;
 					}
 					break;
 				}
@@ -2309,15 +2428,16 @@ void uiManager::attack() //어택
 				switch (_currentEnemy)
 				{
 				case 0:		// 야생
-					_poketmonManager->setCurrentWildHP(10);
+					_poketmonManager->setCurrentWildHP(200);
 
 					_isTurn = false;
 					_isNext = false;
+
 					if (_poketmonManager->getWildPoketmon().currentHP <= 0)
 					{
 						vector<string> _vStr;
 
-						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은) 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은) 50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
+						_vStr.push_back("야생의 " + _currentEnemyPokemon.name + "는(은)쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 획득했다!;" + "레드는(은) 500원을 획득했다!;" + "aaa;");
 
 						TXTDATA->txtSave("script/야생배틀승리.txt", _vStr);
 
@@ -2328,10 +2448,60 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 1:		// 트레이너1
-					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 200);
+
+					_isTurn = false;
+					_isNext = false;
+
+					if (_poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_currentEnemyIndex + 1 >= 2)
+						{
+							_npc = NPC::TRAINER1;
+							_isWin = true;
+						}
+						else if (_poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "새 조련사 소룡는(은)\n;" + _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "새 조련사 소룡는(은)\n" + _poketmonManager->getTrainer1Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/트레이너1_포켓몬기절.txt", _vStr);
+
+							_npc = NPC::TRAINER1_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 2:		// 트레이너2
-					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 200);
+
+					_isTurn = false;
+					_isNext = false;
+
+					if (_poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex].currentHP <= 0)
+					{
+						vector<string> _vStr;
+
+						if (_currentEnemyIndex + 1 >= 2)
+						{
+							_npc = NPC::TRAINER2;
+							_isWin = true;
+						}
+						else if (_poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].maxHP != 0)
+						{
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "새 조련사 날개는(은)\n;" + _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "새 조련사 날개는(은)\n" + _poketmonManager->getTrainer2Poketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+
+							TXTDATA->txtSave("script/트레이너2_포켓몬기절.txt", _vStr);
+
+							_npc = NPC::TRAINER2_BATTLE_DOWN;
+						}
+						_isScript = true;
+						_isCount = true;
+						_isWin = true;
+					}
 					break;
 				case 3:		// 관장
 					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
@@ -2345,11 +2515,12 @@ void uiManager::attack() //어택
 
 						if (_currentEnemyIndex + 1 >= 3)
 						{
-							_npc = NPC::CHAMPION_BATTLE_WIN;
+							_npc = NPC::CHAMPION;
+							_isWin = true;
 						}
 						else if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].maxHP != 0)
 						{
-							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n 쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n 50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
+							_vStr.push_back("적의 " + _currentEnemyPokemon.name + "는(은)\n쓰러졌다!;" + _character->getPoketmon(_currentPoke).name + "는(은)\n50의 경험치를 얻었다!;" + "체육관 관장 비상는(은)\n;" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "꺼내려 하고있다;" + "골드(이)도 포켓몬을\n바꾸시겠습니까?;" + "체육관 관장 비상는(은)\n" + _poketmonManager->getChampionPoketmon()[_currentEnemyIndex + 1].name + "를(을);" + "차례로 꺼냈다;" + "aaa;");
 
 							TXTDATA->txtSave("script/관장포켓몬기절.txt", _vStr);
 
@@ -2357,13 +2528,13 @@ void uiManager::attack() //어택
 						}
 						_isScript = true;
 						_isCount = true;
-						//_isWin = true;
+						_isWin = true;
 					}
 					break;
 				}
 
-				_isTurn = false;
-				_isNext = false;
+				//_isTurn = false;
+				//_isNext = false;
 
 				//if (_currentEnemyPokemon.currentHP <= 0)
 				//{

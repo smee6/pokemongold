@@ -33,13 +33,13 @@ HRESULT uiManager::init()
 
 	SOUNDMANAGER->addSound("town1BGM", "soundFX/mainBGM.mp3", true, true);
 	SOUNDMANAGER->addSound("town2BGM", "soundFX/road.mp3", true, true);
-	SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
-	SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
-	SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
-	SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
-	SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
-	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
-	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
+	//SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
+	//SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
+	//SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
+	//SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
+	//SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
+	//SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
+	//SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
 
 	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
 

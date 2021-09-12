@@ -38,12 +38,12 @@ HRESULT uiManager::init()
 	SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
 	SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
 	SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
-	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", false, true);
+	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
 	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
+	SOUNDMANAGER->addSound("pokecenter", "soundFX/pokecenter.mp3", true, true);
 
 	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
 
-	SOUNDMANAGER->addSound("pokecenter", "soundFX/pokecenter.mp3", false, false);
 	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", false, false);
 	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", false, false);
 

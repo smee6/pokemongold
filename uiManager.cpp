@@ -1546,7 +1546,7 @@ void uiManager::script()
 			}
 
 			// 배틀 시 플레이어가 졌을 경우
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _whoTurn != 1 && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
 			{
 				// 다음 포켓몬이 있을 경우
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0 && _character->getPoketmon(_currentPoke + 1).maxHP != 0)
@@ -1904,7 +1904,7 @@ void uiManager::battle()
 	static int ex = WINSIZEX;
 
 	// 야생 포켓몬과의 전투일 때
-	if (_isWild)
+	if (_isWild && _currentEnemyPokemon.currentHP > 0)
 	{
 		//_npc = NPC::BATTLE;
 		// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
@@ -1980,10 +1980,10 @@ void uiManager::battle()
 			//index = _character->getPoketmon(0).index;
 
 			// 이미지 출력
-			_playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
+			if (_character->getPoketmon(_currentPoke).currentHP > 0) _playerPokeImage->frameRender(_backBuffer->getMemDC(), 70, 200);
 
 			// 트레이너와의 배틀일 경우
-			if (!_isWild) _enemyPokeImage->frameRender(_backBuffer->getMemDC(), WINSIZEX - 230, 0);
+			if (!_isWild && _currentEnemyPokemon.currentHP > 0) _enemyPokeImage->frameRender(_backBuffer->getMemDC(), WINSIZEX - 230, 0);
 
 			_currentHP = _character->getPoketmon(_currentPoke).currentHP;
 			_maxHP = _character->getPoketmon(_currentPoke).sumMaxHP;

@@ -120,7 +120,7 @@ void poketmonManager::poketmonSpawn()
 void poketmonManager::wildPoketmonSetting()     //야생포켓몬 셋팅
 {
 
-    _randomPoketmon = RND->getFromIntTo(0, 1);                           //랜덤 야생포켓몬 변수
+    _randomPoketmon = RND->getFromIntTo(0, 9);                           //랜덤 야생포켓몬 변수
 
     //_randomPoketmon = 0;
 

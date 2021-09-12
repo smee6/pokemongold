@@ -215,13 +215,13 @@ void character::poketmonMeet() // 器南阁 炼快 矫 贸府
             if (UIMANAGER->getIsWild())
             {
                 UIMANAGER->setNPC(NPC::BATTLE, true);
-                _pM->wildPoketmonSetting();
             }
             //UIMANAGER->setIsWild(true);
             UIMANAGER->setIsBattleStart(true);
             UIMANAGER->setIsBattle(true);
             UIMANAGER->setIsAnimation(true);
-            UIMANAGER->setIsBattleScript(true); 
+            UIMANAGER->setIsBattleScript(true);
+            _pM->wildPoketmonSetting();
 
             _battleLoadingImage->setFrameX(0);
             _battleLoadingImage->setFrameY(0);

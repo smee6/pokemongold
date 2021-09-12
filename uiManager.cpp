@@ -1449,7 +1449,28 @@ void uiManager::script()
 			// 배틀 시 플레이어가 졌을 경우
 			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
 			{
-				if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || _character->getPoketmon(_currentPoke).currentHP <= 0))
+
+				if (_character->getPoketmon(_currentPoke).currentHP <= 0 && _character->getPoketmon(_currentPoke + 1).maxHP != 0)
+				{
+					//_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
+
+					_currentPoke++;
+
+					_isAttack = false;
+					_attackCount = 0;
+					_isTurn = false;
+					_isNext = false;
+					_whoTurn = 0;
+
+					//else
+					//{
+					//	for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
+					//	{
+					//		_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
+					//	}
+					//}
+				}
+				else if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0)))
 				{
 					_isAttack = false;
 					_isBattle = false;
@@ -1458,11 +1479,11 @@ void uiManager::script()
 					_isNext = false;
 					_whoTurn = 0;
 					_currentEnemyIndex = 0;
-					//_championCount++;
+					_currentPoke = 0;
 
-					if (_character->getPoketmon(_currentPoke).currentHP <= 0)
+					for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
 					{
-						_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
+						_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
 					}
 				}
 			}
@@ -2210,7 +2231,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 1:		// 트레이너1
-					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
 
 					_isTurn = false;
 					_isNext = false;
@@ -2238,7 +2259,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 2:		// 트레이너2
-					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
 
 					_isTurn = false;
 					_isNext = false;
@@ -2266,7 +2287,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 3:		// 관장
-					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
 
 					if (_poketmonManager->getChampionPoketmon()[_currentEnemyIndex].currentHP <= 0)
 					{
@@ -2318,7 +2339,7 @@ void uiManager::attack() //어택
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
-				_character->setCurrentHP(_currentPoke, 10);
+				_character->setCurrentHP(_currentPoke, 200);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -2399,7 +2420,7 @@ void uiManager::attack() //어택
 				_attackCount++;
 
 				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
-				_character->setCurrentHP(_currentPoke, 10);
+				_character->setCurrentHP(_currentPoke, 200);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -2428,7 +2449,7 @@ void uiManager::attack() //어택
 				switch (_currentEnemy)
 				{
 				case 0:		// 야생
-					_poketmonManager->setCurrentWildHP(200);
+					_poketmonManager->setCurrentWildHP(10);
 
 					_isTurn = false;
 					_isNext = false;
@@ -2448,7 +2469,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 1:		// 트레이너1
-					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentTrainer1HP(_currentEnemyIndex, 10);
 
 					_isTurn = false;
 					_isNext = false;
@@ -2476,7 +2497,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 2:		// 트레이너2
-					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentTrainer2HP(_currentEnemyIndex, 10);
 
 					_isTurn = false;
 					_isNext = false;
@@ -2504,7 +2525,7 @@ void uiManager::attack() //어택
 					}
 					break;
 				case 3:		// 관장
-					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 200);
+					_poketmonManager->setCurrentChampionHP(_currentEnemyIndex, 10);
 
 					_isTurn = false;
 					_isNext = false;

@@ -29,6 +29,8 @@ HRESULT skill::init()
 	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
 	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 
+	SOUNDMANAGER->addSound("몸통박치기", "soundFX/BodySlam.wav", true, false);
+
 	return S_OK;
 }
 
@@ -982,6 +984,107 @@ void skill::skillAni()
 	// isSkill이 true 값일때 이미지가 뜨고 애니메이션이 끝나면 isSkill이 false값이 되는게 나의 생각
 	// 애니메이션이 돌아갈곳이 일단 필요하다.
 
+	if (_isSound)
+	{
+		switch (_skillIndex)
+		{
+		case 0:
+			skillNone();
+			break;
+		case 1:
+			tackle();
+			SOUNDMANAGER->play("몸통박치기", 0.01f * UIMANAGER->getVolume());
+			break;
+		case 2:
+			stringShot();
+			break;
+		case 3:
+			confusion();
+			break;
+		case 4:
+			poisonPowder();
+			break;
+		case 5:
+			stunSpore();
+			break;
+		case 6:
+			sleepPowder();
+			break;
+		case 7:
+			poisonSting();
+			break;
+		case 8:
+			focusEnergy();
+			break;
+		case 9:
+			twineedle();
+			break;
+		case 10:
+			sandAttack();
+			break;
+		case 11:
+			gust();
+			break;
+		case 12:
+			quickAttack();
+			break;
+		case 13:
+			wingAttack();
+			break;
+		case 14:
+			tailWhip();
+			break;
+		case 15:
+			peck();
+			break;
+		case 16:
+			growl();
+			break;
+		case 17:
+			leer();
+			break;
+		case 18:
+			thunderShock();
+			break;
+		case 19:
+			thunderbolt();
+			break;
+		case 20:
+			razorLeaf();
+			break;
+		case 21:
+			reflect();
+			break;
+		case 22:
+			smokescreen();
+			break;
+		case 23:
+			ember();
+			break;
+		case 24:
+			rage();
+			break;
+		case 25:
+			waterGun();
+			break;
+		case 26:
+			harden();
+			break;
+		case 27:
+			scratch();
+			break;
+		case 28:
+			furyAttack();
+			break;
+		case 29:
+			bind();
+			break;
+		case 30:
+			bite();
+		}
+	}
+
+	_isSound = false;
 
 	if (_isSkill)	//스킬이 활성화 됬을시
 	{	

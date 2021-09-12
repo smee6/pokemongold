@@ -156,7 +156,8 @@ private:
 	image* _enemyImage;							// 상대 트레이너 이미지
 	image* _enemyPokeImage;						// 상대 포켓몬 이미지
 
-	int _appearIndex = 2;						// 포켓몬 출근 시 볼 프레임 이미지 렌더용
+	int _appearIndexPlayer = 2;						// 포켓몬 출근 시 볼 프레임 이미지 렌더용
+	int _appearIndexEnemy = 2;						// 포켓몬 출근 시 볼 프레임 이미지 렌더용
 
 	progressBar* _hpBarPlayer;					// 체력 게이지
 	progressBar* _hpBarEnemy;
@@ -164,12 +165,13 @@ private:
 
 	int _px, _ex;								// 배틀 시 플레이어 및 에너미 이미지 시작 위치
 
-	int _currentHP, _maxHP;						// 현재 hp, 최대 hp
-	int _currentEXP, _maxEXP;					// 현재 경험치, 최대 경험치
+	//int _currentHP, _maxHP;						// 현재 hp, 최대 hp
+	//int _currentEXP, _maxEXP;					// 현재 경험치, 최대 경험치
 
 	float _time;
 
 	int _behaviorCount;							//커서 움직임을 위한 변수
+	int _skillCnt;								// 스킬 커서
 
 	bool _isBattleScript;						// 배틀 시작 스크립트 실행 여부
 	bool _isTurn;								// 공격 애니메이션 띄우는 중인지

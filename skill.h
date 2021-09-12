@@ -85,6 +85,10 @@ private:
 	bool _isSkill;				// 스킬 사용확인
 	bool _isWhoSkill;			// 이미지 위치 띄우는거 조절할려고 만든 불값 플레이어(true) 인가 야생(false)인가 
 
+	// 사운드 출력위한 변수
+	int _skillIndex;
+	bool _isSound;
+
 	RECT rc;					//위치 잡을 임시용
 
 	poketmonManager* _pM;
@@ -164,6 +168,12 @@ public:
 	int getSkillAccuracy() { return _accuracy; }				//명중률 getter
 
 	int getSkillType() { return _skilltype; }
+
+	int getSkillIndex() { return _skillIndex; }
+	void setSkillIndex(int index) { _skillIndex = index; }
+
+	bool getIsSound() { return _isSound; }
+	void setIsSound(bool sound) { _isSound = sound; }
 
 	//CLASSIFCATION getIfcation() { return _ifcation; }			//분류
 					//타입

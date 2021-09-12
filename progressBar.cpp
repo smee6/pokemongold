@@ -48,7 +48,10 @@ void progressBar::render()
 {
 	float value = 1;
 
-	if (abs(_currentWidth - _width) > 60) value = 3;
+	if (abs(_currentWidth - _width) > 150) value = 6;
+	else if (abs(_currentWidth - _width) > 120) value = 5;
+	else if (abs(_currentWidth - _width) > 90) value = 4;
+	else if (abs(_currentWidth - _width) > 60) value = 3;
 	else if (abs(_currentWidth - _width) > 30) value = 2;
 	else value = 1;
 

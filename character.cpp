@@ -15,7 +15,7 @@ character::~character()
 HRESULT character::init() // 인잇
 {
     imageInit();
-    deletComingsoon();
+
     _image = IMAGEMANAGER->findImage("아이들_좌우");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
@@ -130,8 +130,11 @@ void character::controll() // 캐릭터 컨트롤 처리
     }
 
     // 메뉴창 (enter Key)
-    if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) UIMANAGER->setOpenMenu(true);
-
+    if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+    {
+        SOUNDMANAGER->play("menu", 0.01f * UIMANAGER->getVolume());
+        UIMANAGER->setOpenMenu(true);
+    }
 }
 
 void character::imageSetting() // 상태에 따라 현재 이미지 세팅
@@ -193,6 +196,13 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
     // 포켓몬 조우 시에만 처리되도록.
     if (!_isPoketmonMeet) return;
 
+    // 배틀 사운드 재생
+    if (!SOUNDMANAGER->isPlaySound("battle"))
+    {
+        SOUNDMANAGER->stop("town2BGM");
+        SOUNDMANAGER->play("battle", 0.01f * UIMANAGER->getVolume());
+    }
+
     // 포켓몬 조우 시 Y프레임 세팅
     _battleLoadingImage->setFrameY(0); 
 
@@ -212,10 +222,7 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
         // 맥스 프레임 도달하면 배틀씬으로 전환
         if (_battleLoadingImage->getFrameX() >= _battleLoadingImage->getMaxFrameX() && !UIMANAGER->getIsBattle())
         {
-            if (UIMANAGER->getIsWild())
-            {
-                UIMANAGER->setNPC(NPC::BATTLE, true);
-            }
+            if (UIMANAGER->getIsWild()) UIMANAGER->setNPC(NPC::BATTLE, true);
             //UIMANAGER->setIsWild(true);
             UIMANAGER->setIsBattleStart(true);
             UIMANAGER->setIsBattle(true);
@@ -451,6 +458,18 @@ void character::tileAction() // 캐릭터의 타일 타입에 따른 액션 처리
         if (!_isSloping) _slopeDistance = _tileMap->getCameraY();   // 현재 위치 한 번 기록
         slope(_frontTileType);
     }
+
+    // 첫 마을 빠져나가고 들어올 때 BGM 교체
+    if (SOUNDMANAGER->isPlaySound("town1BGM") && (_currentTile == 5876 || _currentTile == 5662))    // BGM2로 변경
+    {
+        SOUNDMANAGER->stop("town1BGM");
+        SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+    }
+    if (SOUNDMANAGER->isPlaySound("town2BGM") && (_currentTile == 5877 || _currentTile == 5663))    // BGM1로 변경
+    {
+        SOUNDMANAGER->stop("town2BGM");
+        SOUNDMANAGER->play("town1BGM", 0.01f * UIMANAGER->getVolume());
+    }
 }
 
 void character::grass() // 풀 타일 처리
@@ -477,7 +496,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5485;
         _tileMap->setCameraX(1920);
         _tileMap->setCameraY(192);
-
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -485,7 +503,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 4003;
         _tileMap->setCameraX(2944);
         _tileMap->setCameraY(-256);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -493,7 +510,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 3990;
         _tileMap->setCameraX(2112);
         _tileMap->setCameraY(-256);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -501,7 +517,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -509,7 +524,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5037;
         _tileMap->setCameraX(640);
         _tileMap->setCameraY(64);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -517,7 +531,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 6367;
         _tileMap->setCameraX(3584);
         _tileMap->setCameraY(448);
-
+        SOUNDMANAGER->stop("town1BGM");                                 // 사운드 교체
+        SOUNDMANAGER->play("doctor", 0.01f * UIMANAGER->getVolume());   // 사운드 교체
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -525,7 +540,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
-
+        SOUNDMANAGER->stop("doctor");                                   // 사운드 교체
+        SOUNDMANAGER->play("town1BGM", 0.01f * UIMANAGER->getVolume()); // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -533,7 +549,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 4602;
         _tileMap->setCameraX(192);
         _tileMap->setCameraY(-64);
-
+        SOUNDMANAGER->stop("doctor");                                   // 사운드 교체
+        SOUNDMANAGER->play("town1BGM", 0.01f * UIMANAGER->getVolume()); // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -541,7 +558,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5525;
         _tileMap->setCameraX(4480);
         _tileMap->setCameraY(192);
-
+        SOUNDMANAGER->stop("town2BGM");                                     // 사운드 교체
+        SOUNDMANAGER->play("pokecenter", 0.01f * UIMANAGER->getVolume());   // 사운드 교체
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -549,7 +567,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
-
+        SOUNDMANAGER->stop("pokecenter");                                   // 사운드 교체
+        SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());     // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -557,7 +576,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5381;
         _tileMap->setCameraX(-4736);
         _tileMap->setCameraY(192);
-
+        SOUNDMANAGER->stop("pokecenter");                                   // 사운드 교체
+        SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());     // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -569,7 +589,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
-
+        SOUNDMANAGER->stop("town2BGM");                                 // 사운드 교체
+        SOUNDMANAGER->play("gym", 0.01f * UIMANAGER->getVolume());      // 사운드 교체
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -581,7 +602,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
-
+        SOUNDMANAGER->stop("gym");                                      // 사운드 교체
+        SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume()); // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -593,7 +615,8 @@ void character::door(int doorIndex) // 문 타일 처리
         _npc->setNPCX5(0);              // npc 위치 초기화
         _tileMap->setTile5328Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
         _tileMap->setTile6183Type(TILETYPE_OPEN);   // npc 타일 타입 초기화
-
+        SOUNDMANAGER->stop("gym");                                      // 사운드 교체
+        SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume()); // 사운드 교체
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -601,7 +624,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 5554;
         _tileMap->setCameraX(6336);
         _tileMap->setCameraY(192);
-
         run(3);                                     // 위로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -609,7 +631,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -617,7 +638,6 @@ void character::door(int doorIndex) // 문 타일 처리
         _currentTile = 3647;
         _tileMap->setCameraX(-6144);
         _tileMap->setCameraY(-320);
-
         run(2);                                     // 아래로 1칸 걸어서 나오는 코드  
         tileAction();
         break;
@@ -690,114 +710,6 @@ void character::ui() // ui창 호출
     if (UIMANAGER->getIsBattle()) UIMANAGER->battle();
     if (UIMANAGER->getIsConfirm()) UIMANAGER->confirm();
     if (UIMANAGER->getIsScript()) UIMANAGER->script();
-}
-
-void character::deletComingsoon() //삭제예쩡
-{
-    _poketmon[0].name = "치코리타";							// 이름
-    _poketmon[0].gender = "수컷";							// 성별
-    _poketmon[0].isGender = 0;							// 성별 체크
-    _poketmon[0].index = 152;								// 인덱스 번호
-    _poketmon[0].level = 20;								// 포켓몬 현재 레벨
-    _poketmon[0].evolutionLevel = 0;						// 진화 단계
-
-    _poketmon[0].type1 = static_cast<int>(TYPE_PLAYER::GRASS); 								// 포켓몬 타입1	
-    _poketmon[0].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
-
-    _poketmon[0].iconNumX = 30;							//포켓몬 미니 아이콘 좌표x
-    _poketmon[0].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
-
-    _poketmon[0].attack = 49;								// 1레벨 초기 공격
-    _poketmon[0].defense = 65;							// 1레벨 초기 방어	
-    _poketmon[0].specialAttack = 49;						// 1레벨 초기 특수공격
-    _poketmon[0].specialDefense = 65;						// 1레벨 초기 특수방어
-    _poketmon[0].speed = 45;								// 1레벨 초기 스피드
-    _poketmon[0].currentHP = 45;							// 1레벨 초기 현재 체력
-    _poketmon[0].maxHP = 45;								// 1레벨 초기 최대 체력
-
-    _poketmon[0].levelAttack = 1.67f;                     //레벨당 공격력
-    _poketmon[0].levelDefense = 1.86f;                    //레벨당 방어력
-    _poketmon[0].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
-    _poketmon[0].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
-    _poketmon[0].levelSpeed = 1.62f;                      //레벨당 스피드
-    _poketmon[0].levelHP = 2.49f;                         //레벨당 체력
-
-    _poketmon[0].sumAttack = 1;							// 최종 공격
-    _poketmon[0].sumDefense = 1;							// 최종 방어
-    _poketmon[0].sumSpecialAttack = 1;					// 최종 특수공격
-    _poketmon[0].sumSpecialDefense = 1;					// 최종 특수방어
-    _poketmon[0].sumSpeed = 1;							// 최종 스피드
-    _poketmon[0].sumMaxHP = _poketmon[0].maxHP + (_poketmon[0].levelHP * _poketmon[0].level);	// 최종 체력
-    _poketmon[0].currentHP = _poketmon[0].sumMaxHP;
-
-    _poketmon[0].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-    _poketmon[0].maxExp = 1971;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
-
-    _poketmon[0].totalEXP = 8800;							// 토탈 경험치
-
-    _poketmon[0].skill[0] = 1;								// 스킬1 인덱스 
-    _poketmon[0].skill[1] = 2;								// 스킬2 인덱스 
-    _poketmon[0].skill[2] = 3;								// 스킬3 인덱스 
-    _poketmon[0].skill[3] = 4;								// 스킬4 인덱스 
-    _poketmon[0].skillPP[0] = 10;							// 스킬1 현재 PP
-    _poketmon[0].skillPP[1] = 10;							// 스킬2 현재 PP
-    _poketmon[0].skillPP[2] = 10;							// 스킬3 현재 PP
-    _poketmon[0].skillPP[3] = 10;							// 스킬4 현재 PP
-
-    _poketmon[0].item = 1;								// 보유 중인 아이템 인덱스
-
-//--------------------------------------------------------------------------------------------------------------
-    _poketmon[1].name = "피죤";							// 이름
-    _poketmon[1].gender = "암컷";							// 성별
-    _poketmon[1].isGender = 1;							// 성별 체크
-    _poketmon[1].index = 17;								// 인덱스 번호
-    _poketmon[1].level = 20;								// 포켓몬 현재 레벨
-    _poketmon[1].evolutionLevel = 1;						// 진화 단계
-
-    _poketmon[1].type1 = static_cast<int>(TYPE_PLAYER::FLYING); 								// 포켓몬 타입1	
-    _poketmon[1].type2 = static_cast<int>(TYPE_PLAYER::NONE);								// 포켓몬 타입2
-
-    _poketmon[1].iconNumX = 12;							//포켓몬 미니 아이콘 좌표x
-    _poketmon[1].iconNumY = 0;								//포켓몬 미니 아이콘 좌표y
-
-    _poketmon[1].attack = 49;								// 1레벨 초기 공격
-    _poketmon[1].defense = 65;							// 1레벨 초기 방어	
-    _poketmon[1].specialAttack = 49;						// 1레벨 초기 특수공격
-    _poketmon[1].specialDefense = 65;						// 1레벨 초기 특수방어
-    _poketmon[1].speed = 45;								// 1레벨 초기 스피드
-    _poketmon[1].currentHP = 45;							// 1레벨 초기 현재 체력
-    _poketmon[1].maxHP = 45;								// 1레벨 초기 최대 체력
-
-    _poketmon[1].levelAttack = 1.67f;                     //레벨당 공격력
-    _poketmon[1].levelDefense = 1.86f;                    //레벨당 방어력
-    _poketmon[1].levelSpecialAttack = 1.67f;              //레벨당 특수공격력
-    _poketmon[1].levelSpecialDefense = 1.86f;             //레벨당 특수방어력
-    _poketmon[1].levelSpeed = 1.62f;                      //레벨당 스피드
-    _poketmon[1].levelHP = 2.49f;                         //레벨당 체력
-
-    _poketmon[1].sumAttack = 1;							// 최종 공격
-    _poketmon[1].sumDefense = 1;							// 최종 방어
-    _poketmon[1].sumSpecialAttack = 1;					// 최종 특수공격
-    _poketmon[1].sumSpecialDefense = 1;					// 최종 특수방어
-    _poketmon[1].sumSpeed = 1;							// 최종 스피드
-    _poketmon[1].sumMaxHP = _poketmon[1].maxHP + (_poketmon[1].levelHP * _poketmon[1].level); // 최종 체력
-    _poketmon[1].currentHP = _poketmon[1].sumMaxHP;
-
-    _poketmon[1].currentExp = 800;						// 현재 경험치(현재 얻은 총 경험치, level값 만큼 빼서 나머지 양 보여주기)
-    _poketmon[1].maxExp = 1261;							// 최대 경험치(현재 레벨의 최대 경험치 값 표시)
-
-    _poketmon[1].totalEXP = 8800;							// 토탈 경험치
-
-    _poketmon[1].skill[0] = 1;								// 스킬1 인덱스 
-    _poketmon[1].skill[1] = 2;								// 스킬2 인덱스 
-    _poketmon[1].skill[2] = 3;								// 스킬3 인덱스 
-    _poketmon[1].skill[3] = 4;								// 스킬4 인덱스 
-    _poketmon[1].skillPP[0] = 10;							// 스킬1 현재 PP
-    _poketmon[1].skillPP[1] = 10;							// 스킬2 현재 PP
-    _poketmon[1].skillPP[2] = 10;							// 스킬3 현재 PP
-    _poketmon[1].skillPP[3] = 10;							// 스킬4 현재 PP
-
-    _poketmon[1].item = 2;								// 보유 중인 아이템 인덱스
 }
 
 void character::render() // 렌더

@@ -44,7 +44,7 @@ HRESULT playGround::init()
 
 	SCENEMANAGER->addScene("엔딩", new endingScene);
 	//SCENEMANAGER->changeScene("엔딩");
-	
+	SOUNDMANAGER->play("town1BGM", 0.01f * UIMANAGER->soundVolume);
 	return S_OK;
 }
 

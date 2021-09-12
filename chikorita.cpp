@@ -20,7 +20,7 @@ HRESULT chikorita::init()
         _poketmon.name = "치코리타";						//이름 치코리타
         _poketmon.isGender = RND->getFromIntTo(0, 2);	    //성별체크 랜덤
         _poketmon.index = 152;							    //전국도감번호 152
-        _poketmon.level = RND->getFromIntTo(1, 15);		//처음 등장 레벨 1~50
+        _poketmon.level = RND->getFromIntTo(1, 6);		//처음 등장 레벨 1~50
        
         potketmonEXP();										//경험치
         
@@ -67,7 +67,7 @@ HRESULT chikorita::init()
         _poketmon.name = "베이리프";						//이름 베어리프
         _poketmon.isGender = RND->getFromIntTo(0, 2);	    //성별체크 랜덤
         _poketmon.index = 153;							    //전국도감번호 153
-        _poketmon.level = RND->getFromIntTo(16, 50);	    //처음 등장 레벨 16~50
+        _poketmon.level = RND->getFromIntTo(7, 10);	    //처음 등장 레벨 16~50
 
         potketmonEXP();										//경험치
 
@@ -114,7 +114,7 @@ HRESULT chikorita::init()
         _poketmon.name = "메가니움";						//이름 메가니움
         _poketmon.isGender = RND->getFromIntTo(0, 2);	    //성별체크 랜덤
         _poketmon.index = 154;							    //전국도감번호 154
-        _poketmon.level = RND->getFromIntTo(33, 70);	    //처음 등장 레벨 33~70
+        _poketmon.level = RND->getFromIntTo(11, 15);	    //처음 등장 레벨 33~70
 
         potketmonEXP();										//경험치
 

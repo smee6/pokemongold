@@ -20,7 +20,7 @@ HRESULT cyndaquil::init()
 		_poketmon.name = "브케인";							//이름 브케인
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 155;								//전국도감번호 155
-		_poketmon.level = RND->getFromIntTo(1, 14);			//처음 등장 레벨 1~50
+		_poketmon.level = RND->getFromIntTo(1, 6);			//처음 등장 레벨 1~50
 
 		potketmonEXP();										//경험치
 
@@ -67,7 +67,7 @@ HRESULT cyndaquil::init()
 		_poketmon.name = "마그케인";							//이름 마그케인
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 156;								//전국도감번호 156
-		_poketmon.level = RND->getFromIntTo(15, 50);		//처음 등장 레벨 15~50
+		_poketmon.level = RND->getFromIntTo(7, 10);		//처음 등장 레벨 15~50
 
 		potketmonEXP();										//경험치
 
@@ -115,7 +115,7 @@ HRESULT cyndaquil::init()
 		_poketmon.name = "블레이범";							//이름 블레이범
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 157;								//전국도감번호 157
-		_poketmon.level = RND->getFromIntTo(36, 50);		//처음 등장 레벨 36~50
+		_poketmon.level = RND->getFromIntTo(11, 15);		//처음 등장 레벨 36~50
 
 		potketmonEXP();										//경험치
 

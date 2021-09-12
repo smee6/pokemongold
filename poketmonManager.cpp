@@ -352,7 +352,7 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
    
     _championPoketmon[0].isGender = RND->getFromIntTo(0, 2);
     _championPoketmon[0].index = 17;
-    _championPoketmon[0].level = 21;
+    _championPoketmon[0].level = 12;
     _championPoketmon[0].evolutionLevel = 1;
 
     if (_championPoketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
@@ -406,7 +406,7 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
 
     _championPoketmon[1].isGender = RND->getFromIntTo(0, 2);
     _championPoketmon[1].index = 22;
-    _championPoketmon[1].level = 24;
+    _championPoketmon[1].level = 14;
     _championPoketmon[1].evolutionLevel = 1;
 
     if (_championPoketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
@@ -460,7 +460,7 @@ void poketmonManager::championPoketmonSetting() //비상 체육관 챔피온
                       
     _championPoketmon[2].isGender = RND->getFromIntTo(0, 2);
     _championPoketmon[2].index = 18;
-    _championPoketmon[2].level = 29;
+    _championPoketmon[2].level = 16;
     _championPoketmon[2].evolutionLevel = 2;
     
     if (_championPoketmon[2].isGender)         // 포켓몬 성별체크가 트루일시
@@ -516,7 +516,7 @@ void poketmonManager::trainer1Poketmon() //트레이너 1
  
     _trainer1Poketmon[0].isGender = RND->getFromIntTo(0, 2);
     _trainer1Poketmon[0].index = 16;
-    _trainer1Poketmon[0].level = 15;
+    _trainer1Poketmon[0].level = 6;
     _trainer1Poketmon[0].evolutionLevel = 0;
 
     if (_trainer1Poketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
@@ -571,7 +571,7 @@ void poketmonManager::trainer1Poketmon() //트레이너 1
 
     _trainer1Poketmon[1].isGender = RND->getFromIntTo(0, 2);
     _trainer1Poketmon[1].index = 17;
-    _trainer1Poketmon[1].level = 19;
+    _trainer1Poketmon[1].level = 11;
     _trainer1Poketmon[1].evolutionLevel = 1;
 
     if (_trainer1Poketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
@@ -627,7 +627,7 @@ void poketmonManager::trainer2Poketmon()  //트레이너2
                       
     _trainer2Poketmon[0].isGender = RND->getFromIntTo(0, 2);
     _trainer2Poketmon[0].index = 21;
-    _trainer2Poketmon[0].level = 17;
+    _trainer2Poketmon[0].level = 7;
     _trainer2Poketmon[0].evolutionLevel = 0;
 
     if (_trainer2Poketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
@@ -681,7 +681,7 @@ void poketmonManager::trainer2Poketmon()  //트레이너2
                       
     _trainer2Poketmon[1].isGender = RND->getFromIntTo(0, 2);
     _trainer2Poketmon[1].index = 22;
-    _trainer2Poketmon[1].level = 22;
+    _trainer2Poketmon[1].level = 12;
     _trainer2Poketmon[1].evolutionLevel = 1;
 
     if (_trainer2Poketmon[1].isGender)         // 포켓몬 성별체크가 트루일시

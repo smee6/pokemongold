@@ -28,7 +28,35 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
-	
+	// ======================================================================================================================
+	// 사운드 // ============================================================================================================
+
+	SOUNDMANAGER->addSound("town1BGM", "soundFX/mainBGM.mp3", true, true);
+	SOUNDMANAGER->addSound("town2BGM", "soundFX/road.mp3", true, true);
+	SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
+	SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
+	SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
+	SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
+	SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
+	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
+	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
+
+	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
+
+	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", false, false);
+	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", false, false);
+
+	SOUNDMANAGER->addSound("x", "soundFX/xbutton.wav", false, false);
+	SOUNDMANAGER->addSound("yes", "soundFX/yes.wav", false, false);
+	SOUNDMANAGER->addSound("no", "soundFX/no.wav", false, false);
+	SOUNDMANAGER->addSound("switch", "soundFX/switch.wav", false, false);
+	SOUNDMANAGER->addSound("menu", "soundFX/menu.wav", false, false);
+	SOUNDMANAGER->addSound("mom", "soundFX/mom.wav", false, false);
+	SOUNDMANAGER->addSound("med", "soundFX/medicine.wav", false, false);
+	SOUNDMANAGER->addSound("item", "soundFX/getitem.wav", false, false);
+	SOUNDMANAGER->addSound("click", "soundFX/click.wav", false, false);
+	SOUNDMANAGER->addSound("attack", "soundFX/attack.wav", false, false);
+	// ======================================================================================================================
 	
 
 	//불러오는거 ... ?
@@ -159,10 +187,12 @@ void uiManager::shop()
 		// 스위치 넣어서 상점이 열려있을때만
 		if (!buyWindow) {
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && shopCnt < 2) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				shopCnt += 1;
 				//메뉴 화살표 위아래 움직이는
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP) && shopCnt > 0) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				shopCnt -= 1;
 			}
 		}
@@ -179,6 +209,7 @@ void uiManager::shop()
 			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
+				SOUNDMANAGER->play("x", 0.01f * soundVolume);
 				shopWindow = false;
 				uiOpen = false;
 				shopCnt = 0;
@@ -196,9 +227,11 @@ void uiManager::shop()
 		if (buyWindow) {
 
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && buyCnt < 4) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				buyCnt += 1;
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP) && buyCnt > 0) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				buyCnt -= 1;
 			}
 
@@ -228,6 +261,7 @@ void uiManager::shop()
 				IMAGEMANAGER->findImage("안산다")->render(_backBuffer->getMemDC());
 
 				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+					SOUNDMANAGER->play("x", 0.01f * soundVolume);
 					buyCnt = 0;
 					//shopCnt = 0;
 					buyWindow = false;
@@ -243,15 +277,15 @@ void uiManager::shop()
 void uiManager::pokeCenter()
 {
 	uiOpen = true;
+	
 	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
-
 	cnt++;
-
+	
 	if (cnt == 15) {
 		_index++;
 		cnt = 0;
 	}
-
+	
 	if (_index > 10) {
 		_index = 0;
 		//uiOpen = false;
@@ -274,10 +308,13 @@ void uiManager::menu()
 				if (!pokeWindow) {
 					if (!bagWindow) {
 						if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && menuCnt < 6) {
+							SOUNDMANAGER->play("click", 0.01f * soundVolume);
 							menuCnt += 1;
+							
 							//메뉴 화살표 위아래 움직이는
 						}
 						if (KEYMANAGER->isOnceKeyDown(VK_UP) && menuCnt > 0) {
+							SOUNDMANAGER->play("click", 0.01f * soundVolume);
 							menuCnt -= 1;
 						}
 					}
@@ -288,7 +325,7 @@ void uiManager::menu()
 	if (!_isOpenBag && !_isOpenPokemon && !_isOpenPokeDogam && !_isOpenPokeGear && !_isOpenPlayerStatus && !_isOpenSetting)
 	{
 		if (KEYMANAGER->isOnceKeyDown('X')) {
-
+			SOUNDMANAGER->play("x", 0.01f * soundVolume);
 				uiOpen = false;
 				_isOpenMenu = false;
 				menuCnt = 0;
@@ -342,6 +379,7 @@ void uiManager::menu()
 			IMAGEMANAGER->findImage("menu6")->render(_backBuffer->getMemDC());
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
+				SOUNDMANAGER->play("x", 0.01f * soundVolume);
 				uiOpen = false;
 				_isOpenMenu = false;
 				menuCnt = 0;
@@ -353,6 +391,7 @@ void uiManager::menu()
 
 	if (_isOpenBag)
 	{
+		
 		bag();
 	}
 	if (_isOpenPlayerStatus)
@@ -389,11 +428,12 @@ void uiManager::pokeShift()
 
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && pokesCnt < 6) {
 				pokesCnt += 1;
-
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				//메뉴 화살표 위아래 움직이는
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP) && pokesCnt > 0) {
 				pokesCnt -= 1;
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			}
 			if (KEYMANAGER->isOnceKeyDown('X')) {
 				pokesCnt = 0;
@@ -678,12 +718,15 @@ void uiManager::bag()
 	if (bagWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && bagCnt < 3) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			bagCnt ++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && bagCnt > 0) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			bagCnt --;
 		}
 		if (KEYMANAGER->isOnceKeyDown('X')) {
+			SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 			bagCnt = 0;
 			bagWindow = false;
@@ -747,6 +790,7 @@ void uiManager::bag()
 		case 3:// 가방에서 나가기에 커서가 있다
 			IMAGEMANAGER->findImage("bag3")->render(_backBuffer->getMemDC());
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 				bagCnt = 0;
 				bagWindow = false;
@@ -797,12 +841,15 @@ void uiManager::pokeDogam()
 
 		IMAGEMANAGER->findImage("dogam1")->render(_backBuffer->getMemDC());
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 23) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			dogamCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && dogamCnt > 0) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			dogamCnt--;
 		}
 		if (KEYMANAGER->isOnceKeyDown('X')) {
+			SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 			dogamCnt = 0;
 			pokedogamWindow = false;
@@ -896,12 +943,14 @@ void uiManager::pokeGear()
 	if (gearWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && gearCnt < 2) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			gearCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && gearCnt > 0) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			gearCnt--;
 		}
-		if (KEYMANAGER->isOnceKeyDown('X')) {
+		if (KEYMANAGER->isOnceKeyDown('X')) {SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 			gearCnt = 0;
 			gearWindow = false;
@@ -924,6 +973,7 @@ void uiManager::pokeGear()
 			IMAGEMANAGER->findImage("gear2")->render(_backBuffer->getMemDC());
 
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 				gearCnt = 0;
 				gearWindow = false;
@@ -972,12 +1022,15 @@ void uiManager::playerStatus()
 	if (statusWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && statusCnt < 1) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			statusCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && statusCnt > 0) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			statusCnt--;
 		}
 		if (KEYMANAGER->isOnceKeyDown('X')) {
+			SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 			statusCnt = 0;
 			statusWindow = false;
@@ -1040,12 +1093,15 @@ void uiManager::setting()
 	if (settingWindow) {
 
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && settingCnt < 3) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			settingCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && settingCnt > 0) {
+			SOUNDMANAGER->play("click", 0.01f * soundVolume);
 			settingCnt--;
 		}
 		if (KEYMANAGER->isOnceKeyDown('X')) {
+			SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 			settingCnt = 0;
 			settingWindow = false;
@@ -1058,9 +1114,11 @@ void uiManager::setting()
 		case 0:
 			IMAGEMANAGER->findImage("setting0")->render(_backBuffer->getMemDC());
 			if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && soundVolume < 100) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				soundVolume++;
 			}
 			if (KEYMANAGER->isStayKeyDown(VK_LEFT) && soundVolume > 0) {
+				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				soundVolume--;
 			}
 
@@ -1068,6 +1126,7 @@ void uiManager::setting()
 		case 1:
 			IMAGEMANAGER->findImage("setting1")->render(_backBuffer->getMemDC());
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+				SOUNDMANAGER->play("x", 0.01f * soundVolume);
 				settingCnt = 0;
 				settingWindow = false;
 				uiOpen = false;
@@ -1169,6 +1228,7 @@ void uiManager::howStrong()
 
 
 	if (KEYMANAGER->isOnceKeyDown('X')) {
+		SOUNDMANAGER->play("x", 0.01f * soundVolume);
 
 		howStrongWindow = false;
 		_isOpenHowStrong = false;

@@ -14,6 +14,7 @@ private:
 
 	float _time;					// 시간사용을 위한 시간변수
 
+	int _scrCnt;
 
 public:
 	endingScene();

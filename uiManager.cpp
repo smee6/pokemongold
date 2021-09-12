@@ -1084,7 +1084,7 @@ void uiManager::setting()
 
 		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
 
-		HFONT font2 = CreateFont(56, 0, 0, 0, 700, false, false, false,
+		HFONT font2 = CreateFont(42, 0, 0, 0, 700, false, false, false,
 			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
 			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
 

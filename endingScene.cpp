@@ -61,4 +61,97 @@ void endingScene::render()
 		_endingPokemon[_endCount]->frameRender(getMemDC(), 50 + i * 120, 20, _index, 0);
 		_endingPokemon[_endCount]->frameRender(getMemDC(), 50 + i * 120, WINSIZEY - 30 - 50, _index, 0);
 	}
+
+	//글자
+	////////////////////////////////////////////////////////////////////////////  			
+	_scrCnt++;
+
+	if (_scrCnt <= 200) {
+	
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+		const char* s1 = "포켓몬스터 골드버전 모작 팀 프로젝트";
+
+
+		sprintf_s(str, s1);
+		TextOut(_backBuffer->getMemDC(), 110, 250, str, strlen(str));
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+	}
+	else if (_scrCnt > 200 && _scrCnt < 400) {
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+		const char* s1_1 = "제작 : 경일 29기 진 아재무쌍";
+
+		sprintf_s(str, s1_1);
+		TextOut(_backBuffer->getMemDC(), 130, 250, str, strlen(str));
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+	
+	
+	}
+	else if (_scrCnt > 400 && _scrCnt < 600) {
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(36, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+		const char* s1 = "플레이 해주셔서 감사합니다.";
+		const char* s1_1 = "Thanks for Playing this Game";
+
+		sprintf_s(str, s1);
+		TextOut(_backBuffer->getMemDC(), 160, 250, str, strlen(str));
+		sprintf_s(str, s1_1);
+		TextOut(_backBuffer->getMemDC(), 20, 290, str, strlen(str));
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+	
+	}
+	else if (_scrCnt > 600) {
+		char str[128];
+
+		SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+		HFONT font2 = CreateFont(50, 0, 0, 0, 700, false, false, false,
+			DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+		HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+		const char* s1 = "TO BE COUNTINUE";
+
+
+		sprintf_s(str, s1);
+		TextOut(_backBuffer->getMemDC(), 60, 250, str, strlen(str));
+
+		SelectObject(_backBuffer->getMemDC(), oldFont2);
+		DeleteObject(font2);
+	
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	//
+
+
 }

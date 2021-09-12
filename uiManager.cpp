@@ -195,29 +195,31 @@ void uiManager::shop()
 				SOUNDMANAGER->play("click", 0.01f * soundVolume);
 				shopCnt -= 1;
 			}
+
+			switch (shopCnt)
+			{
+			case 0:
+				IMAGEMANAGER->findImage("사다")->render(_backBuffer->getMemDC());
+				break;
+			case 1:
+				IMAGEMANAGER->findImage("팔다")->render(_backBuffer->getMemDC());
+				break;
+			case 2:
+				IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
+				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+				{
+					SOUNDMANAGER->play("x", 0.01f * soundVolume);
+					shopWindow = false;
+					uiOpen = false;
+					shopCnt = 0;
+					_isOpenShop = false;
+					return;
+				}
+				break;
+			}
 		}
 
-		switch (shopCnt)
-		{
-		case 0:
-			IMAGEMANAGER->findImage("사다")->render(_backBuffer->getMemDC());
-			break;
-		case 1:
-			IMAGEMANAGER->findImage("팔다")->render(_backBuffer->getMemDC());
-			break;
-		case 2:
-			IMAGEMANAGER->findImage("그만두다")->render(_backBuffer->getMemDC());
-			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-			{
-				SOUNDMANAGER->play("x", 0.01f * soundVolume);
-				shopWindow = false;
-				uiOpen = false;
-				shopCnt = 0;
-				_isOpenShop = false;
-				return;
-			}
-			break;
-		}
+
 
 		if (shopCnt == 0 && KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 			buyWindow = true;
@@ -239,28 +241,36 @@ void uiManager::shop()
 			case 0:
 				IMAGEMANAGER->findImage("몬스터볼")->render(_backBuffer->getMemDC());
 				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
+					if (gold < 500) return;
+					SOUNDMANAGER->play("yes", 0.01f * soundVolume);
 					pokeballQ++;
+					gold -= 500;
 				};
 				break;
 			case 1:
 				IMAGEMANAGER->findImage("상처약")->render(_backBuffer->getMemDC());
 				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
+					if (gold < 200) return;
+					SOUNDMANAGER->play("yes", 0.01f * soundVolume);
 					medicineQ++;
+					gold -= 200;
 				};
 				break;
 			case 2:
 				IMAGEMANAGER->findImage("고급상처약")->render(_backBuffer->getMemDC());
 				// 나중에 여기서 돈 검사해서 있으면 Q (수량) 을 늘려주게 코드 몇줄만 추가
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
+					if (gold < 600) return;
+					SOUNDMANAGER->play("yes", 0.01f * soundVolume);
 					goodMedicineQ++;
+					gold -= 600;
 				};
 				break;
 			case 3:
 				IMAGEMANAGER->findImage("안산다")->render(_backBuffer->getMemDC());
-
-				if (KEYMANAGER->isOnceKeyUp(VK_SPACE)) {
+				if (KEYMANAGER->isOnceKeyDown('Z')) {
 					SOUNDMANAGER->play("x", 0.01f * soundVolume);
 					buyCnt = 0;
 					//shopCnt = 0;
@@ -270,6 +280,27 @@ void uiManager::shop()
 
 				break;
 			}
+
+			char str[128];
+
+			SetTextColor(_backBuffer->getMemDC(), RGB(0, 0, 0));
+
+			HFONT font2 = CreateFont(32, 0, 0, 0, 700, false, false, false,
+				DEFAULT_CHARSET, OUT_STROKE_PRECIS, CLIP_DEFAULT_PRECIS,
+				PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("PokemonGSC"));
+
+			HFONT oldFont2 = (HFONT)SelectObject(_backBuffer->getMemDC(), font2);
+
+
+			sprintf_s(str, "%d", gold);
+			TextOut(_backBuffer->getMemDC(), 440, 30, str, strlen(str));
+
+
+			SelectObject(_backBuffer->getMemDC(), oldFont2);
+			DeleteObject(font2);
+
+
+
 		}
 	}
 }

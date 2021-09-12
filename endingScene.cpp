@@ -11,6 +11,7 @@ endingScene::~endingScene()
 
 HRESULT endingScene::init()
 {
+	SOUNDMANAGER->play("ending", 0.01f * UIMANAGER->soundVolume);
 	_endingBackground[0] = IMAGEMANAGER->addImage("엔딩배경1", "image/end_image/endingBackground1.bmp", 640, 576, true, RGB(255, 0, 255));				// 엔딩 배경 1
 	_endingBackground[1] = IMAGEMANAGER->addImage("엔딩배경2", "image/end_image/endingBackground2.bmp", 640, 576, true, RGB(255, 0, 255));				// 엔딩 배경 1
 	_endingBackground[2] = IMAGEMANAGER->addImage("엔딩배경3", "image/end_image/endingBackground3.bmp", 640, 576, true, RGB(255, 0, 255));				// 엔딩 배경 1

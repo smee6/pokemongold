@@ -184,6 +184,8 @@ private:
 	int _currentEnemyIndex;						// 상대방의 현재 포켓몬의 인덱스 번호
 	int _currentEnemy;							// 현재 상대방 종류 (0 == 야생 / 1 == 트레이너1 / 2 == 트레이너2 / 3 == 관장)
 	int _currentSkill;							// 현재 사용한 스킬의 인덱스 번호(0~3)
+	int _currentSkillEnemy;
+	int _currentLevel;
 
 	int _attackCount;							// 공격 순서 판정용
 	int _whoTurn;								// 현재 누구의 턴인지(0 == 평시 / 1 == 내 턴 / 2 == 상대 턴)

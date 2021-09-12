@@ -1430,6 +1430,11 @@ void uiManager::script()
 			{
 				_isOpenPokecenter = true;
 				uiOpen = true;
+
+				for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
+				{
+					_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
+				}
 			}
 
 			// 포켓몬 센터 회복 후
@@ -1577,6 +1582,9 @@ void uiManager::script()
 				_whoTurn = 0;
 				_isChange = true;
 
+				// 체력 0으로 고정
+				_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP);
+
 				//else
 				//{
 				//	for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
@@ -1597,14 +1605,15 @@ void uiManager::script()
 				_currentEnemyIndex = 0;
 				_currentPoke = 0;
 				_skillCnt = 0;
+				_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP);
 
 				SOUNDMANAGER->stop("battle");
 				SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
 
-				for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
-				{
-					_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
-				}
+				//for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
+				//{
+				//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
+				//}
 			}
 
 			// 교체가 끝나면
@@ -1684,12 +1693,17 @@ void uiManager::script()
 					if (_isWin && _scriptIndex == 1)
 					{
 						_isWin = false;
-						_character->setTotalExp(_currentPoke, 50);
+						_character->setTotalExp(_currentPoke, 100);
 
-						if (_character->getPoketmon(_currentPoke).currentExp >= _character->getPoketmon(_currentPoke).maxExp)
+						//if (_character->getPoketmon(_currentPoke).currentExp >= _character->getPoketmon(_currentPoke).maxExp)
+						//{
+						//	_isLevelUp = true;
+						//	_character->levelUp(_currentPoke);
+						//}
+						if (_character->getPoketmon(_currentPoke).level > _currentLevel)
 						{
 							_isLevelUp = true;
-							_character->levelUp(_currentPoke);
+							//_character->levelUp(_currentPoke);
 						}
 					}
 					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
@@ -2448,6 +2462,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 1:		// 트레이너1
@@ -2477,6 +2492,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 2:		// 트레이너2
@@ -2506,6 +2522,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 3:		// 관장
@@ -2532,9 +2549,12 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				}
+				_currentLevel = _character->getPoketmon(_currentPoke).level;
+
 
 				//if (_currentEnemyPokemon.currentHP <= 0)
 				//{
@@ -2560,7 +2580,7 @@ void uiManager::attack() //어택
 			{
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
-				_poketmonManager->getSkill()->setSkillIndex(_currentEnemyPokemon.skill[_currentSkill]);
+				_poketmonManager->getSkill()->setSkillIndex(_currentEnemyPokemon.skill[_currentSkillEnemy]);
 				_poketmonManager->getSkill()->setIsSound(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
@@ -2588,15 +2608,26 @@ void uiManager::attack() //어택
 
 				char skill[128];
 
-				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
-				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				_currentSkillEnemy = RND->getInt(4);
+				if (_currentEnemyPokemon.skill[_currentSkillEnemy] == 0)
 				{
 					while (true)
 					{
-						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
-						_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+						if (_currentEnemyPokemon.skill[_currentSkillEnemy] != 0) break;
+						_currentSkillEnemy = RND->getInt(4);
 					}
 				}
+				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[_currentSkillEnemy]);
+
+				//_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+				//if (_poketmonManager->getSkill()->getSkillName() == " -")
+				//{
+				//	while (true)
+				//	{
+				//		if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+				//		_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+				//	}
+				//}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_currentEnemyPokemon.name + "의\n" + skill + "!;" + "aaa;");
 
@@ -2621,15 +2652,26 @@ void uiManager::attack() //어택
 
 				char skill[128];
 
-				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
-				if (_poketmonManager->getSkill()->getSkillName() == " -")
+				_currentSkillEnemy = RND->getInt(4);
+				if (_currentEnemyPokemon.skill[_currentSkillEnemy] == 0)
 				{
 					while (true)
 					{
-						if (_poketmonManager->getSkill()->getSkillName() != " -") break;
-						_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+						if (_currentEnemyPokemon.skill[_currentSkillEnemy] != 0) break;
+						_currentSkillEnemy = RND->getInt(4);
 					}
 				}
+				_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[_currentSkillEnemy]);
+
+				//_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+				//if (_poketmonManager->getSkill()->getSkillName() == " -")
+				//{
+				//	while (true)
+				//	{
+				//		if (_poketmonManager->getSkill()->getSkillName() != " -") break;
+				//		_poketmonManager->getSkill()->skillNumLink(_currentEnemyPokemon.skill[RND->getInt(4)]);
+				//	}
+				//}
 				sprintf_s(skill, _poketmonManager->getSkill()->getSkillName().c_str());
 				_vStr.push_back(_currentEnemyPokemon.name + "의\n" + skill + "!;" + "aaa;");
 
@@ -2642,7 +2684,7 @@ void uiManager::attack() //어택
 			{
 				_whoTurn = 2;
 				_poketmonManager->getSkill()->setWhoSkill(true);
-				_poketmonManager->getSkill()->setSkillIndex(_currentEnemyPokemon.skill[_currentSkill]);
+				_poketmonManager->getSkill()->setSkillIndex(_currentEnemyPokemon.skill[_currentSkillEnemy]);
 				_poketmonManager->getSkill()->setIsSound(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 
@@ -2698,6 +2740,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 1:		// 트레이너1
@@ -2727,6 +2770,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 2:		// 트레이너2
@@ -2756,6 +2800,7 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				case 3:		// 관장
@@ -2785,9 +2830,12 @@ void uiManager::attack() //어택
 						_isScript = true;
 						_isCount = true;
 						_isWin = true;
+						gold += 500;
 					}
 					break;
 				}
+				_currentLevel = _character->getPoketmon(_currentPoke).level;
+
 
 				//_isTurn = false;
 				//_isNext = false;

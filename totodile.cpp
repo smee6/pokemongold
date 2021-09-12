@@ -20,7 +20,7 @@ HRESULT totodile::init()
 		_poketmon.name = "리아코";							//이름 리아코
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤	
 		_poketmon.index = 158;								//전국도감번호 158
-		_poketmon.level = RND->getFromIntTo(1, 18);			//처음 등장 레벨 1~50
+		_poketmon.level = RND->getFromIntTo(1, 6);			//처음 등장 레벨 1~50
 
 		potketmonEXP();										//경험치
 
@@ -67,7 +67,7 @@ HRESULT totodile::init()
 		_poketmon.name = "엘리게이";							//이름 엘리게이
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤	
 		_poketmon.index = 159;								//전국도감번호 159
-		_poketmon.level = RND->getFromIntTo(19, 50);		//처음 등장 레벨 19~50
+		_poketmon.level = RND->getFromIntTo(7, 10);		//처음 등장 레벨 19~50
 
 		potketmonEXP();										//경험치
 
@@ -114,7 +114,7 @@ HRESULT totodile::init()
 		_poketmon.name = "장크로다일";						//이름 장크로다일
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤	
 		_poketmon.index = 160;								//전국도감번호 160
-		_poketmon.level = RND->getFromIntTo(30, 50);		//처음 등장 레벨 30~50
+		_poketmon.level = RND->getFromIntTo(11, 15);		//처음 등장 레벨 30~50
 
 		potketmonEXP();										//경험치
 

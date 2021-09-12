@@ -20,7 +20,7 @@ HRESULT pikachu::init()
 		_poketmon.name = "피카츄";							//이름 피카츄
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 25;								//전국도감번호 25
-		_poketmon.level = RND->getFromIntTo(1, 19);			//처음 등장 레벨 1~50
+		_poketmon.level = RND->getFromIntTo(1, 6);			//처음 등장 레벨 1~50
 
 		potketmonEXP();										//경험치
 
@@ -67,7 +67,7 @@ HRESULT pikachu::init()
 		_poketmon.name = "라이츄";							//이름 라이츄
 		_poketmon.isGender = RND->getFromIntTo(0, 2);		//성별체크 랜덤
 		_poketmon.index = 26;								//전국도감번호 26
-		_poketmon.level = RND->getFromIntTo(20, 50);		//처음 등장 레벨 1~15
+		_poketmon.level = RND->getFromIntTo(7, 10);		//처음 등장 레벨 1~15
 
 		potketmonEXP();										//경험치
 

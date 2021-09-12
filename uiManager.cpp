@@ -28,7 +28,33 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
-	
+	// ======================================================================================================================
+	// 사운드 // ============================================================================================================
+
+	SOUNDMANAGER->addSound("town1BGM", "soundFX/mainBGM.mp3", true, true);
+	SOUNDMANAGER->addSound("town2BGM", "soundFX/road.mp3", true, true);
+	SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
+	SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
+	SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
+	SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
+	SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
+	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
+	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
+
+	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
+	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", false, false);
+	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", false, false);
+
+	SOUNDMANAGER->addSound("x", "soundFX/xbutton.wav", false, false);
+	SOUNDMANAGER->addSound("yes", "soundFX/yes.wav", false, false);
+	SOUNDMANAGER->addSound("no", "soundFX/no.wav", false, false);
+	SOUNDMANAGER->addSound("switch", "soundFX/switch.wav", false, false);
+	SOUNDMANAGER->addSound("menu", "soundFX/menu.wav", false, false);
+	SOUNDMANAGER->addSound("mom", "soundFX/mom.wav", false, false);
+	SOUNDMANAGER->addSound("med", "soundFX/medicine.wav", false, false);
+	SOUNDMANAGER->addSound("item", "soundFX/getitem.wav", false, false);
+	SOUNDMANAGER->addSound("click", "soundFX/click.wav", false, false);
+	// ======================================================================================================================
 	
 
 	//불러오는거 ... ?

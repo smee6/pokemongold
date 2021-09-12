@@ -69,7 +69,7 @@ void poketmon::ability()
 {
     //현재 능력치는     =     1레벨 능력치  +        레벨당 능력치  * 레벨 이다.
 
-    _poketmon.sumAttack = static_cast<int>(_poketmon.attack + (_poketmon.levelAttack * _poketmon.level)/5 + RND->getFromIntTo(0,255));       //공격력       
+    _poketmon.sumAttack = _poketmon.attack + (_poketmon.levelAttack * _poketmon.level);                              //공격력       
     _poketmon.sumDefense = _poketmon.defense + (_poketmon.levelDefense * _poketmon.level);                                                   //방어력
     _poketmon.sumMaxHP = _poketmon.maxHP + (_poketmon.levelHP * _poketmon.level);                                                            //hp
     _poketmon.sumSpecialAttack = _poketmon.specialAttack + (_poketmon.levelSpecialAttack * _poketmon.level);                                 //특수공격력

@@ -33,13 +33,13 @@ HRESULT uiManager::init()
 
 	SOUNDMANAGER->addSound("town1BGM", "soundFX/mainBGM.mp3", true, true);
 	SOUNDMANAGER->addSound("town2BGM", "soundFX/road.mp3", true, true);
-	//SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
-	//SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
-	//SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
-	//SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
-	//SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
-	//SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
-	//SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
+	SOUNDMANAGER->addSound("open", "soundFX/op.mp3", true, true);
+	SOUNDMANAGER->addSound("title", "soundFX/title.mp3", true, true);
+	SOUNDMANAGER->addSound("start", "soundFX/start.mp3", true, true);
+	SOUNDMANAGER->addSound("ending", "soundFX/ending.mp3", true, true);
+	SOUNDMANAGER->addSound("gym", "soundFX/gym.mp3", true, true);
+	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", false, true);
+	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
 
 	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
 
@@ -1395,7 +1395,11 @@ void uiManager::script()
 		case NPC::TRAINER2_BATTLE_WIN:
 			_vScript = TXTDATA->txtLoad("script/트레이너2_배틀승리.txt");
 			break;
-		default:
+		case NPC::LEVEL_UP:
+			_vScript = TXTDATA->txtLoad("script/레벨업.txt");
+			break;
+		case NPC::POKEMONCHANGE:
+			_vScript = TXTDATA->txtLoad("script/포켓몬교체.txt");
 			break;
 		}
 
@@ -1542,9 +1546,9 @@ void uiManager::script()
 			}
 
 			// 배틀 시 플레이어가 졌을 경우
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _whoTurn != 1 && _championCount != 3 && _trainer1Count != 2 && _trainer2Count != 2)
 			{
-
+				// 다음 포켓몬이 있을 경우
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0 && _character->getPoketmon(_currentPoke + 1).maxHP != 0)
 				{
 					//_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
@@ -1556,6 +1560,7 @@ void uiManager::script()
 					_isTurn = false;
 					_isNext = false;
 					_whoTurn = 0;
+					_isChange = true;
 
 					//else
 					//{
@@ -1565,6 +1570,7 @@ void uiManager::script()
 					//	}
 					//}
 				}
+				// 다음 포켓몬이 없을 경우
 				else if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0)))
 				{
 					_isAttack = false;
@@ -1583,6 +1589,29 @@ void uiManager::script()
 				}
 			}
 
+			// 교체가 끝나면
+			if (_npc == NPC::POKEMONCHANGE)
+			{
+				_isChange = false;
+			}
+
+			// 포켓몬 교체
+			if (_isChange)
+			{
+				vector<string> _vStr;
+				_vStr.push_back("가랏 " + _character->getPoketmon(_currentPoke).name + "!;" + "aaa;");
+
+				TXTDATA->txtSave("script/포켓몬교체.txt", _vStr);
+
+				_npc = NPC::POKEMONCHANGE;
+
+				_isScript = true;
+				_isCount = true;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+			}
+
+
 			// 스타팅 포켓몬 획득 시
 			if (_npc == NPC::CYNDAQUIL || _npc == NPC::TOTODILE || _npc == NPC::CHIKORITA)
 			{
@@ -1591,7 +1620,7 @@ void uiManager::script()
 			}
 
 			// 배틀 승리 상황이 아니면
-			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _championCount != 4)
+			if (_npc != NPC::CHAMPION_BATTLE_WIN && _npc != NPC::TRAINER1_BATTLE_WIN && _npc != NPC::TRAINER2_BATTLE_WIN && _championCount != 3 && _championCount != 4 && !_isChange)
 			{
 				// 끝나면 스크립트 종료 및 초기화(다음 스크립트 위해서)
 				_isScript = false;
@@ -1632,9 +1661,15 @@ void uiManager::script()
 					{
 						_isWin = false;
 						_character->setTotalExp(_currentPoke, 50);
-						if (_character->getPoketmon(0).totalEXP >= _character->getPoketmon(0).maxExp)
+						if (_character->getPoketmon(_currentPoke).totalEXP >= _character->getPoketmon(_currentPoke).maxExp)
 						{
 							_character->levelUp(_currentPoke);
+
+							vector<string> _vStr;
+							_vStr.push_back(_character->getPoketmon(_currentPoke).name + "의 레벨이\n" + to_string(_character->getPoketmon(_currentPoke).level) + "로 올랐습니다!;");
+
+							TXTDATA->txtSave("script/레벨업.txt", _vStr);
+
 						}
 					}
 					// 버튼을 누르면
@@ -2448,6 +2483,7 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
+					//_isChange = true;
 				}
 
 				_isTurn = false;
@@ -2529,6 +2565,7 @@ void uiManager::attack() //어택
 					TXTDATA->txtSave("script/패배.txt", _vStr);
 
 					_npc = NPC::BATTLE_DOWN;
+					//_isChange = true;
 				}
 			}
 		}

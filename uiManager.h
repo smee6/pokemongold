@@ -52,6 +52,9 @@ enum class NPC
 	TRAINER2_BATTLE_DOWN,
 	TRAINER2_BATTLE_WIN,
 
+	// level up
+	LEVEL_UP,
+
 	// pokemon change
 	POKEMONCHANGE,
 };
@@ -172,6 +175,8 @@ private:
 	bool _isTurn;								// 공격 애니메이션 띄우는 중인지
 	bool _isNext;								// 후턴 포켓몬의 공격 차례인지
 	bool _isBattleStart;						// 배틀 시작 시 한 번 체크
+	bool _isChange;								// 포켓몬 교체 체크
+	bool _isLevelUp;
 
 	int _currentPoke;							// 플레이어의 현재 포켓몬의 인덱스 번호(0~5)
 	int _currentEnemyIndex;						// 상대방의 현재 포켓몬의 인덱스 번호

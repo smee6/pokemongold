@@ -54,6 +54,7 @@ HRESULT uiManager::init()
 	SOUNDMANAGER->addSound("med", "soundFX/medicine.wav", false, false);
 	SOUNDMANAGER->addSound("item", "soundFX/getitem.wav", false, false);
 	SOUNDMANAGER->addSound("click", "soundFX/click.wav", false, false);
+	SOUNDMANAGER->addSound("attack", "soundFX/attack.wav", false, false);
 	// ======================================================================================================================
 	
 

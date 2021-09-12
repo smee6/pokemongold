@@ -21,8 +21,14 @@ HRESULT skill::init()
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
 
-	_isWhoSkill = true;
+	//_isWhoSkill = true;
 	_isSkill = false;								//초기화
+
+	_imgX = 0;
+	_imgY = 0;
+
+	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
+	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 
 	return S_OK;
 }
@@ -36,19 +42,13 @@ void skill::update()
 	
 
 	//밑에 키매니저들은 체크할려고 만든 것들 나중에 지워도 됨
-	if (KEYMANAGER->isOnceKeyDown('K')) _isSkill = true;
-	if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;			//나 (플레이어)
-	if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;		//야생
-
-	
-
+	//if (KEYMANAGER->isOnceKeyDown('K')) _isSkill = true;
+	//if (KEYMANAGER->isOnceKeyDown('I')) _isWhoSkill = true;			//나 (플레이어)
+	//if (KEYMANAGER->isOnceKeyDown('U')) _isWhoSkill = false;		//야생
 
 	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
-	else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
-
-
-
-
+	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
+	
 	skillAni();
 	
 
@@ -626,10 +626,12 @@ void skill::razorLeaf()													//잎날가르기
 	//_skillNumber = 20;												//스킬넘버
 
 	_name = "잎날가르기";												//이름
-	_imgName = "myrazorLeaf";											//이미지이름
+	
 
 	if (_isWhoSkill)
 	{
+		_imgName = "myrazorLeaf";											//이미지이름
+
 		_imgX = -410;
 		_imgY = -70;
 
@@ -637,8 +639,10 @@ void skill::razorLeaf()													//잎날가르기
 
 	if (!_isWhoSkill)
 	{
-		_imgX = 0;
-		_imgY = 0;
+		_imgName = "wildrazorLeaf";											//이미지이름
+
+		_imgX = -50;
+		_imgY = -250;
 	}
 
 	_power = 55;														//위력
@@ -713,19 +717,23 @@ void skill::ember()														//불꽃세례
 	_index = RND->getFromIntTo(0, 100);
 
 	_name = "불꽃세례";													//이름
-	_imgName = "fire";													//이미지이름
+														//이미지이름
 
 	if (_isWhoSkill)
 	{
-		_imgX = 0;
-		_imgY = 0;
+		_imgName = "myember";
+
+		_imgX = -250;
+		_imgY = -75;
 
 	}
 
 	if (!_isWhoSkill)
 	{
-		_imgX = 0;
-		_imgY = 0;
+		_imgName = "wildember";
+		
+		_imgX = -40;
+		_imgY = -155;
 	}
 
 	_power = 40;														//위력
@@ -770,19 +778,23 @@ void skill::waterGun()													//물대포
 	//_skillNumber = 25;												//스킬넘버
 
 	_name = "물대포";													//이름
-	_imgName = "cut";													//이미지이름
+													
 
 	if (_isWhoSkill)
 	{
-		_imgX = 0;
-		_imgY = 0;
+		_imgName = "mywaterGun";
+
+		_imgX = -250;
+		_imgY = -75;
 
 	}
 
 	if (!_isWhoSkill)
 	{
-		_imgX = 0;
-		_imgY = 0;
+		_imgName = "wildwaterGun";
+
+		_imgX = -60;
+		_imgY = -110;
 	}
 
 	_power = 40;														//위력
@@ -934,12 +946,14 @@ void skill::bite()
 
 void skill::render()
 {
+	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
+	if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 	
 
 	char str[128];
 
-	if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
-	else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
+	//if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
+	//else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 
 	if (_isSkill) IMAGEMANAGER->frameRender(_imgName, getMemDC(), _imgPoint.x, _imgPoint.y, _currentFrame, 0);
 
@@ -964,7 +978,9 @@ void skill::skillAni()
 
 
 	if (_isSkill)	//스킬이 활성화 됬을시
-	{
+	{	
+		
+
 		_frameCount++;		//프레임 돌릴거
 		_count++;			//일정시간뒤에 꺼지게 할려고
 
@@ -1051,6 +1067,11 @@ void skill::imageInit()	//스킬 이미지
 	IMAGEMANAGER->addFrameImage("harden", "image/skill/harden.bmp", 540, 90, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("rage", "image/skill/rage.bmp", 570, 170, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("myrazorLeaf", "image/skill/myrazorLeaf.bmp", 9920, 400, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildrazorLeaf", "image/skill/wildrazorLeaf.bmp", 9920, 400, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mywaterGun", "image/skill/mywaterGun.bmp", 4200, 260, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildwaterGun", "image/skill/wildwaterGun.bmp", 4200, 260, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("myember", "image/skill/myember.bmp", 4300, 300, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("wildember", "image/skill/wildember.bmp", 4300, 300, 10, 1, true, RGB(255, 0, 255));
 
 
 }

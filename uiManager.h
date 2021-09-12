@@ -339,6 +339,9 @@ public:
 
 	bool getIsBadge() { return _isGetBadge; }
 
+	int getVolume() { return soundVolume; }
+	void setVolume(int volume) { soundVolume = volume; }
+
 	// Memory
 	void setCharacterMemoryAddressLink(character* character) { _character = character; }
 	void setSkillMemoryAddressLink(poketmonManager* pm) { _poketmonManager = pm; }

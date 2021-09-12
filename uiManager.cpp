@@ -108,6 +108,7 @@ HRESULT uiManager::init()
 
 	IMAGEMANAGER->addImage("status0", "image/menuUI/status_0.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("status1", "image/menuUI/status_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("status2", "image/menuUI/status_2.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("setting0", "image/menuUI/setting_0.bmp", 640, 576, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("setting1", "image/menuUI/setting_1.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -1075,6 +1076,9 @@ void uiManager::playerStatus()
 			break;
 		case 1:
 			IMAGEMANAGER->findImage("status1")->render(_backBuffer->getMemDC());
+			if (_isGetBadge) {
+				IMAGEMANAGER->findImage("status2")->render(_backBuffer->getMemDC());
+			}
 			break;
 		
 		

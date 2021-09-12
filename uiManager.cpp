@@ -85,6 +85,8 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addImage("setting1", "image/menuUI/setting_1.bmp", 640, 576, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("dogam0", "image/menuUI/dogam_0.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("dogam1", "image/menuUI/dogam_1.bmp", 640, 576, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("dogam_c", "image/menuUI/dogam_cursor.bmp", 640, 576, true, RGB(255, 0, 255));
 	// =======================================================================================================================
 
 	IMAGEMANAGER->addImage("배틀배경", "image/battle/battleBackground.bmp", 640, 576, true, RGB(255, 0, 255));
@@ -793,7 +795,8 @@ void uiManager::pokeDogam()
 	pokedogamWindow = true;
 	if (pokedogamWindow) {
 
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 1) {
+		IMAGEMANAGER->findImage("dogam1")->render(_backBuffer->getMemDC());
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && dogamCnt < 23) {
 			dogamCnt++;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP) && dogamCnt > 0) {
@@ -807,13 +810,79 @@ void uiManager::pokeDogam()
 			_isOpenPokeDogam = false;
 
 		};
-
+		IMAGEMANAGER->findImage("dogam_c")->render(_backBuffer->getMemDC(),0,dogamCnt*23);
 		switch (dogamCnt) {
 		case 0:
-			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			IMAGEMANAGER->findImage("10F")->render(_backBuffer->getMemDC(), 50, 30);
 			break;
 		case 1:
-			IMAGEMANAGER->findImage("dogam0")->render(_backBuffer->getMemDC());
+			IMAGEMANAGER->findImage("11F")->render(_backBuffer->getMemDC(), 50, 30);
+			break;
+		case 2:
+			IMAGEMANAGER->findImage("12F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 3:
+			IMAGEMANAGER->findImage("13F")->render(_backBuffer->getMemDC(), 50, 30);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage("14F")->render(_backBuffer->getMemDC(), 50, 30);
+			break;
+		case 5:
+			IMAGEMANAGER->findImage("15F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 6:
+			IMAGEMANAGER->findImage("16F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 7:
+			IMAGEMANAGER->findImage("17F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 8:
+			IMAGEMANAGER->findImage("18F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 9:
+			IMAGEMANAGER->findImage("19F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 10:
+			IMAGEMANAGER->findImage("20F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 11:
+			IMAGEMANAGER->findImage("25F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 12:
+			IMAGEMANAGER->findImage("26F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 13:
+			IMAGEMANAGER->findImage("21F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 14:
+			IMAGEMANAGER->findImage("22F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 15:
+			IMAGEMANAGER->findImage("152F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 16:
+			IMAGEMANAGER->findImage("153F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 17:
+			IMAGEMANAGER->findImage("154F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 18:
+			IMAGEMANAGER->findImage("155F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 19:
+			IMAGEMANAGER->findImage("156F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 20:
+			IMAGEMANAGER->findImage("157F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 21:
+			IMAGEMANAGER->findImage("158F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 22:
+			IMAGEMANAGER->findImage("159F")->render(_backBuffer->getMemDC(), 50, 40);
+			break;
+		case 23:
+			IMAGEMANAGER->findImage("160F")->render(_backBuffer->getMemDC(), 50, 40);
 			break;
 		}
 	}

@@ -1839,7 +1839,7 @@ void uiManager::battle()
 			case NPC::CHAMPION:
 				if (_isBattleStart)
 				{
-					_isBattleStart = false;
+					//_isBattleStart = false;
 
 					_currentEnemyIndex = 0;
 				}
@@ -1850,7 +1850,7 @@ void uiManager::battle()
 			case NPC::TRAINER1:
 				if (_isBattleStart)
 				{
-					_isBattleStart = false;
+					//_isBattleStart = false;
 
 					_currentEnemyIndex = 0;
 				}
@@ -1861,7 +1861,7 @@ void uiManager::battle()
 			case NPC::TRAINER2:
 				if (_isBattleStart)
 				{
-					_isBattleStart = false;
+					//_isBattleStart = false;
 
 					_currentEnemyIndex = 0;
 				}
@@ -1991,16 +1991,18 @@ void uiManager::battle()
 			_maxEXP = _character->getPoketmon(_currentPoke).maxExp;
 			
 			// 플레이어 체력바
-			_hpBarPlayer->setGauge(_currentHP, _maxHP);
+			_hpBarPlayer->setGauge(_currentHP, _maxHP, _isBattleStart);
 			_hpBarPlayer->render();
 
 			// 에너미 체력바
-			_hpBarEnemy->setGauge(_currentEnemyPokemon.currentHP, _currentEnemyPokemon.sumMaxHP);
+			_hpBarEnemy->setGauge(_currentEnemyPokemon.currentHP, _currentEnemyPokemon.sumMaxHP, _isBattleStart);
 			_hpBarEnemy->render();
 
 			// 경험치 바
-			_expBar->setGauge(_currentEXP, _maxEXP);
+			_expBar->setGauge(_currentEXP, _maxEXP, _isBattleStart);
 			_expBar->render();
+
+			_isBattleStart = false;
 
 			// 이름 띄우기
 			char str[128];

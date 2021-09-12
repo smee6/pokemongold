@@ -46,6 +46,15 @@ void progressBar::update()
 
 void progressBar::render()
 {
+	float value = 1;
+
+	if (abs(_currentWidth - _width) > 60) value = 3;
+	else if (abs(_currentWidth - _width) > 30) value = 2;
+	else value = 1;
+
+	if (_currentWidth > _width) _width += value;
+	else if (_currentWidth < _width) _width -= value;
+
 	IMAGEMANAGER->render(_back, getMemDC(),
 		_rcProgress.left + _progressBarBottom->getWidth() / 2,
 		_y + _progressBarBottom->getHeight() / 2, 0, 0,
@@ -62,5 +71,11 @@ void progressBar::setGauge(float currentGauge, float maxGauge)
 {
 	//이해 안가신다면 외우셔도 좋습니다 *-_-*
 	_width = (currentGauge / maxGauge) * _progressBarBottom->getWidth();
+}
 
+void progressBar::setGauge(float currentGauge, float maxGauge, bool start)
+{
+	//이해 안가신다면 외우셔도 좋습니다 *-_-*
+	if (start) _width = (currentGauge / maxGauge) * _progressBarBottom->getWidth();
+	_currentWidth = (currentGauge / maxGauge) * _progressBarBottom->getWidth();
 }

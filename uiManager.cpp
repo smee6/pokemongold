@@ -2339,7 +2339,7 @@ void uiManager::attack() //어택
 				_poketmonManager->getSkill()->setWhoSkill(true);
 				_poketmonManager->getSkill()->setIsSkill(true);
 				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
-				_character->setCurrentHP(_currentPoke, 200);
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{
@@ -2420,7 +2420,7 @@ void uiManager::attack() //어택
 				_attackCount++;
 
 				//_character->setCurrentHP(_currentPoke, _currentEnemyPokemon.sumAttack * _poketmonManager->getSkill()->getSkillPower());
-				_character->setCurrentHP(_currentPoke, 200);
+				_character->setCurrentHP(_currentPoke, 10);
 
 				if (_character->getPoketmon(_currentPoke).currentHP <= 0)
 				{

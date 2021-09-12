@@ -16,8 +16,7 @@ HRESULT skill::init()
 	imageInit();
 
 	STATUS_AILMENT::NONE;	// 상태이상 초기값은 없음
-
-	_imgName = "snap";							//처음에 들어가는 값
+		
 
 	_index = _currentFrame = _frameCount = 0;		//애니메이션 관련 초기화
 
@@ -61,10 +60,11 @@ void skill::skillNone()													//스킬없음
 
 	_name = " -";														//이름
 
-
-	_imgX = 0;
-	_imgY = 0;
-
+	if (_isWhoSkill || !_isWhoSkill)
+	{
+		_imgX = 0;
+		_imgY = 0;
+	}
 	_power = NULL;														//위력
 	_PP = NULL;															//PP
 	_accuracy = NULL;													//명중률
@@ -79,10 +79,13 @@ void skill::tackle()													// 몸통박치기
 	//_skillNumber = 1;													//스킬넘버
 
 	_name = "몸통박치기";												//이름
-	
-	_imgX = 25;
-	_imgY = 0;
 
+
+	if (_isWhoSkill || !_isWhoSkill)
+	{
+		_imgX = 25;
+		_imgY = 0;
+	}
 	_imgName = "attack";												//이미지이름
 
 	
@@ -166,10 +169,11 @@ void skill::poisonPowder()												//독가루
 
 	_name = "독가루";													//이름
 	_imgName = "poison";												//이미지이름
-
-	_imgX = -80;
-	_imgY = -50;
-
+	if (_isWhoSkill || !_isWhoSkill)
+	{
+		_imgX = -80;
+		_imgY = -50;
+	}
 	_power = NULL;														//위력
 	_PP = 35;															//PP
 	_accuracy = 75;														//명중률
@@ -184,10 +188,11 @@ void skill::stunSpore()													//저리가루
 
 	_name = "저리가루";													//이름
 	_imgName = "poison";												//이미지이름
-
-	_imgX = -80;
-	_imgY = -50;
-
+	if (_isWhoSkill || !_isWhoSkill)
+	{
+		_imgX = -80;
+		_imgY = -50;
+	}
 	_power = NULL;														//위력
 	_PP = 30;															//PP
 	_accuracy = 75;														//명중률
@@ -202,10 +207,11 @@ void skill::sleepPowder()												//수면가루
 
 	_name = "수면가루";													//이름
 	_imgName = "poison";												//이미지이름
-
-	_imgX = -80;
-	_imgY = -50;
-
+	if (_isWhoSkill || !_isWhoSkill)
+	{
+		_imgX = -80;
+		_imgY = -50;
+	}
 	_power = NULL;								 						//위력
 	_PP = 15;															//PP
 	_accuracy = 75;														//명중률
@@ -959,12 +965,12 @@ void skill::render()
 
 
 
-	//sprintf_s(str, "좌표x : %d ", _imgX);
-	//TextOut(getMemDC(), 50, 50, str, strlen(str));
-	//sprintf_s(str, "좌표y : % d ", _imgY);
-	//TextOut(getMemDC(), 50, 70, str, strlen(str));
-	//sprintf_s(str, "상태 : %d ", _isWhoSkill);
-	//TextOut(getMemDC(), 50, 90, str, strlen(str));
+	sprintf_s(str, "좌표x : %d ", _imgX);
+	TextOut(getMemDC(), 50, 150, str, strlen(str));
+	sprintf_s(str, "좌표y : % d ", _imgY);
+	TextOut(getMemDC(), 50, 170, str, strlen(str));
+	sprintf_s(str, "상태 : %d ", _isWhoSkill);
+	TextOut(getMemDC(), 50, 190, str, strlen(str));
 
 
 }

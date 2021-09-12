@@ -12,7 +12,6 @@ openingScene::~openingScene()
 HRESULT openingScene::init()
 {
 	opening = IMAGEMANAGER->addFrameImage("¿ÀÇÁ´×", "image/op_image_frame.bmp", 65280, 576, 102, 1, true, RGB(255, 0, 255));
-
 	return S_OK;
 }
 

@@ -67,7 +67,7 @@ private:
 
 
 	int gold = 5000;
-	int soundVolume = 50;
+	
 	int shopCnt = 0;							//상점 메뉴 선택지
 	int buyCnt = 0;								//아이템 메뉴 선택지
 	int menuCnt = 0;
@@ -244,7 +244,7 @@ public:
 
 	void levelUp();
 
-	
+	int soundVolume = 50;
 
 	// get set
 	bool getIsScript() { return _isScript; }

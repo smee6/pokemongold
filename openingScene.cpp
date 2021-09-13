@@ -13,7 +13,7 @@ HRESULT openingScene::init()
 {
 	_opening = IMAGEMANAGER->addFrameImage("오프닝", "image/op_image_frame.bmp", 65280, 576, 102, 1, true, RGB(255, 0, 255));
 	_title = IMAGEMANAGER->addImage("인트로", "image/intro.bmp", 640, 576, true, RGB(255, 0, 255));
-	_dr = IMAGEMANAGER->addImage("오박사", "image/DrOh.bmp", 120, 168, true, RGB(255, 0, 255));
+	_dr = IMAGEMANAGER->addImage("박사", "image/DrOh.bmp", 120, 168, true, RGB(255, 0, 255));
 
 	SOUNDMANAGER->play("op_star", 0.01f * UIMANAGER->getVolume());
 

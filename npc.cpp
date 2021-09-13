@@ -229,6 +229,7 @@ void npc::move()
 			}
 			if (_npc[4].moveCount == 17)
 			{
+				SOUNDMANAGER->stop("gym");
 				_character->setDirection(1);
 				_character->idle(1);
 				UIMANAGER->setIsScript(true);
@@ -262,6 +263,7 @@ void npc::move()
 			}
 			if (_npc[4].moveCount == 9)
 			{
+				SOUNDMANAGER->stop("gym");
 				_character->setDirection(1);
 				_character->idle(1);
 				UIMANAGER->setIsScript(true);
@@ -295,6 +297,7 @@ void npc::move()
 			}
 			if (_npc[5].moveCount == 17)
 			{
+				SOUNDMANAGER->stop("gym");
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER2, true);
 				UIMANAGER->setIsWild(false);

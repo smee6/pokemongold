@@ -307,7 +307,11 @@ void character::npcScript() // npc 대화 스크립트 처리
                     {
                         UIMANAGER->setNPC(NPC::CHAMPION, true);
                         UIMANAGER->setIsWild(false);
-                        if (UIMANAGER->getChampionCount() == 0) _scriptAction = 1;                          // 스크립트 액션 = 1
+                        if (UIMANAGER->getChampionCount() == 0)
+                        {
+                            SOUNDMANAGER->stop("gym");
+                            _scriptAction = 1;                          // 스크립트 액션 = 1
+                        }
                     }
                     break;
                 case 7: // 상점 아재

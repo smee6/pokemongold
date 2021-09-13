@@ -1347,6 +1347,7 @@ void uiManager::script()
 			else _vScript = TXTDATA->txtLoad("script/쫄따구1_배틀후.txt");
 
 			_trainer1Count++;
+			//if (_trainer1Count >= 4) _trainer1Count = 6;
 
 			break;
 		case NPC::TRAINER2:
@@ -1356,6 +1357,7 @@ void uiManager::script()
 			else _vScript = TXTDATA->txtLoad("script/쫄따구2_배틀후.txt");
 
 			_trainer2Count++;
+			//if (_trainer2Count >= 4) _trainer2Count = 6;
 
 			break;
 		case NPC::POKECENTER:
@@ -1537,7 +1539,7 @@ void uiManager::script()
 					_skillCnt = 0;
 
 					SOUNDMANAGER->stop("battle");
-					SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+					SOUNDMANAGER->play("gym", 0.01f * UIMANAGER->getVolume());
 				}
 			}
 
@@ -1583,7 +1585,18 @@ void uiManager::script()
 				_txtIndex = 0;
 				_scriptIndex = 0;
 				uiOpen = false;
+				SOUNDMANAGER->stop("battle");
+				SOUNDMANAGER->play("gym", 0.01f * soundVolume);
 
+			}
+			if ((_npc == NPC::CHAMPION || _npc == NPC::TRAINER1 || _npc == NPC::TRAINER2) && (_championCount == 3 || _trainer1Count == 3 || _trainer2Count == 3))
+			{
+				SOUNDMANAGER->stop("battle");
+				SOUNDMANAGER->play("gym", 0.01f * soundVolume);
+
+				if (_npc == NPC::CHAMPION) _championCount = 10;
+				else if (_npc == NPC::TRAINER1) _trainer1Count = 10;
+				else if (_npc == NPC::TRAINER2) _trainer2Count = 10;
 			}
 
 			//// 배틀 시 플레이어가 졌을 경우
@@ -1662,9 +1675,12 @@ void uiManager::script()
 				_txtIndex = 0;
 				_scriptIndex = 0;
 				uiOpen = false;
-			
-				SOUNDMANAGER->stop("battle");
-				SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+
+				if (_npc != NPC::CHAMPION && _npc != NPC::TRAINER1 && _npc != NPC::TRAINER2)
+				{
+					SOUNDMANAGER->stop("battle");
+					SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+				}
 			
 				//for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
 				//{

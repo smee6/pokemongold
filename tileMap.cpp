@@ -19,8 +19,8 @@ HRESULT tileMap::init()
 	IMAGEMANAGER->addImage("나무", "image/pokemon_tree.bmp", 8256, 2560, true, RGB(255, 0, 255));
 
 	//맵 카메라 초기화
-	_cameraX = 2560;
-	_cameraY = 0;
+	_cameraX = 2688;
+	_cameraY = -64;
 	
 	load();
 
@@ -129,12 +129,15 @@ void tileMap::render()
 			}
 	}
 
-	char str[128];
-	sprintf_s(str, "cameraX : %d", _cameraX);
-	TextOut(getMemDC(), 100, 100, str, strlen(str));
+	if (KEYMANAGER->isToggleKey(VK_TAB))
+	{
+		char str[128];
+		sprintf_s(str, "cameraX : %d", _cameraX);
+		TextOut(getMemDC(), 100, 100, str, strlen(str));
 
-	sprintf_s(str, "cameraY : %d", _cameraY);
-	TextOut(getMemDC(), 100, 130, str, strlen(str));
+		sprintf_s(str, "cameraY : %d", _cameraY);
+		TextOut(getMemDC(), 100, 130, str, strlen(str));
+	}
 }
 
 void tileMap::setTile()

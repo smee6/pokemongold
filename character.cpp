@@ -737,6 +737,17 @@ void character::render() // 렌더
 
         sprintf_s(str, "_scriptAction : %d", _scriptAction);
         TextOut(getMemDC(), 100, 280, str, strlen(str));
+
+        sprintf_s(str, "_isPoketmonMeet : %d", _isPoketmonMeet);
+        TextOut(getMemDC(), 100, 300, str, strlen(str));
+
+        sprintf_s(str, "isUiOpen : %d", UIMANAGER->isUiOpen());
+        TextOut(getMemDC(), 100, 320, str, strlen(str));
+
+        sprintf_s(str, "getIsMove : %d", _npc->getIsMove());
+        TextOut(getMemDC(), 100, 340, str, strlen(str));
+
+        //_isPoketmonMeet || UIMANAGER->isUiOpen() || _npc->getIsMove()
     }
     
     // 비탈길 이동 중일 때 그림자 보여짐

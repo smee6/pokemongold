@@ -221,8 +221,8 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
 
     _startPoketmon[0].skill[0] = 1;
     _startPoketmon[0].skill[1] = 17;
-    _startPoketmon[0].skill[2] = 0;
-    _startPoketmon[0].skill[3] = 0;
+    _startPoketmon[0].skill[2] = 12;
+    _startPoketmon[0].skill[3] = 23;
 
     _startPoketmon[0].sumAttack = static_cast<int>(_startPoketmon[0].attack + (_startPoketmon[0].levelAttack * _startPoketmon[0].level));
     _startPoketmon[0].sumDefense = _startPoketmon[0].defense + (_startPoketmon[0].levelDefense * _startPoketmon[0].level);
@@ -275,8 +275,8 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
 
     _startPoketmon[1].skill[0] = 27;
     _startPoketmon[1].skill[1] = 17;
-    _startPoketmon[1].skill[2] = 0;
-    _startPoketmon[1].skill[3] = 0;
+    _startPoketmon[1].skill[2] = 25;
+    _startPoketmon[1].skill[3] = 30;
                    
     _startPoketmon[1].sumAttack = static_cast<int>(_startPoketmon[1].attack + (_startPoketmon[1].levelAttack * _startPoketmon[1].level));
     _startPoketmon[1].sumDefense = _startPoketmon[1].defense + (_startPoketmon[1].levelDefense * _startPoketmon[1].level);
@@ -332,8 +332,8 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
                                    
     _startPoketmon[2].skill[0] = 1;
     _startPoketmon[2].skill[1] = 16;
-    _startPoketmon[2].skill[2] = 0;
-    _startPoketmon[2].skill[3] = 0;
+    _startPoketmon[2].skill[2] = 20;
+    _startPoketmon[2].skill[3] = 29;
     
     _startPoketmon[2].sumAttack = static_cast<int>(_startPoketmon[2].attack + (_startPoketmon[2].levelAttack * _startPoketmon[2].level));
     _startPoketmon[2].sumDefense = _startPoketmon[2].defense + (_startPoketmon[2].levelDefense * _startPoketmon[2].level);

@@ -37,8 +37,8 @@ HRESULT inGameScene::init()
 
 	SOUNDMANAGER->play("town1BGM", 0.01f * UIMANAGER->getVolume());
 
-	UIMANAGER->setIsScript(true);
-	UIMANAGER->setIsCount(true);
+	/*UIMANAGER->setIsScript(true);
+	UIMANAGER->setIsCount(true);*/
 
 	return S_OK;
 }

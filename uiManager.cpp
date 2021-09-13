@@ -1718,6 +1718,16 @@ void uiManager::script()
 				uiOpen = false;
 			}
 
+			if (_npc == NPC::TITLE)
+			{
+				_isScript = false;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+				SOUNDMANAGER->stop("start");
+				SCENEMANAGER->changeScene("인게임");
+			}
+
 			// 트레이너들이 말을 걸었을 경우
 			//if ((_npc == NPC::TRAINER1 && _trainer1Count == 1) || (_npc == NPC::TRAINER2 && _trainer2Count == 1))
 			//{

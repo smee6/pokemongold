@@ -1571,13 +1571,17 @@ void uiManager::script()
 				uiOpen = false;
 				_isScript = true;
 				_isCount = true;
-				//_isBattle = false;
-				//_isAttack = false;
-				//_attackCount = 0;
-				//_isTurn = false;
-				//_isNext = false;
-				//_whoTurn = 0;
-				//_currentEnemyIndex = 0;
+				_isBattle = false;
+				_isAttack = false;
+				_attackCount = 0;
+				_isTurn = false;
+				_isNext = false;
+				_whoTurn = 0;
+				_currentEnemyIndex = 0;
+				_isScript = false;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
 
 			}
 
@@ -1588,7 +1592,7 @@ void uiManager::script()
 			
 			// 배틀 시 플레이어가 졌을 경우
 			// 다음 포켓몬이 있을 경우
-			if (_character->getPoketmon(_currentPoke).currentHP <= 0 && _character->getPoketmon(_currentPoke + 1).maxHP != 0)
+			if (_isBattle && _character->getPoketmon(_currentPoke).currentHP <= 0 && _character->getPoketmon(_currentPoke + 1).maxHP != 0)
 			{
 				//_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 
@@ -1614,8 +1618,8 @@ void uiManager::script()
 				//	}
 				//}
 			}
-			// 상대 포켓몬이 죽을 경우(야생)
-			else if (_isBattle && _isWild && (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0))
+			// 다음 포켓몬이 없을 경우
+			else if (_isBattle && (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
 				_isBattle = false;
@@ -1626,6 +1630,12 @@ void uiManager::script()
 				_currentEnemyIndex = 0;
 				_currentPoke = 0;
 				_skillCnt = 0;
+				_isScript = false;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+
+				// 체력 0으로 고정
 				_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP);
 
 				SOUNDMANAGER->stop("battle");
@@ -1636,26 +1646,30 @@ void uiManager::script()
 				//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
 				//}
 			}
-			//else if (_isBattle && _currentEnemyPokemon.currentHP <= 0)
-			//{
-			//	_isAttack = false;
-			//	_isBattle = false;
-			//	_attackCount = 0;
-			//	_isTurn = false;
-			//	_isNext = false;
-			//	_whoTurn = 0;
-			//	_currentEnemyIndex = 0;
-			//	_currentPoke = 0;
-			//	_skillCnt = 0;
-			//
-			//	SOUNDMANAGER->stop("battle");
-			//	SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
-			//
-			//	//for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
-			//	//{
-			//	//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
-			//	//}
-			//}
+			else if (_isBattle && _currentEnemyPokemon.currentHP <= 0)
+			{
+				_isAttack = false;
+				_isBattle = false;
+				_attackCount = 0;
+				_isTurn = false;
+				_isNext = false;
+				_whoTurn = 0;
+				_currentEnemyIndex = 0;
+				_currentPoke = 0;
+				_skillCnt = 0;
+				_isScript = false;
+				_txtIndex = 0;
+				_scriptIndex = 0;
+				uiOpen = false;
+			
+				SOUNDMANAGER->stop("battle");
+				SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+			
+				//for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
+				//{
+				//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
+				//}
+			}
 
 			// 교체가 끝나면
 			if (_npc == NPC::POKEMONCHANGE)
@@ -2287,6 +2301,7 @@ void uiManager::battle()
 
 		static int catchCount = 0;
 		catchCount++;
+		static float time;
 
 		if (_catchIndex < 30)
 		{
@@ -2295,10 +2310,13 @@ void uiManager::battle()
 				_catchIndex++;
 			}
 		}
-		else if (_catchIndex == IMAGEMANAGER->findImage("포획")->getMaxFrameX())
+		else if (_catchIndex == IMAGEMANAGER->findImage("포획")->getMaxFrameX() - 1)
 		{
-			static float time = TIMEMANAGER->getWorldTime();
-
+			time = TIMEMANAGER->getWorldTime();
+			_catchIndex++;
+		}
+		else if (_catchIndex == IMAGEMANAGER->findImage("포획")->getMaxFrameX())
+		{			
 			if (TIMEMANAGER->getWorldTime() >= time + 1)
 			{
 				_catchIndex++;

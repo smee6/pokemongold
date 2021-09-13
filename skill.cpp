@@ -106,7 +106,7 @@ void skill::stringShot()												//실뿜기
 
 	_name = "실뿜기";													//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 
 		_imgX = -200;
@@ -117,7 +117,7 @@ void skill::stringShot()												//실뿜기
 	}
 
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 0;
 		_imgY = -100;
@@ -140,7 +140,7 @@ void skill::confusion()													//염동력
 	//_skillNumber = 3;													//스킬넘버
 
 	_name = "염동력";													//이름
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -200;
 		_imgY = 50;
@@ -149,7 +149,7 @@ void skill::confusion()													//염동력
 	}
 	
 	
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 125;
 		_imgY = -100;
@@ -231,7 +231,7 @@ void skill::poisonSting()												//독침
 	_name = "독침";														//이름
 	
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mypoisonSting";											//이미지이름
 		
@@ -240,7 +240,7 @@ void skill::poisonSting()												//독침
 
 	}
 	
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildpoisonSting";
 
@@ -265,19 +265,19 @@ void skill::focusEnergy()												//기충전
 
 	_name = "기충전";													//이름
 
-	if (_isWhoSkill)
-	{
-		_imgName = "growth";
+
+	_imgName = "growth";
+
+	if (!_isWhoSkill)
+	{	
 
 		_imgX = -380;
 		_imgY = 160;
 
 	}
 
-	if (!_isWhoSkill)
-	{
-		_imgName = "growth";
-
+	if (_isWhoSkill)
+	{	
 		_imgX = 300;
 		_imgY = -220;
 	}
@@ -296,7 +296,7 @@ void skill::twineedle()													//더블니들
 
 	_name = "더블니들";													//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myhorn";
 
@@ -305,7 +305,7 @@ void skill::twineedle()													//더블니들
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildhorn";
 
@@ -329,7 +329,7 @@ void skill::sandAttack()												//모래뿌리기
 
 	_name = "모래뿌리기";												//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mysandAttack";
 
@@ -338,7 +338,7 @@ void skill::sandAttack()												//모래뿌리기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildsandAttack";
 
@@ -361,7 +361,7 @@ void skill::gust()														//바람일으키기
 	_name = "바람일으키기";												//이름
 	_imgName = "squall";												//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		
 		_imgX = 0;
@@ -369,7 +369,7 @@ void skill::gust()														//바람일으키기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 0;
 		_imgY = 25;
@@ -389,14 +389,14 @@ void skill::quickAttack()												//전광석화
 
 	_name = "전광석화";													//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myquickAttack";
 
 		_imgX = -400;
 		_imgY = -15;
 	}
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildquickAttack";
 
@@ -418,12 +418,12 @@ void skill::wingAttack()												//날개치기
 	_name = "날개치기";													//이름
 	_imgName = "wingAttack";											//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -50;
 		_imgY = 0;
 	}
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 
 		_imgX = -20;
@@ -446,12 +446,12 @@ void skill::tailWhip()													//꼬리흔들기
 	_name = "꼬리흔들기";												//이름
 	_imgName = "tailWhip";													//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -50;
 		_imgY = -50;
 	}
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 
 		_imgX = -20;
@@ -472,7 +472,7 @@ void skill::peck()														//쪼기
 
 	_name = "쪼기";														//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mypoisonSting";
 
@@ -481,7 +481,7 @@ void skill::peck()														//쪼기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildpoisonSting";
 
@@ -502,7 +502,7 @@ void skill::growl()														//울음소리
 
 	_name = "울음소리";													//이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mygrowl";
 
@@ -511,7 +511,7 @@ void skill::growl()														//울음소리
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildgrowl";
 
@@ -533,7 +533,7 @@ void skill::leer()														//째려보기
 	_name = "째려보기";													//이름
 	
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myleer";
 
@@ -542,7 +542,7 @@ void skill::leer()														//째려보기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildleer";
 
@@ -569,14 +569,14 @@ void skill::thunderShock()												//전기쇼크
 	
 	_imgName = "thunderShock";
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -60;
 		_imgY = -100;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = -45;
 		_imgY = -100;
@@ -606,14 +606,14 @@ void skill::thunderbolt()												//10만볼트
 	
 	_imgName = "spark";
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -10;
 		_imgY = -50;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 0;
 		_imgY = -50;
@@ -636,7 +636,7 @@ void skill::razorLeaf()													//잎날가르기
 	_name = "잎날가르기";												//이름
 	
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myrazorLeaf";											//이미지이름
 
@@ -645,7 +645,7 @@ void skill::razorLeaf()													//잎날가르기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildrazorLeaf";											//이미지이름
 
@@ -667,14 +667,14 @@ void skill::reflect()													//리플렉터 물리데미지 반감.
 	_name = "리플렉터";													//이름
 	_imgName = "lightScreen";											//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -300;
 		_imgY = 100;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 300;
 		_imgY = -250;
@@ -694,7 +694,7 @@ void skill::smokescreen()												//연막
 	_name = "연막";														//이름
 	
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mysmokescreen";											//이미지이름
 
@@ -703,7 +703,7 @@ void skill::smokescreen()												//연막
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildsmokescreen";
 
@@ -727,7 +727,7 @@ void skill::ember()														//불꽃세례
 	_name = "불꽃세례";													//이름
 														//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myember";
 
@@ -736,7 +736,7 @@ void skill::ember()														//불꽃세례
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildember";
 		
@@ -761,14 +761,14 @@ void skill::rage()														//분노
 	_name = "분노";														//이름
 	_imgName = "rage";													//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -30;
 		_imgY = -55;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 0;
 		_imgY = -25;
@@ -788,7 +788,7 @@ void skill::waterGun()													//물대포
 	_name = "물대포";													//이름
 													
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "mywaterGun";
 
@@ -797,7 +797,7 @@ void skill::waterGun()													//물대포
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildwaterGun";
 
@@ -819,14 +819,14 @@ void skill::harden()													//단단해지기
 	_name = "단단해지기";												//이름
 	_imgName = "harden";													//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -320;
 		_imgY = 200;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 350;
 		_imgY = -200;
@@ -846,14 +846,14 @@ void skill::scratch()													//할퀴기
 	_name = "할퀴기";													//이름
 	_imgName = "scratch";												//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -25;
 		_imgY = -25;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 25;
 		_imgY = 0;
@@ -872,7 +872,7 @@ void skill::furyAttack()												//마구찌르기
 
 	_name = "마구찌르기";												//이름
 	
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgName = "myhorn";
 
@@ -881,7 +881,7 @@ void skill::furyAttack()												//마구찌르기
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgName = "wildhorn";
 
@@ -903,14 +903,14 @@ void skill::bind()														//조이기
 	_name = "조이기";													//이름
 	_imgName = "bind";													//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -75;
 		_imgY = -25;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = -50;
 		_imgY = -25;
@@ -930,14 +930,14 @@ void skill::bite()
 	_name = "물기";														//이름
 	_imgName = "snap";													//이미지이름
 
-	if (_isWhoSkill)
+	if (!_isWhoSkill)
 	{
 		_imgX = -50;
 		_imgY = -50;
 
 	}
 
-	if (!_isWhoSkill)
+	if (_isWhoSkill)
 	{
 		_imgX = 0;
 		_imgY = -25;
@@ -963,16 +963,17 @@ void skill::render()
 	//if (!_isWhoSkill) _imgPoint = { 450 + _imgX ,70 + _imgY };		//	야생일시
 	//else if (_isWhoSkill) _imgPoint = { 100 + _imgX,250 + _imgY };		//	플레이어 일시
 
+	
 	if (_isSkill) IMAGEMANAGER->frameRender(_imgName, getMemDC(), _imgPoint.x, _imgPoint.y, _currentFrame, 0);
 
 
 
-	sprintf_s(str, "좌표x : %d ", _imgX);
-	TextOut(getMemDC(), 50, 150, str, strlen(str));
-	sprintf_s(str, "좌표y : % d ", _imgY);
-	TextOut(getMemDC(), 50, 170, str, strlen(str));
-	sprintf_s(str, "상태 : %d ", _isWhoSkill);
-	TextOut(getMemDC(), 50, 190, str, strlen(str));
+	//sprintf_s(str, "좌표x : %d ", _imgX);
+	//TextOut(getMemDC(), 50, 150, str, strlen(str));
+	//sprintf_s(str, "좌표y : % d ", _imgY);
+	//TextOut(getMemDC(), 50, 170, str, strlen(str));
+	//sprintf_s(str, "상태 : %d ", _isWhoSkill);
+	//TextOut(getMemDC(), 50, 190, str, strlen(str));
 
 
 }

@@ -147,8 +147,10 @@ void npc::updateNPC()
 	{
 		_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
 	}
-
-	_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 64, 64);
+	if (_npc[4].moveCount != 100)
+	{
+		_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 64, 64);
+	}
 
 	//Æ÷ÄÏº¼
 	for (int i = 8; i < npcMAX; i++)
@@ -227,14 +229,15 @@ void npc::move()
 			}
 			if (_npc[4].moveCount == 17)
 			{
-				_character->setDirection(1);
-				_character->idle(1);
+				//_character->setDirection(1);
+				//_character->idle(1);
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER1, true);
 				UIMANAGER->setIsWild(false);
 				UIMANAGER->setIsBattleStart(true);
 				_character->setScriptAction(1);
 				_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 0, 0);
+				_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 0, 0);
 				_isMove = false;
 				_npc[4].moveCount = 100;
 			}
@@ -259,14 +262,15 @@ void npc::move()
 			}
 			if (_npc[4].moveCount == 9)
 			{
-				_character->setDirection(1);
-				_character->idle(1);
+				//_character->setDirection(1);
+				//_character->idle(1);
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER1, true);
 				UIMANAGER->setIsWild(false);
 				UIMANAGER->setIsBattleStart(true);
 				_character->setScriptAction(1);
 				_npc[4].moveRC = RectMake(_tileMap->getTile()[6184].rc.left, _tileMap->getTile()[6184].rc.top, 0, 0);
+				_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 0, 0);
 				_isMove = false;
 				_npc[4].moveCount = 100;
 			}

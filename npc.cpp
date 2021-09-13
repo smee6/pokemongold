@@ -38,6 +38,12 @@ void npc::update()
 		}
 	}
 
+	RECT temp;
+	if (IntersectRect(&temp, &_moveRC, &_character->getRect()))
+	{
+		_isMove = true;
+	}
+
 	if (_isMove == true)
 	{
 		move();
@@ -141,6 +147,9 @@ void npc::updateNPC()
 	{
 		_npc[5].moveRC = RectMake(_tileMap->getTile()[5327].rc.left, _tileMap->getTile()[5327].rc.top, 64, 64);
 	}
+
+	_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 64, 64);
+
 	//Æ÷ÄÏº¼
 	for (int i = 8; i < npcMAX; i++)
 	{
@@ -216,6 +225,36 @@ void npc::move()
 				_npc[4].npcX += 8;
 			}
 			if (_npc[4].moveCount == 17)
+			{
+				UIMANAGER->setIsScript(true);
+				UIMANAGER->setNPC(NPC::TRAINER1, true);
+				UIMANAGER->setIsWild(false);
+				UIMANAGER->setIsBattleStart(true);
+				_character->setScriptAction(1);
+				_moveRC = RectMake(_tileMap->getTile()[6183].rc.left, _tileMap->getTile()[6183].rc.top, 0, 0);
+				_isMove = false;
+				_npc[4].moveCount = 100;
+			}
+		}
+	}
+
+	if (IntersectRect(&temp, &_moveRC, &_character->getRect()))
+	{
+		if (_npc[4].markCount != 100)
+		{
+			_npc[4].markCount++;
+		}
+		else if (_npc[4].markCount == 100)
+		{
+			if (_npc[4].moveCount < 25 && _npc[4].moveCount != 100)
+			{
+				_npc[4].moveCount++;
+			}
+			if (_npc[4].moveCount <= 8)
+			{
+				_npc[4].npcX += 8;
+			}
+			if (_npc[4].moveCount == 9)
 			{
 				UIMANAGER->setIsScript(true);
 				UIMANAGER->setNPC(NPC::TRAINER1, true);

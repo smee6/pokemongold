@@ -41,22 +41,23 @@ HRESULT uiManager::init()
 	SOUNDMANAGER->addSound("battle", "soundFX/battle.mp3", true, true);
 	SOUNDMANAGER->addSound("doctor", "soundFX/doctor.mp3", true, true);
 	SOUNDMANAGER->addSound("pokecenter", "soundFX/pokecenter.mp3", true, true);
+	SOUNDMANAGER->addSound("op_star", "soundFX/op_star.wav", true, false);
 
 	// SOUNDMANAGER->play("switch", 0.01f * soundVolume);
 
-	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", false, false);
-	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", false, false);
+	SOUNDMANAGER->addSound("pokeheal", "soundFX/pokeheal.mp3", true, false);
+	SOUNDMANAGER->addSound("win", "soundFX/win.mp3", true, false);
 
-	SOUNDMANAGER->addSound("x", "soundFX/xbutton.wav", false, false);
-	SOUNDMANAGER->addSound("yes", "soundFX/yes.wav", false, false);
-	SOUNDMANAGER->addSound("no", "soundFX/no.wav", false, false);
-	SOUNDMANAGER->addSound("switch", "soundFX/switch.wav", false, false);
-	SOUNDMANAGER->addSound("menu", "soundFX/menu.wav", false, false);
-	SOUNDMANAGER->addSound("mom", "soundFX/mom.wav", false, false);
-	SOUNDMANAGER->addSound("med", "soundFX/medicine.wav", false, false);
-	SOUNDMANAGER->addSound("item", "soundFX/getitem.wav", false, false);
-	SOUNDMANAGER->addSound("click", "soundFX/click.wav", false, false);
-	SOUNDMANAGER->addSound("attack", "soundFX/attack.wav", false, false);
+	SOUNDMANAGER->addSound("x", "soundFX/xbutton.wav", true, false);
+	SOUNDMANAGER->addSound("yes", "soundFX/yes.wav", true, false);
+	SOUNDMANAGER->addSound("no", "soundFX/no.wav", true, false);
+	SOUNDMANAGER->addSound("switch", "soundFX/switch.wav", true, false);
+	SOUNDMANAGER->addSound("menu", "soundFX/menu.wav", true, false);
+	SOUNDMANAGER->addSound("mom", "soundFX/mom.wav", true, false);
+	SOUNDMANAGER->addSound("med", "soundFX/medicine.wav", true, false);
+	SOUNDMANAGER->addSound("item", "soundFX/getitem.wav", true, false);
+	SOUNDMANAGER->addSound("click", "soundFX/click.wav", true, false);
+	SOUNDMANAGER->addSound("attack", "soundFX/attack.wav", true, false);
 	// ======================================================================================================================
 	
 
@@ -314,7 +315,9 @@ void uiManager::pokeCenter()
 	IMAGEMANAGER->findImage("pokeCenter")->frameRender(_backBuffer->getMemDC(), 170, 105, _index, 0);
 	cnt++;
 	
-	if (cnt == 15) {
+	if (_index == 4) SOUNDMANAGER->play("pokeheal", 0.01f * soundVolume);
+
+	if (cnt == 20) {
 		_index++;
 		cnt = 0;
 	}
@@ -506,6 +509,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(0).currentHP >= _character->getPoketmon(0).sumMaxHP) {
 					_character->setCurrentHP(0, _character->getPoketmon(0).currentHP - _character->getPoketmon(0).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -516,6 +520,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(0).currentHP >= _character->getPoketmon(0).sumMaxHP) {
 					_character->setCurrentHP(0, _character->getPoketmon(0).currentHP - _character->getPoketmon(0).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -536,6 +541,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(1).currentHP >= _character->getPoketmon(1).sumMaxHP) {
 					_character->setCurrentHP(1, _character->getPoketmon(1).currentHP - _character->getPoketmon(1).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -546,6 +552,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(1).currentHP >= _character->getPoketmon(1).sumMaxHP) {
 					_character->setCurrentHP(1, _character->getPoketmon(1).currentHP - _character->getPoketmon(1).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -566,6 +573,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(2).currentHP >= _character->getPoketmon(2).sumMaxHP) {
 					_character->setCurrentHP(2, _character->getPoketmon(2).currentHP - _character->getPoketmon(2).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -576,6 +584,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(2).currentHP >= _character->getPoketmon(2).sumMaxHP) {
 					_character->setCurrentHP(2, _character->getPoketmon(0).currentHP - _character->getPoketmon(2).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -596,6 +605,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(3).currentHP >= _character->getPoketmon(3).sumMaxHP) {
 					_character->setCurrentHP(3, _character->getPoketmon(3).currentHP - _character->getPoketmon(3).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -606,6 +616,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(3).currentHP >= _character->getPoketmon(3).sumMaxHP) {
 					_character->setCurrentHP(3, _character->getPoketmon(3).currentHP - _character->getPoketmon(3).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -626,6 +637,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(4).currentHP >= _character->getPoketmon(4).sumMaxHP) {
 					_character->setCurrentHP(4, _character->getPoketmon(4).currentHP - _character->getPoketmon(4).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -636,6 +648,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(4).currentHP >= _character->getPoketmon(4).sumMaxHP) {
 					_character->setCurrentHP(4, _character->getPoketmon(4).currentHP - _character->getPoketmon(4).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -656,6 +669,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(5).currentHP >= _character->getPoketmon(5).sumMaxHP) {
 					_character->setCurrentHP(5, _character->getPoketmon(5).currentHP - _character->getPoketmon(5).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -666,6 +680,7 @@ void uiManager::pokeShift()
 				if (_character->getPoketmon(5).currentHP >= _character->getPoketmon(5).sumMaxHP) {
 					_character->setCurrentHP(5, _character->getPoketmon(5).currentHP - _character->getPoketmon(5).sumMaxHP);
 				}
+				SOUNDMANAGER->play("med", 0.01f * soundVolume);
 				pokeWindow = false;
 				_isOpenPokemon = false;
 				pokesCnt = 0;
@@ -1288,7 +1303,7 @@ void uiManager::script()
 			_vScript = TXTDATA->txtLoad("script/타이틀.txt");
 			break;
 		case NPC::MOM:
-			if (_momCount == 0)	_vScript = TXTDATA->txtLoad("script/조수.txt");
+			if (_momCount == 0)	_vScript = TXTDATA->txtLoad("script/엄마1.txt");
 			else _vScript = TXTDATA->txtLoad("script/엄마2.txt");
 
 			_momCount++;
@@ -1593,8 +1608,8 @@ void uiManager::script()
 				//	}
 				//}
 			}
-			// 다음 포켓몬이 없을 경우
-			else if (_isBattle && (_currentEnemyPokemon.currentHP <= 0 || (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0)))
+			// 상대 포켓몬이 죽을 경우(야생)
+			else if (_isBattle && _isWild && (_character->getPoketmon(_currentPoke + 1).maxHP == 0 && _character->getPoketmon(_currentPoke).currentHP <= 0))
 			{
 				_isAttack = false;
 				_isBattle = false;
@@ -1615,6 +1630,26 @@ void uiManager::script()
 				//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
 				//}
 			}
+			//else if (_isBattle && _currentEnemyPokemon.currentHP <= 0)
+			//{
+			//	_isAttack = false;
+			//	_isBattle = false;
+			//	_attackCount = 0;
+			//	_isTurn = false;
+			//	_isNext = false;
+			//	_whoTurn = 0;
+			//	_currentEnemyIndex = 0;
+			//	_currentPoke = 0;
+			//	_skillCnt = 0;
+			//
+			//	SOUNDMANAGER->stop("battle");
+			//	SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+			//
+			//	//for (int i = 0; _character->getPoketmon(i).maxHP != 0; i++)
+			//	//{
+			//	//	_character->setCurrentHP(i, _character->getPoketmon(i).currentHP - _character->getPoketmon(i).sumMaxHP);
+			//	//}
+			//}
 
 			// 교체가 끝나면
 			if (_npc == NPC::POKEMONCHANGE)

@@ -42,8 +42,14 @@ void soundManager::release()
 
 void soundManager::update()
 {
+	for (int i = 0; i < _mTotalSounds.size(); ++i)
+	{
+		_channel[i]->setVolume(0.01f * UIMANAGER->getVolume());
+	}
 	//FMOD엔진 내부에 작동을 계속해서 최신화 시켜주려면 업데이트를 걸어주자
 	_system->update();
+
+
 }
 
 void soundManager::addSound(string keyName, string soundName, bool bgm, bool loop)
@@ -79,6 +85,7 @@ void soundManager::play(string keyName, float volume)
 	arrSoundsIter iter = _mTotalSounds.begin();
 
 	int count = 0;
+	_volume = volume;
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
@@ -88,7 +95,7 @@ void soundManager::play(string keyName, float volume)
 			//음악을 반복해서 틀꺼면 RE_USE를 추천하지만 디폴트는 채널프리 입니다
 			_system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &_channel[count]);
 
-			_channel[count]->setVolume(volume);
+			_channel[count]->setVolume(_volume);
 			break;
 		}
 	}

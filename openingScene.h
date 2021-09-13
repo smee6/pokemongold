@@ -11,6 +11,8 @@ private:
 
 	int _waitTime;				// 마지막 대기 시간
 
+	int _count;
+
 public:
 	openingScene();
 	~openingScene();

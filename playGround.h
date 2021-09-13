@@ -1,11 +1,12 @@
 #pragma once
 #include "gameNode.h"
-#include "tileMap.h"
-#include "character.h"
-#include "poketmonManager.h"
+//#include "tileMap.h"
+//#include "character.h"
+//#include "poketmonManager.h"
+//#include "npc.h"
 #include "endingScene.h"
 #include "openingScene.h"
-#include "npc.h"
+#include "inGameScene.h"
 
 
 
@@ -13,10 +14,10 @@
 class playGround : public gameNode
 {
 private:
-	tileMap* _tileMap;							// 타일맵 클래스
-	character* _character;						// 캐릭터 클래스
-	poketmonManager* _pM;						// 포켓몬 매니저 클래스
-	npc* _npc;									// npc 클래스
+	//tileMap* _tileMap;							// 타일맵 클래스
+	//character* _character;						// 캐릭터 클래스
+	//poketmonManager* _pM;						// 포켓몬 매니저 클래스
+	//npc* _npc;									// npc 클래스
 
 
 

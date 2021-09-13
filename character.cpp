@@ -16,7 +16,7 @@ HRESULT character::init() // 인잇
 {
     imageInit();
 
-    _image = IMAGEMANAGER->findImage("아이들_좌우");
+    _image = IMAGEMANAGER->findImage("아이들_상하");
     _shadowImage = IMAGEMANAGER->findImage("캐릭터_그림자");
     _grassImage = IMAGEMANAGER->findImage("풀숲1");
     _battleLoadingImage = IMAGEMANAGER->findImage("배틀로딩");
@@ -28,7 +28,7 @@ HRESULT character::init() // 인잇
     _frameCount = _currentFrame = _loadingCount = _scriptAction = 0;
     _x = WINSIZEX / 2 + TILESIZE / 2;
     _y = WINSIZEY / 2;
-    _currentTile = 4853;
+    _currentTile = 4641;
     _slopeDistance = 0;
     _rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -240,7 +240,7 @@ void character::poketmonMeet() // 포켓몬 조우 시 처리
 
 void character::npcScript() // npc 대화 스크립트 처리
 {
-    // 스크립트 떠있으면 빠져나감
+    // 스크립트, ui 떠있거나, 걸을 때 빠져나감
     if (UIMANAGER->getIsScript() || UIMANAGER->isUiOpen() || _isMoving) return;
 
     for (int i = 0; i < npcMAX; i++)
@@ -248,7 +248,7 @@ void character::npcScript() // npc 대화 스크립트 처리
         RECT temp;
         RECT npc = _npc->getnpcRC()[i].detectRC;
 
-        if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시, ui없을 시, 서있을 때
+        if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시
         {
             // 상점 아재 엔드 스크립트 대사 선택
             if (_scriptAction == 1 && i == 7) 
@@ -327,8 +327,8 @@ void character::npcScript() // npc 대화 스크립트 처리
                     //_scriptAction = 1;                          // 스크립트 액션 = 1
                     break;
                 }
-                if (UIMANAGER->getIsCount()) UIMANAGER->setIsScript(true); // 스크립트 켜줌.
 
+                if (UIMANAGER->getIsCount()) UIMANAGER->setIsScript(true); // 스크립트 켜줌.
             }
         }
     }
@@ -755,10 +755,10 @@ void character::render() // 렌더
     }
 
     // 포켓몬 조우 시 플래시이미지, 배틀로딩이미지 재생
-    if (!UIMANAGER->getIsBattle())
+    if (!UIMANAGER->getIsBattle() && _isPoketmonMeet)
     {
-        if (_isPoketmonMeet && _loadingCount > 70) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
-        if (_isPoketmonMeet && _loadingCount <= 70) _flashLoadingImage->alphaRender(getMemDC(), _alpha);
+        if (_loadingCount <= 70) _flashLoadingImage->alphaRender(getMemDC(), _alpha);
+        if (_loadingCount > 70) _battleLoadingImage->frameRender(getMemDC(), 0, 0);
     }
 
     // ui창 호출

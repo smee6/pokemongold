@@ -797,7 +797,7 @@ void uiManager::bag()
 					if (!_isBattle) return;
 
 					// 보유 포켓몬이 꽉찬 경우에 사용 불가
-					if (_character->getPoketmon(5).maxHP != 0) return;
+					if (_character->getPoketmon(5).maxHP != 0 || !_isWild) return;
 					pokeballQ--;
 					_isCatch = true;
 					usePokeBall();

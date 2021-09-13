@@ -404,7 +404,7 @@ void skill::quickAttack()												//전광석화
 		_imgY = -250;
 	}
 
-	_power = 40;														//위력
+	_power = 80;														//위력
 	_PP = 30;															//PP
 	_accuracy = 100;													//명중률
 	_ifcation = CLASSIFCATION::PHYSICS;									//분류
@@ -744,7 +744,7 @@ void skill::ember()														//불꽃세례
 		_imgY = -155;
 	}
 
-	_power = 40;														//위력
+	_power = 60;														//위력
 	_PP = 25;															//PP
 	_accuracy = 100;													//명중률
 	_ifcation = CLASSIFCATION::SPECIAL;									//분류
@@ -805,7 +805,7 @@ void skill::waterGun()													//물대포
 		_imgY = -110;
 	}
 
-	_power = 40;														//위력
+	_power = 60;														//위력
 	_PP = 25;															//PP
 	_accuracy = 100;													//명중률
 	_ifcation = CLASSIFCATION::SPECIAL;									//분류
@@ -916,7 +916,7 @@ void skill::bind()														//조이기
 		_imgY = -25;
 	}
 
-	_power = 15;														//위력
+	_power = 50;														//위력
 	_PP = 20;															//PP
 	_accuracy = 85;														//명중률
 	_ifcation = CLASSIFCATION::PHYSICS;									//분류
@@ -944,7 +944,7 @@ void skill::bite()
 	}
 	
 	
-	_power = 60;														//위력
+	_power = 100;														//위력
 	_PP = 25;															//PP
 	_accuracy = 100;													//명중률
 	_ifcation = CLASSIFCATION::PHYSICS;									//분류
@@ -987,102 +987,104 @@ void skill::skillAni()
 
 	if (_isSound)
 	{
-		switch (_skillIndex)
-		{
-		case 0:
-			skillNone();
-			break;
-		case 1:
-			tackle();
-			SOUNDMANAGER->play("몸통박치기", 0.01f * UIMANAGER->getVolume());
-			break;
-		case 2:
-			stringShot();
-			break;
-		case 3:
-			confusion();
-			break;
-		case 4:
-			poisonPowder();
-			break;
-		case 5:
-			stunSpore();
-			break;
-		case 6:
-			sleepPowder();
-			break;
-		case 7:
-			poisonSting();
-			break;
-		case 8:
-			focusEnergy();
-			break;
-		case 9:
-			twineedle();
-			break;
-		case 10:
-			sandAttack();
-			break;
-		case 11:
-			gust();
-			break;
-		case 12:
-			quickAttack();
-			break;
-		case 13:
-			wingAttack();
-			break;
-		case 14:
-			tailWhip();
-			break;
-		case 15:
-			peck();
-			break;
-		case 16:
-			growl();
-			break;
-		case 17:
-			leer();
-			break;
-		case 18:
-			thunderShock();
-			break;
-		case 19:
-			thunderbolt();
-			break;
-		case 20:
-			razorLeaf();
-			break;
-		case 21:
-			reflect();
-			break;
-		case 22:
-			smokescreen();
-			break;
-		case 23:
-			ember();
-			break;
-		case 24:
-			rage();
-			break;
-		case 25:
-			waterGun();
-			break;
-		case 26:
-			harden();
-			break;
-		case 27:
-			scratch();
-			break;
-		case 28:
-			furyAttack();
-			break;
-		case 29:
-			bind();
-			break;
-		case 30:
-			bite();
-		}
+		SOUNDMANAGER->play("몸통박치기", 0.01f * UIMANAGER->getVolume());
+
+		//switch (_skillIndex)
+		//{
+		//case 0:
+		//	skillNone();
+		//	break;
+		//case 1:
+		//	tackle();
+		//	SOUNDMANAGER->play("몸통박치기", 0.01f * UIMANAGER->getVolume());
+		//	break;
+		//case 2:
+		//	stringShot();
+		//	break;
+		//case 3:
+		//	confusion();
+		//	break;
+		//case 4:
+		//	poisonPowder();
+		//	break;
+		//case 5:
+		//	stunSpore();
+		//	break;
+		//case 6:
+		//	sleepPowder();
+		//	break;
+		//case 7:
+		//	poisonSting();
+		//	break;
+		//case 8:
+		//	focusEnergy();
+		//	break;
+		//case 9:
+		//	twineedle();
+		//	break;
+		//case 10:
+		//	sandAttack();
+		//	break;
+		//case 11:
+		//	gust();
+		//	break;
+		//case 12:
+		//	quickAttack();
+		//	break;
+		//case 13:
+		//	wingAttack();
+		//	break;
+		//case 14:
+		//	tailWhip();
+		//	break;
+		//case 15:
+		//	peck();
+		//	break;
+		//case 16:
+		//	growl();
+		//	break;
+		//case 17:
+		//	leer();
+		//	break;
+		//case 18:
+		//	thunderShock();
+		//	break;
+		//case 19:
+		//	thunderbolt();
+		//	break;
+		//case 20:
+		//	razorLeaf();
+		//	break;
+		//case 21:
+		//	reflect();
+		//	break;
+		//case 22:
+		//	smokescreen();
+		//	break;
+		//case 23:
+		//	ember();
+		//	break;
+		//case 24:
+		//	rage();
+		//	break;
+		//case 25:
+		//	waterGun();
+		//	break;
+		//case 26:
+		//	harden();
+		//	break;
+		//case 27:
+		//	scratch();
+		//	break;
+		//case 28:
+		//	furyAttack();
+		//	break;
+		//case 29:
+		//	bind();
+		//	break;
+		//case 30:
+		//	bite();
+		//}
 	}
 
 	_isSound = false;

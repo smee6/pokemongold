@@ -28,6 +28,8 @@ private:
 
 	arrSounds		_mTotalSounds;
 
+	float _volume;
+
 public:
 	soundManager();
 	~soundManager();

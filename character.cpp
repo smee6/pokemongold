@@ -250,6 +250,7 @@ void character::npcScript() // npc 대화 스크립트 처리
 
         if (IntersectRect(&temp, &_rc, &npc)) // npc 탐지 렉트랑 충돌 시
         {
+            
             // 상점 아재 엔드 스크립트 대사 선택
             if (_scriptAction == 1 && i == 7) 
             {

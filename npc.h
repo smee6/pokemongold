@@ -52,6 +52,7 @@ public:
 	//접근자
 	tagNPC* getnpcRC() { return _npc; }				//npc에 대한 접근자
 	inline bool getIsMove() { return _isMove; }		//isMove에 대한 접근자
+	inline RECT getMoveRC() { return _moveRC; }		//_moveRC에 대한 접근자
 
 	//설정자
 	void setNPCX4(int npcX) { _npc[4].npcX = npcX; }

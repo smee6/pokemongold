@@ -185,7 +185,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
 
     _startPoketmon[0].isGender = RND->getFromIntTo(0, 2);
     _startPoketmon[0].index = 155;
-    _startPoketmon[0].level = 5;
+    _startPoketmon[0].level = 10;
     _startPoketmon[0].evolutionLevel = 0;
 
     if (_startPoketmon[0].isGender)         // 포켓몬 성별체크가 트루일시
@@ -239,7 +239,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
 
     _startPoketmon[1].isGender = RND->getFromIntTo(0, 2);
     _startPoketmon[1].index = 158;
-    _startPoketmon[1].level = 5;
+    _startPoketmon[1].level = 10;
     _startPoketmon[1].evolutionLevel = 0;
 
     if (_startPoketmon[1].isGender)         // 포켓몬 성별체크가 트루일시
@@ -296,7 +296,7 @@ void poketmonManager::startPoketmonSetting()            // 스타팅 포켓몬 데이터
                    
     _startPoketmon[2].isGender = RND->getFromIntTo(0, 2);
     _startPoketmon[2].index = 152;
-    _startPoketmon[2].level = 5;
+    _startPoketmon[2].level = 10;
     _startPoketmon[2].evolutionLevel = 0;
 
     if (_startPoketmon[2].isGender)         // 포켓몬 성별체크가 트루일시

@@ -643,7 +643,11 @@ void character::door(int doorIndex) // 문 타일 처리
         tileAction();
         break;
     case 1093:  // 불탄 탑 들어갔을 때 게임 엔딩
-        if (UIMANAGER->getIsBadge()) SCENEMANAGER->changeScene("엔딩");
+        if (UIMANAGER->getIsBadge())
+        {   
+            SOUNDMANAGER->stop("town2BGM");
+            SCENEMANAGER->changeScene("엔딩");
+        }
         break;
     }
 }
@@ -718,37 +722,37 @@ void character::render() // 렌더
     // 캐릭터 이미지 렌더
     _image->frameRender(getMemDC(), _rc.left, _rc.top);
 
-    if (KEYMANAGER->isToggleKey(VK_TAB)) // 데이터값들 표시
-    {
-        Rectangle(getMemDC(), _rc);
+    //if (KEYMANAGER->isToggleKey(VK_TAB)) // 데이터값들 표시
+    //{
+    //    Rectangle(getMemDC(), _rc);
 
-        char str[128];
-        sprintf_s(str, "_isMoving : %d", _isMoving);
-        TextOut(getMemDC(), 100, 160, str, strlen(str));
+    //    char str[128];
+    //    sprintf_s(str, "_isMoving : %d", _isMoving);
+    //    TextOut(getMemDC(), 100, 160, str, strlen(str));
 
-        sprintf_s(str, "_frontTileType : %d", _frontTileType);
-        TextOut(getMemDC(), 100, 190, str, strlen(str));
+    //    sprintf_s(str, "_frontTileType : %d", _frontTileType);
+    //    TextOut(getMemDC(), 100, 190, str, strlen(str));
 
-        sprintf_s(str, "_현재 타일 : %d", _currentTile);
-        TextOut(getMemDC(), 100, 220, str, strlen(str));
+    //    sprintf_s(str, "_현재 타일 : %d", _currentTile);
+    //    TextOut(getMemDC(), 100, 220, str, strlen(str));
 
-        sprintf_s(str, "_포켓몬 조우 : %d", _isPoketmonMeet);
-        TextOut(getMemDC(), 100, 250, str, strlen(str));
+    //    sprintf_s(str, "_포켓몬 조우 : %d", _isPoketmonMeet);
+    //    TextOut(getMemDC(), 100, 250, str, strlen(str));
 
-        sprintf_s(str, "_scriptAction : %d", _scriptAction);
-        TextOut(getMemDC(), 100, 280, str, strlen(str));
+    //    sprintf_s(str, "_scriptAction : %d", _scriptAction);
+    //    TextOut(getMemDC(), 100, 280, str, strlen(str));
 
-        sprintf_s(str, "_isPoketmonMeet : %d", _isPoketmonMeet);
-        TextOut(getMemDC(), 100, 300, str, strlen(str));
+    //    sprintf_s(str, "_isPoketmonMeet : %d", _isPoketmonMeet);
+    //    TextOut(getMemDC(), 100, 300, str, strlen(str));
 
-        sprintf_s(str, "isUiOpen : %d", UIMANAGER->isUiOpen());
-        TextOut(getMemDC(), 100, 320, str, strlen(str));
+    //    sprintf_s(str, "isUiOpen : %d", UIMANAGER->isUiOpen());
+    //    TextOut(getMemDC(), 100, 320, str, strlen(str));
 
-        sprintf_s(str, "getIsMove : %d", _npc->getIsMove());
-        TextOut(getMemDC(), 100, 340, str, strlen(str));
+    //    sprintf_s(str, "getIsMove : %d", _npc->getIsMove());
+    //    TextOut(getMemDC(), 100, 340, str, strlen(str));
 
-        //_isPoketmonMeet || UIMANAGER->isUiOpen() || _npc->getIsMove()
-    }
+    //    //_isPoketmonMeet || UIMANAGER->isUiOpen() || _npc->getIsMove()
+    //}
     
     // 비탈길 이동 중일 때 그림자 보여짐
     if (_isSloping) 

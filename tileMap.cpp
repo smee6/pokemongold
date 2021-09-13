@@ -129,7 +129,7 @@ void tileMap::render()
 			}
 	}
 
-	if (KEYMANAGER->isToggleKey(VK_TAB))
+	/*if (KEYMANAGER->isToggleKey(VK_TAB))
 	{
 		char str[128];
 		sprintf_s(str, "cameraX : %d", _cameraX);
@@ -137,7 +137,7 @@ void tileMap::render()
 
 		sprintf_s(str, "cameraY : %d", _cameraY);
 		TextOut(getMemDC(), 100, 130, str, strlen(str));
-	}
+	}*/
 }
 
 void tileMap::setTile()

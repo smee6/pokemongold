@@ -329,6 +329,7 @@ void uiManager::pokeCenter()
 		_isCount = true;
 		_isScript = true;
 		_isOpenPokecenter = false;
+		_currentPoke = 0;
 	}
 }
 /// <메뉴> ////////////////////////////////////////////
@@ -1596,8 +1597,6 @@ void uiManager::script()
 			{
 				//_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP - _character->getPoketmon(_currentPoke).sumMaxHP);
 
-				_currentPoke++;
-
 				_appearIndexPlayer = 2;
 
 				_isAttack = false;
@@ -1609,6 +1608,8 @@ void uiManager::script()
 
 				// 체력 0으로 고정
 				_character->setCurrentHP(_currentPoke, _character->getPoketmon(_currentPoke).currentHP);
+
+				_currentPoke++;
 
 				//else
 				//{
@@ -1892,7 +1893,7 @@ void uiManager::script()
 		DeleteObject(font);
 
 
-		char str[128];
+		/*char str[128];
 
 		sprintf_s(str, "battle : %d", _isBattle);
 		TextOut(_backBuffer->getMemDC(), 300, 10, str, strlen(str));
@@ -1904,7 +1905,7 @@ void uiManager::script()
 		TextOut(_backBuffer->getMemDC(), 300, 50, str, strlen(str));
 
 		sprintf_s(str, "champion : %d", _championCount);
-		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));
+		TextOut(_backBuffer->getMemDC(), 300, 70, str, strlen(str));*/
 	}
 }
 
@@ -2186,7 +2187,7 @@ void uiManager::battle()
 		if (_appearIndexPlayer < 0 && _appearIndexEnemy < 0)
 		{
 			//	커서의 위치
-			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack && !_isScript)
+			if (!_isOpenSkill && !_isOpenPokemon && !_isOpenBag && !_isAttack && !_isScript && !_isCatch)
 			{
 				if (_behaviorCount == 0)			// 싸우다
 				{
@@ -2336,23 +2337,23 @@ void uiManager::battle()
 		}
 	}
 
-	char str[128];
+	//char str[128];
 
-	sprintf_s(str, "%d", _currentEnemyPokemon.level);
-	TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
+	//sprintf_s(str, "%d", _currentEnemyPokemon.level);
+	//TextOut(_backBuffer->getMemDC(), 10, 10, str, strlen(str));
 
-	sprintf_s(str, "currentEnemy : %d", _currentEnemyIndex);
-	TextOut(_backBuffer->getMemDC(), 300, 90, str, strlen(str));
+	//sprintf_s(str, "currentEnemy : %d", _currentEnemyIndex);
+	//TextOut(_backBuffer->getMemDC(), 300, 90, str, strlen(str));
 
-	sprintf_s(str, "currentEnemyHP : %d", _currentEnemyPokemon.currentHP);
-	TextOut(_backBuffer->getMemDC(), 300, 110, str, strlen(str));
+	//sprintf_s(str, "currentEnemyHP : %d", _currentEnemyPokemon.currentHP);
+	//TextOut(_backBuffer->getMemDC(), 300, 110, str, strlen(str));
 
-	sprintf_s(str, "catch(bool) : %d", _isCatch);
-	TextOut(_backBuffer->getMemDC(), 200, 200, str, strlen(str));
+	//sprintf_s(str, "catch(bool) : %d", _isCatch);
+	//TextOut(_backBuffer->getMemDC(), 200, 200, str, strlen(str));
 
-	sprintf_s(str, "catch : %d", _catchIndex);
-	TextOut(_backBuffer->getMemDC(), 200, 220, str, strlen(str));
-	//_character->getPoketmon(_currentPoke).totalEXP >= _character->getPoketmon(_currentPoke).maxExp
+	//sprintf_s(str, "catch : %d", _catchIndex);
+	//TextOut(_backBuffer->getMemDC(), 200, 220, str, strlen(str));
+	////_character->getPoketmon(_currentPoke).totalEXP >= _character->getPoketmon(_currentPoke).maxExp
 }
 
 void uiManager::skillSelect()
@@ -3008,6 +3009,7 @@ void uiManager::usePokeBall()
 		_appearIndexEnemy = 2;
 		_isCatch = false;
 		_catchIndex = 0;
+		_behaviorCount = 0;
 
 		SOUNDMANAGER->stop("battle");
 		SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());

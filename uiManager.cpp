@@ -128,6 +128,7 @@ HRESULT uiManager::init()
 	IMAGEMANAGER->addFrameImage("포켓볼상태", "image/battle/poketballState.bmp", 28, 112, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("성별", "image/battle/gender.bmp", 7, 16, 1, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("포켓몬출근", "image/battle/appearPokemon.bmp", 600, 200, 3, 1,  true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("포획", "image/skill/monsterball.bmp", 15480, 300, 36, 1, true, RGB(255, 0, 255));
 
 	// ========================================================================================================================
 
@@ -783,7 +784,12 @@ void uiManager::bag()
 					// 보유 포켓몬이 꽉찬 경우에 사용 불가
 					if (_character->getPoketmon(5).maxHP != 0) return;
 					pokeballQ--;
+					_isCatch = true;
 					usePokeBall();
+					bagCnt = 0;
+					bagWindow = false;
+					uiOpen = false;
+					_isOpenBag = false;
 					//전투중이 아닌 경우 못 씀
 					//전투중에 쓸경우 뭐 대충 bool 값 체크해서 사용하게 해줌 
 				};
@@ -1965,7 +1971,7 @@ void uiManager::battle()
 	{
 		//_npc = NPC::BATTLE;
 		// 야생일 때에는 처음 이미지 그대로 유지	(추후에 야생 / 트레이너 두 개를 구분해서 사용)
-		_enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
+		if (_catchIndex < 15) _enemyPokeImage->render(_backBuffer->getMemDC(), ex, 0);
 	}
 
 	// 경험치 올라가는거 시간 조정하려고 했던 것
@@ -2238,6 +2244,45 @@ void uiManager::battle()
 		attack();
 	}
 
+	if (_isCatch)
+	{
+		usePokeBall();
+
+		IMAGEMANAGER->frameRender("포획", _backBuffer->getMemDC(), 200, 0, _catchIndex, 0);
+
+		static int catchCount = 0;
+		catchCount++;
+
+		if (_catchIndex < 30)
+		{
+			if (catchCount % 4 == 0)
+			{
+				_catchIndex++;
+			}
+		}
+		else if (_catchIndex == IMAGEMANAGER->findImage("포획")->getMaxFrameX())
+		{
+			static float time = TIMEMANAGER->getWorldTime();
+
+			if (TIMEMANAGER->getWorldTime() >= time + 1)
+			{
+				_catchIndex++;
+			}
+		}
+		else
+		{
+			if (catchCount % 20 == 0)
+			{
+				_catchIndex++;
+			}
+		}
+
+		if (_catchIndex >= IMAGEMANAGER->findImage("포획")->getMaxFrameX())
+		{
+			catchCount = 0;
+		}
+	}
+
 	char str[128];
 
 	sprintf_s(str, "%d", _currentEnemyPokemon.level);
@@ -2249,10 +2294,10 @@ void uiManager::battle()
 	sprintf_s(str, "currentEnemyHP : %d", _currentEnemyPokemon.currentHP);
 	TextOut(_backBuffer->getMemDC(), 300, 110, str, strlen(str));
 
-	sprintf_s(str, "total : %d", _character->getPoketmon(_currentPoke).currentExp);
+	sprintf_s(str, "catch(bool) : %d", _isCatch);
 	TextOut(_backBuffer->getMemDC(), 200, 200, str, strlen(str));
 
-	sprintf_s(str, "max : %d", _character->getPoketmon(_currentPoke).maxExp);
+	sprintf_s(str, "catch : %d", _catchIndex);
 	TextOut(_backBuffer->getMemDC(), 200, 220, str, strlen(str));
 	//_character->getPoketmon(_currentPoke).totalEXP >= _character->getPoketmon(_currentPoke).maxExp
 }
@@ -2885,27 +2930,35 @@ void uiManager::usePokeBall()
 
 	//맞았을때 좌우로 흔들거리는 프레임이미지 출력
 
-	//잡았다 - 보유 구조체 3번에 저장(레벨, 젠더, 보유기술)
-	for (int i = 0; i < 6; i++)
+	if (_catchIndex > IMAGEMANAGER->findImage("포획")->getMaxFrameX())
 	{
-		if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
+		//잡았다 - 보유 구조체 3번에 저장(레벨, 젠더, 보유기술)
+		for (int i = 0; i < 6; i++)
 		{
-			_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
+			if (_character->getPoketmon(i).maxHP == 0)		// 빈 자리일 경우
+			{
+				_character->setPoketmon(_poketmonManager->getWildPoketmon(), i);		// 보유 포켓몬에 추가
 
-			// 한마리 잡으면 종료
-			break;
+				// 한마리 잡으면 종료
+				break;
+			}
 		}
-	}
 
-	uiOpen = false;
-	_isBattle = false;
-	_isOpenBag = false;
-	bagWindow = false;
-	_px = -_playerImage->getWidth();
-	_ex = WINSIZEX + _enemyPokeImage->getWidth();
-	_behaviorCount = 0;
-	_appearIndexPlayer = 2;
-	_appearIndexEnemy = 2;
+		uiOpen = false;
+		_isBattle = false;
+		_isOpenBag = false;
+		bagWindow = false;
+		_px = -_playerImage->getWidth();
+		_ex = WINSIZEX + _enemyPokeImage->getWidth();
+		_behaviorCount = 0;
+		_appearIndexPlayer = 2;
+		_appearIndexEnemy = 2;
+		_isCatch = false;
+		_catchIndex = 0;
+
+		SOUNDMANAGER->stop("battle");
+		SOUNDMANAGER->play("town2BGM", 0.01f * UIMANAGER->getVolume());
+	}
 }
 
 void uiManager::useMedicine()
